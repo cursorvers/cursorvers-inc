@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder's Message | Cursorvers Inc.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans JP"', 'sans-serif'], en: ['"Manrope"', 'sans-serif'] },
+                    colors: { 'brand-black': '#1A202C', 'brand-blue': '#0052CC', 'brand-gray': '#F8FAFC' },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: "Noto Sans JP", sans-serif; background: #fff; color: #1A202C; }
+        .prose p { margin-bottom: 1.8em; line-height: 1.9; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed w-full z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-lg font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</a>
+            <a href="index.html" class="text-sm text-gray-500 hover:text-brand-blue transition">Back to Home</a>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase font-en block mb-6">Founder's Message</span>
+                <h1 class="text-4xl md:text-5xl font-bold mt-6 leading-tight">AIに、臨床の魂を。</h1>
+            </div>
+
+            <div class="mb-20 relative shadow-2xl rounded-sm overflow-hidden">
+                <img src="founder.jpg" alt="Masayuki Otawara" class="w-full h-[550px] object-cover grayscale hover:grayscale-0 transition duration-1000">
+            </div>
+            
+            <div class="prose max-w-none text-lg text-gray-700 leading-loose">
+                <p>
+                    医療AIは、単なる「効率化ツール」ではありません。それは、診断の精度を高め、治療の選択肢を広げ、最終的には患者さんの命に関わる「新たな医療インフラ」です。
+                </p>
+                <p>
+                    しかし、どれほど優れたアルゴリズムであっても、現場の文脈（コンテキスト）を理解しないまま導入されれば、それは異物となり、リスクとなります。私は救急医として、一刻を争う臨床現場に立ち続ける中で、テクノロジーと現場の乖離がもたらす危うさを肌で感じてきました。
+                </p>
+                <p>
+                    必要なのは、システムに「臨床の魂」を吹き込むことです。<br>
+                    それは、現場のワークフローに即した設計であり、万が一の誤謬を許容しない厳格な監査であり、そして「誰が責任を負うのか」というガバナンスの確立です。
+                </p>
+                <p>
+                    Cursorversは、医療機関とベンダーの間に立ち、この「魂」を実装するための専門機関です。<br>
+                    イノベーションを止めるブレーキではなく、安心してアクセルを踏み込むための「最強の安全装置」として。私たちは、信頼できる医療AIの社会実装を、最前線で支え続けます。
+                </p>
+                
+                <div class="mt-24 pt-12 border-t border-gray-100 flex flex-col items-end">
+                    <p class="text-sm font-bold text-gray-400 mb-4 font-en uppercase tracking-wider">Founder / Medical AI Governance Architect</p>
+                    <p class="text-xl font-extrabold text-brand-black font-en tracking-wider">Masayuki Otawara, MD, PhD</p>
+                </div>
+            </div>
+            
+            <div class="mt-24 bg-gray-50 p-10 rounded-sm border border-gray-100">
+                <h3 class="font-bold text-brand-black mb-6 font-en uppercase tracking-widest text-sm">Profile</h3>
+                <div class="text-sm text-gray-600 leading-relaxed space-y-4">
+                    <p>
+                        <strong>大田原 正幸</strong>（医学博士・医師）<br>
+                        杏林大学医学部付属病院 高度救命救急センターでの後期研修を経て、慶應義塾大学医学部 外科学教室、杏林大学医学部 救急医学教室 助教を歴任。
+                    </p>
+                    <p>
+                        2015年より Harvard Medical School / Massachusetts General Hospital にて Research Fellow として研究に従事。帰国後、杏林大学医学部 助教、東京都立広尾病院 救命救急センター 医長を務める。
+                    </p>
+                    <p>
+                        現在は杏林大学 保健学部 救急救命学科 准教授として教育・研究にあたる傍ら、Cursorversを創業。臨床現場のリアリティとアカデミアの知見を融合させたAIガバナンス構築を推進している。
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white py-12 text-center text-xs text-gray-400 font-en border-t border-gray-100 tracking-wider">
+        <p>&copy; 2025 Cursorvers Inc. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
