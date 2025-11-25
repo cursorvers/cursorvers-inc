@@ -510,6 +510,11 @@
             const nav = document.querySelector('[data-desktop-nav]');
             if (menuBtn && nav) {
                 let mobileMenu = null;
+                const closeMenu = () => {
+                    if (mobileMenu) mobileMenu.style.display = 'none';
+                    document.body.style.overflow = '';
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                };
                 const createMenu = () => {
                     if (mobileMenu) return;
                     mobileMenu = document.createElement('div');
@@ -533,10 +538,13 @@
                     document.body.appendChild(mobileMenu);
                     const navLinks = mobileMenu.querySelector('#mobile-nav-links');
                     nav.querySelectorAll('a').forEach(link => {
-                        const clone = link.cloneNode(true);
-                        clone.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2';
-                        clone.addEventListener('click', closeMenu);
-                        navLinks.appendChild(clone);
+                        const a = document.createElement('a');
+                        a.href = link.href;
+                        a.textContent = link.textContent.trim();
+                        a.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2 text-center';
+                        if (link.target) a.target = link.target;
+                        a.addEventListener('click', closeMenu);
+                        navLinks.appendChild(a);
                     });
                     mobileMenu.querySelector('#mobile-menu-close').addEventListener('click', closeMenu);
                 };
@@ -545,11 +553,6 @@
                     mobileMenu.style.display = 'flex';
                     document.body.style.overflow = 'hidden';
                     menuBtn.setAttribute('aria-expanded', 'true');
-                };
-                const closeMenu = () => {
-                    if (mobileMenu) mobileMenu.style.display = 'none';
-                    document.body.style.overflow = '';
-                    menuBtn.setAttribute('aria-expanded', 'false');
                 };
                 menuBtn.addEventListener('click', openMenu);
                 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
