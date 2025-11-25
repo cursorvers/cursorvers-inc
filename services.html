@@ -33,16 +33,16 @@
 </head>
 <body class="antialiased">
 
-    <header class="fixed w-full z-50 glass-nav transition-all duration-300">
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 group">
+            <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
                 <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
                 <span class="text-lg font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
             </a>
-            <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-600 font-en">
+            <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-600 font-en" data-desktop-nav>
                 <a href="index.html#philosophy" class="hover:text-brand-blue transition">Philosophy</a>
                 <a href="index.html#business" class="hover:text-brand-blue transition">Business</a>
-                <span class="text-brand-blue">Services</span>
+                <a href="services.html" class="text-brand-blue" aria-current="page">Services</a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="index.html#company" class="hover:text-brand-blue transition">Company</a>
                 <a href="https://note.com/nice_wren7963" target="_blank" class="hover:text-brand-blue transition flex items-center gap-1">
@@ -50,10 +50,12 @@
                 </a>
             </nav>
             <div class="flex items-center gap-6">
-                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en">
+                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en" data-mobile-contact>
                     Contact
                 </a>
-                <button class="md:hidden text-black text-xl"><i class="fa-solid fa-bars"></i></button>
+                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -209,6 +211,7 @@
         </div>
     </footer>
 
+    <script src="./mobile-menu.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {

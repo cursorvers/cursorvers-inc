@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursorvers | Medical AI Governance</title>
+    <title>Cursorvers Inc. | Medical AI Governance</title>
     <meta name="description" content="医療AIの安全・倫理・継続性を担保する。Cursorvers株式会社は、医療機関向け監査・教育・ベンダー支援の専門機関です。">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -53,31 +53,42 @@
             position: relative;
             height: 100vh;
             width: 100%;
-            background: #000;
+            background: #000; /* 背景を黒に設定 */
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        /* Background Image: Close-up Command Line (Restored) */
+        /* Background Image - Darkened */
         .hero-bg-code {
             position: absolute;
             inset: 0;
             background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            opacity: 0.4;
+            opacity: 0.2; /* 不透明度を下げて暗くする */
             z-index: 0;
-            filter: contrast(1.2) brightness(0.6) hue-rotate(200deg) saturate(1.2);
+            /* コントラストを上げ、明度を大きく下げることで深いダークトーンにする */
+            filter: contrast(1.5) brightness(0.3) hue-rotate(200deg) grayscale(30%);
+        }
+
+        /* ダークオーバーレイを追加して深みを出す */
+        .hero-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
         }
 
         /* Three.js Layer */
         #webgl-container {
             position: absolute;
             inset: 0;
-            z-index: 1;
-            mix-blend-mode: screen; /* 光を合成 */
+            z-index: 2; /* オーバーレイの上に配置 */
+            mix-blend-mode: screen;
+            opacity: 0.9; /* 光を強調 */
         }
 
         .hero-content {
@@ -125,18 +136,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
-        /* Image Styling */
-        .img-clean {
-            overflow: hidden;
-            border-radius: 4px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
-        }
-        .img-clean img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 1.5s ease;
-        }
-        .img-clean:hover img { transform: scale(1.05); }
     </style>
 </head>
 <body class="antialiased">
@@ -144,7 +143,7 @@
     <header class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group">
-                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers primary logomark" class="h-10 w-10 mix-blend-multiply">
+                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Logo" class="h-10 w-10 mix-blend-multiply">
                 <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
             </a>
             <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-600 font-en">
@@ -153,9 +152,6 @@
                 <a href="services.html" class="hover:text-brand-blue transition">Services</a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="#company" class="hover:text-brand-blue transition">Company</a>
-                <a href="https://note.com/nice_wren7963" target="_blank" class="hover:text-brand-blue transition flex items-center gap-1">
-                    Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en">
@@ -167,8 +163,7 @@
     </header>
 
     <div class="hero-wrapper">
-        <div class="hero-bg-code animate-pulse-slow"></div>
-        
+        <div class="hero-bg-code"></div>
         <div id="webgl-container"></div>
 
         <div class="hero-content max-w-5xl mx-auto px-6 animate-fade-in">
@@ -197,77 +192,33 @@
 
     <section id="philosophy" class="section-padding bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6">
-            
-            <div class="grid md:grid-cols-2 gap-24 items-center mb-32">
-                <div class="img-clean aspect-[4/5] reveal shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop" alt="Clinician reviewing advanced medical AI data dashboards">
-                </div>
-                
-                <div class="reveal">
-                    <span class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-8 font-en">Corporate Philosophy</span>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-12 leading-tight text-brand-black">
-                        知的資産の防衛が<br>
-                        最大のガバナンスである。
+            <div class="grid md:grid-cols-2 gap-24 items-center">
+                <div class="order-2 md:order-1">
+                    <span class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-6 font-en">Corporate Philosophy</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-10 leading-tight text-brand-black">
+                        知的資産の防衛が<br>最大のガバナンスである。
                     </h2>
-                    <div class="space-y-6 text-gray-600 text-lg leading-relaxed border-l-4 border-gray-200 pl-8">
+                    <div class="space-y-8 text-gray-600 text-lg leading-relaxed">
                         <p>
-                            AI技術は、医療現場に未曾有の恩恵をもたらす一方で、「見えないリスク」が潜んでいます。診断の偏り、データプライバシー侵害、倫理的課題。これらのリスクは、医療の質を低下させ、患者の信頼を損ねるだけでなく、最悪の場合、法的な問題に発展する可能性さえあります。
+                            AI技術は、医療現場に未曾有の恩恵をもたらす一方で、その裏側には「見えないリスク」が潜んでいます。診断の偏り、データプライバシー侵害、倫理的課題。これらのリスクは、医療の質を低下させ、患者の信頼を損ねるだけでなく、最悪の場合、法的な問題に発展する可能性さえあります。
                         </p>
                         <p>
-                            私たちは、イノベーションを阻害するブレーキではありません。むしろ、医療AIがその真価を発揮し、安全かつ持続的に社会に貢献するための、「最強の安全装置」でありたいと考えています。先行きの不透明な時代において、信頼こそが最も重要な資産であり、その防衛こそが企業の成長基盤となります。
+                            私たちは、イノベーションを阻害するブレーキではありません。むしろ、医療AIがその真価を発揮し、安全かつ持続的に社会に貢献するための、**「最強の安全装置」**でありたいと考えています。先行きの不透明な時代において、信頼こそが最も重要な資産であり、その防衛こそが企業の成長基盤となります。
                         </p>
                         <p>
                             Cursorversは、先進的な技術と深い医療知見を融合させ、医療機関が自信を持ってAIを導入・運用できるよう支援します。リスクを未然に防ぎ、透明性の高いガバナンス体制を構築することで、医療従事者が本質的な業務に集中し、患者さんへより良い医療を提供できる未来を創造します。
                         </p>
                     </div>
-                    <div class="mt-16">
+                    <div class="mt-12">
                         <a href="message.html" class="text-brand-blue font-bold hover:underline flex items-center gap-2">
                             Founder Message <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-24 items-center mb-32">
-                <div class="reveal order-2 md:order-1">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight text-brand-black">
-                        Empower the Individual.<br>
-                        個人を強くし、その先の組織を変える。
-                    </h2>
-                    <div class="space-y-6 text-gray-600 text-lg leading-relaxed border-l-4 border-gray-100 pl-8">
-                        <p>
-                            多くの医療機関で、AI導入を任されるのは「ごく少数の個人」です。その人が、経営層からの期待と現場の不安、そしてベンダーからの提案を一手に引き受け、誰にも相談できないまま意思決定を迫られています。
-                        </p>
-                        <p>
-                            Cursorversは、まずその「個人」を支えることから始めます。顧問契約や教育プログラムを通じてガバナンスの判断軸を共有し、小さな成功体験を積み重ねながら、組織全体の体制構築へとつなげていきます。
-                        </p>
-                    </div>
-                </div>
-                <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2070&auto=format&fit=crop" alt="AIガバナンス顧問が医療リーダーと戦略を共有している様子">
+                <div class="order-1 md:order-2 img-cover h-[600px] overflow-hidden rounded-sm shadow-2xl">
+                    <img src="image_23.png" alt="Medical Intelligence">
                 </div>
             </div>
-
-             <div class="grid md:grid-cols-2 gap-24 items-center">
-                <div class="img-clean aspect-[4/5] reveal shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Tokyoの都市夜景が医療ネットワークの広がりを象徴するイメージ">
-                </div>
-                
-                <div class="reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight text-brand-black">
-                        AIガバナンスの民主化
-                    </h2>
-                    <div class="space-y-6 text-gray-600 text-lg leading-relaxed border-l-4 border-gray-100 pl-8">
-                        <p>
-                            一部の専門家やシステムに依存するのではなく、現場の医療者一人ひとりがAIのリスクを理解し、自律的に制御できる状態を目指します。それが、真に安全で持続可能な医療AIの未来を拓く鍵となります。
-                        </p>
-                        <p>
-                             Cursorversは、先進的な技術と深い医療知見を融合させ、医療機関が自信を持ってAIを導入・運用できるよう支援します。リスクを未然に防ぎ、透明性の高いガバナンス体制を構築することで、医療従事者が本質的な業務に集中し、患者さんへより良い医療を提供できる未来を創造します。
-                        </p>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -282,7 +233,7 @@
             <div class="grid md:grid-cols-3 gap-10">
                 <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="location.href='services.html#audit'">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?q=80&w=2000&auto=format&fit=crop" alt="Hospital audit team reviewing AI導入データ">
+                        <img src="image_6.png" alt="Audit">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Audit & Consulting</h3>
@@ -297,7 +248,7 @@
 
                 <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="location.href='services.html#vendor'">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2000&auto=format&fit=crop" alt="Medical AI startup engineers working at analytics workstations">
+                        <img src="image_8.png" alt="Startup" style="object-fit: cover; object-position: top center;">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Startup Advisory</h3>
@@ -312,7 +263,7 @@
 
                 <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="window.open('https://cursorvers.github.io/cursorvers-edu/', '_blank')">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop" alt="医療従事者がAI教育プログラムをオンライン受講している様子">
+                        <img src="image_8.png" alt="Education" style="object-fit: cover; object-position: bottom left;">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Education</h3>
@@ -337,18 +288,18 @@
                     <div class="space-y-0 text-sm">
                         <div class="flex py-5 border-b border-gray-100">
                             <span class="w-40 text-gray-500 font-bold">会社名</span>
-                            <span class="text-brand-black font-en">Cursorvers</span>
+                            <span class="text-brand-black font-en">Cursorvers Inc.</span>
                         </div>
                         <div class="flex py-5 border-b border-gray-100">
                             <span class="w-40 text-gray-500 font-bold">代表者</span>
                             <div class="text-brand-black">
-                                Founder (External Director): Masayuki Otawara<br>
+                                Founder: Masayuki Otawara, MD, PhD<br>
                                 Representative Director: Emi Otawara
                             </div>
                         </div>
                         <div class="flex py-5 border-b border-gray-100">
                             <span class="w-40 text-gray-500 font-bold">所在地</span>
-                            <span class="text-brand-black">Tokyo, Japan（詳細はお問い合わせ後に開示）</span>
+                            <span class="text-brand-black font-en">Tokyo, Japan</span>
                         </div>
                         <div class="flex py-5 border-b border-gray-100">
                             <span class="w-40 text-gray-500 font-bold">事業内容</span>
@@ -371,6 +322,21 @@
                             </div>
                             <i class="fa-solid fa-shield-virus text-2xl text-gray-400"></i>
                         </div>
+                        <div class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
+                            <div>
+                                <p class="font-bold text-brand-black">税理士法人シリウス</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Tax Advisory</p>
+                            </div>
+                            <i class="fa-solid fa-file-invoice text-2xl text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
+                            <div>
+                                <p class="font-bold text-brand-black">熊谷経営法律事務所</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Legal Advisory</p>
+                            </div>
+                            <i class="fa-solid fa-scale-balanced text-2xl text-gray-400"></i>
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-2">※各パートナー名称は契約書等にて正式に開示します。</p>
                     </div>
                 </div>
             </div>
@@ -382,7 +348,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start gap-20">
                 <div class="max-w-xs">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers inverted logomark" class="h-8 w-8 rounded-full border border-white/20">
+                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Logo" class="h-8 w-8 rounded-full border border-white/20">
                         <span class="text-white font-bold text-xl font-en tracking-widest">Cursorvers</span>
                     </div>
                     <p class="leading-relaxed opacity-60 text-gray-400">Ensuring Safety, Ethics, and Continuity in Medical AI.</p>
@@ -399,21 +365,16 @@
                     <div>
                         <h4 class="text-white font-bold mb-6 font-en">Legal</h4>
                         <ul class="space-y-4 text-gray-400">
-                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
-                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
-                            <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="hover:text-white transition">Contact Us</a></li>
+                            <li><a href="#" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="mt-20 pt-8 border-t border-gray-800 flex justify-between items-center font-en text-xs text-gray-500">
-                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
-                <div class="flex gap-6 text-lg">
-                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/" target="_blank" rel="noopener" class="hover:text-white transition">
-                        <i class="fa-brands fa-linkedin"></i>
-                    </a>
-                </div>
+                <p>&copy; 2025 Cursorvers Inc. All Rights Reserved.</p>
+                <div class="flex gap-6 text-lg"><a href="#" class="hover:text-white transition"><i class="fa-brands fa-linkedin"></i></a></div>
             </div>
         </div>
     </footer>

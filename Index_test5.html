@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursorvers | Medical AI Governance</title>
+    <meta name="description" content="医療AIの安全・倫理・継続性を担保する。Cursorvers株式会社。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+                        display: ['"Manrope"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        bg: '#030305',
+                        surface: '#0E0E10',
+                        surfaceHighlight: '#18181B',
+                        primary: '#3B82F6', // Crisp Blue
+                        cyan: '#22D3EE', // Medical Cyan
+                        border: 'rgba(255, 255, 255, 0.08)',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #1a1a1a 0deg, #0a0a0a 180deg, #1a1a1a 360deg)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030305;
+            color: #E2E8F0;
+            overflow-x: hidden;
+        }
+
+        /* --- High-End Utilities --- */
+
+        /* 1. Background Grid (Tech Vibe) */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* 2. Glass Cards with Glow Border */
+        .glass-card {
+            background: rgba(14, 14, 16, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* Interactive Border Glow */
+        .glass-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .glass-card:hover {
+            background: rgba(24, 24, 27, 0.8);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7), 0 0 15px rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        /* 3. Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-blue {
+            background: linear-gradient(to right, #60A5FA, #22D3EE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 4. Navigation */
+        .nav-blur {
+            background: rgba(3, 3, 5, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 5. Smooth Scroll Fixes */
+        html.lenis {
+            width: auto;
+            min-height: 100%;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        /* 6. Typography adjustments */
+        .font-feature {
+            font-feature-settings: "palt";
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="fixed top-0 w-full z-50 nav-blur transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div
+                    class="w-8 h-8 rounded bg-gradient-to-br from-primary to-cyan flex items-center justify-center text-black font-bold text-xs tracking-tighter">
+                    CV
+                </div>
+                <span
+                    class="text-sm font-display font-bold tracking-widest uppercase text-white group-hover:text-cyan transition-colors">Cursorvers</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-[13px] font-medium text-gray-400 font-mono">
+                <a href="#philosophy" class="hover:text-white transition-colors"><span
+                        class="text-cyan mr-1">01.</span>Philosophy</a>
+                <a href="#business" class="hover:text-white transition-colors"><span
+                        class="text-cyan mr-1">02.</span>Business</a>
+                <a href="services.html" class="hover:text-white transition-colors"><span
+                        class="text-cyan mr-1">03.</span>Services</a>
+                <a href="message.html" class="hover:text-white transition-colors">Founder</a>
+                <a href="#company" class="hover:text-white transition-colors">Company</a>
+                <a href="https://note.com/nice_wren7963" target="_blank"
+                    class="hover:text-white transition-colors">Journal ↗</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                    target="_blank"
+                    class="hidden md:inline-flex items-center justify-center px-5 py-2 text-[12px] font-bold tracking-wider border border-white/20 rounded-full text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 uppercase font-display">
+                    Contact
+                </a>
+                <button class="md:hidden text-white text-xl"><i class="fa-solid fa-bars-staggered"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="relative h-screen w-full flex flex-col justify-center items-center overflow-hidden">
+            <div class="absolute inset-0 bg-grid z-0 opacity-40"></div>
+            <div id="webgl-container" class="absolute inset-0 z-10 mix-blend-screen opacity-80"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-bg/50 to-bg z-10 pointer-events-none">
+            </div>
+
+            <div class="relative z-20 text-center px-6 max-w-6xl mx-auto mt-10">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan/20 bg-cyan/5 backdrop-blur-md mb-8 animate-fade-in-up">
+                    <span class="w-2 h-2 rounded-full bg-cyan animate-pulse"></span>
+                    <span class="text-cyan text-[10px] font-mono font-medium tracking-widest uppercase">System
+                        Operational</span>
+                </div>
+
+                <h1
+                    class="text-5xl md:text-8xl lg:text-9xl font-display font-extrabold tracking-tighter leading-[0.9] text-white mb-8">
+                    <span
+                        class="block text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 reveal-text">INTELLIGENCE</span>
+                    <span
+                        class="block text-transparent bg-clip-text bg-gradient-to-b from-gray-400 to-gray-800 reveal-text">NEEDS
+                        TRUST.</span>
+                </h1>
+
+                <p
+                    class="text-gray-400 text-base md:text-xl font-feature font-light tracking-wide max-w-2xl mx-auto leading-relaxed mb-12 reveal-text delay-100">
+                    AIに、臨床の魂を。<br>
+                    コードレベルの監査と臨床現場のリアリティを融合させ、<br class="hidden md:inline">
+                    「安全」と「倫理」をシステムとして実装する。
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center reveal-text delay-200">
+                    <a href="services.html"
+                        class="px-8 py-4 bg-white text-black font-display font-bold text-xs tracking-widest hover:bg-cyan hover:scale-105 transition-all duration-300 rounded uppercase">
+                        View Solutions
+                    </a>
+                    <a href="#philosophy"
+                        class="px-8 py-4 border border-white/20 text-white font-display font-bold text-xs tracking-widest hover:bg-white/5 transition-all duration-300 rounded uppercase">
+                        Our Philosophy
+                    </a>
+                </div>
+            </div>
+
+            <div
+                class="absolute bottom-0 left-1/2 w-[1px] h-32 bg-gradient-to-b from-transparent via-cyan to-transparent opacity-50 z-20">
+            </div>
+        </section>
+
+        <section id="philosophy" class="relative py-32 px-6 bg-bg z-20">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-20 items-center mb-40">
+                    <div class="glass-card p-2 rounded-2xl reveal-img">
+                        <div class="relative aspect-[4/5] overflow-hidden rounded-xl bg-surfaceHighlight">
+                            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop"
+                                alt="Data"
+                                class="w-full h-full object-cover opacity-80 mix-blend-screen hover:scale-105 transition-transform duration-700">
+                            <div
+                                class="absolute bottom-4 left-4 font-mono text-[10px] text-cyan bg-black/50 px-2 py-1 rounded">
+                                FIG. 01: GOVERNANCE</div>
+                        </div>
+                    </div>
+
+                    <div class="reveal-text">
+                        <span class="text-cyan font-mono text-xs tracking-widest uppercase mb-6 block">// Corporate
+                            Philosophy</span>
+                        <h2 class="text-3xl md:text-5xl font-display font-bold leading-tight mb-8 text-white">
+                            知的資産の防衛が、<br>
+                            <span class="text-gray-500">最強のガバナンス。</span>
+                        </h2>
+                        <div
+                            class="space-y-6 text-gray-400 text-lg font-feature leading-relaxed border-l border-white/10 pl-6">
+                            <p>
+                                AI技術は「見えないリスク」を孕んでいます。診断バイアス、データプライバシー侵害、倫理的課題。これらは医療の質を低下させるだけでなく、法的問題に発展する可能性があります。
+                            </p>
+                            <p>
+                                私たちはイノベーションのブレーキではありません。医療AIが真価を発揮するための「最強の安全装置（Safety
+                                Architecture）」です。信頼こそが最も重要な資産であり、その防衛こそが企業の成長基盤となります。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-20 items-center">
+                    <div class="order-2 md:order-1 reveal-text">
+                        <h2 class="text-3xl md:text-5xl font-display font-bold leading-tight mb-8 text-white">
+                            Empower the Individual.<br>
+                            <span class="text-gray-500">個を強くし、組織を変える。</span>
+                        </h2>
+                        <div class="space-y-6 text-gray-400 text-lg font-feature leading-relaxed">
+                            <p>
+                                医療AI導入の責任は、往々にして少数の個人にのしかかります。Cursorversは、まずその「個人」を支えることから始めます。
+                            </p>
+                            <p>
+                                顧問契約や教育プログラムを通じてガバナンスの判断軸を共有し、組織全体の体制構築へとつなげていきます。
+                            </p>
+                            <a href="message.html"
+                                class="inline-flex items-center gap-2 text-white border-b border-cyan pb-1 mt-4 hover:text-cyan transition">
+                                Founder Message <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="glass-card p-2 rounded-2xl order-1 md:order-2 reveal-img">
+                        <div class="relative aspect-[4/5] overflow-hidden rounded-xl bg-surfaceHighlight">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
+                                alt="Network"
+                                class="w-full h-full object-cover opacity-80 mix-blend-screen hover:scale-105 transition-transform duration-700">
+                            <div
+                                class="absolute bottom-4 left-4 font-mono text-[10px] text-cyan bg-black/50 px-2 py-1 rounded">
+                                FIG. 02: EMPOWERMENT</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="business" class="py-32 bg-[#050507] relative border-t border-white/5">
+            <div class="absolute inset-0 bg-grid opacity-20 pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-20 reveal-text">
+                    <span class="text-cyan font-mono text-xs tracking-widest uppercase block mb-4">// Business
+                        Domain</span>
+                    <h2 class="text-4xl md:text-6xl font-display font-bold text-white mb-6">3 Core Axes</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 h-auto md:h-[600px]">
+
+                    <div class="md:col-span-2 glass-card rounded-3xl p-8 flex flex-col justify-between group cursor-pointer"
+                        onclick="location.href='services.html#audit'">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <span
+                                    class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] text-gray-300 font-mono uppercase">For
+                                    Hospitals</span>
+                                <h3 class="text-3xl font-bold text-white mt-4">Audit & Consulting</h3>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
+                                <i
+                                    class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow flex items-end">
+                            <p class="text-gray-400 max-w-md">
+                                有床・無床診療所から中小病院まで。第三者監査による認証と、現場に即したガバナンス体制構築。
+                            </p>
+                        </div>
+                        <div
+                            class="absolute right-0 bottom-0 w-2/3 h-full opacity-20 mix-blend-lighten pointer-events-none">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                                class="w-full h-full object-cover mask-image-l">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-1 flex flex-col gap-6">
+                        <div class="glass-card rounded-3xl p-8 flex-1 flex flex-col justify-between group cursor-pointer"
+                            onclick="location.href='services.html#vendor'">
+                            <div>
+                                <span
+                                    class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] text-gray-300 font-mono uppercase">For
+                                    Vendors</span>
+                                <h3 class="text-xl font-bold text-white mt-3">Startup Advisory</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm mt-4">
+                                臨床現場のリアリティチェック、PoC設計、規制対応支援。
+                            </p>
+                            <div
+                                class="absolute bottom-4 right-4 text-white/20 group-hover:text-cyan transition-colors">
+                                <i class="fa-solid fa-code-branch text-2xl"></i>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-3xl p-8 flex-1 flex flex-col justify-between group cursor-pointer"
+                            onclick="window.open('https://cursorvers.github.io/cursorvers-edu/', '_blank')">
+                            <div>
+                                <span
+                                    class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] text-gray-300 font-mono uppercase">For
+                                    Individuals</span>
+                                <h3 class="text-xl font-bold text-white mt-3">Education</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm mt-4">
+                                医師・医療従事者向けAIリテラシー教育プログラム。
+                            </p>
+                            <div
+                                class="absolute bottom-4 right-4 text-white/20 group-hover:text-cyan transition-colors">
+                                <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="company" class="py-32 px-6 bg-bg border-t border-white/5">
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-12 gap-12">
+                    <div class="md:col-span-4">
+                        <h3 class="text-2xl font-display font-bold text-white mb-2">Company Data</h3>
+                        <p class="text-gray-500 text-sm font-mono">:: SYSTEM INFORMATION</p>
+                    </div>
+                    <div class="md:col-span-8">
+                        <div class="divide-y divide-white/10 text-sm md:text-base font-feature">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
+                                <span class="text-gray-500 font-mono text-xs uppercase tracking-widest pt-1">Company
+                                    Name</span>
+                                <span class="md:col-span-2 text-white font-medium">Cursorvers 株式会社</span>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
+                                <span class="text-gray-500 font-mono text-xs uppercase tracking-widest pt-1">Board
+                                    Members</span>
+                                <div class="md:col-span-2 text-white">
+                                    <div class="mb-2">Founder (Ext. Director): Masayuki Otawara</div>
+                                    <div>Representative Director: Emi Otawara</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-6">
+                                <span class="text-gray-500 font-mono text-xs uppercase tracking-widest pt-1">Strategic
+                                    Partner</span>
+                                <div class="md:col-span-2 text-white flex items-center gap-4">
+                                    <i class="fa-solid fa-shield-virus text-cyan text-xl"></i>
+                                    <div>
+                                        <div class="font-bold">Health ISAC Japan</div>
+                                        <div class="text-xs text-gray-500 font-mono">SECURITY & AUDIT COLLABORATION
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#020203] text-white py-20 border-t border-white/5 relative z-10 font-mono text-xs">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+                <div class="max-w-xs">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="w-6 h-6 bg-white rounded flex items-center justify-center text-black font-bold text-[8px]">
+                            CV</div>
+                        <span class="font-display font-bold text-lg tracking-widest uppercase">Cursorvers</span>
+                    </div>
+                    <p class="text-gray-500 leading-relaxed font-sans">Ensuring Safety, Ethics, and Continuity in
+                        Medical AI Systems.</p>
+                </div>
+                <div class="flex gap-16">
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase tracking-widest">Index</h4>
+                        <ul class="space-y-3 text-gray-500">
+                            <li><a href="services.html" class="hover:text-cyan transition">Services</a></li>
+                            <li><a href="message.html" class="hover:text-cyan transition">Message</a></li>
+                            <li><a href="https://note.com/nice_wren7963" class="hover:text-cyan transition">Journal</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-4 uppercase tracking-widest">Legal</h4>
+                        <ul class="space-y-3 text-gray-500">
+                            <li><a href="privacy.html" class="hover:text-cyan transition">Privacy Policy</a></li>
+                            <li><a href="terms.html" class="hover:text-cyan transition">Terms of Service</a></li>
+                            <li><a href="tokushoho.html" class="hover:text-cyan transition">特定商取引法</a></li>
+                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                                    class="hover:text-cyan transition">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex justify-between items-center text-gray-600">
+                <p>&copy; 2025 Cursorvers Inc. // System Operational</p>
+                <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
+                    target="_blank" class="hover:text-white transition text-lg"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Lenis Smooth Scroll
+        const lenis = new Lenis({ duration: 1.2, smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // 2. GSAP Reveal
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Text Reveal
+        const texts = document.querySelectorAll(".reveal-text");
+        texts.forEach(text => {
+            gsap.fromTo(text,
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.5, ease: "power3.out", scrollTrigger: { trigger: text, start: "top 85%" } }
+            );
+        });
+
+        // Image Reveal (Scale Up)
+        const imgs = document.querySelectorAll(".reveal-img");
+        imgs.forEach(img => {
+            gsap.fromTo(img,
+                { scale: 0.95, opacity: 0 },
+                { scale: 1, opacity: 1, duration: 1.2, ease: "power2.out", scrollTrigger: { trigger: img, start: "top 80%" } }
+            );
+        });
+
+        // 3. Three.js Particles (Medical Data Vibe)
+        const initThree = () => {
+            const container = document.getElementById('webgl-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create connected particles (Neural Network look)
+            const particlesCount = 150;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 25; // Wide spread
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0x22D3EE, // Cyan
+                transparent: true,
+                opacity: 0.8
+            });
+
+            // Lines connecting particles
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x3B82F6, transparent: true, opacity: 0.15 });
+            const linesGeometry = new THREE.BufferGeometry();
+            const mesh = new THREE.Points(geometry, material);
+            const lines = new THREE.LineSegments(linesGeometry, lineMaterial);
+
+            scene.add(mesh);
+            scene.add(lines);
+
+            camera.position.z = 8;
+
+            // Mouse interaction
+            let mouseX = 0;
+            let mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX / window.innerWidth - 0.5;
+                mouseY = e.clientY / window.innerHeight - 0.5;
+            });
+
+            // Animate
+            const animate = () => {
+                requestAnimationFrame(animate);
+
+                mesh.rotation.y += 0.002;
+                lines.rotation.y += 0.002;
+
+                // Subtle tilt
+                mesh.rotation.x = mouseY * 0.2;
+                mesh.rotation.y += mouseX * 0.2;
+                lines.rotation.x = mouseY * 0.2;
+                lines.rotation.y += mouseX * 0.2;
+
+                // Update lines logic (simple nearest neighbor visual trick)
+                // Note: Full N^2 loop is heavy, static lines or simple rotation is better for performance in single file
+
+                renderer.render(scene, camera);
+            };
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        };
+        initThree();
+    </script>
+</body>
+
+</html>
