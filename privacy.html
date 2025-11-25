@@ -150,8 +150,10 @@
                     const navLinks = mobileMenu.querySelector('#mobile-nav-links');
                     nav.querySelectorAll('a').forEach(link => {
                         const clone = link.cloneNode(true);
-                        clone.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2';
-                        clone.addEventListener('click', closeMenu);
+                        clone.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2 text-center';
+                        clone.addEventListener('click', () => {
+                            setTimeout(closeMenu, 100);
+                        });
                         navLinks.appendChild(clone);
                     });
                     mobileMenu.querySelector('#mobile-menu-close').addEventListener('click', closeMenu);
