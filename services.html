@@ -29,6 +29,8 @@
         
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .plan-list { min-height: 180px; }
+        @media (max-width: 767px) { .plan-list { min-height: auto; } }
     </style>
 </head>
 <body class="antialiased">
@@ -61,141 +63,118 @@
     </header>
 
     <main class="pt-32 pb-24 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase font-en block mb-6">Our Solutions</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-brand-black mb-6">Governance Solutions</h1>
-                <p class="text-brand-slate text-lg max-w-3xl mx-auto leading-relaxed">
-                    医療機関の規模とフェーズに合わせた、最適なガバナンス体制を構築します。
+        <div class="max-w-5xl mx-auto space-y-16">
+            <section class="text-center reveal space-y-6">
+                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase font-en block">Our Solutions</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-brand-black">料金プラン（医療機関向け）</h1>
+                <p class="text-sm text-brand-blue font-semibold tracking-widest">※2025–26年の導入期「経験価格」（税抜）</p>
+                <p class="text-brand-slate text-lg leading-relaxed">
+                    中小病院・診療所向けに、AIガバナンスと監査を <strong>導入しやすい価格</strong> で提供しています。
                 </p>
-            </div>
+            </section>
 
-            <nav class="sticky-nav sticky z-10 bg-white/95 backdrop-blur py-4 border-b border-gray-100 mb-16">
-                <div class="flex justify-center gap-8 text-sm font-medium text-gray-700">
-                    <a href="#advisory" class="hover:text-brand-blue transition border-b-2 border-transparent hover:border-brand-blue pb-2">顧問契約 (Advisory)</a>
-                    <a href="#audit" class="hover:text-brand-blue transition border-b-2 border-transparent hover:border-brand-blue pb-2">監査・認証 (Audit)</a>
-                    <a href="#vendor" class="hover:text-brand-blue transition border-b-2 border-transparent hover:border-brand-blue pb-2">ベンダー支援 (Vendor)</a>
+            <section id="advisory" class="reveal space-y-10">
+                <div class="space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-blue">Section 01</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">1. 継続パートナー（顧問）</h2>
                 </div>
-            </nav>
-
-            <section id="advisory" class="mb-32 pt-16 reveal">
-                <div class="border-l-4 border-brand-blue pl-6 mb-10">
-                    <h2 class="text-3xl font-bold mb-2 text-brand-black">Advisory / 顧問契約</h2>
-                    <p class="text-gray-600">経営層と現場の橋渡しを行い、リスク管理を継続サポート。</p>
-                </div>
-                
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-blue transition shadow-sm hover:shadow-md">
-                        <h3 class="text-xl font-bold mb-1">Lite Partner</h3>
-                        <p class="text-xs text-brand-slate mb-6 font-en uppercase tracking-wider">&nbsp;</p>
-                        <p class="mb-6"><span class="price-val">¥50,000</span><span class="price-unit">/mo</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2">
-                            <li>• 月次オンライン相談 (30分)</li>
-                            <li>• チャットホットライン</li>
-                            <li>• 最新リスク情報の共有</li>
-                        </ul>
-                    </div>
-                    <div class="border border-gray-200 rounded-xl p-8 bg-blue-50/30 hover:border-brand-blue transition shadow-sm hover:shadow-md">
-                        <h3 class="text-xl font-bold mb-1">Standard Partner</h3>
-                        <p class="text-xs text-brand-slate mb-6 font-en uppercase tracking-wider">&nbsp;</p>
-                        <p class="mb-6"><span class="price-val">¥120,000</span><span class="price-unit">/mo</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-200 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2">
-                            <li>• <strong>導入ベンダー選定・評価支援</strong></li>
-                            <li>• <strong>月1回 定例MTG (60分)</strong></li>
-                            <li>• 優先チャット対応</li>
-                            <li>• 運用ログのサマリーチェック</li>
-                        </ul>
-                    </div>
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-blue transition shadow-sm hover:shadow-md">
-                        <h3 class="text-xl font-bold mb-1">Premium Partner</h3>
-                        <p class="text-xs text-brand-slate mb-6 font-en uppercase tracking-wider">中小病院・大規模施設向け</p>
-                        <p class="mb-6"><span class="price-val">¥250,000</span><span class="text-lg font-bold">~</span><span class="price-unit">/mo</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <p class="text-sm text-gray-500 mb-4">Standard Partnerのサービスに加えて、下記を提供します。</p>
-                        <ul class="text-sm text-gray-600 space-y-2">
-                            <li>• 訪問サポート / 委員会陪席</li>
-                            <li>• ガバナンス規定の作成代行</li>
-                            <li>• リスク評価レポート (四半期)</li>
-                        </ul>
-                        <p class="text-xs text-gray-400 mt-4 text-right">※規模により要相談</p>
-                    </div>
+                    <article class="border border-gray-200 rounded-xl p-6 bg-white shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <h3 class="text-xl font-bold mb-2">Lite Partner</h3>
+                        <p class="text-brand-black font-bold text-2xl mb-4">月額 50,000円</p>
+                        <p class="text-sm text-gray-500 mb-4">
+                            AI導入の初期検討段階で発生する「これはリスクか？」「どこまで院内に共有すべきか？」という細かな論点を、専任窓口が随時チャットで整理します。
+                            ガイドライン改定や行政通知などの最新情報も月次レポートで提供し、院内説明の土台を素早く整えます。
+                        </p>
+                        <div class="text-sm text-gray-700 space-y-3 list-disc pl-4 flex-grow plan-list">
+                            <li>チャット相談（回数無制限・原則3営業日以内に回答）</li>
+                            <li>月1回の「AI活用＆リスク」インテリジェンスレポート</li>
+                            <li>意思決定フローや簡易チェックリストのテンプレート提供</li>
+                        </div>
+                    </article>
+                    <article class="border border-gray-200 rounded-xl p-6 bg-blue-50/40 shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <h3 class="text-xl font-bold mb-2">Standard Partner</h3>
+                        <p class="text-brand-black font-bold text-2xl mb-4">月額 120,000円</p>
+                        <p class="text-sm text-gray-500 mb-4">
+                            Liteのリモート支援に加え、月例ミーティングで経営層・現場・ベンダーの視点を揃えます。
+                            ベンダー比較のフレームやPoC計画書の雛形を共有し、「どのシナリオでROIを測るか」を一緒に設計します。
+                        </p>
+                        <div class="text-sm text-gray-700 space-y-3 list-disc pl-4 flex-grow plan-list">
+                            <li>Liteの内容すべて</li>
+                            <li>月1回のオンライン定例ミーティング（45分）</li>
+                            <li>院内のAI導入プロジェクトの伴走</li>
+                            <li>ベンダー選定・打合せへの同席</li>
+                        </div>
+                    </article>
+                    <article class="border border-gray-200 rounded-xl p-6 bg-white shadow-sm hover:shadow-md transition flex flex-col h-full">
+                        <h3 class="text-xl font-bold mb-2">Premium Partner</h3>
+                        <p class="text-brand-black font-bold text-2xl mb-2">月額 250,000円</p>
+                        <p class="text-sm text-gray-500 mb-6">対象：小規模病院（〜100床）、多店舗展開クリニック</p>
+                        <p class="text-sm text-gray-500 mb-4">
+                            現地訪問や委員会同席を行い、規程ドラフト作成やログ監査、経営報告資料づくりまで伴走。
+                            プロジェクトごとに優先課題を決め、第三者レビューと改善プランを四半期単位で提示します。
+                        </p>
+                        <div class="text-sm text-gray-700 space-y-3 list-disc pl-4 flex-grow plan-list">
+                            <li>Standardの内容すべて</li>
+                            <li>訪問またはロングMTG（月1回まで）</li>
+                            <li>委員会・幹部会への陪席</li>
+                            <li>規程・ガイドラインの作成代行、運用モニタリング</li>
+                        </div>
+                    </article>
                 </div>
             </section>
 
-            <section id="audit" class="mb-32 pt-16 reveal">
-                <div class="border-l-4 border-brand-black pl-6 mb-10">
-                    <h2 class="text-3xl font-bold mb-2 text-brand-black">Audit / 監査・認証</h2>
-                    <p class="text-gray-600">第三者視点でのシステム監査と報告書発行。</p>
+            <section id="audit" class="reveal space-y-10">
+                <div class="space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-blue">Section 02</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">2. スポット診断・監査（単発メニュー）</h2>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-black transition">
-                        <h3 class="text-xl font-bold mb-2">Clinic Audit</h3>
-                        <p class="text-sm text-gray-500 mb-6">診療所向けスポット監査</p>
-                        <p class="mb-6"><span class="price-val">¥480,000</span><span class="price-unit">/回</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
-                            <li>ガイドライン準拠チェック</li>
-                            <li>書面・ログ監査 / オンラインヒアリング</li>
-                            <li><strong>正式監査報告書 (Formal Report)</strong></li>
-                            <li>簡易リスク低減計画</li>
-                        </ul>
-                        <p class="text-xs text-gray-400 mt-4">※弁護士を介した報告書が必要な場合は別途ご相談ください。</p>
-                    </div>
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-black transition">
-                        <h3 class="text-xl font-bold mb-2">Hospital Audit</h3>
-                        <p class="text-sm text-gray-500 mb-6">病院向け詳細監査</p>
-                        <p class="mb-6"><span class="price-val">¥980,000</span><span class="text-lg font-bold">~</span><span class="price-unit">/回</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
-                            <li>部門横断的な現地調査</li>
-                            <li>詳細システム監査・セキュリティ評価</li>
-                            <li><strong>正式監査報告書 & 認証バッジ発行</strong></li>
-                            <li>経営層向け報告会</li>
-                        </ul>
-                    </div>
+
+                <article class="border border-gray-200 rounded-2xl p-8 bg-white shadow-sm hover:shadow-md transition">
+                    <h3 class="text-2xl font-bold text-brand-black mb-3">AIセーフティ簡易診断</h3>
+                    <p class="text-gray-600 mb-4">オンライン完結でリスクの棚卸しと優先度判定を実施し、48時間以内に「まず着手すべき3項目」を提示します。理事会や委員会での初回説明資料として、そのままご利用いただける構成です。</p>
+                    <ul class="text-lg text-brand-black font-semibold space-y-1 mb-6">
+                        <li>診療所・在宅：<strong>50,000円／回</strong></li>
+                        <li>小規模病院：<strong>100,000円／回</strong></li>
+                    </ul>
+                    <p class="text-sm text-gray-600">内容：事前アンケート＋オンラインヒアリング1回（60分）＋リスクの「赤・黄・青」3段階評価レポート（簡易版）＋90日間アクションリスト</p>
+                </article>
+
+                <article class="border border-gray-200 rounded-2xl p-8 bg-white shadow-sm hover:shadow-md transition">
+                    <h3 class="text-2xl font-bold text-brand-black mb-3">AIセーフティ本監査</h3>
+                    <p class="text-gray-600 mb-4">医療AIの運用状況をしっかり第三者チェックしたい方向け。複数部門ヒアリング、ログ・モデル精度レビュー、対外説明用サマリーまでをワンパッケージで実施します。</p>
+                    <ul class="text-lg text-brand-black font-semibold space-y-1 mb-6">
+                        <li>診療所・在宅：<strong>300,000円／回</strong></li>
+                        <li>小規模病院：<strong>600,000円〜／回</strong></li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mb-4">内容：</p>
+                    <ul class="text-sm text-gray-700 list-disc pl-5 space-y-2">
+                        <li>ドキュメントレビュー・現場ヒアリング（複数部門＋ベンダー）</li>
+                        <li>実運用データを用いた性能／安全性の確認およびログ監査</li>
+                        <li>監査報告書＋経営層向けサマリー／外部共有用スライドのご提供</li>
+                        <li>報告会（オンライン）1回＋質疑応答サポート</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="reveal space-y-8">
+                <div class="space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-blue">Section 03</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">3. 顧問先限定の特典</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>Lite／Standard／Premium</strong> いずれかの顧問契約をいただいている医療機関は、上記すべての診断・監査メニューを
+                    <span class="font-bold text-brand-blue">一律 20％OFF</span> でご利用いただけます。
+                </p>
+                <div class="border border-dashed border-brand-blue rounded-2xl p-6 bg-blue-50/30 text-sm text-gray-700">
+                    <p class="font-semibold">例）診療所の本監査：通常 300,000円 → 顧問先 240,000円</p>
                 </div>
             </section>
 
-            <section id="vendor" class="pt-16 reveal">
-                <div class="border-l-4 border-brand-slate pl-6 mb-10">
-                    <h2 class="text-3xl font-bold mb-2 text-brand-black">Vendor Support / ベンダー支援</h2>
-                    <p class="text-gray-600">医療AIベンダー向け開発・導入支援。</p>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-slate transition">
-                        <h3 class="text-xl font-bold mb-2">Startup Advisor</h3>
-                        <p class="text-sm text-gray-500 mb-6">シード〜シリーズA向け</p>
-                        <p class="mb-6"><span class="price-val">¥70,000</span><span class="price-unit">/mo</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
-                            <li><strong>月2回</strong> メンタリング</li>
-                            <li>チャット相談</li>
-                            <li>臨床ワークフロー適合性レビュー</li>
-                        </ul>
-                    </div>
-                    <div class="border border-gray-200 rounded-xl p-8 bg-white hover:border-brand-slate transition">
-                        <h3 class="text-xl font-bold mb-2">Enterprise Project</h3>
-                        <p class="text-sm text-gray-500 mb-6">大手・製薬企業向け</p>
-                        <p class="mb-6"><span class="price-val">¥500,000</span><span class="text-lg font-bold">~</span><span class="price-unit">/mo</span></p>
-                        
-                        <p class="font-bold text-sm mb-3 border-b border-gray-100 pb-1">Deliverables</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc pl-4">
-                            <li>PoC設計・計画策定</li>
-                            <li>医療機関(顧問先)への紹介・マッチング</li>
-                            <li>規制・ガイドライン対応支援</li>
-                        </ul>
-                    </div>
-                </div>
+            <section class="reveal border-t border-gray-200 pt-8 text-xs text-gray-500 space-y-2">
+                <p>※上記は導入期の経験価格です。正式サービス化に伴い、今後変更となる場合があります。</p>
+                <p>※すべて税抜表示です。</p>
             </section>
-
         </div>
     </main>
 
