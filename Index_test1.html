@@ -1,4 +1,47 @@
-<!DOCTYPE html>
+URLの取得、ありがとうございます！ これで**「無料コミュニティ（LINE）」への入り口**が確定しました。
+
+それでは、Cursorに戻って Webサイトのリンクを書き換え、システム全体を完成させましょう。
+
+以下の手順で進めてください。
+
+Step 1: services.html の書き換え
+Cursorで services.html を開きます。
+
+147行目付近（Phase 01: Free Community のエリア）にあるボタンのコードを探します。
+
+以下のように書き換えてください。
+
+HTML
+
+<a href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" ...>
+
+<a href="https://lin.ee/fbhW5eQ" target="_blank" class="inline-flex items-center justify-center px-8 py-3 border border-white/30 rounded-full text-sm font-bold hover:bg-white hover:text-black transition">
+    Join Community
+</a>
+Step 2: index.html の書き換え（もしあれば）
+もし index.html（トップページ）にも「LINE登録ボタン」や「Join Free Community」というボタンがある場合は、同様に https://lin.ee/fbhW5eQ に書き換えてください。
+
+Step 3: 公開（Git Push）
+書き換えが終わったら、ターミナルで以下のコマンドを実行して、変更をインターネット上に反映させます。
+
+Bash
+
+git add .
+git commit -m "Update LINE link"
+git push
+これで、すべての導線が繋がりました！
+
+note を読む
+
+LP (services.html) に来る
+
+LINE (https://lin.ee/fbhW5eQ) に登録して診断する [無料ルート]
+
+OR
+
+Stripe で決済して Discord に入る [有料ルート]
+
+Pushが終わったら、スマホで LP を開いてボタンを押してみてください。LINEが立ち上がれば成功です！<!DOCTYPE html>
 
 <html lang="ja" class="scroll-smooth">
 
