@@ -1,8 +1,8 @@
-name: Weekly Backup Tag
+name: Daily Backup Tag
 
 on:
   schedule:
-    - cron: '0 15 * * 0'  # UTC 15:00 = JST 00:00 Sunday
+    - cron: '0 18 * * *'  # UTC 18:00 = JST 03:00 Daily
   workflow_dispatch:       # 手動トリガー
 
 jobs:
