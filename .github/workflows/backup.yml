@@ -1,0 +1,20 @@
+name: Weekly Backup Tag
+
+on:
+  schedule:
+    - cron: '0 15 * * 0'  # UTC 15:00 = JST 00:00 Sunday
+  workflow_dispatch:       # 手動トリガー
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create backup tag
+        run: |
+          TAG_NAME="backup/$(date +%Y-%m-%d)"
+          git tag "$TAG_NAME" || echo "Tag already exists"
+          git push origin "$TAG_NAME" || echo "Tag already pushed"
+
