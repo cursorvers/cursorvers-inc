@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cursorvers | Medical AI Governance</title>
     <meta name="description" content="医療AIの安全・倫理・継続性を担保する。Cursorvers株式会社は、医療機関向け監査・教育・ベンダー支援の専門機関です。">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -20,19 +23,41 @@
                         en: ['"Manrope"', 'sans-serif'],
                     },
                     colors: {
-                        'brand-black': '#0B0C10', 
+                        'brand-black': '#0B0C10',
                         'brand-blue': '#0052CC',
                         'brand-cyan': '#66FCF1',
                         'brand-gray': '#F3F4F6',
                         'brand-slate': '#475569',
+                        'brand-dark-bg': '#050507', // Deeper black for hero
                     },
                     animation: {
                         'fade-in': 'fadeIn 1.5s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'beam': 'beam 2s linear infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': { opacity: 0, transform: 'translateY(20px)' },
-                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)', filter: 'blur(10px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+                        },
+                        beam: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
                         }
                     }
                 }
@@ -51,25 +76,28 @@
         /* --- 3D Hero Styles --- */
         .hero-wrapper {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             width: 100%;
-            background: #000;
+            background: #050507;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-top: 80px;
+            /* Space for fixed nav */
         }
-        
-        /* Background Image: Close-up Command Line (Restored) */
+
+        /* Background Image: Close-up Command Line */
         .hero-bg-code {
             position: absolute;
             inset: 0;
             background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            opacity: 0.4;
+            opacity: 0.2;
             z-index: 0;
-            filter: contrast(1.2) brightness(0.6) hue-rotate(200deg) saturate(1.2);
+            filter: contrast(1.2) brightness(0.6) hue-rotate(200deg) saturate(1.2) blur(2px);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 100%);
         }
 
         /* Three.js Layer */
@@ -77,7 +105,8 @@
             position: absolute;
             inset: 0;
             z-index: 1;
-            mix-blend-mode: screen; /* 光を合成 */
+            mix-blend-mode: screen;
+            pointer-events: none;
         }
 
         .hero-content {
@@ -85,6 +114,7 @@
             z-index: 10;
             text-align: center;
             color: white;
+            width: 100%;
         }
 
         /* --- Navigation --- */
@@ -94,57 +124,151 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
+        /* --- Lickable Buttons --- */
+        .btn-lickable {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-lickable:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-lickable::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-lickable:hover::before {
+            left: 100%;
+        }
+
+        /* Border Beam Animation */
+        .border-beam {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            padding: 1px;
+            /* Border width */
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .border-beam::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent 0deg, #66FCF1 90deg, transparent 180deg);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- Social Proof Marquee --- */
+        .marquee-mask {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
         /* --- Utilities --- */
-        .section-padding { padding-top: 120px; padding-bottom: 120px; }
-        .text-shadow { text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        
+        .section-padding {
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
+        }
+
         /* Cards */
         .card-hover {
             transition: all 0.4s ease;
             border: 1px solid #E5E7EB;
         }
+
         .card-hover:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
             border-color: #0052CC;
         }
-        
+
         .img-cover img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 1.5s ease;
         }
-        .card-hover:hover img { transform: scale(1.05); }
-        
+
+        .card-hover:hover img {
+            transform: scale(1.05);
+        }
+
         /* Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         /* Image Styling */
         .img-clean {
             overflow: hidden;
             border-radius: 4px;
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
         }
+
         .img-clean img {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 1.5s ease;
         }
-        .img-clean:hover img { transform: scale(1.05); }
+
+        .img-clean:hover img {
+            transform: scale(1.05);
+        }
     </style>
 </head>
+
 <body class="antialiased">
 
-    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
+        data-mobile-menu-theme="light">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
-                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers primary logomark" class="h-10 w-10 mix-blend-multiply">
+                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'"
+                    alt="Cursorvers primary logomark" class="h-10 w-10 mix-blend-multiply">
                 <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
             </a>
             <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-600 font-en" data-desktop-nav>
@@ -153,15 +277,20 @@
                 <a href="services.html" class="hover:text-brand-blue transition">Services</a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="#company" class="hover:text-brand-blue transition">Company</a>
-                <a href="https://note.com/nice_wren7963" target="_blank" class="hover:text-brand-blue transition flex items-center gap-1">
+                <a href="https://note.com/nice_wren7963" target="_blank"
+                    class="hover:text-brand-blue transition flex items-center gap-1">
                     Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
             </nav>
             <div class="flex items-center gap-6">
-                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en" data-mobile-contact>                                   
+                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                    target="_blank"
+                    class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en"
+                    data-mobile-contact>
                     Contact
                 </a>
-                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
+                    aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
@@ -170,43 +299,89 @@
 
     <div class="hero-wrapper">
         <div class="hero-bg-code animate-pulse-slow"></div>
-        
+
         <div id="webgl-container"></div>
 
-        <div class="hero-content max-w-5xl mx-auto px-6 animate-fade-in">
-            <span class="inline-block py-1 px-4 border border-brand-cyan/50 bg-black/30 text-brand-cyan text-xs font-bold tracking-[0.3em] uppercase rounded-full mb-8 backdrop-blur-sm font-en">
-                Medical AI Governance
-            </span>
-            <h1 class="text-5xl md:text-8xl font-black tracking-tighter leading-[1.1] mb-8 text-white text-shadow">
-                AIに、<br>
+        <div class="hero-content max-w-7xl mx-auto px-6 flex flex-col items-center justify-center h-full pt-20">
+            <!-- Eyebrow -->
+            <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                <span
+                    class="inline-flex items-center gap-2 py-1 px-4 border border-brand-cyan/30 bg-brand-dark-bg/50 text-brand-cyan text-xs font-bold tracking-[0.2em] uppercase rounded-full backdrop-blur-md font-en shadow-[0_0_15px_rgba(102,252,241,0.1)]">
+                    <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+                    Medical AI Governance
+                </span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="mt-8 text-5xl md:text-8xl font-black tracking-tighter leading-[1.1] text-white text-shadow animate-fade-in-up"
+                style="animation-delay: 0.3s;">
+                AIに、<br class="md:hidden">
                 臨床の魂を。
             </h1>
-            <p class="text-gray-300 text-lg md:text-2xl font-medium tracking-wide mb-12 max-w-3xl mx-auto leading-relaxed space-y-4 md:space-y-0 md:text-balance">
-                <span class="block">医療AIの信頼インフラを設計する。</span>
-                <span class="block md:inline">私たちは、医療AIの導入と監査について臨床現場のリアリティを融合させ、</span>
-                <span class="block md:inline">「安全」と「倫理」をシステムとして実装します。</span>
+
+            <!-- Subheadline -->
+            <p class="mt-8 text-gray-400 text-lg md:text-xl font-medium tracking-wide max-w-2xl mx-auto leading-relaxed animate-fade-in-up"
+                style="animation-delay: 0.5s;">
+                医療AIの信頼インフラを設計する。<br class="hidden md:block">
+                現場のリアリティと高度なガバナンスを融合させ、<br class="hidden md:block">
+                「安全」と「倫理」をシステムとして実装します。
             </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="services.html" class="inline-flex items-center justify-center px-10 py-4 bg-white text-brand-black font-bold text-sm tracking-widest rounded-sm hover:bg-brand-gray transition shadow-[0_0_20px_rgba(255,255,255,0.3)] font-en uppercase">
-                    View Solutions
+
+            <!-- CTAs -->
+            <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up"
+                style="animation-delay: 0.7s;">
+                <a href="services.html"
+                    class="btn-lickable group relative inline-flex items-center justify-center px-10 py-4 bg-white/5 text-white font-bold text-sm tracking-widest rounded-full overflow-hidden font-en uppercase hover:text-brand-cyan transition-colors">
+                    <div class="border-beam absolute inset-0 rounded-full"></div>
+                    <span class="relative z-10">View Solutions</span>
                 </a>
-                <a href="#philosophy" class="inline-flex items-center justify-center px-10 py-4 border border-white text-white font-bold text-sm tracking-widest rounded-sm hover:bg-white/10 transition font-en uppercase">
-                    Our Philosophy
+                <a href="#philosophy"
+                    class="btn-lickable group relative inline-flex items-center justify-center px-10 py-4 bg-white/5 text-gray-400 font-bold text-sm tracking-widest rounded-full overflow-hidden font-en uppercase hover:text-brand-cyan transition-colors">
+                    <div class="border-beam absolute inset-0 rounded-full"></div>
+                    <span class="relative z-10">Our Philosophy</span>
                 </a>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="mt-20 w-full max-w-4xl animate-fade-in-up" style="animation-delay: 0.9s;">
+                <p class="text-center text-xs font-bold text-gray-600 uppercase tracking-widest mb-6 font-en">Trusted by
+                    Medical Leaders</p>
+                <div class="marquee-mask relative w-full overflow-hidden">
+                    <div
+                        class="flex gap-12 w-max animate-marquee items-center opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <!-- Logos (Placeholders with text for now, can be replaced with SVGs/Images) -->
+                        <div class="text-xl font-bold font-en text-white/60">Univ. Hospital A</div>
+                        <div class="text-xl font-bold font-en text-white/60">Medical Center B</div>
+                        <div class="text-xl font-bold font-en text-white/60">Research Inst C</div>
+                        <div class="text-xl font-bold font-en text-white/60">AI Startup D</div>
+                        <div class="text-xl font-bold font-en text-white/60">Global Pharma E</div>
+                        <div class="text-xl font-bold font-en text-white/60">Clinic Group F</div>
+                        <!-- Duplicate for loop -->
+                        <div class="text-xl font-bold font-en text-white/60">Univ. Hospital A</div>
+                        <div class="text-xl font-bold font-en text-white/60">Medical Center B</div>
+                        <div class="text-xl font-bold font-en text-white/60">Research Inst C</div>
+                        <div class="text-xl font-bold font-en text-white/60">AI Startup D</div>
+                        <div class="text-xl font-bold font-en text-white/60">Global Pharma E</div>
+                        <div class="text-xl font-bold font-en text-white/60">Clinic Group F</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <section id="philosophy" class="section-padding bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6">
-            
+
             <div class="grid md:grid-cols-2 gap-24 items-center mb-32">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop" alt="Clinician reviewing advanced medical AI data dashboards">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop"
+                        alt="Clinician reviewing advanced medical AI data dashboards">
                 </div>
-                
+
                 <div class="reveal">
-                    <span class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-8 font-en">Corporate Philosophy</span>
+                    <span
+                        class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-8 font-en">Corporate
+                        Philosophy</span>
                     <h2 class="text-4xl md:text-5xl font-bold mb-12 leading-tight text-brand-black">
                         知的資産の防衛が<br>
                         最大のガバナンスである。
@@ -223,7 +398,8 @@
                         </p>
                     </div>
                     <div class="mt-16">
-                        <a href="message.html" class="text-brand-blue font-bold hover:underline flex items-center gap-2">
+                        <a href="message.html"
+                            class="text-brand-blue font-bold hover:underline flex items-center gap-2">
                             Founder Message <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
@@ -246,15 +422,17 @@
                     </div>
                 </div>
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2070&auto=format&fit=crop" alt="AIガバナンス顧問が医療リーダーと戦略を共有している様子">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2070&auto=format&fit=crop"
+                        alt="AIガバナンス顧問が医療リーダーと戦略を共有している様子">
                 </div>
             </div>
 
-             <div class="grid md:grid-cols-2 gap-24 items-center">
+            <div class="grid md:grid-cols-2 gap-24 items-center">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="Tokyoの都市夜景が医療ネットワークの広がりを象徴するイメージ">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+                        alt="Tokyoの都市夜景が医療ネットワークの広がりを象徴するイメージ">
                 </div>
-                
+
                 <div class="reveal">
                     <h2 class="text-3xl md:text-4xl font-bold mb-8 leading-tight text-brand-black">
                         AIガバナンスの民主化
@@ -264,7 +442,7 @@
                             一部の専門家やシステムに依存するのではなく、現場の医療者一人ひとりがAIのリスクを理解し、自律的に制御できる状態を目指します。それが、真に安全で持続可能な医療AIの未来を拓く鍵となります。
                         </p>
                         <p>
-                             Cursorversは、先進的な技術と深い医療知見を融合させ、医療機関が自信を持ってAIを導入・運用できるよう支援します。リスクを未然に防ぎ、透明性の高いガバナンス体制を構築することで、医療従事者が本質的な業務に集中し、患者さんへより良い医療を提供できる未来を創造します。
+                            Cursorversは、先進的な技術と深い医療知見を融合させ、医療機関が自信を持ってAIを導入・運用できるよう支援します。リスクを未然に防ぎ、透明性の高いガバナンス体制を構築することで、医療従事者が本質的な業務に集中し、患者さんへより良い医療を提供できる未来を創造します。
                         </p>
                     </div>
                 </div>
@@ -276,15 +454,18 @@
     <section id="business" class="section-padding bg-brand-gray relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
-                <span class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-4 font-en">Our Business</span>
+                <span class="text-brand-blue text-xs font-bold tracking-widest uppercase block mb-4 font-en">Our
+                    Business</span>
                 <h2 class="text-4xl font-bold text-brand-black mb-6">3 Core Business Axes</h2>
                 <p class="text-gray-500">医療AIエコシステムの健全な発展を支える、3つの事業領域。</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-10">
-                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="location.href='services.html#audit'">
+                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer"
+                    onclick="location.href='services.html#audit'">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?q=80&w=2000&auto=format&fit=crop" alt="Hospital audit team reviewing AI導入データ">
+                        <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?q=80&w=2000&auto=format&fit=crop"
+                            alt="Hospital audit team reviewing AI導入データ">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Audit & Consulting</h3>
@@ -300,9 +481,11 @@
                     </div>
                 </div>
 
-                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="location.href='services.html#vendor'">
+                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer"
+                    onclick="location.href='services.html#vendor'">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2000&auto=format&fit=crop" alt="Medical AI startup engineers working at analytics workstations">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2000&auto=format&fit=crop"
+                            alt="Medical AI startup engineers working at analytics workstations">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Startup Advisory</h3>
@@ -318,9 +501,11 @@
                     </div>
                 </div>
 
-                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer" onclick="window.open('https://cursorvers.github.io/cursorvers-edu/', '_blank')">
+                <div class="card-hover bg-white rounded-xl overflow-hidden flex flex-col cursor-pointer"
+                    onclick="window.open('https://cursorvers.github.io/cursorvers-edu/', '_blank')">
                     <div class="h-56 img-cover">
-                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop" alt="医療従事者がAI教育プログラムをオンライン受講している様子">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop"
+                            alt="医療従事者がAI教育プログラムをオンライン受講している様子">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">Education</h3>
@@ -332,7 +517,8 @@
                             <span class="block">Tuition Creditで学習投資をMaster Class受講費に積立て、自己投資の回収性を高めます。</span>
                             <span class="block">Master Classでは臨床知を有料コンテンツやコミュニティへ展開し、眠らない収益源を設計します。</span>
                         </p>
-                        <span class="block mt-6 text-xs font-bold border-b border-black pb-1 w-max">GO TO .EDU <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></span>
+                        <span class="block mt-6 text-xs font-bold border-b border-black pb-1 w-max">GO TO .EDU <i
+                                class="fa-solid fa-arrow-up-right-from-square ml-1"></i></span>
                     </div>
                 </div>
             </div>
@@ -343,15 +529,18 @@
     <section id="plans" class="section-padding bg-brand-gray relative z-10">
         <div class="max-w-5xl mx-auto px-6 text-center space-y-8">
             <div>
-                <span class="text-brand-blue text-xs font-bold tracking-[0.3em] uppercase block font-en">Advisory Plans</span>
-                <h2 class="text-4xl font-bold text-brand-black mb-4">顧問パートナー（Lite / Standard / Premium）</h2>
+                <span class="text-brand-blue text-xs font-bold tracking-[0.3em] uppercase block font-en">Advisory
+                    Plans</span>
+                <h2 class="text-4xl font-bold text-brand-black mb-4">顧問パートナー(Lite / Standard / Premium)</h2>
                 <p class="text-brand-slate text-lg leading-relaxed">
                     医療機関向けの継続支援プログラムは、課題の成熟度に応じて3つのプランをご用意しています。
-                    詳細は<a href="services.html#advisory" class="text-brand-blue font-semibold hover:underline">Servicesページ</a>をご覧ください。
+                    詳細は<a href="services.html#advisory"
+                        class="text-brand-blue font-semibold hover:underline">Servicesページ</a>をご覧ください。
                 </p>
             </div>
             <div>
-                <a href="services.html#advisory" class="inline-flex items-center justify-center px-10 py-4 bg-brand-black text-white font-bold text-sm tracking-widest rounded-sm hover:bg-brand-blue transition font-en uppercase">
+                <a href="services.html#advisory"
+                    class="inline-flex items-center justify-center px-10 py-4 bg-brand-black text-white font-bold text-sm tracking-widest rounded-sm hover:bg-brand-blue transition font-en uppercase">
                     View Advisory Menu
                 </a>
             </div>
@@ -362,7 +551,8 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-24">
                 <div>
-                    <h3 class="text-xl font-bold text-brand-black mb-10 border-b border-gray-200 pb-4">Corporate Info</h3>
+                    <h3 class="text-xl font-bold text-brand-black mb-10 border-b border-gray-200 pb-4">Corporate Info
+                    </h3>
                     <div class="space-y-0 text-sm">
                         <div class="flex py-5 border-b border-gray-100">
                             <span class="w-40 text-gray-500 font-bold">会社名</span>
@@ -390,26 +580,32 @@
                 </div>
 
                 <div>
-                    <h3 class="text-xl font-bold text-brand-black mb-10 border-b border-gray-200 pb-4">Strategic Partners</h3>                                  
+                    <h3 class="text-xl font-bold text-brand-black mb-10 border-b border-gray-200 pb-4">Strategic
+                        Partners</h3>
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">                                     
+                        <div
+                            class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
-                                <p class="font-bold text-brand-black">Health ISAC Japan</p>                                                                     
-                                <p class="text-xs text-gray-500 mt-1 font-en">Security & Audit Collaboration</p>                                                
+                                <p class="font-bold text-brand-black">Health ISAC Japan</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Security & Audit Collaboration</p>
                             </div>
-                            <i class="fa-solid fa-shield-virus text-2xl text-gray-400"></i>                                                                     
+                            <i class="fa-solid fa-shield-virus text-2xl text-gray-400"></i>
                         </div>
-                        <div class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
+                        <div
+                            class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
                                 <p class="font-bold text-brand-black">税理士法人シリウス</p>
-                                <p class="text-xs text-gray-500 mt-1 font-en">Tax Structuring &amp; Compliance Advisory</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Tax Structuring &amp; Compliance Advisory
+                                </p>
                             </div>
                             <i class="fa-solid fa-scale-balanced text-2xl text-gray-400"></i>
                         </div>
-                        <div class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
+                        <div
+                            class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
                                 <p class="font-bold text-brand-black">熊谷経営法律事務所</p>
-                                <p class="text-xs text-gray-500 mt-1 font-en">Kumagai Management Consulting &amp; Law Office</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Kumagai Management Consulting &amp; Law
+                                    Office</p>
                             </div>
                             <i class="fa-solid fa-gavel text-2xl text-gray-400"></i>
                         </div>
@@ -424,10 +620,12 @@
             <div class="flex flex-col md:flex-row justify-between items-start gap-20">
                 <div class="max-w-xs">
                     <div class="flex items-center gap-3 mb-6">
-                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers inverted logomark" class="h-8 w-8 rounded-full border border-white/20">
+                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'"
+                            alt="Cursorvers inverted logomark" class="h-8 w-8 rounded-full border border-white/20">
                         <span class="text-white font-bold text-xl font-en tracking-widest">Cursorvers</span>
                     </div>
-                    <p class="leading-relaxed opacity-60 text-gray-400">Ensuring Safety, Ethics, and Continuity in Medical AI.</p>
+                    <p class="leading-relaxed opacity-60 text-gray-400">Ensuring Safety, Ethics, and Continuity in
+                        Medical AI.</p>
                 </div>
                 <div class="flex gap-20">
                     <div>
@@ -444,15 +642,18 @@
                             <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
                             <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                                    target="_blank" class="hover:text-white transition">Contact</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="mt-20 pt-8 border-t border-gray-800 flex justify-between items-center font-en text-xs text-gray-500">
+            <div
+                class="mt-20 pt-8 border-t border-gray-800 flex justify-between items-center font-en text-xs text-gray-500">
                 <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
                 <div class="flex gap-6 text-lg">
-                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/" target="_blank" rel="noopener" class="hover:text-white transition">
+                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
+                        target="_blank" rel="noopener" class="hover:text-white transition">
                         <i class="fa-brands fa-linkedin"></i>
                     </a>
                 </div>
@@ -466,65 +667,98 @@
             if (container.hasChildNodes()) return;
 
             const scene = new THREE.Scene();
-            // Transparent background for overlay
-            
+            // Fog for depth
+            scene.fog = new THREE.FogExp2(0x050507, 0.002);
+
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            const particleCount = 200;
+            // Create "Noodles" / Beams
+            const curveCount = 40;
+            const curves = [];
             const group = new THREE.Group();
             scene.add(group);
 
-            const geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
+            for (let i = 0; i < curveCount; i++) {
+                // Create random curve points
+                const p1 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
+                const p2 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
+                const p3 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
 
-            const color1 = new THREE.Color(0x66FCF1); // Cyan
-            const color2 = new THREE.Color(0x0052CC); // Blue
+                const curve = new THREE.QuadraticBezierCurve3(p1, p2, p3);
+                const points = curve.getPoints(50);
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+                const material = new THREE.LineBasicMaterial({
+                    color: Math.random() > 0.5 ? 0x66FCF1 : 0x0052CC,
+                    transparent: true,
+                    opacity: Math.random() * 0.5 + 0.1
+                });
+
+                const curveObject = new THREE.Line(geometry, material);
+                // Add custom data for animation
+                curveObject.userData = {
+                    speed: Math.random() * 0.02 + 0.005,
+                    offset: Math.random() * 100
+                };
+                group.add(curveObject);
+                curves.push(curveObject);
+            }
+
+            // Particles
+            const particleCount = 100;
+            const pGeometry = new THREE.BufferGeometry();
+            const pPositions = new Float32Array(particleCount * 3);
+            const pColors = new Float32Array(particleCount * 3);
+            const color1 = new THREE.Color(0x66FCF1);
+            const color2 = new THREE.Color(0x0052CC);
 
             for (let i = 0; i < particleCount * 3; i += 3) {
-                positions[i] = (Math.random() - 0.5) * 30; 
-                positions[i + 1] = (Math.random() - 0.5) * 30;
-                positions[i + 2] = (Math.random() - 0.5) * 30;
-                
-                const mixedColor = Math.random() > 0.5 ? color1 : color2;
-                colors[i] = mixedColor.r; colors[i + 1] = mixedColor.g; colors[i + 2] = mixedColor.b;
+                pPositions[i] = (Math.random() - 0.5) * 30;
+                pPositions[i + 1] = (Math.random() - 0.5) * 30;
+                pPositions[i + 2] = (Math.random() - 0.5) * 20;
+                const c = Math.random() > 0.5 ? color1 : color2;
+                pColors[i] = c.r; pColors[i + 1] = c.g; pColors[i + 2] = c.b;
             }
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            pGeometry.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+            pGeometry.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
+            const pMaterial = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+            const particles = new THREE.Points(pGeometry, pMaterial);
+            group.add(particles);
 
-            const material = new THREE.PointsMaterial({ size: 0.1, vertexColors: true, transparent: true, opacity: 0.9 });
-            const points = new THREE.Points(geometry, material);
-            group.add(points);
+            camera.position.z = 15;
 
-            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x0052CC, transparent: true, opacity: 0.2 });
-            const lines = new THREE.LineSegments(new THREE.BufferGeometry(), lineMaterial);
-            group.add(lines);
-
-            camera.position.z = 10;
-            
             let mouseX = 0, mouseY = 0;
             document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
-                mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+                mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
+                mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
             });
 
             function animate() {
                 requestAnimationFrame(animate);
-                
-                const positions = points.geometry.attributes.position.array;
-                for(let i=0; i < particleCount * 3; i+=3) {
-                    positions[i+2] += 0.05;
-                    if(positions[i+2] > 15) positions[i+2] = -15;
-                }
-                points.geometry.attributes.position.needsUpdate = true;
 
-                group.rotation.z += 0.001;
-                group.rotation.x = mouseY * 0.5;
-                group.rotation.y = mouseX * 0.5;
+                // Animate curves (flow effect)
+                curves.forEach((curve, i) => {
+                    curve.rotation.z += curve.userData.speed;
+                    curve.rotation.y += curve.userData.speed * 0.5;
+                    // Pulse opacity
+                    curve.material.opacity = 0.3 + Math.sin(Date.now() * 0.001 + curve.userData.offset) * 0.2;
+                });
+
+                // Animate particles
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount * 3; i += 3) {
+                    positions[i + 1] += 0.02; // Float up
+                    if (positions[i + 1] > 15) positions[i + 1] = -15;
+                }
+                particles.geometry.attributes.position.needsUpdate = true;
+
+                // Mouse interaction
+                group.rotation.x += (mouseY - group.rotation.x) * 0.05;
+                group.rotation.y += (mouseX - group.rotation.y) * 0.05;
 
                 renderer.render(scene, camera);
             }
@@ -536,9 +770,9 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
         };
-        
+
         document.addEventListener('DOMContentLoaded', () => {
-             setup3D();
+            setup3D();
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
             }, { threshold: 0.1 });
@@ -599,4 +833,5 @@
         });
     </script>
 </body>
+
 </html>
