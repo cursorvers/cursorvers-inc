@@ -28,17 +28,32 @@
                         'brand-cyan': '#66FCF1',
                         'brand-gray': '#F3F4F6',
                         'brand-slate': '#475569',
-                        'hero-bg': '#050507',
+                        'brand-dark-bg': '#050507', // Deeper black for hero
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'beam': 'beam 2s linear infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'marquee': 'marquee 25s linear infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 40s linear infinite',
                     },
                     keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 },
+                        },
                         fadeInUp: {
                             '0%': { opacity: 0, transform: 'translateY(20px)', filter: 'blur(10px)' },
                             '100%': { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+                        },
+                        beam: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0)' },
@@ -58,7 +73,7 @@
             font-feature-settings: "palt";
         }
 
-        /* --- Hero Section (Gemini 3 Style) --- */
+        /* --- 3D Hero Styles --- */
         .hero-wrapper {
             position: relative;
             min-height: 100vh;
@@ -69,43 +84,60 @@
             align-items: center;
             justify-content: center;
             padding-top: 80px;
+            /* Space for fixed nav */
         }
 
+        /* Background Image: Close-up Command Line */
+        .hero-bg-code {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+            filter: contrast(1.2) brightness(0.6) hue-rotate(200deg) saturate(1.2) blur(2px);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 100%);
+        }
+
+        /* Three.js Layer */
         #webgl-container {
             position: absolute;
             inset: 0;
             z-index: 1;
+            mix-blend-mode: screen;
             pointer-events: none;
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
+            text-align: center;
+            color: white;
             width: 100%;
         }
 
-        /* Glass Nav */
+        /* --- Navigation --- */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(5, 5, 7, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Lickable Buttons */
+        /* --- Lickable Buttons --- */
         .btn-lickable {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .btn-lickable:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 0 1px rgba(102, 252, 241, 0.3), 0 10px 30px -10px rgba(102, 252, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(102, 252, 241, 0.5);
-            color: #66FCF1;
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-lickable::before {
@@ -123,13 +155,14 @@
             left: 100%;
         }
 
-        /* Border Beam */
+        /* Border Beam Animation */
         .border-beam {
             position: absolute;
             inset: 0;
             border-radius: inherit;
             pointer-events: none;
             padding: 1px;
+            /* Border width */
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -143,11 +176,6 @@
             animation: rotate 4s linear infinite;
         }
 
-        /* Navy Border Beam */
-        .border-beam-navy::before {
-            background: conic-gradient(from 0deg, transparent 0deg, #0052CC 90deg, transparent 180deg);
-        }
-
         @keyframes rotate {
             from {
                 transform: rotate(0deg);
@@ -158,16 +186,27 @@
             }
         }
 
-        .text-glow {
-            text-shadow: 0 0 30px rgba(102, 252, 241, 0.4);
+        /* --- Social Proof Marquee --- */
+        .marquee-mask {
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
-        /* --- Standard Sections (From index.html) --- */
+        /* --- Utilities --- */
         .section-padding {
             padding-top: 120px;
             padding-bottom: 120px;
         }
 
+        .text-shadow {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
+        }
+
+        /* Cards */
         .card-hover {
             transition: all 0.4s ease;
             border: 1px solid #E5E7EB;
@@ -190,6 +229,7 @@
             transform: scale(1.05);
         }
 
+        /* Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -201,6 +241,7 @@
             transform: translateY(0);
         }
 
+        /* Image Styling */
         .img-clean {
             overflow: hidden;
             border-radius: 4px;
@@ -222,7 +263,6 @@
 
 <body class="antialiased">
 
-    <!-- Navigation -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
         data-mobile-menu-theme="light">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
@@ -257,84 +297,78 @@
         </div>
     </header>
 
-    <!-- Hero Section (Gemini 3 Style) -->
     <div class="hero-wrapper">
+        <div class="hero-bg-code animate-pulse-slow"></div>
+
         <div id="webgl-container"></div>
 
-        <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
-            <div class="text-left z-10 pt-20">
-                <!-- Eyebrow -->
-                <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
-                    <span
-                        class="inline-flex items-center gap-2 py-1 px-3 border border-brand-cyan/30 bg-brand-cyan/5 text-brand-cyan text-[10px] font-bold tracking-[0.2em] uppercase rounded-full backdrop-blur-md font-en shadow-[0_0_15px_rgba(102,252,241,0.1)]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse"></span>
-                        Medical AI Governance
-                    </span>
-                </div>
+        <div class="hero-content max-w-7xl mx-auto px-6 flex flex-col items-center justify-center h-full pt-20">
+            <!-- Eyebrow -->
+            <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
+                <span
+                    class="inline-flex items-center gap-2 py-1 px-4 border border-brand-cyan/30 bg-brand-dark-bg/50 text-brand-cyan text-xs font-bold tracking-[0.2em] uppercase rounded-full backdrop-blur-md font-en shadow-[0_0_15px_rgba(102,252,241,0.1)]">
+                    <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+                    Medical AI Governance
+                </span>
+            </div>
 
-                <!-- Headline -->
-                <h1 class="mt-8 text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] text-white animate-fade-in-up"
-                    style="animation-delay: 0.2s;">
-                    AIに、<br>
-                    <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-brand-blue text-glow">臨床の魂</span>を。
-                </h1>
+            <!-- Headline -->
+            <h1 class="mt-8 text-5xl md:text-8xl font-black tracking-tighter leading-[1.1] text-white text-shadow animate-fade-in-up"
+                style="animation-delay: 0.3s;">
+                AIに、<br class="md:hidden">
+                臨床の魂を。
+            </h1>
 
-                <!-- Subheadline -->
-                <p class="mt-8 text-gray-400 text-lg font-medium tracking-wide leading-relaxed max-w-lg animate-fade-in-up"
-                    style="animation-delay: 0.3s;">
-                    医療AIの信頼インフラを設計する。<br>
-                    現場のリアリティと高度なガバナンスを融合させ、<br>
-                    「安全」と「倫理」をシステムとして実装します。
-                </p>
+            <!-- Subheadline -->
+            <p class="mt-8 text-gray-400 text-lg md:text-xl font-medium tracking-wide max-w-2xl mx-auto leading-relaxed animate-fade-in-up"
+                style="animation-delay: 0.5s;">
+                医療AIの信頼インフラを設計する。<br class="hidden md:block">
+                現場のリアリティと高度なガバナンスを融合させ、<br class="hidden md:block">
+                「安全」と「倫理」をシステムとして実装します。
+            </p>
 
-                <!-- CTAs -->
-                <div class="mt-10 flex flex-wrap gap-3 md:gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <a href="services.html"
-                        class="btn-lickable group relative inline-flex items-center justify-center px-5 py-2.5 md:px-8 md:py-3.5 bg-brand-cyan/10 text-white font-bold text-[10px] md:text-sm tracking-widest rounded-full overflow-hidden font-en uppercase">
-                        <div class="border-beam absolute inset-0 rounded-full"></div>
-                        <span class="relative z-10 flex items-center gap-1 md:gap-2">
-                            View Solutions <i
-                                class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                        </span>
-                    </a>
-                    <a href="#philosophy"
-                        class="btn-lickable group relative inline-flex items-center justify-center px-5 py-2.5 md:px-8 md:py-3.5 bg-brand-blue/10 text-white font-bold text-[10px] md:text-sm tracking-widest rounded-full overflow-hidden font-en uppercase hover:text-white transition-colors">
-                        <div class="border-beam border-beam-navy absolute inset-0 rounded-full"></div>
-                        <span class="relative z-10 flex items-center gap-1 md:gap-2">Our Philosophy <i
-                                class="fa-solid fa-chevron-down group-hover:translate-y-0.5 transition-transform"></i></span>
-                    </a>
-                </div>
+            <!-- CTAs -->
+            <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up"
+                style="animation-delay: 0.7s;">
+                <a href="services.html"
+                    class="btn-lickable group relative inline-flex items-center justify-center px-10 py-4 bg-white/5 text-white font-bold text-sm tracking-widest rounded-full overflow-hidden font-en uppercase hover:text-brand-cyan transition-colors">
+                    <div class="border-beam absolute inset-0 rounded-full"></div>
+                    <span class="relative z-10">View Solutions</span>
+                </a>
+                <a href="#philosophy"
+                    class="btn-lickable group relative inline-flex items-center justify-center px-10 py-4 bg-white/5 text-gray-400 font-bold text-sm tracking-widest rounded-full overflow-hidden font-en uppercase hover:text-brand-cyan transition-colors">
+                    <div class="border-beam absolute inset-0 rounded-full"></div>
+                    <span class="relative z-10">Our Philosophy</span>
+                </a>
+            </div>
 
-                <!-- Social Proof -->
-                <div class="mt-16 pt-8 border-t border-white/5 animate-fade-in-up" style="animation-delay: 0.5s;">
-                    <p class="text-xs font-bold text-gray-600 uppercase tracking-widest mb-4 font-en">Trusted by Leaders
-                    </p>
-                    <div class="relative w-full overflow-hidden mask-image-gradient">
-                        <div
-                            class="flex gap-12 w-max animate-marquee opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-                            <span class="text-xl font-bold font-en text-white">Univ. Hospital A</span>
-                            <span class="text-xl font-bold font-en text-white">Medical Center B</span>
-                            <span class="text-xl font-bold font-en text-white">Research Inst C</span>
-                            <span class="text-xl font-bold font-en text-white">AI Startup D</span>
-                            <span class="text-xl font-bold font-en text-white">Global Pharma E</span>
-                            <!-- Duplicate -->
-                            <span class="text-xl font-bold font-en text-white">Univ. Hospital A</span>
-                            <span class="text-xl font-bold font-en text-white">Medical Center B</span>
-                            <span class="text-xl font-bold font-en text-white">Research Inst C</span>
-                            <span class="text-xl font-bold font-en text-white">AI Startup D</span>
-                            <span class="text-xl font-bold font-en text-white">Global Pharma E</span>
-                        </div>
+            <!-- Social Proof -->
+            <div class="mt-20 w-full max-w-4xl animate-fade-in-up" style="animation-delay: 0.9s;">
+                <p class="text-center text-xs font-bold text-gray-600 uppercase tracking-widest mb-6 font-en">Trusted by
+                    Medical Leaders</p>
+                <div class="marquee-mask relative w-full overflow-hidden">
+                    <div
+                        class="flex gap-12 w-max animate-marquee items-center opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <!-- Logos (Placeholders with text for now, can be replaced with SVGs/Images) -->
+                        <div class="text-xl font-bold font-en text-white/60">Univ. Hospital A</div>
+                        <div class="text-xl font-bold font-en text-white/60">Medical Center B</div>
+                        <div class="text-xl font-bold font-en text-white/60">Research Inst C</div>
+                        <div class="text-xl font-bold font-en text-white/60">AI Startup D</div>
+                        <div class="text-xl font-bold font-en text-white/60">Global Pharma E</div>
+                        <div class="text-xl font-bold font-en text-white/60">Clinic Group F</div>
+                        <!-- Duplicate for loop -->
+                        <div class="text-xl font-bold font-en text-white/60">Univ. Hospital A</div>
+                        <div class="text-xl font-bold font-en text-white/60">Medical Center B</div>
+                        <div class="text-xl font-bold font-en text-white/60">Research Inst C</div>
+                        <div class="text-xl font-bold font-en text-white/60">AI Startup D</div>
+                        <div class="text-xl font-bold font-en text-white/60">Global Pharma E</div>
+                        <div class="text-xl font-bold font-en text-white/60">Clinic Group F</div>
                     </div>
                 </div>
             </div>
-
-            <!-- Right side reserved for 3D visual focus -->
-            <div class="hidden md:block"></div>
         </div>
     </div>
 
-    <!-- Philosophy Section (From index.html) -->
     <section id="philosophy" class="section-padding bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6">
 
@@ -417,7 +451,6 @@
         </div>
     </section>
 
-    <!-- Business Section (From index.html) -->
     <section id="business" class="section-padding bg-brand-gray relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
@@ -493,13 +526,12 @@
         </div>
     </section>
 
-    <!-- Plans Section (From index.html) -->
     <section id="plans" class="section-padding bg-brand-gray relative z-10">
         <div class="max-w-5xl mx-auto px-6 text-center space-y-8">
             <div>
                 <span class="text-brand-blue text-xs font-bold tracking-[0.3em] uppercase block font-en">Advisory
                     Plans</span>
-                <h2 class="text-4xl font-bold text-brand-black mb-4">顧問パートナー（Lite / Standard / Premium）</h2>
+                <h2 class="text-4xl font-bold text-brand-black mb-4">顧問パートナー(Lite / Standard / Premium)</h2>
                 <p class="text-brand-slate text-lg leading-relaxed">
                     医療機関向けの継続支援プログラムは、課題の成熟度に応じて3つのプランをご用意しています。
                     詳細は<a href="services.html#advisory"
@@ -515,7 +547,6 @@
         </div>
     </section>
 
-    <!-- Company Section (From index.html) -->
     <section id="company" class="section-padding bg-white relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-24">
@@ -555,9 +586,7 @@
                         <div
                             class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
-                                <p class="font-bold text-brand-black"><a href="https://health-isac-japan.jp/"
-                                        target="_blank" class="hover:text-brand-blue transition">Health ISAC Japan</a>
-                                </p>
+                                <p class="font-bold text-brand-black">Health ISAC Japan</p>
                                 <p class="text-xs text-gray-500 mt-1 font-en">Security & Audit Collaboration</p>
                             </div>
                             <i class="fa-solid fa-shield-virus text-2xl text-gray-400"></i>
@@ -565,8 +594,7 @@
                         <div
                             class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
-                                <p class="font-bold text-brand-black"><a href="https://www.sirius-ta.com/"
-                                        target="_blank" class="hover:text-brand-blue transition">税理士法人シリウス</a></p>
+                                <p class="font-bold text-brand-black">税理士法人シリウス</p>
                                 <p class="text-xs text-gray-500 mt-1 font-en">Tax Structuring &amp; Compliance Advisory
                                 </p>
                             </div>
@@ -575,9 +603,8 @@
                         <div
                             class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
-                                <p class="font-bold text-brand-black"><a href="https://kumagailawfirm.com/"
-                                        target="_blank" class="hover:text-brand-blue transition">熊谷経営法律事務所</a></p>
-                                <p class="text-xs text-gray-500 mt-1 font-en">Management Consulting &amp; Law
+                                <p class="font-bold text-brand-black">熊谷経営法律事務所</p>
+                                <p class="text-xs text-gray-500 mt-1 font-en">Kumagai Management Consulting &amp; Law
                                     Office</p>
                             </div>
                             <i class="fa-solid fa-gavel text-2xl text-gray-400"></i>
@@ -588,7 +615,6 @@
         </div>
     </section>
 
-    <!-- Footer (From index.html) -->
     <footer class="bg-brand-black text-white py-20 text-sm relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-start gap-20">
@@ -641,7 +667,8 @@
             if (container.hasChildNodes()) return;
 
             const scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x020204, 0.002);
+            // Fog for depth
+            scene.fog = new THREE.FogExp2(0x050507, 0.002);
 
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -649,188 +676,89 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            // --- Fixed Droplet Ripple Shader ---
-            const MAX_RIPPLES = 15;
+            // Create "Noodles" / Beams
+            const curveCount = 40;
+            const curves = [];
+            const group = new THREE.Group();
+            scene.add(group);
 
-            const vertexShader = `
-                uniform float uTime;
-                uniform vec3 uRipples[15];
-                
-                varying vec2 vUv;
-                varying float vElevation;
+            for (let i = 0; i < curveCount; i++) {
+                // Create random curve points
+                const p1 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
+                const p2 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
+                const p3 = new THREE.Vector3((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10);
 
-                void main() {
-                    vUv = uv;
-                    vec3 pos = position;
-                    
-                    // Ambient swell
-                    float elevation = sin(pos.x * 0.1 + uTime * 0.5) * 0.3 + sin(pos.y * 0.1 + uTime * 0.3) * 0.2;
-                    
-                    // Add ripples from array
-                    for(int i = 0; i < 15; i++) {
-                        vec2 ripplePos = uRipples[i].xy;
-                        float age = uRipples[i].z;
-                        
-                        if(age > 0.0 && age < 3.0) {
-                            float dist = distance(uv, ripplePos);
-                            float radius = age * 0.2;
-                            
-                            // Wave pattern
-                            float wave = sin((dist - radius) * 50.0);
-                            
-                            // Strength decays with age and distance from expanding ring
-                            float ringDist = abs(dist - radius);
-                            float strength = exp(-ringDist * 20.0) * (1.0 - age / 3.0);
-                            
-                            elevation += wave * strength * 3.0;
-                        }
-                    }
+                const curve = new THREE.QuadraticBezierCurve3(p1, p2, p3);
+                const points = curve.getPoints(50);
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-                    pos.z += elevation;
-                    vElevation = elevation;
+                const material = new THREE.LineBasicMaterial({
+                    color: Math.random() > 0.5 ? 0x66FCF1 : 0x0052CC,
+                    transparent: true,
+                    opacity: Math.random() * 0.5 + 0.1
+                });
 
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-                }
-            `;
-
-            const fragmentShader = `
-                uniform vec3 uColor1;
-                uniform vec3 uColor2;
-                uniform vec3 uAccent;
-                
-                varying float vElevation;
-                varying vec2 vUv;
-
-                void main() {
-                    float mixStrength = smoothstep(-1.0, 2.0, vElevation);
-                    vec3 color = mix(uColor1, uColor2, mixStrength);
-                    
-                    // Highlight wave peaks
-                    float peak = smoothstep(1.0, 2.5, vElevation);
-                    color += uAccent * peak;
-                    
-                    // Grid
-                    float gridX = sin(vUv.x * 100.0);
-                    float gridY = sin(vUv.y * 100.0);
-                    float grid = smoothstep(0.95, 1.0, max(gridX, gridY)) * 0.3;
-                    
-                    float alpha = 0.15 + grid + mixStrength * 0.4;
-                    
-                    // Vignette
-                    float dist = distance(vUv, vec2(0.5));
-                    alpha *= (1.0 - smoothstep(0.2, 0.65, dist));
-
-                    gl_FragColor = vec4(color, alpha);
-                }
-            `;
-
-            const geometry = new THREE.PlaneGeometry(80, 80, 200, 200);
-
-            // Initialize ripples with Float32Array for proper uniform handling
-            const rippleData = [];
-            for (let i = 0; i < MAX_RIPPLES; i++) {
-                rippleData.push(new THREE.Vector3(0.5, 0.5, 10.0)); // Inactive (age > 3)
+                const curveObject = new THREE.Line(geometry, material);
+                // Add custom data for animation
+                curveObject.userData = {
+                    speed: Math.random() * 0.02 + 0.005,
+                    offset: Math.random() * 100
+                };
+                group.add(curveObject);
+                curves.push(curveObject);
             }
-
-            const material = new THREE.ShaderMaterial({
-                vertexShader: vertexShader,
-                fragmentShader: fragmentShader,
-                uniforms: {
-                    uTime: { value: 0 },
-                    uRipples: { value: rippleData },
-                    uColor1: { value: new THREE.Color(0x010103) },
-                    uColor2: { value: new THREE.Color(0x0066cc) },
-                    uAccent: { value: new THREE.Color(0x66ffff) }
-                },
-                transparent: true,
-                side: THREE.DoubleSide
-            });
-
-            const plane = new THREE.Mesh(geometry, material);
-            plane.rotation.x = -Math.PI / 2.15;
-            plane.position.y = -8;
-            scene.add(plane);
 
             // Particles
-            const particlesGeo = new THREE.BufferGeometry();
-            const particleCount = 300;
-            const posArray = new Float32Array(particleCount * 3);
+            const particleCount = 100;
+            const pGeometry = new THREE.BufferGeometry();
+            const pPositions = new Float32Array(particleCount * 3);
+            const pColors = new Float32Array(particleCount * 3);
+            const color1 = new THREE.Color(0x66FCF1);
+            const color2 = new THREE.Color(0x0052CC);
+
             for (let i = 0; i < particleCount * 3; i += 3) {
-                posArray[i] = (Math.random() - 0.5) * 50;
-                posArray[i + 1] = (Math.random() - 0.5) * 15;
-                posArray[i + 2] = (Math.random() - 0.5) * 30;
+                pPositions[i] = (Math.random() - 0.5) * 30;
+                pPositions[i + 1] = (Math.random() - 0.5) * 30;
+                pPositions[i + 2] = (Math.random() - 0.5) * 20;
+                const c = Math.random() > 0.5 ? color1 : color2;
+                pColors[i] = c.r; pColors[i + 1] = c.g; pColors[i + 2] = c.b;
             }
-            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const particlesMat = new THREE.PointsMaterial({
-                size: 0.08,
-                color: 0x66ffff,
-                transparent: true,
-                opacity: 0.4,
-                blending: THREE.AdditiveBlending
-            });
-            const particles = new THREE.Points(particlesGeo, particlesMat);
-            scene.add(particles);
+            pGeometry.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+            pGeometry.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
+            const pMaterial = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+            const particles = new THREE.Points(pGeometry, pMaterial);
+            group.add(particles);
 
-            camera.position.set(0, 6, 14);
-            camera.lookAt(0, 0, 0);
+            camera.position.z = 15;
 
-            // Raycaster for mouse tracking
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2();
-            const hitPlane = new THREE.Mesh(
-                new THREE.PlaneGeometry(100, 100),
-                new THREE.MeshBasicMaterial({ visible: false })
-            );
-            hitPlane.rotation.x = -Math.PI / 2.15;
-            hitPlane.position.y = -8;
-            scene.add(hitPlane);
-
-            let rippleIndex = 0;
-            let lastSpawnTime = 0;
-
+            let mouseX = 0, mouseY = 0;
             document.addEventListener('mousemove', (e) => {
-                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-                raycaster.setFromCamera(mouse, camera);
-                const hits = raycaster.intersectObject(hitPlane);
-
-                if (hits.length > 0 && hits[0].uv) {
-                    const now = performance.now();
-                    if (now - lastSpawnTime > 80) { // Spawn rate limit (ms)
-                        const uv = hits[0].uv;
-                        rippleData[rippleIndex].set(uv.x, uv.y, 0.01); // Start age near 0
-                        rippleIndex = (rippleIndex + 1) % MAX_RIPPLES;
-                        lastSpawnTime = now;
-                    }
-                }
-
-                // Camera parallax
-                camera.position.x += (mouse.x * 3 - camera.position.x) * 0.02;
-                camera.position.y += (6 + mouse.y * 2 - camera.position.y) * 0.02;
-                camera.lookAt(0, -1, 0);
+                mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
+                mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
             });
-
-            const clock = new THREE.Clock();
 
             function animate() {
                 requestAnimationFrame(animate);
-                const elapsed = clock.getElapsedTime();
-                const delta = clock.getDelta() || 0.016;
 
-                material.uniforms.uTime.value = elapsed;
+                // Animate curves (flow effect)
+                curves.forEach((curve, i) => {
+                    curve.rotation.z += curve.userData.speed;
+                    curve.rotation.y += curve.userData.speed * 0.5;
+                    // Pulse opacity
+                    curve.material.opacity = 0.3 + Math.sin(Date.now() * 0.001 + curve.userData.offset) * 0.2;
+                });
 
-                // Age all active ripples
-                for (let i = 0; i < MAX_RIPPLES; i++) {
-                    if (rippleData[i].z < 5.0) {
-                        rippleData[i].z += 0.02; // Age increment
-                    }
+                // Animate particles
+                const positions = particles.geometry.attributes.position.array;
+                for (let i = 0; i < particleCount * 3; i += 3) {
+                    positions[i + 1] += 0.02; // Float up
+                    if (positions[i + 1] > 15) positions[i + 1] = -15;
                 }
-                // Force uniform update
-                material.uniforms.uRipples.value = rippleData;
-                material.uniformsNeedUpdate = true;
+                particles.geometry.attributes.position.needsUpdate = true;
 
-                particles.rotation.y = elapsed * 0.02;
+                // Mouse interaction
+                group.rotation.x += (mouseY - group.rotation.x) * 0.05;
+                group.rotation.y += (mouseX - group.rotation.y) * 0.05;
 
                 renderer.render(scene, camera);
             }
@@ -845,18 +773,12 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             setup3D();
-
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            // Mobile Menu Logic (Same as index.html)
+            // Mobile Menu
             const menuBtn = document.querySelector('[data-mobile-menu-open]');
             const nav = document.querySelector('[data-desktop-nav]');
             if (menuBtn && nav) {

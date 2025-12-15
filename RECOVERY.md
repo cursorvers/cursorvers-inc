@@ -82,3 +82,4 @@ git push origin main --force
 
 復旧に困った場合は Founder に連絡してください。
 
+
