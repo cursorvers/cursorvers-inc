@@ -129,7 +129,21 @@
                 </div>
             </section>
 
-            <section id="audit" class="reveal space-y-10">
+            <!-- Self Check導線 -->
+            <div class="reveal bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left">
+                    <p class="text-brand-black font-semibold">まずは3分セルフ簡易チェックで一次判定 → 必要に応じて48hへ</p>
+                    <p class="text-sm text-gray-500 mt-1">※無料・患者情報の入力不要</p>
+                </div>
+                <a href="https://cursorvers-selfcheck.manus.space"
+                    target="_blank"
+                    data-cta="cta_self_check_click"
+                    class="inline-flex items-center justify-center px-6 py-3 bg-brand-blue text-white font-bold text-sm tracking-wider rounded-full hover:bg-brand-black transition whitespace-nowrap">
+                    セルフチェックを開始 <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <section id="audit" class="reveal space-y-10" style="scroll-margin-top: 100px;">
                 <div class="space-y-2">
                     <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-blue">Section 02</p>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">2. スポット診断・監査（単発メニュー）</h2>
@@ -269,6 +283,17 @@
                 menuBtn.addEventListener('click', openMenu);
                 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
             }
+
+            // CTA Click Tracking
+            document.addEventListener('click', (e) => {
+                const a = e.target.closest('[data-cta]');
+                if (!a) return;
+                const name = a.getAttribute('data-cta');
+                if (window.gtag) {
+                    gtag('event', name, { event_category: 'CTA', value: 1 });
+                }
+                console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
+            });
         });
     </script>
 </body>

@@ -406,15 +406,91 @@
         </div>
     </section>
 
-    <!-- 48h Deliverables Section -->
-    <section id="deliverables" class="py-20 bg-white relative z-10">
+    <!-- Self Check (3min) Section -->
+    <section id="self-check" class="py-20 bg-white relative z-10">
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">48h Deliverables</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-black">48時間でお渡しするもの</h2>
+                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">Self Check (3min)</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">セルフ簡易チェック（3分）</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">院内AI利用の「安全運用」を、<span class="text-red-500 font-bold">赤</span>・<span class="text-yellow-500 font-bold">黄</span>・<span class="text-blue-500 font-bold">青</span>で一次判定します。患者情報は入力しません。</p>
             </div>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-clipboard-question text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-black mb-2">10問に回答（選択式のみ）</h3>
+                            <p class="text-sm text-gray-600">iPhoneでそのまま完結。最短3分。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-traffic-light text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-black mb-2">リスクを <span class="text-red-500">赤</span>・<span class="text-yellow-500">黄</span>・<span class="text-blue-500">青</span> で可視化</h3>
+                            <p class="text-sm text-gray-600">運用・ガバナンス上の論点を一次判定。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-list-ol text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-black mb-2">まず着手すべき3項目（簡易版）</h3>
+                            <p class="text-sm text-gray-600">次に何をすべきかを即表示。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-arrow-up-right-dots text-brand-blue"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-brand-black mb-2">48h診断に進むべきか提案</h3>
+                            <p class="text-sm text-gray-600">結果に応じて、上位メニューをご案内。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 注意文 -->
+            <div class="mt-8 text-center text-sm text-gray-500 space-y-1">
+                <p>※本チェックは医療行為（診断・治療）ではありません。</p>
+                <p>※患者情報・症例の詳細は入力しないでください。</p>
+            </div>
+            <!-- CTA -->
+            <div class="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://cursorvers-selfcheck.manus.space"
+                    target="_blank"
+                    data-cta="cta_self_check_click"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white font-bold text-sm tracking-widest rounded-full hover:bg-brand-black transition font-en">
+                    3分セルフ簡易チェックを開始 <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#upgrade-48h"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-white text-brand-black font-bold text-sm tracking-widest rounded-full border-2 border-gray-300 hover:border-brand-blue hover:text-brand-blue transition font-en">
+                    48h簡易診断（有料）を見る <i class="fa-solid fa-chevron-down ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 48h Upgrade Section -->
+    <section id="upgrade-48h" class="py-20 bg-brand-gray relative z-10" style="scroll-margin-top: 100px;">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">48h Upgrade</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">上位：AIセーフティ簡易診断（48h）</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">セルフチェックの結果を、院内でそのまま使える資料に落とし込みます（オンライン完結）。</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl p-6 border border-gray-200">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-list-check text-brand-blue"></i>
@@ -425,7 +501,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                <div class="bg-white rounded-xl p-6 border border-gray-200">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-traffic-light text-brand-blue"></i>
@@ -436,7 +512,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                <div class="bg-white rounded-xl p-6 border border-gray-200">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-calendar-days text-brand-blue"></i>
@@ -447,30 +523,50 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
+                <div class="bg-white rounded-xl p-6 border border-gray-200">
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
                             <i class="fa-solid fa-file-powerpoint text-brand-blue"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-brand-black mb-2">委員会・理事会でそのまま使える説明スライド</h3>
+                            <h3 class="font-bold text-brand-black mb-2">委員会・理事会でそのまま使える説明スライド（簡易版）</h3>
                             <p class="text-sm text-gray-600">経営層への報告資料作成の手間を削減。簡易版を即日提供。</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-10">
+            <!-- 価格表示 -->
+            <div class="mt-10 bg-white rounded-xl p-6 border border-brand-blue/30 max-w-md mx-auto">
+                <h4 class="font-bold text-brand-black mb-4 text-center">料金（税抜）</h4>
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <span class="text-gray-600">診療所・在宅</span>
+                        <span class="font-bold text-brand-black">50,000円／回<span class="text-xs font-normal text-gray-500">（税抜）</span></span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-gray-600">小規模病院</span>
+                        <span class="font-bold text-brand-black">100,000円／回<span class="text-xs font-normal text-gray-500">（税抜）</span></span>
+                    </div>
+                </div>
+            </div>
+            <!-- CTA -->
+            <div class="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
                     target="_blank"
+                    data-cta="cta_48h_apply_click"
                     class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-sm tracking-widest rounded-full hover:bg-brand-blue transition font-en">
-                    AIセーフティ簡易診断を申し込む <i class="fa-solid fa-arrow-right ml-2"></i>
+                    48h簡易診断を申し込む <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+                <a href="services.html"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-white text-brand-black font-bold text-sm tracking-widest rounded-full border-2 border-gray-300 hover:border-brand-blue hover:text-brand-blue transition font-en">
+                    料金プランを見る <i class="fa-solid fa-arrow-right ml-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
     <!-- Comparison Section -->
-    <section id="comparison" class="py-16 bg-brand-gray relative z-10">
+    <section id="comparison" class="py-16 bg-white relative z-10">
         <div class="max-w-5xl mx-auto px-6">
             <div class="text-center mb-10">
                 <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">Why Cursorvers</span>
@@ -987,6 +1083,19 @@
                 menuBtn.addEventListener('click', openMenu);
                 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
             }
+
+            // CTA Click Tracking
+            document.addEventListener('click', (e) => {
+                const a = e.target.closest('[data-cta]');
+                if (!a) return;
+                const name = a.getAttribute('data-cta');
+                // Send to Google Analytics if available
+                if (window.gtag) {
+                    gtag('event', name, { event_category: 'CTA', value: 1 });
+                }
+                // Fallback: log to console for debugging
+                console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
+            });
         });
     </script>
 </body>
