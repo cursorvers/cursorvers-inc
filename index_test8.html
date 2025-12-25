@@ -34,7 +34,6 @@
                         'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'marquee': 'marquee 40s linear infinite',
-                        'marquee-reverse': 'marquee-reverse 40s linear infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -44,10 +43,6 @@
                         marquee: {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-50%)' },
-                        },
-                        'marquee-reverse': {
-                            '0%': { transform: 'translateX(-50%)' },
-                            '100%': { transform: 'translateX(0)' },
                         }
                     }
                 }
@@ -313,8 +308,24 @@
 
                 <!-- Social Proof -->
                 <div class="mt-16 pt-8 border-t border-white/5 animate-fade-in-up" style="animation-delay: 0.5s;">
-                    <p class="text-xs font-bold text-gray-600 uppercase tracking-widest mb-4 font-en">Trusted by Healthcare Teams</p>
-                    <p class="text-base md:text-lg text-gray-500">小規模病院 ・ 有床診療所 ・ クリニック ・ 訪問診療 ・ 医療AIベンダー</p>
+                    <p class="text-xs font-bold text-gray-600 uppercase tracking-widest mb-4 font-en">Trusted by Leaders
+                    </p>
+                    <div class="relative w-full overflow-hidden mask-image-gradient">
+                        <div
+                            class="flex gap-12 w-max animate-marquee opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                            <span class="text-xl font-bold font-en text-white">Univ. Hospital A</span>
+                            <span class="text-xl font-bold font-en text-white">Medical Center B</span>
+                            <span class="text-xl font-bold font-en text-white">Research Inst C</span>
+                            <span class="text-xl font-bold font-en text-white">AI Startup D</span>
+                            <span class="text-xl font-bold font-en text-white">Global Pharma E</span>
+                            <!-- Duplicate -->
+                            <span class="text-xl font-bold font-en text-white">Univ. Hospital A</span>
+                            <span class="text-xl font-bold font-en text-white">Medical Center B</span>
+                            <span class="text-xl font-bold font-en text-white">Research Inst C</span>
+                            <span class="text-xl font-bold font-en text-white">AI Startup D</span>
+                            <span class="text-xl font-bold font-en text-white">Global Pharma E</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -403,192 +414,6 @@
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- Self Check (3min) Section -->
-    <section id="self-check" class="py-20 bg-white relative z-10">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">Self Check (3min)</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">セルフ簡易チェック（3分）</h2>
-                <p class="text-gray-600 text-lg max-w-2xl mx-auto">院内AI利用の「安全運用」を、<span class="text-red-500 font-bold">赤</span>・<span class="text-yellow-500 font-bold">黄</span>・<span class="text-blue-500 font-bold">青</span>で一次判定します。患者情報は入力しません。</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-clipboard-question text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">10問に回答（選択式のみ）</h3>
-                            <p class="text-sm text-gray-600">スマートフォンでそのまま完結。最短3分。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-traffic-light text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">リスクを <span class="text-red-500">赤</span>・<span class="text-yellow-500">黄</span>・<span class="text-blue-500">青</span> で可視化</h3>
-                            <p class="text-sm text-gray-600">運用・ガバナンス上の論点を一次判定。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-list-ol text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">まず着手すべき3項目（簡易版）</h3>
-                            <p class="text-sm text-gray-600">次に何をすべきかを即表示。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-brand-gray rounded-xl p-6 border border-gray-100">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-cyan/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-arrow-up-right-dots text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">48h診断に進むべきか提案</h3>
-                            <p class="text-sm text-gray-600">結果に応じて、上位メニューをご案内。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 注意文 -->
-            <div class="mt-8 text-center text-sm text-gray-500 space-y-1">
-                <p>※本チェックは医療行為（診断・治療）ではありません。</p>
-                <p>※患者情報・症例の詳細は入力しないでください。</p>
-            </div>
-            <!-- CTA -->
-            <div class="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://cursorvers-selfcheck.manus.space"
-                    target="_blank"
-                    data-cta="cta_self_check_click"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white font-bold text-sm tracking-widest rounded-full hover:bg-brand-black transition font-en">
-                    3分セルフ簡易チェックを開始 <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
-                <a href="#upgrade-48h"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-white text-brand-black font-bold text-sm tracking-widest rounded-full border-2 border-gray-300 hover:border-brand-blue hover:text-brand-blue transition font-en">
-                    48h簡易診断（有料）を見る <i class="fa-solid fa-chevron-down ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 48h Upgrade Section -->
-    <section id="upgrade-48h" class="py-20 bg-brand-gray relative z-10" style="scroll-margin-top: 100px;">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">48h Upgrade</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">上位：AIセーフティ簡易診断（48h）</h2>
-                <p class="text-gray-600 text-lg max-w-2xl mx-auto">セルフチェックの結果を、院内でそのまま使える資料に落とし込みます（オンライン完結）。</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-list-check text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">まず着手すべき3項目（優先順位付き）</h3>
-                            <p class="text-sm text-gray-600">膨大なタスクの中から、今すぐ取り組むべき3つを明確化します。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-traffic-light text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">リスク評価：<span class="text-red-500">赤</span>・<span class="text-yellow-500">黄</span>・<span class="text-blue-500">青</span>の3段階</h3>
-                            <p class="text-sm text-gray-600">根拠を明示した分かりやすいリスク分類で、意思決定を加速。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-calendar-days text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">90日アクションリスト（担当・期限の雛形）</h3>
-                            <p class="text-sm text-gray-600">誰が・いつまでに・何をするか。すぐ運用できる計画表を提供。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-file-powerpoint text-brand-blue"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-brand-black mb-2">委員会・理事会でそのまま使える説明スライド（簡易版）</h3>
-                            <p class="text-sm text-gray-600">経営層への報告資料作成の手間を削減。簡易版を即日提供。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 価格表示 -->
-            <div class="mt-10 bg-white rounded-xl p-6 border border-brand-blue/30 max-w-md mx-auto">
-                <h4 class="font-bold text-brand-black mb-4 text-center">料金（税抜）</h4>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-gray-600">診療所・在宅</span>
-                        <span class="font-bold text-brand-black">50,000円／回<span class="text-xs font-normal text-gray-500">（税抜）</span></span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="text-gray-600">小規模病院</span>
-                        <span class="font-bold text-brand-black">100,000円／回<span class="text-xs font-normal text-gray-500">（税抜）</span></span>
-                    </div>
-                </div>
-            </div>
-            <!-- CTA -->
-            <div class="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                    target="_blank"
-                    data-cta="cta_48h_apply_click"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-sm tracking-widest rounded-full hover:bg-brand-blue transition font-en">
-                    48h簡易診断を申し込む <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
-                <a href="services.html"
-                    class="inline-flex items-center justify-center px-8 py-4 bg-white text-brand-black font-bold text-sm tracking-widest rounded-full border-2 border-gray-300 hover:border-brand-blue hover:text-brand-blue transition font-en">
-                    料金プランを見る <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Section -->
-    <section id="comparison" class="py-16 bg-white relative z-10">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-10">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase block mb-4 font-en">Why Cursorvers</span>
-                <h2 class="text-2xl md:text-3xl font-bold text-brand-black">なぜCursorversなのか</h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 font-en">Vendor</p>
-                    <h3 class="font-bold text-brand-black mb-3">AIベンダー</h3>
-                    <p class="text-sm text-gray-600">製品導入に強い一方、自社製品の中立的な監査は難しい構造。</p>
-                </div>
-                <div class="bg-white rounded-xl p-6 border border-gray-200">
-                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 font-en">Big Consulting</p>
-                    <h3 class="font-bold text-brand-black mb-3">大手コンサル</h3>
-                    <p class="text-sm text-gray-600">大規模プロジェクトに強いが、価格・体制が中小規模に合いにくい。</p>
-                </div>
-                <div class="bg-white rounded-xl p-6 border border-brand-blue shadow-md">
-                    <p class="text-xs font-bold text-brand-blue uppercase tracking-wider mb-2 font-en">Cursorvers</p>
-                    <h3 class="font-bold text-brand-black mb-3">Cursorvers</h3>
-                    <p class="text-sm text-gray-600"><strong>ベンダー中立</strong>＋<strong>導入後運用の守備</strong>＋<strong>第三者監査レポート</strong>で透明性を担保。</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -751,7 +576,7 @@
                             class="flex items-center justify-between p-5 bg-brand-gray rounded-lg border border-gray-100">
                             <div>
                                 <p class="font-bold text-brand-black"><a href="https://kumagailawfirm.com/"
-                                        target="_blank" class="hover:text-brand-blue transition">熊谷経営法律事務所</a></p>
+                                        target="_blank" class="hover:text-brand-blue transition">熊谷経済法律事務所</a></p>
                                 <p class="text-xs text-gray-500 mt-1 font-en">Management Consulting &amp; Law
                                     Office</p>
                             </div>
@@ -830,33 +655,33 @@
             const vertexShader = `
                 uniform float uTime;
                 uniform vec3 uRipples[15];
-
+                
                 varying vec2 vUv;
                 varying float vElevation;
 
                 void main() {
                     vUv = uv;
                     vec3 pos = position;
-
+                    
                     // Ambient swell
                     float elevation = sin(pos.x * 0.1 + uTime * 0.5) * 0.3 + sin(pos.y * 0.1 + uTime * 0.3) * 0.2;
-
+                    
                     // Add ripples from array
                     for(int i = 0; i < 15; i++) {
                         vec2 ripplePos = uRipples[i].xy;
                         float age = uRipples[i].z;
-
+                        
                         if(age > 0.0 && age < 3.0) {
                             float dist = distance(uv, ripplePos);
                             float radius = age * 0.2;
-
+                            
                             // Wave pattern
                             float wave = sin((dist - radius) * 50.0);
-
+                            
                             // Strength decays with age and distance from expanding ring
                             float ringDist = abs(dist - radius);
                             float strength = exp(-ringDist * 20.0) * (1.0 - age / 3.0);
-
+                            
                             elevation += wave * strength * 3.0;
                         }
                     }
@@ -872,25 +697,25 @@
                 uniform vec3 uColor1;
                 uniform vec3 uColor2;
                 uniform vec3 uAccent;
-
+                
                 varying float vElevation;
                 varying vec2 vUv;
 
                 void main() {
                     float mixStrength = smoothstep(-1.0, 2.0, vElevation);
                     vec3 color = mix(uColor1, uColor2, mixStrength);
-
+                    
                     // Highlight wave peaks
                     float peak = smoothstep(1.0, 2.5, vElevation);
                     color += uAccent * peak;
-
+                    
                     // Grid
                     float gridX = sin(vUv.x * 100.0);
                     float gridY = sin(vUv.y * 100.0);
                     float grid = smoothstep(0.95, 1.0, max(gridX, gridY)) * 0.3;
-
+                    
                     float alpha = 0.15 + grid + mixStrength * 0.4;
-
+                    
                     // Vignette
                     float dist = distance(vUv, vec2(0.5));
                     alpha *= (1.0 - smoothstep(0.2, 0.65, dist));
@@ -1083,19 +908,6 @@
                 menuBtn.addEventListener('click', openMenu);
                 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
             }
-
-            // CTA Click Tracking
-            document.addEventListener('click', (e) => {
-                const a = e.target.closest('[data-cta]');
-                if (!a) return;
-                const name = a.getAttribute('data-cta');
-                // Send to Google Analytics if available
-                if (window.gtag) {
-                    gtag('event', name, { event_category: 'CTA', value: 1 });
-                }
-                // Fallback: log to console for debugging
-                console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
-            });
         });
     </script>
 </body>
