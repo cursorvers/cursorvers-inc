@@ -1016,7 +1016,7 @@
                 }
             `;
 
-            const geometry = new THREE.PlaneGeometry(80, 80, 200, 200);
+            const geometry = new THREE.PlaneGeometry(120, 120, 250, 250);
 
             // Initialize ripples with Float32Array for proper uniform handling
             const rippleData = [];
@@ -1040,7 +1040,7 @@
 
             const plane = new THREE.Mesh(geometry, material);
             plane.rotation.x = -Math.PI / 2.15;
-            plane.position.y = -8;
+            plane.position.y = -6;
             scene.add(plane);
 
             // Particles
@@ -1063,18 +1063,18 @@
             const particles = new THREE.Points(particlesGeo, particlesMat);
             scene.add(particles);
 
-            camera.position.set(0, 6, 14);
+            camera.position.set(0, 8, 16);
             camera.lookAt(0, 0, 0);
 
             // Raycaster for mouse tracking
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
             const hitPlane = new THREE.Mesh(
-                new THREE.PlaneGeometry(100, 100),
+                new THREE.PlaneGeometry(150, 150),
                 new THREE.MeshBasicMaterial({ visible: false })
             );
             hitPlane.rotation.x = -Math.PI / 2.15;
-            hitPlane.position.y = -8;
+            hitPlane.position.y = -6;
             scene.add(hitPlane);
 
             let rippleIndex = 0;
