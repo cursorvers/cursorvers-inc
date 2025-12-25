@@ -653,8 +653,8 @@
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Why Cursorvers</span>
                 <h2 class="text-headline font-bold text-brand-black text-balance">他社との違い</h2>
             </div>
-            <!-- 比較表 -->
-            <div class="overflow-x-auto mb-16">
+            <!-- 比較表（PC） -->
+            <div class="hidden md:block overflow-x-auto mb-16">
                 <table class="w-full text-body border-collapse">
                     <thead>
                         <tr class="border-b-2 border-gray-200">
@@ -691,6 +691,40 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- 比較表（モバイル：リスト形式） -->
+            <div class="md:hidden mb-16 space-y-8">
+                <!-- Cursorvers -->
+                <div class="border-2 border-brand-blue rounded-2xl overflow-hidden shadow-lg">
+                    <div class="bg-brand-blue text-white text-center py-3 font-bold text-lg">Cursorvers</div>
+                    <div class="bg-brand-cyan/5 p-5 space-y-3 text-base">
+                        <p><span class="text-text-tertiary">立場：</span><span class="font-bold text-brand-black">ベンダー中立</span></p>
+                        <p><span class="text-text-tertiary">導入後：</span><span class="font-bold text-brand-black">運用設計が本業</span></p>
+                        <p><span class="text-text-tertiary">最小予算：</span><span class="font-bold text-brand-blue text-lg">5万円〜</span></p>
+                        <p><span class="text-text-tertiary">残るもの：</span><span class="font-bold text-brand-black">SOP・研修資料・チェックリスト</span></p>
+                    </div>
+                </div>
+                <!-- AIベンダー -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <div class="bg-gray-100 text-text-tertiary text-center py-2 font-bold">AIベンダー</div>
+                    <div class="p-5 space-y-2 text-sm text-text-secondary">
+                        <p><span class="text-text-tertiary">立場：</span>自社製品を販売</p>
+                        <p><span class="text-text-tertiary">導入後：</span>サポート契約が別</p>
+                        <p><span class="text-text-tertiary">最小予算：</span>製品価格に依存</p>
+                        <p><span class="text-text-tertiary">残るもの：</span>なし</p>
+                    </div>
+                </div>
+                <!-- 大手コンサル -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <div class="bg-gray-100 text-text-tertiary text-center py-2 font-bold">大手コンサル</div>
+                    <div class="p-5 space-y-2 text-sm text-text-secondary">
+                        <p><span class="text-text-tertiary">立場：</span>大規模案件が得意</p>
+                        <p><span class="text-text-tertiary">導入後：</span>追加費用が発生</p>
+                        <p><span class="text-text-tertiary">最小予算：</span>数百万円〜</p>
+                        <p><span class="text-text-tertiary">残るもの：</span>報告書</p>
+                    </div>
+                </div>
             </div>
             <!-- ポイント -->
             <div class="grid md:grid-cols-3 gap-10">
