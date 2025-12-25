@@ -1002,8 +1002,8 @@
                     color += uAccent * peak;
 
                     // Grid
-                    float gridX = sin(vUv.x * 100.0);
-                    float gridY = sin(vUv.y * 100.0);
+                    float gridX = sin(vUv.x * 200.0);
+                    float gridY = sin(vUv.y * 200.0);
                     float grid = smoothstep(0.95, 1.0, max(gridX, gridY)) * 0.3;
 
                     float alpha = 0.15 + grid + mixStrength * 0.4;
