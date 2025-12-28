@@ -115,33 +115,60 @@
         /* モバイル向け比較表最適化 */
         @media (max-width: 767px) {
             .comparison-table {
-                font-size: 0.7rem;
+                font-size: 0.6rem;
+                table-layout: fixed;
+                width: 100%;
             }
             .comparison-table th,
             .comparison-table td {
-                padding: 0.4rem 0.2rem !important;
-                font-size: 0.65rem !important;
-                line-height: 1.25;
+                padding: 0.3rem 0.15rem !important;
+                font-size: 0.55rem !important;
+                line-height: 1.2;
+                word-break: break-all;
             }
             .comparison-table th {
-                font-size: 0.6rem !important;
+                font-size: 0.5rem !important;
             }
             .comparison-table th span {
-                font-size: 0.55rem !important;
+                font-size: 0.45rem !important;
             }
             .comparison-table .fa-solid {
-                font-size: 0.75rem !important;
+                font-size: 0.65rem !important;
             }
             .feature-category td {
-                font-size: 0.65rem !important;
-                padding: 0.4rem 0.2rem !important;
+                font-size: 0.55rem !important;
+                padding: 0.3rem 0.15rem !important;
             }
             /* text-lgクラスをオーバーライド */
             .comparison-table .text-lg {
-                font-size: 0.65rem !important;
+                font-size: 0.55rem !important;
             }
             .comparison-table .text-xl {
-                font-size: 0.75rem !important;
+                font-size: 0.65rem !important;
+            }
+            /* 列幅を均等に */
+            .comparison-table th:first-child,
+            .comparison-table td:first-child {
+                width: 28%;
+            }
+            .comparison-table th:not(:first-child),
+            .comparison-table td:not(:first-child) {
+                width: 24%;
+            }
+        }
+
+        /* 極小画面（iPhone SE等） */
+        @media (max-width: 374px) {
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.2rem 0.1rem !important;
+                font-size: 0.5rem !important;
+            }
+            .comparison-table th {
+                font-size: 0.45rem !important;
+            }
+            .comparison-table th span {
+                font-size: 0.4rem !important;
             }
         }
 
