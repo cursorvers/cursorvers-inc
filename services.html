@@ -112,6 +112,39 @@
             background: #F0F7FF;
         }
 
+        /* モバイル向け比較表最適化 */
+        @media (max-width: 767px) {
+            .comparison-table {
+                font-size: 0.7rem;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.4rem 0.2rem !important;
+                font-size: 0.65rem !important;
+                line-height: 1.25;
+            }
+            .comparison-table th {
+                font-size: 0.6rem !important;
+            }
+            .comparison-table th span {
+                font-size: 0.55rem !important;
+            }
+            .comparison-table .fa-solid {
+                font-size: 0.75rem !important;
+            }
+            .feature-category td {
+                font-size: 0.65rem !important;
+                padding: 0.4rem 0.2rem !important;
+            }
+            /* text-lgクラスをオーバーライド */
+            .comparison-table .text-lg {
+                font-size: 0.65rem !important;
+            }
+            .comparison-table .text-xl {
+                font-size: 0.75rem !important;
+            }
+        }
+
         /* PC向け大きめフォント（年配経営者向け） */
         @media (min-width: 768px) {
             .text-body-lg {
