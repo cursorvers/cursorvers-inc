@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>医療AIベンダー向けアドバイザリ | Cursorvers</title>
+    <meta name="description" content="医療AIベンダー向け支援。継続アドバイザリで製品の医療現場適合性を高めます。">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        en: ['"Manrope"', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-black': '#0B0C10',
+                        'brand-blue': '#0052CC',
+                        'brand-cyan': '#66FCF1',
+                        'brand-gray': '#F7F8FA',
+                        'text-primary': '#0B0C10',
+                        'text-secondary': '#374151',
+                        'text-tertiary': '#6B7280',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* iOS Safe Area Support */
+        html {
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #0B0C10;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+        }
+
+        /* iOS Touch Optimization */
+        a, button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Mobile font size optimization */
+        @media (max-width: 767px) {
+            body {
+                font-size: 16px;
+                -webkit-text-size-adjust: 100%;
+            }
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0052CC 0%, #66FCF1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.12);
+            border-color: #0052CC;
+        }
+
+        .popular-badge {
+            background: linear-gradient(135deg, #0052CC 0%, #66FCF1 100%);
+        }
+
+        /* PC向け大きめフォント（年配経営者向け） */
+        @media (min-width: 768px) {
+            .text-body-lg {
+                font-size: 1.625rem !important;
+                /* 26px */
+                line-height: 1.75;
+            }
+
+            .text-body {
+                font-size: 1.375rem !important;
+                /* 22px */
+                line-height: 1.75;
+            }
+
+            /* カード見出し */
+            .card-premium h3,
+            .card-hover h3 {
+                font-size: 1.5rem !important;
+                /* 24px */
+            }
+
+            /* テーブル */
+            table {
+                font-size: 1.25rem !important;
+                /* 20px */
+            }
+
+            /* リスト項目 */
+            li {
+                font-size: 1.25rem;
+                /* 20px */
+            }
+
+            /* 段落 */
+            p {
+                font-size: 1.25rem;
+                /* 20px */
+            }
+
+            /* セクション説明 */
+            .section-desc {
+                font-size: 1.375rem !important;
+                /* 22px */
+            }
+        }
+
+        /* Mobile polish */
+        @media (max-width: 767px) {
+            .text-body-lg {
+                font-size: 1.125rem !important;
+                /* 18px */
+                line-height: 1.85;
+            }
+
+            .text-body {
+                font-size: 1rem !important;
+                /* 16px */
+                line-height: 1.85;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation (same as index.html) -->
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
+        data-mobile-menu-theme="light">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
+                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'"
+                    alt="Cursorvers primary logomark" class="h-10 w-10 mix-blend-multiply">
+                <span class="flex flex-col leading-none">
+                    <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
+                    <span class="text-[10px] font-semibold text-text-tertiary tracking-[0.25em]">カーソルバース</span>
+                </span>
+            </a>
+            <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en"
+                data-desktop-nav>
+                <a href="index.html" class="hover:text-brand-blue transition">Home</a>
+                <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
+                <a href="consulting.html" class="text-brand-blue font-semibold">For Vendors</a>
+                <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
+                <a href="index.html#company" class="hover:text-brand-blue transition">Company</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                    target="_blank" rel="noopener noreferrer"
+                    class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en"
+                    data-mobile-contact>
+                    Contact
+                </a>
+                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
+                    aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero -->
+        <!-- Hero -->
+        <section class="relative py-20 md:py-28 text-center px-6 overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                <img src="consulting_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-60 filter grayscale">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-white/70 to-white/90"></div>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">For AI Vendors</p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+                    医療AIベンダー向け<br><span class="gradient-text">アドバイザリ</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+                    臨床医の視点とガバナンスの知見で、<br class="hidden md:inline">製品の医療現場適合性を高めます。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#pricing"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
+                        プランを見る <i class="fa-solid fa-arrow-down ml-2"></i>
+                    </a>
+                    <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                        target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
+                        まずは相談する
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20 md:py-28 bg-brand-gray px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">継続アドバイザリ契約</h2>
+                    <p class="text-xl text-text-secondary">製品開発フェーズに合わせて、継続的にサポート。</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+                    <!-- Lite Plan -->
+                    <div class="bg-white rounded-2xl p-8 card-hover flex flex-col">
+                        <div class="mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Lite</h3>
+                            <p class="text-text-tertiary text-lg">まずは試したい方に</p>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-3xl font-bold">¥50,000</span>
+                            <span class="text-text-tertiary text-xl">/月</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>月2回のオンラインMTG（各30分）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>メールでの相談（月5回まで）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>ガイドライン改定情報の共有</span>
+                            </li>
+                        </ul>
+                        <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                            target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition">
+                            お問い合わせ
+                        </a>
+                    </div>
+
+                    <!-- Standard Plan (Popular) -->
+                    <div
+                        class="bg-white rounded-2xl p-8 border-2 border-brand-blue card-hover flex flex-col relative shadow-xl">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <span
+                                class="popular-badge text-white text-sm font-bold px-5 py-1.5 rounded-full">Popular</span>
+                        </div>
+                        <div class="mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Standard</h3>
+                            <p class="text-text-tertiary text-lg">本格的な開発サポートに</p>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-3xl font-bold">¥100,000</span>
+                            <span class="text-text-tertiary text-xl">/月</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>月3回のオンラインMTG（各45分）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>Slackでの随時相談（無制限）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>ガイドライン改定情報の共有</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span><strong>顧問先医師への紹介</strong></span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>スポットメニュー20%OFF</span>
+                            </li>
+                        </ul>
+                        <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                            target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-4 text-center font-bold text-lg bg-brand-blue text-white rounded-full hover:bg-brand-black transition">
+                            お問い合わせ
+                        </a>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="bg-white rounded-2xl p-8 card-hover flex flex-col">
+                        <div class="mb-6">
+                            <h3 class="text-2xl font-bold mb-2">Premium</h3>
+                            <p class="text-text-tertiary text-lg">深いコミットメントが必要な方に</p>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-3xl font-bold">¥200,000</span>
+                            <span class="text-text-tertiary text-xl">/月</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>月4回のオンラインMTG（各60分）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span><strong>対面MTG（月1回）</strong></span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>Slackでの随時相談（無制限）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>製品レビュー（月1回）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>顧問先医師への紹介優先</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>スポットメニュー30%OFF</span>
+                            </li>
+                        </ul>
+                        <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                            target="_blank" rel="noopener noreferrer"
+                            class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition">
+                            お問い合わせ
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Annual Discount -->
+                <div class="bg-white rounded-2xl p-8 text-center mt-10 border border-gray-100 shadow-sm">
+                    <p class="text-2xl font-bold mb-2">
+                        <i class="fa-solid fa-tag text-brand-blue mr-2"></i>
+                        年間一括契約で <span class="text-brand-blue">20%OFF</span>
+                    </p>
+                    <p class="text-lg text-text-secondary">
+                        例）Standard：月額100,000円 × 12ヶ月 = 1,200,000円 → <strong class="text-brand-black">960,000円/年</strong>
+                    </p>
+                </div>
+
+                <p class="text-center text-lg text-text-tertiary mt-10">※すべて税抜表示です。最低契約期間：3ヶ月</p>
+            </div>
+        </section>
+
+        <!-- Spot Menu -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">スポットメニュー</h2>
+                    <p class="text-xl text-text-secondary">必要なときに、必要なサポートを。</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-8 bg-white rounded-2xl card-hover">
+                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-hospital-user text-brand-blue text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">医療機関フィードバック</h3>
+                        <p class="text-lg text-text-secondary mb-6 leading-relaxed">
+                            UI/UX、ワークフロー適合性、臨床的妥当性について忌憚のないフィードバックを提供。</p>
+                        <p class="text-3xl font-bold">¥100,000〜<span
+                                class="text-xl font-normal text-text-tertiary">/回</span></p>
+                    </div>
+
+                    <div class="p-8 bg-white rounded-2xl card-hover">
+                        <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-flask text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">デモ環境協力</h3>
+                        <p class="text-lg text-text-secondary mb-6 leading-relaxed">模擬環境でのテスト、シナリオ検証で製品の完成度を高めます。</p>
+                        <p class="text-3xl font-bold">¥200,000〜<span
+                                class="text-xl font-normal text-text-tertiary">/回</span></p>
+                    </div>
+
+                    <div class="p-8 bg-white rounded-2xl card-hover">
+                        <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-book-open text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">ガイドライン解説</h3>
+                        <p class="text-lg text-text-secondary mb-6 leading-relaxed">厚労省・学会のガイドラインを製品開発に落とし込む支援。</p>
+                        <p class="text-3xl font-bold">¥150,000〜<span
+                                class="text-xl font-normal text-text-tertiary">/回</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Cursorvers -->
+        <section class="py-20 md:py-28 bg-brand-gray px-6">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16">なぜCursorversなのか</h2>
+
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div>
+                        <div
+                            class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                            <i class="fa-solid fa-user-doctor text-brand-blue text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-4">臨床医の視点</h3>
+                        <p class="text-lg text-text-secondary leading-relaxed">20年の救急集中治療経験を持つ臨床医が、現場目線でフィードバック。</p>
+                    </div>
+
+                    <div>
+                        <div
+                            class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                            <i class="fa-solid fa-shield-halved text-brand-blue text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-4">ガバナンス専門</h3>
+                        <p class="text-lg text-text-secondary leading-relaxed">医療AIガバナンスに特化。ガイドラインを製品設計に落とし込む知見。</p>
+                    </div>
+
+                    <div>
+                        <div
+                            class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                            <i class="fa-solid fa-handshake text-brand-blue text-3xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mb-4">医療機関ネットワーク</h3>
+                        <p class="text-lg text-text-secondary leading-relaxed">顧問先医療機関への紹介・共同検証の可能性。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">まずはお気軽にご相談ください</h2>
+                <p class="text-xl text-text-secondary mb-10 leading-relaxed">
+                    製品の概要をお聞かせいただければ、最適な支援メニューをご提案します。<br>初回相談は無料です。</p>
+                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                    target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center px-10 py-5 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
+                    お問い合わせ <i class="fa-solid fa-arrow-right ml-3"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="bg-brand-black text-white py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-24">
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-4 mb-8">
+                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'"
+                            alt="Cursorvers inverted logomark" class="h-10 w-10 rounded-full border border-white/20">
+                        <span class="flex flex-col leading-none">
+                            <span class="text-white font-bold text-2xl font-en tracking-widest">Cursorvers</span>
+                            <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
+                        </span>
+                    </div>
+                    <p class="text-lg leading-relaxed text-gray-400">Ensuring Safety, Ethics, and Continuity in Medical
+                        AI.</p>
+                </div>
+                <div class="flex gap-16 md:gap-24">
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-8 font-en">Links</h4>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
+                            <li><a href="index.html#company" class="hover:text-white transition">Company</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-8 font-en">Legal</h4>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
+                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
+                                    target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
+                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+                <div class="flex gap-6 text-xl">
+                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
+                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu
+            const menuBtn = document.querySelector('[data-mobile-menu-open]');
+            const nav = document.querySelector('[data-desktop-nav]');
+            if (menuBtn && nav) {
+                let mobileMenu = null;
+                const closeMenu = () => {
+                    if (mobileMenu) mobileMenu.style.display = 'none';
+                    document.body.style.overflow = '';
+                    menuBtn.setAttribute('aria-expanded', 'false');
+                };
+                const createMenu = () => {
+                    if (mobileMenu) return;
+                    mobileMenu = document.createElement('div');
+                    mobileMenu.id = 'mobile-menu';
+                    mobileMenu.className = 'fixed inset-0 z-[60] bg-white flex flex-col';
+                    mobileMenu.innerHTML = `
+                        <div class="flex items-center justify-between h-24 px-6 border-b border-gray-200">
+                            <a href="index.html" class="flex items-center gap-3">
+                                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 mix-blend-multiply">
+                                <span class="flex flex-col leading-none">
+                                    <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
+                                    <span class="text-[10px] font-semibold text-text-tertiary tracking-[0.25em]">カーソルバース</span>
+                                </span>
+                            </a>
+                            <button type="button" class="text-black text-2xl" aria-label="Close menu" id="mobile-menu-close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
+                        <div class="px-6 pb-10 text-center">
+                            <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" rel="noopener noreferrer" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
+                        </div>
+                    `;
+                    document.body.appendChild(mobileMenu);
+                    const navLinks = mobileMenu.querySelector('#mobile-nav-links');
+                    nav.querySelectorAll('a').forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link.href;
+                        a.textContent = link.textContent.trim();
+                        a.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2 text-center';
+                        if (link.target) a.target = link.target;
+                        a.addEventListener('click', closeMenu);
+                        navLinks.appendChild(a);
+                    });
+                    mobileMenu.querySelector('#mobile-menu-close').addEventListener('click', closeMenu);
+                };
+                const openMenu = () => {
+                    createMenu();
+                    mobileMenu.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    menuBtn.setAttribute('aria-expanded', 'true');
+                };
+                menuBtn.addEventListener('click', openMenu);
+                document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
