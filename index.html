@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <title>Cursorvers | Medical AI Governance</title>
-    <meta name="description" content="医療AIの安全・倫理・継続性を担保する。Cursorversは、医療機関向け監査・教育・ベンダー支援の専門機関です。">
+    <title>Cursorvers | 安心と継続の医療AIガバナンス</title>
+    <meta name="description" content="医療AIを安心して使い続けるために。Cursorversは監査・運用設計・教育で、医療機関とベンダーの継続運用を支える専門機関です。">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -28,19 +28,19 @@
                     colors: {
                         'brand-black': '#0B0C10',
                         'brand-blue': '#0052CC',
-                        'brand-cyan': '#66FCF1',
+                        'brand-cyan': '#00A3FF', /* Darker cyan for visibility on white */
                         'brand-gray': '#F7F8FA',
                         'brand-slate': '#475569',
-                        'hero-bg': '#050507',
+                        'hero-bg': '#FFFFFF',    /* Changed to White */
                         'text-primary': '#0B0C10',
                         'text-secondary': '#374151',
                         'text-tertiary': '#6B7280',
                         'text-quaternary': '#9CA3AF',
                     },
                     fontSize: {
-                        'display': ['clamp(3.5rem, 10vw, 7rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
-                        'headline': ['clamp(2.75rem, 6vw, 4.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-                        'title': ['clamp(2rem, 4vw, 3rem)', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
+                        'display': ['clamp(3.5rem, 8vw, 6rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }], /* Slightly smaller/tighter for Japanese */
+                        'headline': ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+                        'title': ['clamp(1.75rem, 3.5vw, 2.5rem)', { lineHeight: '1.3', letterSpacing: '-0.01em' }],
                         'body-lg': ['1.5rem', { lineHeight: '1.8' }],
                         'body': ['1.25rem', { lineHeight: '1.8' }],
                     },
@@ -85,7 +85,8 @@
         }
 
         /* iOS Touch Optimization */
-        a, button {
+        a,
+        button {
             min-height: 44px;
             min-width: 44px;
         }
@@ -98,12 +99,13 @@
             }
         }
 
-        /* --- Hero Section (Gemini 3 Style) --- */
+        /* --- Hero Section (Clean & Safe) --- */
         .hero-wrapper {
             position: relative;
             min-height: 100vh;
             width: 100%;
-            background: #050507;
+            background: #FFFFFF;
+            /* White Background */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -131,75 +133,22 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Lickable Buttons */
-        .btn-lickable {
+        /* Clean Buttons */
+        .btn-clean {
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .btn-lickable:hover {
+        .btn-clean:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 0 1px rgba(102, 252, 241, 0.3), 0 10px 30px -10px rgba(102, 252, 241, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border-color: rgba(102, 252, 241, 0.5);
-            color: #66FCF1;
-        }
-
-        .btn-lickable::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-lickable:hover::before {
-            left: 100%;
-        }
-
-        /* Border Beam */
-        .border-beam {
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            pointer-events: none;
-            padding: 1px;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
-
-        .border-beam::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: conic-gradient(from 0deg, transparent 0deg, #66FCF1 90deg, transparent 180deg);
-            animation: rotate 4s linear infinite;
-        }
-
-        /* Navy Border Beam */
-        .border-beam-navy::before {
-            background: conic-gradient(from 0deg, transparent 0deg, #0052CC 90deg, transparent 180deg);
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .text-glow {
-            text-shadow: 0 0 30px rgba(102, 252, 241, 0.4);
+            /* Removed glow for clean look, replaced with slight gradient or shadow if needed */
+            text-shadow: none;
         }
 
         /* --- Premium Section Styling --- */
@@ -374,7 +323,7 @@
         </div>
     </header>
 
-    <!-- Hero Section (Gemini 3 Style) -->
+    <!-- Hero Section (Clean & Safe Style) -->
     <div class="hero-wrapper">
         <div id="webgl-container"></div>
 
@@ -383,45 +332,43 @@
                 <!-- Eyebrow -->
                 <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                     <span
-                        class="inline-flex items-center gap-2.5 py-1.5 px-4 border border-brand-cyan/30 bg-brand-cyan/5 text-brand-cyan text-xs font-bold tracking-[0.2em] uppercase rounded-full backdrop-blur-md font-en shadow-[0_0_20px_rgba(102,252,241,0.15)]">
-                        <span class="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-                        Medical AI Governance
+                        class="inline-flex items-center gap-2.5 py-1.5 px-4 border border-brand-blue/20 bg-brand-blue/5 text-brand-blue text-xs font-bold tracking-[0.2em] uppercase rounded-full backdrop-blur-md font-en">
+                        <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse-slow"></span>
+                        安心と継続のガバナンス
                     </span>
                 </div>
 
                 <!-- Headline -->
-                <h1 class="mt-10 text-display font-black tracking-tighter text-white animate-fade-in-up text-balance"
+                <!-- Headline -->
+                <h1 class="mt-8 text-display font-black tracking-tighter text-brand-black animate-fade-in-up text-balance leading-tight"
                     style="animation-delay: 0.2s;">
                     AIに、<br>
                     <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-cyan to-brand-blue text-glow">臨床の魂</span>を。
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan">臨床の魂</span>を。
                 </h1>
 
                 <!-- Subheadline -->
-                <p class="mt-8 text-brand-cyan text-2xl md:text-4xl font-bold tracking-wide animate-fade-in-up"
+                <p class="mt-6 text-text-secondary text-2xl md:text-3xl font-bold tracking-wide animate-fade-in-up"
                     style="animation-delay: 0.3s;">
-                    「使いこなす」の、その先へ。
+                    安心と継続を、医療AIに。
                 </p>
 
                 <!-- Body -->
-                <p class="mt-8 text-gray-300 text-lg md:text-2xl font-medium tracking-wide leading-relaxed max-w-xl animate-fade-in-up"
+                <p class="mt-8 text-text-secondary text-lg md:text-xl font-medium tracking-wide leading-relaxed max-w-xl animate-fade-in-up"
                     style="animation-delay: 0.35s;">
-                    2026年、医療機関へのAI導入が本格化する一方で、<br class="hidden md:inline">
-                    <span class="text-white font-semibold">「誰が責任を取るのか」</span>が問われ始めています。
+                    導入がゴールではなく、日々の運用が事故なく回り続けることが信頼になります。<br class="hidden md:inline">
+                    安心と継続は、現場での小さな判断の積み重ねで守られます。
                 </p>
 
-                <!-- Supplement -->
-                <p class="mt-5 text-gray-300 text-base md:text-xl leading-relaxed max-w-xl animate-fade-in-up"
+                <p class="mt-5 text-text-secondary text-base md:text-lg leading-relaxed max-w-xl animate-fade-in-up"
                     style="animation-delay: 0.4s;">
-                    厚労省ガイドライン・医療安全・個人情報保護——<br>
-                    Cursorversは、これらを<span class="text-gray-200 font-semibold">院内で回る仕組み</span>に落とし込みます。
+                    Cursorversは、監査・運用設計・教育を一体で整え、担当が変わっても回る医療AI体制を構築します。
                 </p>
 
                 <!-- CTAs -->
-                <div class="mt-12 flex flex-wrap gap-4 md:gap-5 animate-fade-in-up" style="animation-delay: 0.45s;">
+                <div class="mt-10 flex flex-wrap gap-4 md:gap-5 animate-fade-in-up" style="animation-delay: 0.45s;">
                     <a href="https://cursorvers-selfcheck.manus.space" target="_blank" rel="noopener noreferrer"
-                        class="btn-lickable group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[270px] md:min-w-[300px] bg-brand-cyan/10 text-white font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en">
-                        <div class="border-beam absolute inset-0 rounded-full"></div>
+                        class="btn-clean group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[240px] bg-brand-black text-white font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:bg-gray-800">
                         <span class="relative z-10 flex items-center gap-3">
                             3分セルフチェック（無料） <i
                                 class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
@@ -429,34 +376,35 @@
                     </a>
                     <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
                         target="_blank" rel="noopener noreferrer"
-                        class="btn-lickable group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[270px] md:min-w-[300px] bg-brand-blue/10 text-white font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:text-white transition-colors">
-                        <div class="border-beam border-beam-navy absolute inset-0 rounded-full"></div>
+                        class="btn-clean group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[240px] bg-white border border-gray-200 text-brand-black font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:bg-gray-50 hover:border-brand-blue/30 transition-colors">
                         <span class="relative z-10 flex items-center gap-3">診断結果をもとに相談する <i
-                                class="fa-solid fa-calendar-check group-hover:scale-110 transition-transform"></i></span>
+                                class="fa-solid fa-calendar-check text-brand-blue"></i></span>
                     </a>
                 </div>
 
                 <!-- Social Proof -->
-                <div class="mt-16 pt-10 pb-28 md:pb-16 border-t border-white/10 animate-fade-in-up"
-                    style="animation-delay: 0.5s;">
+                <div class="mt-14 pt-8 border-t border-gray-200 animate-fade-in-up" style="animation-delay: 0.5s;">
                     <div class="flex flex-wrap items-center gap-10 md:gap-14 text-lg">
                         <div class="flex items-center gap-4">
-                            <span class="text-brand-cyan font-bold text-4xl md:text-5xl font-en">20年</span>
-                            <span class="text-gray-400 text-base">救急集中治療<br>での臨床実績</span>
+                            <span class="text-brand-blue font-bold text-4xl md:text-5xl font-en">20<span
+                                    class="text-2xl ml-1">年</span></span>
+                            <span class="text-text-secondary text-base leading-tight">医療現場の<br>運用経験</span>
                         </div>
                         <div class="flex items-center gap-4">
-                            <span class="text-brand-cyan font-bold text-4xl md:text-5xl font-en">48h</span>
-                            <span class="text-gray-400 text-base">以内に<br>初回レポート</span>
+                            <span class="text-brand-blue font-bold text-4xl md:text-5xl font-en">48<span
+                                    class="text-2xl ml-1">h</span></span>
+                            <span class="text-text-secondary text-base leading-tight">以内に<br>初回レポート</span>
                         </div>
                         <div class="flex items-center gap-4">
-                            <span class="text-brand-cyan font-bold text-4xl md:text-5xl font-en">3点</span>
-                            <span class="text-gray-400 text-base">テンプレ納品<br>（ルール／評価／教育）</span>
+                            <span class="text-brand-blue font-bold text-4xl md:text-5xl font-en">3<span
+                                    class="text-2xl ml-1">点</span></span>
+                            <span class="text-text-secondary text-base leading-tight">継続運用テンプレ<br>（ルール／評価／教育）</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right side reserved for 3D visual focus -->
+            <!-- Right side reserved for Clean 3D Visual -->
             <div class="hidden md:block"></div>
         </div>
     </div>
@@ -467,8 +415,8 @@
             <div class="text-center mb-12 md:mb-16">
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Legal
                     Requirement</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">3省2ガイドラインが求めること</h2>
-                <p class="text-xl text-text-secondary max-w-2xl mx-auto">厚生労働省・経済産業省・総務省が定める医療情報システムの安全管理基準</p>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">安心と継続を支える3省2ガイドライン</h2>
+                <p class="text-xl text-text-secondary max-w-2xl mx-auto">厚生労働省・経済産業省・総務省が定める、安心運用と継続性の基準</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 md:gap-8">
@@ -483,15 +431,16 @@
                     <div class="mb-6">
                         <i class="fa-solid fa-quote-left text-brand-blue/20 text-2xl mb-4 block"></i>
                         <p class="text-body-lg text-text-secondary leading-relaxed">
-                            医療機関と事業者との<span
-                                class="text-brand-black font-semibold">役割分担を明確化</span>し、サービスレベル合意書（SLA）等に落とし込むことが重要
+                            医療機関と事業者の<span class="text-brand-black font-semibold">役割分担を明確化</span>し、
+                            平常時から安心して継続できる運用に落とし込むことが重要
                         </p>
                     </div>
                     <div class="text-body text-text-secondary border-t border-gray-200 pt-6 mt-6">
                         <p class="font-semibold text-brand-black mb-2">出典</p>
                         <p class="mb-1">経産省・総務省「医療情報を取り扱う情報システム・サービスの提供事業者における安全管理ガイドライン」第2.0版</p>
                         <p class="mb-3 text-brand-blue font-medium">第4章「リスクマネジメント」4.1 リスクアセスメント</p>
-                        <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/index.html" target="_blank" rel="noopener noreferrer"
+                        <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/index.html" target="_blank"
+                            rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 text-brand-blue hover:underline">
                             公式ページで確認 <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
                         </a>
@@ -509,14 +458,16 @@
                     <div class="mb-6">
                         <i class="fa-solid fa-quote-left text-brand-blue/20 text-2xl mb-4 block"></i>
                         <p class="text-body-lg text-text-secondary leading-relaxed">
-                            通常時から<span class="text-brand-black font-semibold">定期的に訓練・演習を実施</span>し、その結果を踏まえ改善に向けた対応を行う
+                            通常時から<span class="text-brand-black font-semibold">定期的に訓練・演習を実施</span>し、
+                            安心が続く体制へ継続的に改善する
                         </p>
                     </div>
                     <div class="text-body text-text-secondary border-t border-gray-200 pt-6 mt-6">
                         <p class="font-semibold text-brand-black mb-2">出典</p>
                         <p class="mb-1">厚労省「医療情報システムの安全管理に関するガイドライン」第6.0版</p>
                         <p class="mb-3 text-brand-blue font-medium">経営管理編 1.2「遵守事項」</p>
-                        <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank" rel="noopener noreferrer"
+                        <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank"
+                            rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 text-brand-blue hover:underline">
                             公式ページで確認 <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
                         </a>
@@ -541,17 +492,18 @@
                     <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">Why
                         Now</span>
                     <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        「便利」の裏側に、<br class="hidden md:inline">守るべき資産がある。
+                        これからは、<br class="hidden md:inline">「安心と継続」が評価軸。
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-brand-blue/20 pl-6 md:pl-10">
                         <p>
                             <span class="font-bold text-brand-blue">2025年4月</span>、医療DX推進体制整備加算の要件が厳格化。<br>
-                            <span class="font-bold text-brand-blue">2026年度</span>には医療AI利用に関するガバナンス体制の整備が求められます。
+                            <span
+                                class="font-bold text-brand-blue">2026年度</span>には医療AI利用に関する安心と継続を担保するガバナンス体制の整備が求められます。
                         </p>
                         <p>
                             「誰がAIの出力を検証したか」「ルールは文書化されているか」「職員は教育を受けているか」——<br>
-                            <span class="font-semibold text-brand-black">これらを問われたとき、答えられますか？</span>
+                            <span class="font-semibold text-brand-black">これらを問われたとき、安心と継続を説明できますか？</span>
                         </p>
                     </div>
 
@@ -576,11 +528,11 @@
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
                         <p>
-                            専任スタッフを置けない現場のために<br class="hidden md:inline">設計されたサービスです。
+                            専任スタッフを置けない現場でも<br class="hidden md:inline">安心して運用が続くように設計されたサービスです。
                         </p>
                         <p>
-                            だからこそ、<span class="font-semibold text-brand-black">最小構成で最大効果</span>を出す設計が必要です。<br>
-                            Cursorversは、貴院の規模と体制に合わせた「ちょうどいいガバナンス」を提案します。
+                            だからこそ、<span class="font-semibold text-brand-black">最小構成で安心と継続</span>を実現する設計が必要です。<br>
+                            Cursorversは、貴院の規模と体制に合わせた「続けられる運用設計」を提案します。
                         </p>
                     </div>
                 </div>
@@ -605,11 +557,11 @@
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
                         <p>
                             多くの医療機関で、AI運用は<span class="font-semibold text-brand-black">特定の個人</span>に依存しています。<br>
-                            その人が異動すれば、ノウハウも消える。
+                            その人が異動すれば、ノウハウも消え、安心が揺らぐ。
                         </p>
                         <p>
                             Cursorversは、<span class="font-semibold text-brand-black">誰が担当しても回る仕組み</span>を作ります。<br>
-                            院内ルール・チェックリスト・研修資料——すべて「残る成果物」として納品します。
+                            院内ルール・チェックリスト・研修資料——すべて「引き継げる成果物」として納品します。
                         </p>
                     </div>
                 </div>
@@ -621,17 +573,18 @@
                     <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">Our
                         Answer</span>
                     <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        <span class="block md:inline">大病院の仕組みを、</span>
+                        <span class="block md:inline">無理なく続く仕組みを、</span>
                         <span class="block md:inline">中小規模でも。</span>
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
                         <p>
-                            大学病院には専門委員会がある。でも、中小病院やクリニックには<span class="font-semibold text-brand-black">そんな余力がない</span>。
+                            大学病院には専門委員会がある。でも、中小病院やクリニックには<span
+                                class="font-semibold text-brand-black">継続運用を支える余力がない</span>。
                         </p>
                         <p>
-                            だからこそ、<span class="font-semibold text-brand-black">最小構成で最大効果</span>を出す設計が必要です。<br>
-                            Cursorversは、貴院の規模と体制に合わせた「ちょうどいいガバナンス」を提案します。
+                            委員会がなくても回るシンプルなルールとチェック体制を整備し、<br>
+                            <span class="font-semibold text-brand-black">無理なく続くガバナンス</span>に落とし込みます。
                         </p>
                     </div>
                 </div>
@@ -650,8 +603,8 @@
             <div class="text-center mb-14 md:mb-20">
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Our
                     Business</span>
-                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">3つの事業軸</h2>
-                <p class="text-text-secondary text-body-lg">監査・運用設計・教育の3軸で、医療AI運用を支えます。</p>
+                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">安心と継続をつくる3つの支援</h2>
+                <p class="text-text-secondary text-body-lg">監査・運用設計・教育の3軸で、導入後も安心して続く体制を支えます。</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 md:gap-8">
@@ -665,7 +618,7 @@
                         </p>
                         <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">医療機関向け</h3>
                         <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            AI導入前の簡易診断から、適切なベンダーのご紹介、継続的な顧問契約、第三者監査まで。貴院の規模に合わせたガバナンス体制を構築します。
+                            現状診断から運用ルール整備、定期レビュー、第三者監査まで。貴院の規模に合わせて、安心して続く運用体制を構築します。
                         </p>
                         <a href="services.html"
                             class="block mt-8 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
@@ -684,7 +637,7 @@
                         </p>
                         <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">AIベンダー向け</h3>
                         <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            医療現場への導入を成功させるために。臨床視点でのUI/UXレビュー、ガイドライン対応、医師ネットワーク紹介まで。
+                            現場で安心して使われ続けるために。臨床視点でのUI/UXレビュー、ガイドライン対応、医師ネットワーク紹介まで支援します。
                         </p>
                         <a href="consulting.html"
                             class="block mt-8 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
@@ -703,7 +656,7 @@
                             Individuals</p>
                         <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">個人向け教育</h3>
                         <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            医療者・ヘルステック関係者向けのキャリア支援。専門知をAIで"資産"に変え、時間に依存しない収益ラインを構築する方法を学べます。
+                            医療者・ヘルステック関係者向けの継続学習とキャリア支援。専門知をAIで活かし、安心して学び続けられる仕組みを身につけます。
                         </p>
                         <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
                             class="block mt-8 w-full py-4 text-center font-bold text-lg border-2 border-brand-black text-brand-black rounded-full hover:bg-brand-black hover:text-white transition">
@@ -720,9 +673,10 @@
     <section id="case-study" class="py-20 md:py-28 bg-brand-gray relative z-10">
         <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="text-center mb-12 md:mb-16">
-                <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Case Study</span>
+                <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Case
+                    Study</span>
                 <h2 class="text-headline font-bold text-brand-black">導入実績</h2>
-                <p class="text-text-secondary text-body mt-4">AIガバナンス体制構築をご支援した医療機関様</p>
+                <p class="text-text-secondary text-body mt-4">安心と継続の運用体制づくりをご支援した医療機関様</p>
             </div>
 
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -741,17 +695,26 @@
 
                 <div class="grid md:grid-cols-2 gap-0">
                     <!-- Image Slideshow -->
-                    <div class="bg-gray-100 order-2 md:order-1 relative overflow-hidden min-h-[350px]" id="case-slideshow">
-                        <img src="kajita_clinic.jpg" alt="梶田医院 院長" class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100">
-                        <img src="kajita_clinic_2.jpg" alt="梶田医院 院長" class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-                        <img src="kajita_clinic_3.jpg" alt="梶田医院 受付" class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-                        <img src="kajita_clinic_4.jpg" alt="梶田医院 病棟" class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                    <div class="bg-gray-100 order-2 md:order-1 relative overflow-hidden min-h-[350px]"
+                        id="case-slideshow">
+                        <img src="kajita_clinic.jpg" alt="梶田医院 院長"
+                            class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100">
+                        <img src="kajita_clinic_2.jpg" alt="梶田医院 院長"
+                            class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                        <img src="kajita_clinic_3.jpg" alt="梶田医院 受付"
+                            class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+                        <img src="kajita_clinic_4.jpg" alt="梶田医院 病棟"
+                            class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
                         <!-- Slide indicators -->
                         <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                            <span class="slide-dot w-2 h-2 rounded-full bg-white/80 cursor-pointer" data-slide="0"></span>
-                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer" data-slide="1"></span>
-                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer" data-slide="2"></span>
-                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer" data-slide="3"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/80 cursor-pointer"
+                                data-slide="0"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer"
+                                data-slide="1"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer"
+                                data-slide="2"></span>
+                            <span class="slide-dot w-2 h-2 rounded-full bg-white/40 cursor-pointer"
+                                data-slide="3"></span>
                         </div>
                     </div>
                     <!-- Content -->
@@ -760,8 +723,8 @@
                         <div class="relative mb-8">
                             <i class="fa-solid fa-quote-left text-4xl text-brand-blue/20 absolute -top-2 -left-2"></i>
                             <p class="text-lg md:text-xl text-brand-black leading-relaxed pl-6 font-medium">
-                                AIを導入したいが、何から始めればいいかわからなかった。<br>
-                                Cursorversのおかげで、<span class="text-brand-blue">加速度的に体制が整い、進化している。</span>
+                                AIを導入したいが、運用が続くかが不安だった。<br>
+                                Cursorversのおかげで、<span class="text-brand-blue">安心して回る体制が整った。</span>
                             </p>
                         </div>
 
@@ -769,16 +732,17 @@
                         <div class="space-y-6">
                             <div class="flex gap-4">
                                 <div class="flex-shrink-0 w-20 text-sm font-bold text-brand-blue">課題</div>
-                                <p class="text-text-secondary">AI活用は喫緊の課題でしたが、AIの選定やガイドライン対応、活用方法が分からなかった</p>
+                                <p class="text-text-secondary">AI活用は急務だったが、導入後の運用責任や継続体制が見えなかった</p>
                             </div>
                             <div class="flex gap-4">
                                 <div class="flex-shrink-0 w-20 text-sm font-bold text-brand-blue">支援内容</div>
-                                <p class="text-text-secondary">48h簡易診断 → 90日導入支援プログラム → ベンダー選定サポート</p>
+                                <p class="text-text-secondary">48h簡易診断 → 90日運用定着プログラム → 定期レビュー</p>
                             </div>
                         </div>
 
                         <div class="mt-8 pt-6 border-t border-gray-100">
-                            <a href="services.html" class="inline-flex items-center gap-2 text-brand-blue font-bold hover:gap-3 transition-all">
+                            <a href="services.html"
+                                class="inline-flex items-center gap-2 text-brand-blue font-bold hover:gap-3 transition-all">
                                 同様のサービスを見る <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
@@ -789,34 +753,34 @@
     </section>
 
     <script>
-    // Case Study Slideshow
-    (function() {
-        const slides = document.querySelectorAll('.case-slide');
-        const dots = document.querySelectorAll('.slide-dot');
-        let currentSlide = 0;
-        const totalSlides = slides.length;
+            // Case Study Slideshow
+            (function () {
+                const slides = document.querySelectorAll('.case-slide');
+                const dots = document.querySelectorAll('.slide-dot');
+                let currentSlide = 0;
+                const totalSlides = slides.length;
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.style.opacity = i === index ? '1' : '0';
-            });
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('bg-white/80', i === index);
-                dot.classList.toggle('bg-white/40', i !== index);
-            });
-            currentSlide = index;
-        }
+                function showSlide(index) {
+                    slides.forEach((slide, i) => {
+                        slide.style.opacity = i === index ? '1' : '0';
+                    });
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('bg-white/80', i === index);
+                        dot.classList.toggle('bg-white/40', i !== index);
+                    });
+                    currentSlide = index;
+                }
 
-        // Auto advance
-        setInterval(() => {
-            showSlide((currentSlide + 1) % totalSlides);
-        }, 4000);
+                // Auto advance
+                setInterval(() => {
+                    showSlide((currentSlide + 1) % totalSlides);
+                }, 4000);
 
-        // Click handlers
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', () => showSlide(i));
-        });
-    })();
+                // Click handlers
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => showSlide(i));
+                });
+            })();
     </script>
 
     <!-- CTA Section -->
@@ -837,17 +801,17 @@
                             class="text-brand-cyan text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Get
                             Started</span>
                         <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                            どこから始めれば<br class="hidden md:inline">いいかわからない？
+                            安心と継続の第一歩は、<br class="hidden md:inline">どこから？
                         </h2>
                         <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
-                            貴院・貴社の状況をお聞かせください。<br>
-                            医療機関、AIベンダー、個人——<br class="md:hidden">それぞれに最適なサービスをご提案します。
+                            現状の不安や運用体制をお聞かせください。<br>
+                            医療機関、AIベンダー、個人——<br class="md:hidden">それぞれの継続運用に必要な次の一手をご提案します。
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
                                 target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center px-10 py-5 bg-brand-cyan text-brand-black font-bold text-lg rounded-full hover:bg-white transition">
-                                まずは相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                                運用の不安を相談する <i class="fa-solid fa-arrow-right ml-2"></i>
                             </a>
                             <a href="https://cursorvers-selfcheck.manus.space" target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center px-10 py-5 border-2 border-white/30 text-white font-bold text-lg rounded-full hover:bg-white/10 hover:border-white transition">
@@ -890,7 +854,7 @@
                         <div class="flex py-4 md:py-6 border-b border-gray-100">
                             <span class="w-28 md:w-44 text-text-tertiary font-semibold">事業内容</span>
                             <div class="text-brand-black">
-                                医療AI導入監査・ガバナンス構築<br>
+                                医療AI安心運用監査・ガバナンス構築<br>
                                 医療AIベンダー支援<br>
                                 教育研修事業
                             </div>
@@ -951,8 +915,7 @@
                             <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
                         </span>
                     </div>
-                    <p class="text-lg leading-relaxed text-gray-400">Ensuring Safety, Ethics, and Continuity in Medical
-                        AI.</p>
+                    <p class="text-lg leading-relaxed text-gray-400">安心と継続の医療AIガバナンス</p>
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
@@ -970,7 +933,8 @@
                             <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
                             <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                                    target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Contact</a></li>
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="hover:text-white transition">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1002,45 +966,46 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            // --- Fixed Droplet Ripple Shader ---
-            const MAX_RIPPLES = 15;
+            // --- Clean Liquid Shader (White Theme) ---
+            const MAX_RIPPLES = 12;
 
             const vertexShader = `
                 uniform float uTime;
-                uniform vec3 uRipples[15];
+                uniform vec3 uRipples[12];
 
                 varying vec2 vUv;
                 varying float vElevation;
+                varying vec3 vNormal;
 
                 void main() {
                     vUv = uv;
                     vec3 pos = position;
+                    
+                    // Gentle ambient swell
+                    float elevation = sin(pos.x * 0.15 + uTime * 0.4) * 0.2 + sin(pos.y * 0.12 + uTime * 0.25) * 0.15;
 
-                    // Ambient swell
-                    float elevation = sin(pos.x * 0.1 + uTime * 0.5) * 0.3 + sin(pos.y * 0.1 + uTime * 0.3) * 0.2;
+                    // Compute normal approximations
+                    vec3 normal = vec3(0.0, 0.0, 1.0);
 
-                    // Add ripples from array
-                    for(int i = 0; i < 15; i++) {
+                    // Add ripples
+                    for(int i = 0; i < 12; i++) {
                         vec2 ripplePos = uRipples[i].xy;
                         float age = uRipples[i].z;
 
-                        if(age > 0.0 && age < 3.0) {
+                        if(age > 0.0 && age < 4.0) {
                             float dist = distance(uv, ripplePos);
-                            float radius = age * 0.2;
-
-                            // Wave pattern
-                            float wave = sin((dist - radius) * 50.0);
-
-                            // Strength decays with age and distance from expanding ring
-                            float ringDist = abs(dist - radius);
-                            float strength = exp(-ringDist * 20.0) * (1.0 - age / 3.0);
-
-                            elevation += wave * strength * 3.0;
+                            float radius = age * 0.25;
+                            float wave = sin((dist - radius) * 40.0);
+                            // Increased strength for better visibility
+                            float strength = exp(-abs(dist - radius) * 12.0) * (1.0 - age / 4.0) * 1.5;
+                            
+                            elevation += wave * strength * 3.5;
                         }
                     }
 
                     pos.z += elevation;
                     vElevation = elevation;
+                    vNormal = normal;
 
                     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
                 }
@@ -1050,39 +1015,40 @@
                 uniform vec3 uColor1;
                 uniform vec3 uColor2;
                 uniform vec3 uAccent;
+                uniform float uTime;
 
                 varying float vElevation;
                 varying vec2 vUv;
 
                 void main() {
-                    float mixStrength = smoothstep(-1.0, 2.0, vElevation);
-                    vec3 color = mix(uColor1, uColor2, mixStrength);
+                    // Base: White/Light blend
+                    float mixStrength = smoothstep(-1.5, 3.0, vElevation);
+                    vec3 color = mix(uColor1, uColor2, mixStrength * 0.85);
 
-                    // Highlight wave peaks
-                    float peak = smoothstep(1.0, 2.5, vElevation);
-                    color += uAccent * peak;
+                    // Highlights on peaks (Clean liquid look)
+                    // Made sharper and more frequent
+                    float peak = smoothstep(0.5, 3.0, vElevation);
+                    color += uAccent * peak * 0.8;
 
-                    // Grid
-                    float gridX = sin(vUv.x * 200.0);
-                    float gridY = sin(vUv.y * 200.0);
-                    float grid = smoothstep(0.95, 1.0, max(gridX, gridY)) * 0.3;
+                    // Subtle grid/pattern for structure - slightly stronger
+                    float grid = (sin(vUv.x * 120.0) + sin(vUv.y * 120.0)) * 0.04;
+                    
+                    // Alpha handling for soft fade - Increased opacity base
+                    float alpha = 0.12 + mixStrength * 0.3 + peak * 0.4;
 
-                    float alpha = 0.15 + grid + mixStrength * 0.4;
-
-                    // Vignette
+                    // Edge soft vignette
                     float dist = distance(vUv, vec2(0.5));
-                    alpha *= (1.0 - smoothstep(0.2, 0.65, dist));
+                    alpha *= (1.0 - smoothstep(0.35, 0.75, dist));
 
                     gl_FragColor = vec4(color, alpha);
                 }
             `;
 
-            const geometry = new THREE.PlaneGeometry(160, 160, 300, 300);
+            const geometry = new THREE.PlaneGeometry(140, 140, 256, 256);
 
-            // Initialize ripples with Float32Array for proper uniform handling
             const rippleData = [];
             for (let i = 0; i < MAX_RIPPLES; i++) {
-                rippleData.push(new THREE.Vector3(0.5, 0.5, 10.0)); // Inactive (age > 3)
+                rippleData.push(new THREE.Vector3(0.5, 0.5, 10.0));
             }
 
             const material = new THREE.ShaderMaterial({
@@ -1091,51 +1057,52 @@
                 uniforms: {
                     uTime: { value: 0 },
                     uRipples: { value: rippleData },
-                    uColor1: { value: new THREE.Color(0x010103) },
-                    uColor2: { value: new THREE.Color(0x0066cc) },
-                    uAccent: { value: new THREE.Color(0x66ffff) }
+                    // Slightly darker blue tones for better contrast on white
+                    uColor1: { value: new THREE.Color(0xE6F0FA) }, // Light Cool Gray/Blue
+                    uColor2: { value: new THREE.Color(0xA3D9FF) }, // Clear Sky Blue
+                    uAccent: { value: new THREE.Color(0x0044AA) }  // Deep Blue Accent
                 },
                 transparent: true,
                 side: THREE.DoubleSide
             });
 
             const plane = new THREE.Mesh(geometry, material);
-            plane.rotation.x = -Math.PI / 2.3;
-            plane.position.y = -4;
+            plane.rotation.x = -Math.PI / 2.2;
+            plane.position.y = -5;
             scene.add(plane);
 
-            // Particles
+            // Floating Particles (Subtle) - Increased count and opacity
             const particlesGeo = new THREE.BufferGeometry();
-            const particleCount = 300;
+            const particleCount = 400; // Increased count
             const posArray = new Float32Array(particleCount * 3);
             for (let i = 0; i < particleCount * 3; i += 3) {
-                posArray[i] = (Math.random() - 0.5) * 50;
-                posArray[i + 1] = (Math.random() - 0.5) * 15;
-                posArray[i + 2] = (Math.random() - 0.5) * 30;
+                posArray[i] = (Math.random() - 0.5) * 70;
+                posArray[i + 1] = (Math.random() - 0.5) * 25;
+                posArray[i + 2] = (Math.random() - 0.5) * 50;
             }
             particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
             const particlesMat = new THREE.PointsMaterial({
-                size: 0.08,
-                color: 0x66ffff,
+                size: 0.18, // Slightly larger
+                color: 0x0052CC,
                 transparent: true,
-                opacity: 0.4,
-                blending: THREE.AdditiveBlending
+                opacity: 0.5, // Increased opacity
+                blending: THREE.NormalBlending
             });
             const particles = new THREE.Points(particlesGeo, particlesMat);
             scene.add(particles);
 
-            camera.position.set(0, 20, 55);
-            camera.lookAt(0, -8, 0);
+            camera.position.set(0, 25, 50);
+            camera.lookAt(0, -5, 0);
 
-            // Raycaster for mouse tracking
+            // Raycaster
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
             const hitPlane = new THREE.Mesh(
                 new THREE.PlaneGeometry(200, 200),
                 new THREE.MeshBasicMaterial({ visible: false })
             );
-            hitPlane.rotation.x = -Math.PI / 2.3;
-            hitPlane.position.y = -4;
+            hitPlane.rotation.x = -Math.PI / 2.2;
+            hitPlane.position.y = -5;
             scene.add(hitPlane);
 
             let rippleIndex = 0;
@@ -1150,18 +1117,18 @@
 
                 if (hits.length > 0 && hits[0].uv) {
                     const now = performance.now();
-                    if (now - lastSpawnTime > 80) { // Spawn rate limit (ms)
+                    if (now - lastSpawnTime > 100) {
                         const uv = hits[0].uv;
-                        rippleData[rippleIndex].set(uv.x, uv.y, 0.01); // Start age near 0
+                        rippleData[rippleIndex].set(uv.x, uv.y, 0.01);
                         rippleIndex = (rippleIndex + 1) % MAX_RIPPLES;
                         lastSpawnTime = now;
                     }
                 }
 
-                // Camera parallax
-                camera.position.x += (mouse.x * 3 - camera.position.x) * 0.02;
-                camera.position.y += (6 + mouse.y * 2 - camera.position.y) * 0.02;
-                camera.lookAt(0, -1, 0);
+                // Gentle camera sway
+                camera.position.x += (mouse.x * 2 - camera.position.x) * 0.03;
+                camera.position.y += (25 + mouse.y * 2 - camera.position.y) * 0.03;
+                camera.lookAt(0, -5, 0);
             });
 
             const clock = new THREE.Clock();
@@ -1169,21 +1136,20 @@
             function animate() {
                 requestAnimationFrame(animate);
                 const elapsed = clock.getElapsedTime();
-                const delta = clock.getDelta() || 0.016;
 
+                // Gentle wave movement
                 material.uniforms.uTime.value = elapsed;
 
-                // Age all active ripples
+                // Ripple aging
                 for (let i = 0; i < MAX_RIPPLES; i++) {
                     if (rippleData[i].z < 5.0) {
-                        rippleData[i].z += 0.02; // Age increment
+                        rippleData[i].z += 0.03;
                     }
                 }
-                // Force uniform update
                 material.uniforms.uRipples.value = rippleData;
                 material.uniformsNeedUpdate = true;
 
-                particles.rotation.y = elapsed * 0.02;
+                particles.rotation.y = elapsed * 0.05;
 
                 renderer.render(scene, camera);
             }
