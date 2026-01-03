@@ -128,32 +128,45 @@
             overflow: hidden;
         }
 
-        /* Main image with cinematic Ken Burns */
+        /* Main image with drone aerial movement */
         .hero-image {
             position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 115%;
-            height: 115%;
+            top: -15%;
+            left: -15%;
+            width: 130%;
+            height: 130%;
             object-fit: cover;
-            /* Cinematic color grading - movie look */
-            filter: brightness(1.02) contrast(1.12) saturate(0.8);
-            /* Smooth cinematic movement */
-            animation: cinematicMove 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            /* Cinematic color grading - aerial footage look */
+            filter: brightness(1.02) contrast(1.1) saturate(0.85);
+            /* Drone-style smooth aerial movement */
+            animation: droneAerial 45s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+            transform-origin: center center;
         }
 
-        @keyframes cinematicMove {
-            0%, 100% {
-                transform: scale(1) translate(0, 0);
+        @keyframes droneAerial {
+            0% {
+                transform: scale(1.05) translate(0%, 2%) rotate(0deg);
             }
-            25% {
-                transform: scale(1.05) translate(-1%, 0.5%);
+            15% {
+                transform: scale(1.08) translate(-3%, 0%) rotate(0.3deg);
             }
-            50% {
-                transform: scale(1.03) translate(-2%, -0.5%);
+            30% {
+                transform: scale(1.1) translate(-6%, -2%) rotate(0deg);
+            }
+            45% {
+                transform: scale(1.07) translate(-4%, -4%) rotate(-0.3deg);
+            }
+            60% {
+                transform: scale(1.12) translate(-2%, -3%) rotate(0deg);
             }
             75% {
-                transform: scale(1.06) translate(-0.5%, 1%);
+                transform: scale(1.06) translate(1%, -1%) rotate(0.2deg);
+            }
+            90% {
+                transform: scale(1.08) translate(2%, 1%) rotate(0deg);
+            }
+            100% {
+                transform: scale(1.05) translate(0%, 2%) rotate(0deg);
             }
         }
 
