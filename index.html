@@ -6,10 +6,10 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX3Y6G4XWJ"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-TX3Y6G4XWJ');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-TX3Y6G4XWJ');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,7 +19,7 @@
     <meta name="description" content="医療AIを安心して使い続けるために。Cursorversは監査・運用設計・教育で、医療機関とベンダーの継続運用を支える専門機関です。">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap"
         rel="stylesheet">
@@ -107,13 +107,12 @@
             }
         }
 
-        /* --- Hero Section (Clean & Safe) --- */
+        /* --- Hero Section (Urban Video Background) --- */
         .hero-wrapper {
             position: relative;
             min-height: 100vh;
             width: 100%;
             background: #FFFFFF;
-            /* White Background */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -121,10 +120,61 @@
             padding-top: 80px;
         }
 
-        #webgl-container {
+        /* Video Background Container */
+        .video-background {
             position: absolute;
             inset: 0;
             z-index: 1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            /* Cinematic color grading for real footage */
+            filter: brightness(1.08) contrast(1.05) saturate(0.9);
+            transition: opacity 0.5s ease;
+            /* iOS video poster fallback - NY Skyline */
+            background: url('https://images.unsplash.com/photo-1534430480872-3498386e7856?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+        }
+
+        /* Mobile optimization - reduce motion for battery */
+        @media (prefers-reduced-motion: reduce) {
+            .video-background video {
+                display: none;
+            }
+            .video-background {
+                background: url('https://images.unsplash.com/photo-1534430480872-3498386e7856?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            }
+        }
+
+        /* White-based overlay for readability */
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.92) 0%,
+                    rgba(255, 255, 255, 0.85) 40%,
+                    rgba(255, 255, 255, 0.75) 100%);
+            z-index: 2;
+        }
+
+        /* Subtle gradient effect */
+        .video-background::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(0, 82, 204, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 163, 255, 0.05) 0%, transparent 50%);
+            z-index: 3;
             pointer-events: none;
         }
 
@@ -315,7 +365,9 @@
                 <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="#company" class="hover:text-brand-blue transition">Company</a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-brand-blue transition">Journal <i
+                        class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
@@ -332,9 +384,63 @@
         </div>
     </header>
 
-    <!-- Hero Section (Clean & Safe Style) -->
+    <!-- Hero Section (Premium Urban Video Background) -->
+    <!-- Video Credit: Pexels.com - Free to use, no attribution required (CC0 License) -->
+    <!-- Source: https://www.pexels.com/video/3044681/ - New York Manhattan Skyline -->
     <div class="hero-wrapper">
-        <div id="webgl-container"></div>
+        <!-- New York Manhattan Skyscrapers - Real 4K Footage -->
+        <div class="video-background">
+            <video id="hero-video" autoplay muted loop playsinline
+                poster="https://images.unsplash.com/photo-1534430480872-3498386e7856?q=80&w=1920&auto=format&fit=crop">
+                <!-- New York Manhattan Skyline (Real 4K UHD 24fps) - Pexels License -->
+                <source src="https://videos.pexels.com/video-files/3044681/3044681-uhd_2560_1440_24fps.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <script>
+            // iOS/Mobile optimized video playback
+            (function () {
+                const video = document.getElementById('hero-video');
+                if (!video) return;
+
+                // iOS Safari requires user interaction for autoplay
+                // Try to play immediately, fallback to interaction-based play
+                const tryPlay = function() {
+                    video.play().catch(function (e) {
+                        console.log('Autoplay prevented, waiting for interaction');
+                        // On iOS, try playing on first touch/scroll
+                        const playOnInteraction = function() {
+                            video.play();
+                            document.removeEventListener('touchstart', playOnInteraction);
+                            document.removeEventListener('scroll', playOnInteraction);
+                        };
+                        document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
+                        document.addEventListener('scroll', playOnInteraction, { once: true, passive: true });
+                    });
+                };
+
+                // Seamless loop handling
+                video.addEventListener('timeupdate', function () {
+                    if (this.duration - this.currentTime < 0.5) {
+                        this.style.opacity = '0.95';
+                    } else {
+                        this.style.opacity = '1';
+                    }
+                });
+
+                video.addEventListener('ended', function () {
+                    this.currentTime = 0;
+                    this.play();
+                });
+
+                // Try autoplay on load
+                if (document.readyState === 'complete') {
+                    tryPlay();
+                } else {
+                    window.addEventListener('load', tryPlay);
+                }
+            })();
+        </script>
 
         <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
             <div class="text-left z-10 pt-20">
@@ -762,34 +868,34 @@
     </section>
 
     <script>
-            // Case Study Slideshow
-            (function () {
-                const slides = document.querySelectorAll('.case-slide');
-                const dots = document.querySelectorAll('.slide-dot');
-                let currentSlide = 0;
-                const totalSlides = slides.length;
+        // Case Study Slideshow
+        (function () {
+            const slides = document.querySelectorAll('.case-slide');
+            const dots = document.querySelectorAll('.slide-dot');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
 
-                function showSlide(index) {
-                    slides.forEach((slide, i) => {
-                        slide.style.opacity = i === index ? '1' : '0';
-                    });
-                    dots.forEach((dot, i) => {
-                        dot.classList.toggle('bg-white/80', i === index);
-                        dot.classList.toggle('bg-white/40', i !== index);
-                    });
-                    currentSlide = index;
-                }
-
-                // Auto advance
-                setInterval(() => {
-                    showSlide((currentSlide + 1) % totalSlides);
-                }, 4000);
-
-                // Click handlers
-                dots.forEach((dot, i) => {
-                    dot.addEventListener('click', () => showSlide(i));
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.style.opacity = i === index ? '1' : '0';
                 });
-            })();
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-white/80', i === index);
+                    dot.classList.toggle('bg-white/40', i !== index);
+                });
+                currentSlide = index;
+            }
+
+            // Auto advance
+            setInterval(() => {
+                showSlide((currentSlide + 1) % totalSlides);
+            }, 4000);
+
+            // Click handlers
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => showSlide(i));
+            });
+        })();
     </script>
 
     <!-- CTA Section -->
@@ -822,7 +928,8 @@
                                 class="inline-flex items-center justify-center px-10 py-5 bg-brand-cyan text-brand-black font-bold text-lg rounded-full hover:bg-white transition">
                                 運用の不安を相談する <i class="fa-solid fa-arrow-right ml-2"></i>
                             </a>
-                            <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
+                            <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank"
+                                rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center px-10 py-5 border-2 border-white/30 text-white font-bold text-lg rounded-full hover:bg-white/10 hover:border-white transition">
                                 無料セルフチェック
                             </a>
@@ -949,8 +1056,11 @@
                 </div>
             </div>
             <div class="mt-20 pt-10 border-t border-gray-800">
-                <p class="text-center text-sm text-gray-300 mb-6">※ 当事業者は免税事業者です。インボイス（適格請求書）は発行できないため、消費税の仕入税額控除にはご利用いただけません。<a href="tokushoho.html" class="underline hover:text-white ml-1">詳細はこちら</a></p>
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
+                <p class="text-center text-sm text-gray-300 mb-6">※
+                    当事業者は免税事業者です。インボイス（適格請求書）は発行できないため、消費税の仕入税額控除にはご利用いただけません。<a href="tokushoho.html"
+                        class="underline hover:text-white ml-1">詳細はこちら</a></p>
+                <div
+                    class="flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
                     <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
                     <div class="flex gap-6 text-xl">
                         <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
@@ -964,218 +1074,7 @@
     </footer>
 
     <script>
-        const setup3D = () => {
-            const container = document.getElementById('webgl-container');
-            if (container.hasChildNodes()) return;
-
-            const scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x020204, 0.002);
-
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            container.appendChild(renderer.domElement);
-
-            // --- Clean Liquid Shader (White Theme) ---
-            const MAX_RIPPLES = 12;
-
-            const vertexShader = `
-                uniform float uTime;
-                uniform vec3 uRipples[12];
-
-                varying vec2 vUv;
-                varying float vElevation;
-                varying vec3 vNormal;
-
-                void main() {
-                    vUv = uv;
-                    vec3 pos = position;
-                    
-                    // Gentle ambient swell
-                    float elevation = sin(pos.x * 0.15 + uTime * 0.4) * 0.2 + sin(pos.y * 0.12 + uTime * 0.25) * 0.15;
-
-                    // Compute normal approximations
-                    vec3 normal = vec3(0.0, 0.0, 1.0);
-
-                    // Add ripples
-                    for(int i = 0; i < 12; i++) {
-                        vec2 ripplePos = uRipples[i].xy;
-                        float age = uRipples[i].z;
-
-                        if(age > 0.0 && age < 4.0) {
-                            float dist = distance(uv, ripplePos);
-                            float radius = age * 0.25;
-                            float wave = sin((dist - radius) * 40.0);
-                            // Increased strength for better visibility
-                            float strength = exp(-abs(dist - radius) * 12.0) * (1.0 - age / 4.0) * 1.5;
-                            
-                            elevation += wave * strength * 3.5;
-                        }
-                    }
-
-                    pos.z += elevation;
-                    vElevation = elevation;
-                    vNormal = normal;
-
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-                }
-            `;
-
-            const fragmentShader = `
-                uniform vec3 uColor1;
-                uniform vec3 uColor2;
-                uniform vec3 uAccent;
-                uniform float uTime;
-
-                varying float vElevation;
-                varying vec2 vUv;
-
-                void main() {
-                    // Base: White/Light blend
-                    float mixStrength = smoothstep(-1.5, 3.0, vElevation);
-                    vec3 color = mix(uColor1, uColor2, mixStrength * 0.85);
-
-                    // Highlights on peaks (Clean liquid look)
-                    // Made sharper and more frequent
-                    float peak = smoothstep(0.5, 3.0, vElevation);
-                    color += uAccent * peak * 0.8;
-
-                    // Subtle grid/pattern for structure - slightly stronger
-                    float grid = (sin(vUv.x * 120.0) + sin(vUv.y * 120.0)) * 0.04;
-                    
-                    // Alpha handling for soft fade - Increased opacity base
-                    float alpha = 0.12 + mixStrength * 0.3 + peak * 0.4;
-
-                    // Edge soft vignette
-                    float dist = distance(vUv, vec2(0.5));
-                    alpha *= (1.0 - smoothstep(0.35, 0.75, dist));
-
-                    gl_FragColor = vec4(color, alpha);
-                }
-            `;
-
-            const geometry = new THREE.PlaneGeometry(140, 140, 256, 256);
-
-            const rippleData = [];
-            for (let i = 0; i < MAX_RIPPLES; i++) {
-                rippleData.push(new THREE.Vector3(0.5, 0.5, 10.0));
-            }
-
-            const material = new THREE.ShaderMaterial({
-                vertexShader: vertexShader,
-                fragmentShader: fragmentShader,
-                uniforms: {
-                    uTime: { value: 0 },
-                    uRipples: { value: rippleData },
-                    // Slightly darker blue tones for better contrast on white
-                    uColor1: { value: new THREE.Color(0xE6F0FA) }, // Light Cool Gray/Blue
-                    uColor2: { value: new THREE.Color(0xA3D9FF) }, // Clear Sky Blue
-                    uAccent: { value: new THREE.Color(0x0044AA) }  // Deep Blue Accent
-                },
-                transparent: true,
-                side: THREE.DoubleSide
-            });
-
-            const plane = new THREE.Mesh(geometry, material);
-            plane.rotation.x = -Math.PI / 2.2;
-            plane.position.y = -5;
-            scene.add(plane);
-
-            // Floating Particles (Subtle) - Increased count and opacity
-            const particlesGeo = new THREE.BufferGeometry();
-            const particleCount = 400; // Increased count
-            const posArray = new Float32Array(particleCount * 3);
-            for (let i = 0; i < particleCount * 3; i += 3) {
-                posArray[i] = (Math.random() - 0.5) * 70;
-                posArray[i + 1] = (Math.random() - 0.5) * 25;
-                posArray[i + 2] = (Math.random() - 0.5) * 50;
-            }
-            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const particlesMat = new THREE.PointsMaterial({
-                size: 0.18, // Slightly larger
-                color: 0x0052CC,
-                transparent: true,
-                opacity: 0.5, // Increased opacity
-                blending: THREE.NormalBlending
-            });
-            const particles = new THREE.Points(particlesGeo, particlesMat);
-            scene.add(particles);
-
-            camera.position.set(0, 25, 50);
-            camera.lookAt(0, -5, 0);
-
-            // Raycaster
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2();
-            const hitPlane = new THREE.Mesh(
-                new THREE.PlaneGeometry(200, 200),
-                new THREE.MeshBasicMaterial({ visible: false })
-            );
-            hitPlane.rotation.x = -Math.PI / 2.2;
-            hitPlane.position.y = -5;
-            scene.add(hitPlane);
-
-            let rippleIndex = 0;
-            let lastSpawnTime = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-                raycaster.setFromCamera(mouse, camera);
-                const hits = raycaster.intersectObject(hitPlane);
-
-                if (hits.length > 0 && hits[0].uv) {
-                    const now = performance.now();
-                    if (now - lastSpawnTime > 100) {
-                        const uv = hits[0].uv;
-                        rippleData[rippleIndex].set(uv.x, uv.y, 0.01);
-                        rippleIndex = (rippleIndex + 1) % MAX_RIPPLES;
-                        lastSpawnTime = now;
-                    }
-                }
-
-                // Gentle camera sway
-                camera.position.x += (mouse.x * 2 - camera.position.x) * 0.03;
-                camera.position.y += (25 + mouse.y * 2 - camera.position.y) * 0.03;
-                camera.lookAt(0, -5, 0);
-            });
-
-            const clock = new THREE.Clock();
-
-            function animate() {
-                requestAnimationFrame(animate);
-                const elapsed = clock.getElapsedTime();
-
-                // Gentle wave movement
-                material.uniforms.uTime.value = elapsed;
-
-                // Ripple aging
-                for (let i = 0; i < MAX_RIPPLES; i++) {
-                    if (rippleData[i].z < 5.0) {
-                        rippleData[i].z += 0.03;
-                    }
-                }
-                material.uniforms.uRipples.value = rippleData;
-                material.uniformsNeedUpdate = true;
-
-                particles.rotation.y = elapsed * 0.05;
-
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
-            setup3D();
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
