@@ -386,12 +386,30 @@
     <div class="hero-wrapper">
         <!-- Manhattan Video Background -->
         <div class="video-background">
-            <video autoplay muted loop playsinline
+            <video id="hero-video" autoplay muted loop playsinline
                 poster="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1920&auto=format&fit=crop">
                 <source src="hero_manhattan.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
+        <script>
+            // Skip intro - start from desired scene
+            (function() {
+                const video = document.getElementById('hero-video');
+                if (video) {
+                    // Start from 5 seconds in (adjust as needed)
+                    video.currentTime = 5;
+                    video.addEventListener('loadedmetadata', function() {
+                        this.currentTime = 5;
+                    });
+                    // Loop back to start position
+                    video.addEventListener('ended', function() {
+                        this.currentTime = 5;
+                        this.play();
+                    });
+                }
+            })();
+        </script>
 
         <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
             <div class="text-left z-10 pt-20">
