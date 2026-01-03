@@ -117,14 +117,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 80px;
+            padding-top: 0;
             padding-bottom: 60px;
         }
 
-        /* Mobile: tighter header-hero connection */
+        /* Hero content needs offset for fixed header */
+        .hero-content {
+            padding-top: 100px;
+        }
+
         @media (max-width: 767px) {
-            .hero-wrapper {
-                padding-top: 60px;
+            .hero-content {
+                padding-top: 80px;
             }
         }
 
@@ -423,7 +427,7 @@
         </script>
 
         <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
-            <div class="text-left z-10 pt-20">
+            <div class="text-left z-10">
                 <!-- Eyebrow -->
                 <div class="animate-fade-in-up" style="animation-delay: 0.1s;">
                     <span
