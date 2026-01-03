@@ -132,11 +132,11 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            min-width: 100%;
-            min-height: 100%;
+            min-width: 120%;
+            min-height: 120%;
             width: auto;
             height: auto;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1.2);
             object-fit: cover;
             /* Cinematic color grading */
             filter: brightness(1.05) contrast(1.08) saturate(0.9);
@@ -152,14 +152,14 @@
             }
         }
 
-        /* White-based overlay for readability */
+        /* Light overlay for readability */
         .video-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg,
-                    rgba(255, 255, 255, 0.92) 0%,
-                    rgba(255, 255, 255, 0.85) 40%,
-                    rgba(255, 255, 255, 0.75) 100%);
+                    rgba(255, 255, 255, 0.5) 0%,
+                    rgba(255, 255, 255, 0.35) 40%,
+                    rgba(255, 255, 255, 0.25) 100%);
             z-index: 2;
         }
 
