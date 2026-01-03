@@ -393,14 +393,17 @@
             <div class="video-overlay"></div>
         </div>
         <script>
-            // Skip intro - start from desired scene
+            // Skip intro and slow down playback
             (function() {
                 const video = document.getElementById('hero-video');
                 if (video) {
-                    // Start from 5 seconds in (adjust as needed)
+                    // Slow motion - 50% speed for calm background
+                    video.playbackRate = 0.5;
+                    // Start from 5 seconds in
                     video.currentTime = 5;
                     video.addEventListener('loadedmetadata', function() {
                         this.currentTime = 5;
+                        this.playbackRate = 0.5;
                     });
                     // Loop back to start position
                     video.addEventListener('ended', function() {
