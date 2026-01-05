@@ -158,16 +158,6 @@
             filter: brightness(1.05) contrast(1.08) saturate(0.9);
         }
 
-        /* Mobile: use static image instead of video */
-        @media (max-width: 767px) {
-            .video-background video {
-                display: none;
-            }
-            .video-background {
-                background: url('hero_wave_poster.jpg') center/cover no-repeat;
-            }
-        }
-
         /* Fallback for reduced motion preference */
         @media (prefers-reduced-motion: reduce) {
             .video-background video {
@@ -413,21 +403,39 @@
         <!-- Wave Video Background -->
         <div class="video-background">
             <video id="hero-video" autoplay muted loop playsinline poster="hero_wave_poster.jpg" preload="auto">
-                <source src="hero_wave.mp4" type="video/mp4">
+                <source src="hero_wave.mp4" type="video/mp4" media="(min-width: 768px)">
+                <source src="hero_wave_mobile.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
         <script>
-            // Slow down playback for calm wave effect
+            // Mobile-optimized video loading and playback
             (function() {
                 const video = document.getElementById('hero-video');
-                if (video) {
-                    // Slow motion - 60% speed for calm wave background
-                    video.playbackRate = 0.6;
-                    video.addEventListener('loadedmetadata', function() {
-                        this.playbackRate = 0.6;
-                    });
-                }
+                if (!video) return;
+
+                const isMobile = window.innerWidth < 768;
+                const videoSrc = isMobile ? 'hero_wave_mobile.mp4' : 'hero_wave.mp4';
+
+                // Set correct source
+                video.src = videoSrc;
+
+                // Slow motion - 60% speed for calm wave background
+                video.playbackRate = 0.6;
+                video.addEventListener('loadedmetadata', function() {
+                    this.playbackRate = 0.6;
+                });
+
+                // Force play on iOS
+                video.addEventListener('canplaythrough', function() {
+                    this.play().catch(function() {});
+                });
+
+                // Attempt play on user interaction (iOS fallback)
+                document.addEventListener('touchstart', function onTouch() {
+                    video.play().catch(function() {});
+                    document.removeEventListener('touchstart', onTouch);
+                }, { once: true });
             })();
         </script>
 
