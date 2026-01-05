@@ -144,23 +144,23 @@
             overflow: hidden;
         }
 
-        .video-background video {
+        /* Hero Video - Same as edu implementation */
+        .hero-video {
             position: absolute;
             top: 50%;
             left: 50%;
-            min-width: 100vw;
-            min-height: 100vh;
+            min-width: 100%;
+            min-height: 100%;
             width: auto;
             height: auto;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            /* Cinematic color grading */
-            filter: brightness(1.05) contrast(1.08) saturate(0.9);
+            filter: brightness(1.1) saturate(0.9);
         }
 
         /* Fallback for reduced motion preference */
         @media (prefers-reduced-motion: reduce) {
-            .video-background video {
+            .hero-video {
                 display: none;
             }
             .video-background {
@@ -400,53 +400,13 @@
     <!-- Hero Section (Video Background) -->
     <!-- Video Credit: Pexels.com - Free to use (Royalty Free) -->
     <div class="hero-wrapper">
-        <!-- Wave Video Background -->
+        <!-- Wave Video Background (Simple implementation like edu) -->
         <div class="video-background">
-            <!-- Desktop video -->
-            <video id="hero-video-desktop" class="hidden md:block" autoplay muted loop playsinline poster="hero_wave_poster.jpg">
-                <source src="hero_wave.mp4" type="video/mp4">
-            </video>
-            <!-- Mobile video (iOS optimized - all attributes for max compatibility) -->
-            <video id="hero-video-mobile" class="md:hidden"
-                autoplay muted loop playsinline
-                webkit-playsinline="true"
-                x-webkit-airplay="allow"
-                poster="hero_wave_poster.jpg"
-                preload="auto"
-                disablepictureinpicture
-                disableremoteplayback>
+            <video class="hero-video" autoplay muted loop playsinline>
                 <source src="hero_wave_mobile.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
-        <script>
-            (function() {
-                var desktopVideo = document.getElementById('hero-video-desktop');
-                var mobileVideo = document.getElementById('hero-video-mobile');
-
-                // Desktop: slow playback
-                if (desktopVideo) {
-                    desktopVideo.playbackRate = 0.6;
-                }
-
-                // Mobile: force autoplay
-                if (mobileVideo) {
-                    // Set attributes programmatically (iOS sometimes ignores HTML attributes)
-                    mobileVideo.setAttribute('muted', '');
-                    mobileVideo.setAttribute('playsinline', '');
-                    mobileVideo.muted = true;
-                    mobileVideo.playsInline = true;
-
-                    // Attempt autoplay
-                    var playPromise = mobileVideo.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(function() {
-                            // Autoplay blocked - video will show poster
-                        });
-                    }
-                }
-            })();
-        </script>
 
         <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
             <div class="text-left z-10">
