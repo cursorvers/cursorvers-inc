@@ -118,7 +118,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: 96px; /* Match header height h-24 */
+            padding-top: calc(96px + env(safe-area-inset-top, 0px)); /* Header + iOS safe area */
         }
 
         /* Video Background */
