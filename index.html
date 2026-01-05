@@ -402,40 +402,49 @@
     <div class="hero-wrapper">
         <!-- Wave Video Background -->
         <div class="video-background">
-            <video id="hero-video" autoplay muted loop playsinline poster="hero_wave_poster.jpg" preload="auto">
-                <source src="hero_wave.mp4" type="video/mp4" media="(min-width: 768px)">
+            <!-- Desktop video -->
+            <video id="hero-video-desktop" class="hidden md:block" autoplay muted loop playsinline poster="hero_wave_poster.jpg" preload="auto">
+                <source src="hero_wave.mp4" type="video/mp4">
+            </video>
+            <!-- Mobile video (iOS optimized) -->
+            <video id="hero-video-mobile" class="md:hidden" autoplay muted loop playsinline webkit-playsinline poster="hero_wave_poster.jpg" preload="metadata">
                 <source src="hero_wave_mobile.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
         <script>
-            // Mobile-optimized video loading and playback
+            // Video playback setup
             (function() {
-                const video = document.getElementById('hero-video');
-                if (!video) return;
+                const desktopVideo = document.getElementById('hero-video-desktop');
+                const mobileVideo = document.getElementById('hero-video-mobile');
 
-                const isMobile = window.innerWidth < 768;
-                const videoSrc = isMobile ? 'hero_wave_mobile.mp4' : 'hero_wave.mp4';
+                // Desktop: slow playback
+                if (desktopVideo) {
+                    desktopVideo.playbackRate = 0.6;
+                    desktopVideo.addEventListener('loadedmetadata', function() {
+                        this.playbackRate = 0.6;
+                    });
+                }
 
-                // Set correct source
-                video.src = videoSrc;
+                // Mobile: ensure play starts
+                if (mobileVideo) {
+                    // Try immediate play
+                    mobileVideo.play().catch(function() {});
 
-                // Slow motion - 60% speed for calm wave background
-                video.playbackRate = 0.6;
-                video.addEventListener('loadedmetadata', function() {
-                    this.playbackRate = 0.6;
-                });
+                    // iOS needs user gesture - try on first touch
+                    function playOnTouch() {
+                        mobileVideo.play().catch(function() {});
+                        document.removeEventListener('touchstart', playOnTouch);
+                        document.removeEventListener('scroll', playOnTouch);
+                    }
+                    document.addEventListener('touchstart', playOnTouch, { passive: true });
+                    document.addEventListener('scroll', playOnTouch, { passive: true });
 
-                // Force play on iOS
-                video.addEventListener('canplaythrough', function() {
-                    this.play().catch(function() {});
-                });
-
-                // Attempt play on user interaction (iOS fallback)
-                document.addEventListener('touchstart', function onTouch() {
-                    video.play().catch(function() {});
-                    document.removeEventListener('touchstart', onTouch);
-                }, { once: true });
+                    // Also try when video is ready
+                    mobileVideo.addEventListener('canplay', function() {
+                        this.play().catch(function() {});
+                    });
+                }
             })();
         </script>
 
