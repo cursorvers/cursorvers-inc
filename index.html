@@ -164,7 +164,7 @@
                 display: none;
             }
             .video-background {
-                background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+                background: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
             }
         }
 
@@ -398,32 +398,24 @@
     </header>
 
     <!-- Hero Section (Video Background) -->
-    <!-- Video Credit: Pexels.com - Free to use (CC0 License) -->
+    <!-- Video Credit: Pexels.com - Free to use (Royalty Free) -->
     <div class="hero-wrapper">
-        <!-- Library Video Background -->
+        <!-- Wave Video Background -->
         <div class="video-background">
             <video id="hero-video" autoplay muted loop playsinline>
-                <source src="hero_library.mp4" type="video/mp4">
+                <source src="hero_wave.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
         <script>
-            // Skip intro and slow down playback
+            // Slow down playback for calm wave effect
             (function() {
                 const video = document.getElementById('hero-video');
                 if (video) {
-                    // Slow motion - 50% speed for calm background
-                    video.playbackRate = 0.5;
-                    // Start from 15 seconds in (skip intro scenes)
-                    video.currentTime = 15;
+                    // Slow motion - 60% speed for calm wave background
+                    video.playbackRate = 0.6;
                     video.addEventListener('loadedmetadata', function() {
-                        this.currentTime = 15;
-                        this.playbackRate = 0.5;
-                    });
-                    // Loop back to start position
-                    video.addEventListener('ended', function() {
-                        this.currentTime = 15;
-                        this.play();
+                        this.playbackRate = 0.6;
                     });
                 }
             })();
