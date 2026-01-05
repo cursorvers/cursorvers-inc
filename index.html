@@ -403,47 +403,47 @@
         <!-- Wave Video Background -->
         <div class="video-background">
             <!-- Desktop video -->
-            <video id="hero-video-desktop" class="hidden md:block" autoplay muted loop playsinline poster="hero_wave_poster.jpg" preload="auto">
+            <video id="hero-video-desktop" class="hidden md:block" autoplay muted loop playsinline poster="hero_wave_poster.jpg">
                 <source src="hero_wave.mp4" type="video/mp4">
             </video>
-            <!-- Mobile video (iOS optimized) -->
-            <video id="hero-video-mobile" class="md:hidden" autoplay muted loop playsinline webkit-playsinline poster="hero_wave_poster.jpg" preload="metadata">
+            <!-- Mobile video (iOS optimized - all attributes for max compatibility) -->
+            <video id="hero-video-mobile" class="md:hidden"
+                autoplay muted loop playsinline
+                webkit-playsinline="true"
+                x-webkit-airplay="allow"
+                poster="hero_wave_poster.jpg"
+                preload="auto"
+                disablepictureinpicture
+                disableremoteplayback>
                 <source src="hero_wave_mobile.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
         </div>
         <script>
-            // Video playback setup
             (function() {
-                const desktopVideo = document.getElementById('hero-video-desktop');
-                const mobileVideo = document.getElementById('hero-video-mobile');
+                var desktopVideo = document.getElementById('hero-video-desktop');
+                var mobileVideo = document.getElementById('hero-video-mobile');
 
                 // Desktop: slow playback
                 if (desktopVideo) {
                     desktopVideo.playbackRate = 0.6;
-                    desktopVideo.addEventListener('loadedmetadata', function() {
-                        this.playbackRate = 0.6;
-                    });
                 }
 
-                // Mobile: ensure play starts
+                // Mobile: force autoplay
                 if (mobileVideo) {
-                    // Try immediate play
-                    mobileVideo.play().catch(function() {});
+                    // Set attributes programmatically (iOS sometimes ignores HTML attributes)
+                    mobileVideo.setAttribute('muted', '');
+                    mobileVideo.setAttribute('playsinline', '');
+                    mobileVideo.muted = true;
+                    mobileVideo.playsInline = true;
 
-                    // iOS needs user gesture - try on first touch
-                    function playOnTouch() {
-                        mobileVideo.play().catch(function() {});
-                        document.removeEventListener('touchstart', playOnTouch);
-                        document.removeEventListener('scroll', playOnTouch);
+                    // Attempt autoplay
+                    var playPromise = mobileVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(function() {
+                            // Autoplay blocked - video will show poster
+                        });
                     }
-                    document.addEventListener('touchstart', playOnTouch, { passive: true });
-                    document.addEventListener('scroll', playOnTouch, { passive: true });
-
-                    // Also try when video is ready
-                    mobileVideo.addEventListener('canplay', function() {
-                        this.play().catch(function() {});
-                    });
                 }
             })();
         </script>
