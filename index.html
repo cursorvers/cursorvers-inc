@@ -133,18 +133,17 @@
         }
 
 
-        /* Video Background Container - full screen */
-        .video-background {
+        /* Video Background - EXACTLY same as edu */
+        .hero-video-container {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             overflow: hidden;
         }
 
-        /* Hero Video - Same as edu implementation */
         .hero-video {
             position: absolute;
             top: 50%;
@@ -158,37 +157,18 @@
             filter: brightness(1.1) saturate(0.9);
         }
 
-        /* Fallback for reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            .hero-video {
-                display: none;
-            }
-            .video-background {
-                background: url('hero_wave_poster.jpg') center/cover no-repeat;
-            }
-        }
-
-        /* White-based overlay for readability */
-        .video-overlay {
+        /* White overlay for text readability - EXACTLY same as edu */
+        .hero-overlay {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg,
-                    rgba(255, 255, 255, 0.92) 0%,
-                    rgba(255, 255, 255, 0.85) 40%,
-                    rgba(255, 255, 255, 0.75) 100%);
-            z-index: 2;
-        }
-
-        /* Subtle gradient effect */
-        .video-background::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 80%, rgba(0, 82, 204, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 163, 255, 0.05) 0%, transparent 50%);
-            z-index: 3;
-            pointer-events: none;
+                    rgba(255, 255, 255, 0.85) 0%,
+                    rgba(255, 255, 255, 0.75) 40%,
+                    rgba(255, 255, 255, 0.65) 100%);
+            z-index: 1;
         }
 
         .hero-content {
@@ -400,12 +380,12 @@
     <!-- Hero Section (Video Background) -->
     <!-- Video Credit: Pexels.com - Free to use (Royalty Free) -->
     <div class="hero-wrapper">
-        <!-- Wave Video Background (Simple implementation like edu - using Pexels CDN) -->
-        <div class="video-background">
-            <video class="hero-video" autoplay muted loop playsinline poster="hero_wave_poster.jpg">
+        <!-- Video Background - EXACTLY same as edu -->
+        <div class="hero-video-container">
+            <video class="hero-video" autoplay muted loop playsinline>
                 <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
             </video>
-            <div class="video-overlay"></div>
+            <div class="hero-overlay"></div>
         </div>
 
         <div class="hero-content max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center h-full">
