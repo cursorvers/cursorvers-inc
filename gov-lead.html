@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX3Y6G4XWJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TX3Y6G4XWJ');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>GOV-Lead｜院内AIガバナンス担当者 育成・認定プログラム | Cursorvers</title>
+    <meta name="description" content="8週間で院内AIガバナンスの中核人材を育成。AI利用ポリシー、ベンダー評価、研修設計など6つの成果物を納品。PHI不要、NDA対応可。">
+
+    <!-- OGP -->
+    <!-- TODO: OGP画像を作成（黒背景+シアンライン+"GOV-Lead / 院内AIガバナンス担当者 育成・認定"）して images/og-govlead.png に配置 -->
+    <meta property="og:title" content="GOV-Lead｜院内AIガバナンス担当者 育成・認定プログラム">
+    <meta property="og:description" content="8週間で院内AIガバナンスの中核人材を育成。担当が変わっても回り続ける体制を。">
+    <meta property="og:image" content="https://cursorvers.com/images/og-govlead.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cursorvers.com/gov-lead.html">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="canonical" href="https://cursorvers.com/gov-lead.html">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        en: ['"Manrope"', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-black': '#0B0C10',
+                        'brand-blue': '#0052CC',
+                        'brand-cyan': '#66FCF1',
+                        'brand-gray': '#F7F8FA',
+                        'text-primary': '#0B0C10',
+                        'text-secondary': '#374151',
+                        'text-tertiary': '#6B7280',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #0B0C10;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a, button {
+            min-height: 44px;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.12);
+            border-color: #0052CC;
+        }
+
+        .phi-notice {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-left: 4px solid #F59E0B;
+        }
+
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        }
+
+        @media (min-width: 768px) {
+            .sticky-cta {
+                display: none;
+            }
+        }
+
+        main {
+            padding-bottom: 100px;
+        }
+
+        @media (min-width: 768px) {
+            main {
+                padding-bottom: 0;
+            }
+        }
+
+        /* PC向け大きめフォント（年配経営者向け） */
+        @media (min-width: 768px) {
+            .text-body-lg {
+                font-size: 1.625rem !important;
+                /* 26px */
+                line-height: 1.75;
+            }
+
+            .text-body {
+                font-size: 1.375rem !important;
+                /* 22px */
+                line-height: 1.75;
+            }
+
+            /* カード見出し */
+            .card-premium h3,
+            .card-hover h3 {
+                font-size: 1.5rem !important;
+                /* 24px */
+            }
+
+            /* テーブル */
+            table {
+                font-size: 1.25rem !important;
+                /* 20px */
+            }
+
+            /* リスト項目 */
+            li {
+                font-size: 1.25rem;
+                /* 20px */
+            }
+
+            /* 段落 */
+            p {
+                font-size: 1.25rem;
+                /* 20px */
+            }
+
+            /* セクション説明 */
+            .section-desc {
+                font-size: 1.375rem !important;
+                /* 22px */
+            }
+        }
+
+        /* Mobile polish */
+        @media (max-width: 767px) {
+            .text-body-lg {
+                font-size: 1.125rem !important;
+                /* 18px */
+                line-height: 1.85;
+            }
+
+            .text-body {
+                font-size: 1rem !important;
+                /* 16px */
+                line-height: 1.85;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 mix-blend-multiply">
+                <span class="flex flex-col leading-none">
+                    <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
+                    <span class="text-[10px] font-semibold text-text-tertiary tracking-[0.25em]">カーソルバース</span>
+                </span>
+            </a>
+            <div class="hidden md:flex items-center gap-4">
+                <a href="contact.html"
+                    class="px-6 py-3 bg-brand-blue text-white font-bold rounded-full hover:bg-brand-black transition text-sm"
+                    onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_nav_consult'})">
+                    無料で相談する
+                </a>
+                <a href="/brochures/gov-lead.pdf"
+                    target="_blank" rel="noopener noreferrer"
+                    class="px-6 py-3 border border-gray-300 font-bold rounded-full hover:border-brand-blue hover:text-brand-blue transition text-sm"
+                    onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_nav_pdf'})">
+                    資料PDF
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+        <!-- Hero -->
+        <section class="relative py-20 md:py-32 px-6 overflow-hidden">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                <img src="govlead_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-50 filter grayscale">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-white/95"></div>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto text-center">
+                <p class="text-base md:text-lg font-semibold text-brand-blue mb-6 font-en tracking-wider">For Hospitals / 人材育成</p>
+                <h1 class="text-6xl md:text-7xl font-bold tracking-tight mb-6 font-en">GOV-Lead</h1>
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">
+                    院内AIガバナンス担当者<br>
+                    育成・認定プログラム
+                </h2>
+                <p class="text-2xl md:text-3xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed">
+                    AIを"使う"だけで終わらせない。<br class="hidden md:block">
+                    担当が変わっても回り続けるために、<br class="md:hidden">
+                    院内の中核人材を育てます。
+                </p>
+
+                <!-- Badges -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
+                        <i class="fa-solid fa-calendar-days text-brand-blue"></i>
+                        8週間（プライベート実施）
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
+                        <i class="fa-solid fa-file-lines text-brand-blue"></i>
+                        成果物ベース（規程・台帳・教育）
+                    </span>
+                    <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
+                        <i class="fa-solid fa-shield-halved text-brand-blue"></i>
+                        PHI不要 / NDA可
+                    </span>
+                </div>
+
+                <!-- CTA -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                    <a href="contact.html"
+                        class="inline-flex items-center justify-center px-12 py-5 bg-brand-blue text-white font-bold text-xl rounded-full hover:bg-brand-black transition"
+                        onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_hero_consult'})">
+                        無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="/brochures/gov-lead.pdf"
+                        target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-12 py-5 border-2 border-gray-200 font-bold text-xl rounded-full hover:border-brand-blue hover:text-brand-blue transition"
+                        onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_hero_pdf'})">
+                        資料PDFを見る <i class="fa-solid fa-file-pdf ml-2"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 結論：8週間で院内に残るもの -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-6">8週間で、院内に残るもの</h2>
+                <p class="text-xl md:text-2xl text-text-secondary text-center mb-16 max-w-3xl mx-auto leading-relaxed">
+                    テンプレートを渡して終わりではありません。貴院の状況に合わせて作り上げます。
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-file-contract text-3xl text-brand-blue"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">規程と責任分界</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
+                            AI利用ポリシー（ドラフト）＋RACI表で「誰が何に責任を持つか」を明文化
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-cyan-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-clipboard-check text-3xl text-cyan-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">評価と教育</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
+                            ベンダー評価質問票＋院内研修スライド雛形で「選定基準」と「教育体制」を整備
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 card-hover">
+                        <div class="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-list-check text-3xl text-emerald-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">運用と証跡</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
+                            AI利用台帳テンプレ＋インシデント対応フローで「運用の記録」を残せる体制に
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- よくある課題 -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">こんな課題、ありませんか？</h2>
+
+                <div class="grid sm:grid-cols-2 gap-6 mb-12">
+                    <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-medium">「誰がAIの責任を持つか」が曖昧</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-medium">ベンダー比較の観点がない</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-medium">研修が単発で終わり、翌年に忘れる</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
+                        <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-medium">ログ・証跡の管理ルールがない</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-10 text-center">
+                    <p class="text-xl md:text-2xl text-text-secondary leading-relaxed">
+                        「まずは棚卸しから」なら → <a href="services.html#plans" class="text-brand-blue font-semibold hover:underline">48h簡易診断</a><br>
+                        「担当者を育てたい」なら → このまま読み進める
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 対象 -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">GOV-Leadが向いている医療機関</h2>
+
+                <div class="space-y-6">
+                    <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-check text-xl"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl">AI導入済み or 導入予定だが、院内に運用責任者がいない</p>
+                    </div>
+                    <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-check text-xl"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl">ガイドライン対応を"外部任せ"にせず、院内で回したい</p>
+                    </div>
+                    <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
+                        <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-check text-xl"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl">単発研修ではなく、"役割"として定着させたい</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 推奨する選抜者 -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">誰を選抜すべきか</h2>
+                <p class="text-xl md:text-2xl text-text-secondary text-center mb-16">失敗しない条件</p>
+
+                <div class="space-y-6 mb-12">
+                    <div class="bg-white rounded-2xl p-8">
+                        <div class="flex items-center gap-5 mb-4">
+                            <span class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl">1名</span>
+                            <h3 class="text-2xl font-bold">運用責任を持てる人</h3>
+                        </div>
+                        <p class="text-lg md:text-xl text-text-secondary ml-[74px]">事務長/医療安全/情シスなど</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8">
+                        <div class="flex items-center gap-5 mb-4">
+                            <span class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl">2名</span>
+                            <h3 class="text-2xl font-bold">上記 + 現場側キーパーソン</h3>
+                        </div>
+                        <p class="text-lg md:text-xl text-text-secondary ml-[74px]">看護/診療支援部門など</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-8">
+                        <div class="flex items-center gap-5 mb-4">
+                            <span class="w-14 h-14 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl">3名</span>
+                            <h3 class="text-2xl font-bold">上記 + 経営層の窓口</h3>
+                        </div>
+                        <p class="text-lg md:text-xl text-text-secondary ml-[74px]">院長/副院長/部長級</p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-2xl p-8 text-center">
+                    <p class="text-xl md:text-2xl">
+                        <i class="fa-solid fa-clock text-brand-blue mr-2"></i>
+                        <strong>必須条件：</strong>週あたり合計2時間（MTG1h + 課題1h）を確保できる
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- プログラム概要 -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">プログラム概要</h2>
+
+                <div class="grid md:grid-cols-2 gap-10 mb-12">
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-calendar text-brand-blue text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl md:text-2xl mb-2">期間</h3>
+                                <p class="text-lg md:text-xl text-text-secondary">8週間</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-video text-brand-blue text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl md:text-2xl mb-2">形式</h3>
+                                <p class="text-lg md:text-xl text-text-secondary">週1回 60分（オンライン）＋課題レビュー（週1回）</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-building-lock text-brand-blue text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl md:text-2xl mb-2">実施形態</h3>
+                                <p class="text-lg md:text-xl text-text-secondary">1医療機関=プライベート（他院と混ぜない）</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-gray rounded-2xl p-8">
+                        <h3 class="font-bold text-xl md:text-2xl mb-6">成果物（納品物・テンプレ）</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>AI利用ポリシー（ドラフト）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>AI利用台帳テンプレ（Excel/スプレッドシート）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>ベンダー評価質問票（テンプレ）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>インシデント対応フロー（ドラフト）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>院内研修スライド雛形（初回版）</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-lg md:text-xl">
+                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <span>90日フォローガイド（修了後の自走チェックリスト）</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8週間カリキュラム -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">8週間カリキュラム</h2>
+
+                <div class="space-y-5">
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">1</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">現状棚卸し</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">AI利用状況・リスク洗い出し</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">2</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">役割設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">GOV-Lead候補の権限と責任を明文化</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">3</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">規程設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">AI利用ポリシーのドラフト作成</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">4</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">評価設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">ベンダー評価質問票の作成</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">5</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">台帳設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">AI利用台帳のフォーマット確定</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">6</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">教育設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">院内研修スライドの構成・初稿</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">7</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">運用設計</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">インシデント対応フロー・証跡管理</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-8 flex items-start gap-5">
+                        <span class="w-12 h-12 bg-brand-black text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">8</span>
+                        <div>
+                            <h3 class="font-bold text-xl md:text-2xl">総仕上げ＋修了判定</h3>
+                            <p class="text-lg md:text-xl text-text-secondary">成果物レビュー＋Q&A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 価格 -->
+        <section id="pricing" class="py-20 md:py-28 px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">料金（税抜）</h2>
+                <p class="text-center text-xl md:text-2xl text-text-secondary mb-16">1医療機関あたりの価格です</p>
+
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden mb-10">
+                    <table class="w-full">
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-8 py-6 text-xl md:text-2xl">1名</td>
+                                <td class="px-8 py-6 text-xl md:text-2xl font-bold text-right">¥360,000</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-8 py-6 text-xl md:text-2xl">2名パック</td>
+                                <td class="px-8 py-6 text-xl md:text-2xl font-bold text-right">¥520,000</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 bg-blue-50">
+                                <td class="px-8 py-6 text-xl md:text-2xl font-semibold">3名パック <span class="ml-2 text-base text-brand-blue">おすすめ</span></td>
+                                <td class="px-8 py-6 text-xl md:text-2xl font-bold text-right">¥660,000</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-8 py-6 text-xl md:text-2xl">追加1名</td>
+                                <td class="px-8 py-6 text-xl md:text-2xl font-bold text-right">¥160,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-brand-gray rounded-xl p-8">
+                        <h3 class="font-bold mb-6 text-xl md:text-2xl">含まれるもの</h3>
+                        <ul class="space-y-3 text-lg md:text-xl text-text-secondary">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>オンラインMTG×8回（60分）</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>課題レビュー（週1回）</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>テンプレ一式</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>修了判定</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-100 rounded-xl p-8">
+                        <h3 class="font-bold mb-6 text-xl md:text-2xl">含まれないもの</h3>
+                        <ul class="space-y-3 text-lg md:text-xl text-text-secondary">
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>現地訪問</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>実装作業（電子カルテ連携等）</li>
+                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>法務の最終レビュー</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 税注記 -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-8 mb-10">
+                    <p class="text-lg md:text-xl text-amber-800">
+                        <i class="fa-solid fa-info-circle mr-2"></i>
+                        価格は税抜表示です。請求時に消費税（10%）を加算します。適格請求書（インボイス）は発行できません。
+                    </p>
+                </div>
+
+                <!-- 併用割引 -->
+                <div class="bg-blue-50 rounded-xl p-8">
+                    <h3 class="font-bold mb-6 text-xl md:text-2xl text-brand-blue"><i class="fa-solid fa-percent mr-2"></i>併用割引</h3>
+                    <ul class="space-y-4 text-lg md:text-xl">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-tag text-brand-blue mt-1"></i>
+                            <span>顧問（Standard以上）契約中：<strong>10%OFF</strong></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-tag text-brand-blue mt-1"></i>
+                            <span>監査と同時見積（初回のみ）：<strong>監査費用5%OFF</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 顧問・監査との違い -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">どれを選ぶべきか</h2>
+                <p class="text-xl md:text-2xl text-text-secondary text-center mb-16">迷わせない</p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl p-10 text-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <i class="fa-solid fa-magnifying-glass-chart text-3xl text-gray-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">48h簡易診断</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
+                            現状を可視化し「何からやるか」を決める
+                        </p>
+                        <a href="services.html" class="text-lg text-brand-blue font-semibold hover:underline">詳しく見る →</a>
+                    </div>
+                    <div class="bg-white rounded-2xl p-10 text-center border-2 border-brand-blue">
+                        <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <i class="fa-solid fa-graduation-cap text-3xl text-brand-blue"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">GOV-Lead</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
+                            院内の中核人材を育て、運用を"自走"へ
+                        </p>
+                        <span class="inline-block px-5 py-3 bg-brand-blue text-white text-base font-bold rounded-full">このページ</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-10 text-center">
+                        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                            <i class="fa-solid fa-handshake text-3xl text-gray-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">顧問/監査</h3>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
+                            継続伴走と第三者検証で"続く仕組み"を維持・説明可能に
+                        </p>
+                        <a href="services.html#plans" class="text-lg text-brand-blue font-semibold hover:underline">詳しく見る →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">よくあるご質問</h2>
+
+                <div class="space-y-5">
+                    <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden" open>
+                        <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
+                            <span class="font-bold text-xl md:text-2xl pr-4">オンラインのみですか？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
+                            <p>原則オンラインです。ご希望があれば現地訪問は別途見積となります。</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
+                            <span class="font-bold text-xl md:text-2xl pr-4">認定は公的資格ですか？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
+                            <p>公的資格ではありません。Cursorversによる内部認定です。成果物の完成度と理解度を確認して修了判定を行います。</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
+                            <span class="font-bold text-xl md:text-2xl pr-4">途中解約はできますか？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
+                            <p>原則不可です。未実施分の返金には基本的に応じかねます。</p>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+                        <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
+                            <span class="font-bold text-xl md:text-2xl pr-4">顧問と併用できますか？</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
+                            <p>できます。併用割引（10%OFF）が適用されます。</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-20 md:py-28 px-6 bg-brand-black text-white">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">
+                    まずは、院内の<br class="md:hidden">
+                    「AI担当の仕事」を<br>
+                    定義するところから。
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
+                    無料相談で貴院の状況をお聞かせください。<br class="hidden md:block">
+                    GOV-Leadが最適かどうか、<br class="md:hidden">率直にお伝えします。
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                    <a href="contact.html"
+                        class="inline-flex items-center justify-center px-12 py-5 bg-white text-brand-black font-bold text-xl rounded-full hover:bg-brand-cyan transition"
+                        onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_final_consult'})">
+                        無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="/brochures/gov-lead.pdf"
+                        target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-12 py-5 border-2 border-white/30 text-white font-bold text-xl rounded-full hover:border-white hover:bg-white/10 transition"
+                        onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_final_pdf'})">
+                        資料PDFを見る <i class="fa-solid fa-file-pdf ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white py-16 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 rounded-full border border-white/20">
+                        <span class="text-xl font-bold font-en tracking-widest">Cursorvers</span>
+                    </div>
+                    <p class="text-gray-400">安心と継続の医療AIガバナンス</p>
+                </div>
+                <div class="flex gap-12">
+                    <div>
+                        <h4 class="font-bold mb-4 font-en">Links</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
+                            <li><a href="index.html#company" class="hover:text-white transition">Company</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4 font-en">Legal</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm font-en">
+                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="sticky-cta md:hidden">
+        <div class="flex gap-3">
+            <a href="contact.html"
+                class="flex-1 py-4 text-center bg-brand-blue text-white font-bold rounded-full"
+                onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_sticky_consult'})">
+                無料で相談する
+            </a>
+            <a href="/brochures/gov-lead.pdf"
+                target="_blank" rel="noopener noreferrer"
+                class="py-4 px-6 text-center border border-gray-300 font-bold rounded-full"
+                onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_sticky_pdf'})">
+                PDF
+            </a>
+        </div>
+    </div>
+
+    <!-- Analytics: Scroll & Time Tracking -->
+    <script>
+        (function() {
+            let scrollTracked = false;
+            let timeTracked = false;
+
+            // Scroll 50% tracking
+            window.addEventListener('scroll', function() {
+                if (scrollTracked) return;
+                const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+                if (scrollPercent >= 50) {
+                    scrollTracked = true;
+                    if (window.gtag) gtag('event', 'scroll', { label: 'govlead_50pct' });
+                }
+            });
+
+            // Time on page 60s tracking
+            setTimeout(function() {
+                if (!timeTracked) {
+                    timeTracked = true;
+                    if (window.gtag) gtag('event', 'time_on_page', { label: 'govlead_60s' });
+                }
+            }, 60000);
+        })();
+    </script>
+
+</body>
+
+</html>
