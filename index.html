@@ -344,6 +344,9 @@
                 <a href="#philosophy" class="hover:text-brand-blue transition">Philosophy</a>
                 <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
+                <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-brand-blue transition">For Individuals <i
+                        class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="#company" class="hover:text-brand-blue transition">Company</a>
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer"
@@ -351,8 +354,7 @@
                         class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
             </nav>
             <div class="flex items-center gap-6">
-                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                    target="_blank" rel="noopener noreferrer"
+                <a href="contact.html"
                     class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en"
                     data-mobile-contact>
                     Contact
@@ -423,8 +425,7 @@
                                 class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </span>
                     </a>
-                    <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                        target="_blank" rel="noopener noreferrer"
+                    <a href="contact.html"
                         class="btn-clean group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[240px] bg-white border border-gray-200 text-brand-black font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:bg-gray-50 hover:border-brand-blue/30 transition-colors">
                         <span class="relative z-10 flex items-center gap-3">診断結果をもとに相談する <i
                                 class="fa-solid fa-calendar-check text-brand-blue"></i></span>
@@ -458,14 +459,82 @@
         </div>
     </div>
 
-    <!-- 3省2ガイドライン Section -->
+    <!-- Audience Split Section: 2レーン分岐 -->
+    <section class="py-16 md:py-24 bg-brand-gray relative z-10">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-10 md:mb-14">
+                <h2 class="text-2xl md:text-3xl font-bold text-brand-black">あなたはどちらですか？</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                <!-- カードA: 医療機関向け -->
+                <div class="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <p class="text-sm font-bold text-brand-blue uppercase mb-3 font-en tracking-wider">For Hospitals</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-4">医療機関向け</h3>
+                    <p class="text-text-secondary text-lg leading-relaxed mb-8">
+                        導入後も事故なく運用が続くよう、ルール・評価・教育を整えます。
+                    </p>
+
+                    <div class="space-y-4">
+                        <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_selfcheck'})"
+                            class="block w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
+                            3分セルフチェック（無料） <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="services.html"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_services'})"
+                            class="block text-center text-brand-blue font-semibold hover:underline">
+                            医療機関向けサービスを見る →
+                        </a>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-100">
+                        <a href="gov-lead.html"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_govlead'})"
+                            class="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-brand-blue transition">
+                            <span class="bg-brand-blue text-white text-xs font-bold px-2 py-0.5 rounded">NEW</span>
+                            院内担当者を育てる「GOV-Lead」
+                        </a>
+                    </div>
+                </div>
+
+                <!-- カードB: AIベンダー向け -->
+                <div class="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <p class="text-sm font-bold text-brand-blue uppercase mb-3 font-en tracking-wider">For Vendors</p>
+                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-4">AIベンダー向け</h3>
+                    <p class="text-text-secondary text-lg leading-relaxed mb-8">
+                        臨床視点とガバナンス知見で、安心して使われ続ける製品に仕上げます。
+                    </p>
+
+                    <div class="space-y-4">
+                        <a href="consulting.html"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})"
+                            class="block w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
+                            ベンダー向け支援を見る <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="contact.html"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_contact'})"
+                            class="block text-center text-brand-blue font-semibold hover:underline">
+                            無料で相談する →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
     <section class="py-20 md:py-28 bg-white relative z-10">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             <div class="text-center mb-12 md:mb-16">
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Legal
                     Requirement</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">安心と継続を支える3省2ガイドライン</h2>
-                <p class="text-xl text-text-secondary max-w-2xl mx-auto">厚生労働省・経済産業省・総務省が定める、安心運用と継続性の基準</p>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">「問われる時代」に備える</h2>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+                    医療×AIの規制は、年単位ではなく"月単位"で具体化されています。<br class="hidden md:inline">
+                    「誰がAIの出力を検証したか」「ルールは文書化されているか」「職員は教育を受けているか」——<br class="hidden md:inline">
+                    これらを問われたとき、説明できる体制はありますか？
+                </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 md:gap-8">
@@ -652,11 +721,11 @@
             <div class="text-center mb-14 md:mb-20">
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Our
                     Business</span>
-                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">安心と継続をつくる3つの支援</h2>
-                <p class="text-text-secondary text-body-lg">監査・運用設計・教育の3軸で、導入後も安心して続く体制を支えます。</p>
+                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">安心と継続をつくる2つの支援</h2>
+                <p class="text-text-secondary text-body-lg">監査・運用設計・教育で、導入後も安心して続く体制を支えます。</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
                 <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
                     <div class="h-52 md:h-64 img-cover">
                         <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?q=80&w=2000&auto=format&fit=crop"
@@ -669,8 +738,11 @@
                         <p class="text-body text-text-secondary leading-relaxed flex-grow">
                             現状診断から運用ルール整備、定期レビュー、第三者監査まで。貴院の規模に合わせて、安心して続く運用体制を構築します。
                         </p>
+                        <p class="text-sm text-text-secondary mt-4 pt-4 border-t border-gray-100">
+                            <span class="font-semibold text-brand-black">新メニュー：</span>院内AIガバナンス担当者を育成する「<a href="gov-lead.html" class="text-brand-blue hover:underline font-semibold">GOV-Lead</a>」もご用意しています。
+                        </p>
                         <a href="services.html"
-                            class="block mt-8 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
+                            class="block mt-6 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
                             詳しく見る <i class="fa-solid fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -691,25 +763,6 @@
                         <a href="consulting.html"
                             class="block mt-8 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
                             詳しく見る <i class="fa-solid fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
-                    <div class="h-52 md:h-64 img-cover">
-                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop"
-                            alt="医療従事者がAI教育プログラムをオンライン受講している様子">
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col flex-grow">
-                        <p class="text-sm font-bold text-brand-blue uppercase mb-3 font-en tracking-wider">For
-                            Individuals</p>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">個人向け教育</h3>
-                        <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            医療者・ヘルステック関係者向けの継続学習とキャリア支援。専門知をAIで活かし、安心して学び続けられる仕組みを身につけます。
-                        </p>
-                        <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                            class="block mt-8 w-full py-4 text-center font-bold text-lg border-2 border-brand-black text-brand-black rounded-full hover:bg-brand-black hover:text-white transition">
-                            Cursorvers.edu へ <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
                         </a>
                     </div>
                 </div>
@@ -854,19 +907,24 @@
                         </h2>
                         <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
                             現状の不安や運用体制をお聞かせください。<br>
-                            医療機関、AIベンダー、個人——<br class="md:hidden">それぞれの継続運用に必要な次の一手をご提案します。
+                            医療機関・AIベンダーそれぞれに合わせて、次の一手をご提案します。
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                                target="_blank" rel="noopener noreferrer"
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <a href="contact.html"
+                                onclick="if(window.gtag)gtag('event','cta_click',{label:'home_getstarted_contact'})"
                                 class="inline-flex items-center justify-center px-10 py-5 bg-brand-cyan text-brand-black font-bold text-lg rounded-full hover:bg-white transition">
-                                運用の不安を相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                                無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
                             </a>
                             <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank"
                                 rel="noopener noreferrer"
+                                onclick="if(window.gtag)gtag('event','cta_click',{label:'home_getstarted_selfcheck'})"
                                 class="inline-flex items-center justify-center px-10 py-5 border-2 border-white/30 text-white font-bold text-lg rounded-full hover:bg-white/10 hover:border-white transition">
-                                無料セルフチェック
+                                3分セルフチェック（医療機関向け）
                             </a>
+                        </div>
+                        <div class="flex flex-wrap gap-6 text-sm text-gray-400">
+                            <a href="services.html" class="hover:text-white transition">医療機関向けサービス →</a>
+                            <a href="consulting.html" class="hover:text-white transition">AIベンダー向け支援 →</a>
                         </div>
                     </div>
                 </div>
@@ -975,6 +1033,7 @@
                             <li><a href="services.html" class="hover:text-white transition">Services</a></li>
                             <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
                             <li><a href="#company" class="hover:text-white transition">Company</a></li>
+                            <li><a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Cursorvers.edu <span class="text-xs text-gray-500">（個人向け）</span></a></li>
                         </ul>
                     </div>
                     <div>
@@ -983,9 +1042,7 @@
                             <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
                             <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec"
-                                    target="_blank" rel="noopener noreferrer"
-                                    class="hover:text-white transition">Contact</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -1050,7 +1107,7 @@
                         </div>
                         <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
                         <div class="px-6 pb-10 text-center">
-                            <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" rel="noopener noreferrer" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
+                            <a href="contact.html" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
                         </div>
                     `;
                     document.body.appendChild(mobileMenu);

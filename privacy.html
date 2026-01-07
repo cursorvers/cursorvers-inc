@@ -37,6 +37,21 @@
         h1, h2 { font-weight: 700; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         .font-en { font-family: "Manrope", sans-serif; }
+
+        /* PC向け大きめフォント（年配経営者向け） */
+        @media (min-width: 768px) {
+            /* リスト項目 */
+            li {
+                font-size: 1.125rem;
+                /* 18px */
+            }
+
+            /* 段落 */
+            p {
+                font-size: 1.125rem;
+                /* 18px */
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -46,19 +61,19 @@
                 <img src="Cursorvers_logo_navy.jpeg" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
                 <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
             </a>
-            <nav class="hidden md:flex items-center gap-10 text-sm font-medium text-gray-600 font-en" data-desktop-nav>
-                <a href="index.html#philosophy" class="hover:text-brand-blue transition">Philosophy</a>
-                <a href="index.html#business" class="hover:text-brand-blue transition">Business</a>
-                <a href="services.html" class="hover:text-brand-blue transition">Services</a>
+            <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+                <a href="index.html" class="hover:text-brand-blue transition">Home</a>
+                <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
+                <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
                 <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
                 <a href="index.html#company" class="hover:text-brand-blue transition">Company</a>
-                <a href="https://note.com/nice_wren7963" target="_blank" class="hover:text-brand-blue transition flex items-center gap-1">
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
                     Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                 </a>
             </nav>
             <div class="flex items-center gap-6">
-                <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="hidden sm:inline-flex text-sm font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en" data-mobile-contact>
-                    お問い合わせ
+                <a href="contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en" data-mobile-contact>
+                    Contact
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
                     <i class="fa-solid fa-bars"></i>
@@ -69,7 +84,7 @@
 
     <main class="max-w-5xl mx-auto px-6 pt-32 pb-16">
         <h1 class="text-3xl mb-10">プライバシーポリシー</h1>
-        <p class="text-base text-gray-700 mb-4">制定日：2025年1月1日／最終更新日：2025年1月1日</p>
+        <p class="text-base text-gray-700 mb-4">制定日：2025年1月1日／最終更新日：2026年1月7日</p>
         <p class="text-base text-gray-700 mb-12">安心と継続の医療AIガバナンスを支えるため、個人情報の取扱い方針を明示します。</p>
 
         <div class="bg-white shadow rounded-lg p-8 space-y-8 text-base text-gray-700 leading-7">
@@ -77,16 +92,34 @@
                 <h2 class="text-base mb-3">1. 事業者情報</h2>
                 <p>Cursorvers（所在地：Tokyo, Japan、詳細はお問い合わせ後に開示）</p>
             </section>
+            <section class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-lg -mx-2">
+                <h2 class="text-base mb-3 font-bold text-amber-800">重要：患者情報（PHI）について</h2>
+                <p class="text-amber-900"><strong>当社は患者情報・症例の詳細（PHI：Protected Health Information）を一切受領しません。</strong></p>
+                <p class="text-amber-900 mt-2">サービス提供にあたり確認する情報は、AI導入状況、運用フロー、組織体制など「仕組み」に関する情報のみです。お問い合わせフォームやヒアリングにおいて、患者情報・症例の詳細は記載・共有しないでください。</p>
+            </section>
             <section>
                 <h2 class="text-base mb-3">2. 取得する個人情報</h2>
                 <ul class="list-disc list-inside text-gray-700">
                     <li>氏名、所属、役職</li>
                     <li>メールアドレス、電話番号</li>
-                    <li>問い合わせ内容、契約情報、アクセスログ</li>
+                    <li>問い合わせ内容、契約情報</li>
                 </ul>
+                <p class="mt-2 text-sm text-gray-600">※ 患者情報・症例の詳細（PHI）は取得対象外です。</p>
             </section>
             <section>
-                <h2 class="text-base mb-3">3. 利用目的</h2>
+                <h2 class="text-base mb-3">3. アクセスログの取扱い</h2>
+                <p>当ウェブサイトでは、サービス改善およびセキュリティ対策のため、以下のアクセスログを自動取得しています。</p>
+                <ul class="list-disc list-inside text-gray-700 mt-2">
+                    <li>IPアドレス</li>
+                    <li>アクセス日時</li>
+                    <li>参照元URL</li>
+                    <li>使用ブラウザ・OS情報</li>
+                    <li>閲覧ページ</li>
+                </ul>
+                <p class="mt-2">これらの情報は統計的な分析に使用し、個人を特定する目的では使用しません。一定期間経過後に削除します。</p>
+            </section>
+            <section>
+                <h2 class="text-base mb-3">4. 利用目的</h2>
                 <ul class="list-disc list-inside text-gray-700">
                     <li>安心と継続を支えるサービス提供、契約管理、請求・支払業務</li>
                     <li>各種お問い合わせへの対応、運用サポート</li>
@@ -94,24 +127,24 @@
                 </ul>
             </section>
             <section>
-                <h2 class="text-base mb-3">4. 第三者提供について</h2>
+                <h2 class="text-base mb-3">5. 第三者提供について</h2>
                 <p>法令に基づく場合および契約遂行のための委託先を除き、本人の同意なく第三者に提供しません。</p>
             </section>
             <section>
-                <h2 class="text-base mb-3">5. 個人情報の管理</h2>
+                <h2 class="text-base mb-3">6. 個人情報の管理</h2>
                 <p>取得した情報はアクセス権限を限定し、安心してご利用いただくためのセキュリティ対策のもとで保管します。不要となった情報は適切な方法で廃棄します。</p>
             </section>
             <section>
-                <h2 class="text-base mb-3">6. 開示・訂正・削除</h2>
+                <h2 class="text-base mb-3">7. 開示・訂正・削除</h2>
                 <p>所定の手続きによりご本人からの請求があった場合、法令に基づき開示・訂正・削除等に対応します。下記お問い合わせ窓口までご連絡ください。</p>
             </section>
             <section>
-                <h2 class="text-base mb-3">7. Cookie等の利用</h2>
+                <h2 class="text-base mb-3">8. Cookie等の利用</h2>
                 <p>現時点では行動トラッキングを目的としたCookieは使用していません。将来的に導入する場合は、本ポリシーを更新し明示します。</p>
             </section>
             <section>
-                <h2 class="text-base mb-3">8. お問い合わせ</h2>
-                <p>本ポリシーに関するご質問は、<a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="text-blue-600 hover:underline">お問い合わせフォーム</a>よりお願いいたします。</p>
+                <h2 class="text-base mb-3">9. お問い合わせ</h2>
+                <p>本ポリシーに関するご質問は、<a href="contact.html" class="text-blue-600 hover:underline">お問い合わせ</a>よりお願いいたします。</p>
             </section>
         </div>
     </main>
@@ -121,7 +154,7 @@
             <a href="privacy.html" class="hover:text-brand-blue transition">プライバシーポリシー</a>
             <a href="terms.html" class="hover:text-brand-blue transition">利用規約</a>
             <a href="tokushoho.html" class="hover:text-brand-blue transition">特定商取引法に基づく表記</a>
-            <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" rel="noopener" class="hover:text-brand-blue transition">お問い合わせ</a>
+            <a href="contact.html" class="hover:text-brand-blue transition">お問い合わせ</a>
         </div>
         <div class="flex justify-center gap-6 text-lg mb-4">
             <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/" target="_blank" rel="noopener" class="hover:text-brand-blue transition">
@@ -158,7 +191,7 @@
                         </div>
                         <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
                         <div class="px-6 pb-10 text-center">
-                            <a href="https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec" target="_blank" class="inline-block text-sm font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">お問い合わせ</a>
+                            <a href="contact.html" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
                         </div>
                     `;
                     document.body.appendChild(mobileMenu);
