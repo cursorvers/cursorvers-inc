@@ -29,6 +29,32 @@
 
     <link rel="canonical" href="https://cursorvers.com/gov-lead.html">
 
+    <!-- JSON-LD 構造化データ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "GOV-Lead（院内AIガバナンス担当者 育成・認定）",
+        "provider": {
+            "@type": "Organization",
+            "name": "Cursorvers",
+            "url": "https://cursorvers.com"
+        },
+        "serviceType": "医療AIガバナンス 人材育成（院内担当者）",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Japan"
+        },
+        "description": "8週間で院内AIガバナンスの中核人材を育成。AI利用ポリシー、ベンダー評価、研修設計など6つの成果物を納品。",
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "JPY",
+            "price": "360000",
+            "url": "https://cursorvers.com/gov-lead.html"
+        }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -347,6 +373,115 @@
                 </div>
             </div>
         </section>
+
+        <!-- 3分セルフチェック -->
+        <section class="py-20 md:py-28 px-6 bg-white" id="self-check">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">3分セルフチェック（簡易版）</h2>
+                <p class="text-lg md:text-xl text-text-secondary text-center mb-12">
+                    当てはまらない項目が多いほど、「担当者の仕事」と「成果物」を先に作る必要があります。
+                </p>
+
+                <div class="space-y-4 mb-8" id="check-questions">
+                    <div class="bg-brand-gray rounded-xl p-6 flex items-center justify-between">
+                        <span class="text-lg font-medium">Q1. 院内AI利用ルール（文書）がある</span>
+                        <div class="flex gap-2">
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-brand-blue hover:text-brand-blue transition" data-q="1" data-answer="yes">Yes</button>
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-red-400 hover:text-red-500 transition" data-q="1" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    <div class="bg-brand-gray rounded-xl p-6 flex items-center justify-between">
+                        <span class="text-lg font-medium">Q2. 出力の検証責任（誰が確認したか）を説明できる</span>
+                        <div class="flex gap-2">
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-brand-blue hover:text-brand-blue transition" data-q="2" data-answer="yes">Yes</button>
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-red-400 hover:text-red-500 transition" data-q="2" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    <div class="bg-brand-gray rounded-xl p-6 flex items-center justify-between">
+                        <span class="text-lg font-medium">Q3. ベンダー評価のチェック観点がある</span>
+                        <div class="flex gap-2">
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-brand-blue hover:text-brand-blue transition" data-q="3" data-answer="yes">Yes</button>
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-red-400 hover:text-red-500 transition" data-q="3" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    <div class="bg-brand-gray rounded-xl p-6 flex items-center justify-between">
+                        <span class="text-lg font-medium">Q4. 職員教育を年1回以上で回せる</span>
+                        <div class="flex gap-2">
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-brand-blue hover:text-brand-blue transition" data-q="4" data-answer="yes">Yes</button>
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-red-400 hover:text-red-500 transition" data-q="4" data-answer="no">No</button>
+                        </div>
+                    </div>
+                    <div class="bg-brand-gray rounded-xl p-6 flex items-center justify-between">
+                        <span class="text-lg font-medium">Q5. インシデント初動（報告・停止・記録）が決まっている</span>
+                        <div class="flex gap-2">
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-brand-blue hover:text-brand-blue transition" data-q="5" data-answer="yes">Yes</button>
+                            <button class="check-btn px-5 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-red-400 hover:text-red-500 transition" data-q="5" data-answer="no">No</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="check-result" class="hidden bg-gradient-to-r from-brand-blue/10 to-brand-cyan/10 rounded-2xl p-8 text-center">
+                    <p id="result-text" class="text-xl md:text-2xl font-medium text-brand-black"></p>
+                </div>
+            </div>
+        </section>
+
+        <script>
+        (function() {
+            const answers = {};
+            document.querySelectorAll('.check-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const q = this.dataset.q;
+                    const answer = this.dataset.answer;
+                    answers[q] = answer;
+
+                    // Update UI
+                    document.querySelectorAll(`[data-q="${q}"]`).forEach(b => {
+                        b.classList.remove('bg-brand-blue', 'text-white', 'border-brand-blue', 'bg-red-500', 'border-red-500');
+                        b.classList.add('border-gray-300', 'text-gray-600');
+                    });
+                    if (answer === 'yes') {
+                        this.classList.remove('border-gray-300', 'text-gray-600');
+                        this.classList.add('bg-brand-blue', 'text-white', 'border-brand-blue');
+                    } else {
+                        this.classList.remove('border-gray-300', 'text-gray-600');
+                        this.classList.add('bg-red-500', 'text-white', 'border-red-500');
+                    }
+
+                    // Check if all answered
+                    if (Object.keys(answers).length === 5) {
+                        const noCount = Object.values(answers).filter(a => a === 'no').length;
+                        const resultEl = document.getElementById('check-result');
+                        const textEl = document.getElementById('result-text');
+
+                        if (noCount >= 3) {
+                            textEl.textContent = 'GOV-Leadが適しています：担当者を育て、成果物を整えるのが最短です。';
+                        } else if (noCount >= 1) {
+                            textEl.textContent = '48h診断で棚卸し→GOV-Leadで担当者育成、がスムーズです。';
+                        } else {
+                            textEl.textContent = '年次監査・定期レビューで"安心の維持"がテーマです。必要なら相談ください。';
+                        }
+
+                        resultEl.classList.remove('hidden');
+
+                        // GA4 event
+                        if (window.gtag) {
+                            gtag('event', 'govlead_minicheck_complete', {
+                                no_count: noCount,
+                                result: noCount >= 3 ? 'recommend_govlead' : (noCount >= 1 ? 'recommend_48h' : 'recommend_audit')
+                            });
+                        } else if (window.dataLayer) {
+                            dataLayer.push({
+                                event: 'govlead_minicheck_complete',
+                                no_count: noCount,
+                                result: noCount >= 3 ? 'recommend_govlead' : (noCount >= 1 ? 'recommend_48h' : 'recommend_audit')
+                            });
+                        }
+                    }
+                });
+            });
+        })();
+        </script>
 
         <!-- 対象 -->
         <section class="py-20 md:py-28 px-6">
