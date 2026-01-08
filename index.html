@@ -325,10 +325,15 @@
         .img-clean:hover img {
             transform: scale(1.05);
         }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
     </style>
 </head>
 
 <body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
@@ -369,7 +374,7 @@
 
     <!-- Hero Section (Video Background) -->
     <!-- Video Credit: Pexels.com - Free to use (Royalty Free) -->
-    <div class="hero-wrapper">
+    <div id="main" class="hero-wrapper">
         <!-- Video Background - EXACTLY same as edu -->
         <div class="hero-video-container">
             <video class="hero-video" autoplay muted loop playsinline>
@@ -1057,7 +1062,7 @@
                         class="underline hover:text-white ml-1">詳細はこちら</a></p>
                 <div
                     class="flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
-                    <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+                    <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
                     <div class="flex gap-6 text-xl">
                         <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                             target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
@@ -1069,6 +1074,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/nav.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {

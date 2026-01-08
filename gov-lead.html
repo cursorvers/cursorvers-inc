@@ -208,10 +208,15 @@
                 line-height: 1.85;
             }
         }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
     </style>
 </head>
 
 <body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
@@ -246,7 +251,7 @@
         </div>
     </header>
 
-    <main class="pt-24">
+    <main id="main" class="pt-24">
         <!-- Hero -->
         <section class="relative py-20 md:py-32 px-6 overflow-hidden">
             <!-- Background Image -->
@@ -1035,10 +1040,12 @@
                 </div>
             </div>
             <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm font-en">
-                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script src="assets/js/nav.js" defer></script>
 
     <!-- Mobile Sticky CTA -->
     <div class="sticky-cta md:hidden">

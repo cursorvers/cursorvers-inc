@@ -162,10 +162,15 @@
                 line-height: 1.85;
             }
         }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
     </style>
 </head>
 
 <body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation (same as index.html) -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
@@ -203,7 +208,7 @@
         </div>
     </header>
 
-    <main class="pt-24">
+    <main id="main" class="pt-24">
         <!-- Hero -->
         <section class="relative py-20 md:py-28 text-center px-6 overflow-hidden">
             <!-- Background Image -->
@@ -508,7 +513,7 @@
             </div>
             <div
                 class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
-                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                         target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
@@ -519,65 +524,7 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Mobile Menu
-            const menuBtn = document.querySelector('[data-mobile-menu-open]');
-            const nav = document.querySelector('[data-desktop-nav]');
-            if (menuBtn && nav) {
-                let mobileMenu = null;
-                const closeMenu = () => {
-                    if (mobileMenu) mobileMenu.style.display = 'none';
-                    document.body.style.overflow = '';
-                    menuBtn.setAttribute('aria-expanded', 'false');
-                };
-                const createMenu = () => {
-                    if (mobileMenu) return;
-                    mobileMenu = document.createElement('div');
-                    mobileMenu.id = 'mobile-menu';
-                    mobileMenu.className = 'fixed inset-0 z-[60] bg-white flex flex-col';
-                    mobileMenu.innerHTML = `
-                        <div class="flex items-center justify-between h-24 px-6 border-b border-gray-200">
-                            <a href="index.html" class="flex items-center gap-3">
-                                <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 mix-blend-multiply">
-                                <span class="flex flex-col leading-none">
-                                    <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
-                                    <span class="text-[10px] font-semibold text-text-tertiary tracking-[0.25em]">カーソルバース</span>
-                                </span>
-                            </a>
-                            <button type="button" class="text-black text-2xl" aria-label="Close menu" id="mobile-menu-close">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                        <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
-                        <div class="px-6 pb-10 text-center">
-                            <a href="contact.html" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
-                        </div>
-                    `;
-                    document.body.appendChild(mobileMenu);
-                    const navLinks = mobileMenu.querySelector('#mobile-nav-links');
-                    nav.querySelectorAll('a').forEach(link => {
-                        const a = document.createElement('a');
-                        a.href = link.href;
-                        a.textContent = link.textContent.trim();
-                        a.className = 'text-xl font-semibold text-brand-black hover:text-brand-blue transition py-2 text-center';
-                        if (link.target) a.target = link.target;
-                        a.addEventListener('click', closeMenu);
-                        navLinks.appendChild(a);
-                    });
-                    mobileMenu.querySelector('#mobile-menu-close').addEventListener('click', closeMenu);
-                };
-                const openMenu = () => {
-                    createMenu();
-                    mobileMenu.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                    menuBtn.setAttribute('aria-expanded', 'true');
-                };
-                menuBtn.addEventListener('click', openMenu);
-                document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
-            }
-        });
-    </script>
+    <script src="assets/js/nav.js" defer></script>
 
 </body>
 

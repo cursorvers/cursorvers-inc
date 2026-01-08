@@ -152,10 +152,14 @@
                 line-height: 1.85;
             }
         }
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
     </style>
 </head>
 
 <body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
@@ -188,7 +192,7 @@
         </div>
     </header>
 
-    <main class="pt-24">
+    <main id="main" class="pt-24">
         <!-- Hero -->
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
             <div class="max-w-4xl mx-auto text-center">
@@ -396,7 +400,7 @@
             </div>
             <div
                 class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
-                <p>&copy; 2025 Cursorvers All Rights Reserved.</p>
+                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                         target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
@@ -407,65 +411,7 @@
         </div>
     </footer>
 
-    <!-- Mobile Menu Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuBtn = document.querySelector('[data-mobile-menu-open]');
-            const nav = document.querySelector('[data-desktop-nav]');
-            if (!menuBtn || !nav) return;
-
-            let overlay = null;
-            const openMenu = () => {
-                overlay = document.createElement('div');
-                overlay.id = 'mobile-menu';
-                overlay.className = 'fixed inset-0 z-[100] bg-white flex flex-col';
-                overlay.innerHTML = `
-                    <div class="flex items-center justify-between px-6 h-24 border-b border-gray-100">
-                        <a href="index.html" class="flex items-center gap-3">
-                            <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 mix-blend-multiply">
-                            <span class="flex flex-col leading-none">
-                                <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
-                                <span class="text-[10px] font-semibold text-text-tertiary tracking-[0.25em]">カーソルバース</span>
-                            </span>
-                        </a>
-                        <button type="button" class="text-black text-2xl" aria-label="メニューを閉じる" id="mobile-menu-close">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <nav class="flex-1 flex flex-col justify-center px-8 gap-6 text-2xl font-medium" id="mobile-nav"></nav>
-                    <div class="p-6 border-t border-gray-100">
-                        <span class="block w-full py-4 text-center font-bold text-lg bg-brand-blue text-white rounded-full">Contact</span>
-                    </div>
-                `;
-                document.body.appendChild(overlay);
-                document.body.style.overflow = 'hidden';
-
-                const mobileNav = overlay.querySelector('#mobile-nav');
-                nav.querySelectorAll('a').forEach(link => {
-                    const a = document.createElement('a');
-                    a.href = link.href;
-                    a.textContent = link.textContent.trim();
-                    a.className = 'hover:text-brand-blue transition py-2';
-                    mobileNav.appendChild(a);
-                });
-
-                overlay.querySelector('#mobile-menu-close').addEventListener('click', closeMenu);
-                overlay.addEventListener('click', e => { if (e.target === overlay) closeMenu(); });
-                menuBtn.setAttribute('aria-expanded', 'true');
-            };
-
-            const closeMenu = () => {
-                if (overlay) {
-                    overlay.remove();
-                    overlay = null;
-                    document.body.style.overflow = '';
-                    menuBtn.setAttribute('aria-expanded', 'false');
-                }
-            };
-            menuBtn.addEventListener('click', openMenu);
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
-        });
-    </script>
+    <script src="assets/js/nav.js" defer></script>
 
 </body>
 
