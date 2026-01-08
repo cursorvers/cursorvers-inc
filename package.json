@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --minify",
+    "build:id": "node scripts/update-build-id.js",
+    "test:smoke": "npx playwright test",
     "watch:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --watch"
   },
   "devDependencies": {
