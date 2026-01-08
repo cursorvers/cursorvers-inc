@@ -17,35 +17,12 @@
     <meta name="format-detection" content="telephone=no">
     <title>お問い合わせ | Cursorvers｜安心と継続の医療AIガバナンス</title>
     <meta name="description" content="Cursorversへのお問い合わせ。医療機関向けAIガバナンス支援、AIベンダー向けコンサルティング、その他のご相談を承ります。">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        en: ['"Manrope"', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-black': '#0B0C10',
-                        'brand-blue': '#0052CC',
-                        'brand-cyan': '#66FCF1',
-                        'brand-gray': '#F7F8FA',
-                        'text-primary': '#0B0C10',
-                        'text-secondary': '#374151',
-                        'text-tertiary': '#6B7280',
-                    },
-                }
-            }
-        }
-    </script>
     <style>
         html {
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -178,15 +155,15 @@
                 <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">For Edu <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
+                    class="hover:text-brand-blue transition">For Edu <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">Journal <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <span class="text-xs font-bold border border-brand-blue px-6 py-3 rounded-full bg-brand-blue text-white uppercase tracking-wider font-en">
                     Contact
                 </span>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <i class="fa-solid fa-bars"></i>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -211,7 +188,7 @@
             <div class="max-w-4xl mx-auto">
                 <div class="phi-notice rounded-xl p-6">
                     <div class="flex items-start gap-4">
-                        <i class="fa-solid fa-triangle-exclamation text-amber-600 text-2xl mt-1 shrink-0"></i>
+                        <svg class="text-amber-600 text-2xl mt-1 shrink-0" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-triangle-exclamation"></use></svg>
                         <div>
                             <p class="text-lg font-bold text-amber-800 mb-2">患者情報に関する重要なお知らせ</p>
                             <p class="text-amber-900 leading-relaxed">
@@ -234,7 +211,7 @@
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'hospital'})">
                         <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-blue transition">
-                            <i class="fa-solid fa-hospital text-3xl text-brand-blue group-hover:text-white transition"></i>
+                            <svg class="text-3xl text-brand-blue group-hover:text-white transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-hospital"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">医療機関の方</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
@@ -242,24 +219,24 @@
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-brand-blue"></i>
+                                <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 48h簡易診断
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-brand-blue"></i>
+                                <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 AIガバナンス顧問
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-brand-blue"></i>
+                                <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 本監査
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-brand-blue"></i>
+                                <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 GOV-Lead（人材育成）
                             </li>
                         </ul>
                         <span class="inline-flex items-center justify-center px-6 py-4 bg-brand-blue text-white font-bold rounded-full group-hover:bg-brand-black transition">
-                            お問い合わせ <i class="fa-solid fa-arrow-right ml-2"></i>
+                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </span>
                     </a>
 
@@ -269,7 +246,7 @@
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'vendor'})">
                         <div class="w-20 h-20 bg-cyan-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-cyan transition">
-                            <i class="fa-solid fa-microchip text-3xl text-cyan-600 group-hover:text-brand-black transition"></i>
+                            <svg class="text-3xl text-cyan-600 group-hover:text-brand-black transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-microchip"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">AIベンダーの方</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
@@ -277,24 +254,24 @@
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-cyan-600"></i>
+                                <svg class="text-cyan-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 市場参入支援
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-cyan-600"></i>
+                                <svg class="text-cyan-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 ガイドライン対応
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-cyan-600"></i>
+                                <svg class="text-cyan-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 品質保証体制構築
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-cyan-600"></i>
+                                <svg class="text-cyan-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 導入支援
                             </li>
                         </ul>
                         <span class="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-200 font-bold rounded-full group-hover:border-brand-black group-hover:bg-brand-black group-hover:text-white transition">
-                            お問い合わせ <i class="fa-solid fa-arrow-right ml-2"></i>
+                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </span>
                     </a>
 
@@ -304,7 +281,7 @@
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'other'})">
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-200 transition">
-                            <i class="fa-solid fa-comments text-3xl text-gray-500 group-hover:text-brand-black transition"></i>
+                            <svg class="text-3xl text-gray-500 group-hover:text-brand-black transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-comments"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">その他のご相談</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
@@ -312,24 +289,24 @@
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-gray-500"></i>
+                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 取材・講演依頼
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-gray-500"></i>
+                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 パートナーシップ
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-gray-500"></i>
+                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 採用について
                             </li>
                             <li class="flex items-center gap-2 text-sm">
-                                <i class="fa-solid fa-check text-gray-500"></i>
+                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 その他のご質問
                             </li>
                         </ul>
                         <span class="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-200 font-bold rounded-full group-hover:border-brand-black group-hover:bg-brand-black group-hover:text-white transition">
-                            お問い合わせ <i class="fa-solid fa-arrow-right ml-2"></i>
+                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </span>
                     </a>
                 </div>
@@ -343,7 +320,7 @@
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="bg-white rounded-2xl p-8">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
-                            <i class="fa-solid fa-clock text-brand-blue"></i>
+                            <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-clock"></use></svg>
                             対応時間
                         </h3>
                         <p class="text-text-secondary leading-relaxed">
@@ -353,7 +330,7 @@
                     </div>
                     <div class="bg-white rounded-2xl p-8">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-3">
-                            <i class="fa-solid fa-file-alt text-brand-blue"></i>
+                            <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-file-alt"></use></svg>
                             資料請求
                         </h3>
                         <p class="text-text-secondary leading-relaxed">
@@ -403,8 +380,8 @@
                 <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
-                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
-                        <i class="fa-brands fa-linkedin"></i>
+                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-linkedin"></use></svg>
                     </a>
                 </div>
             </div>

@@ -13,27 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>利用規約 | Cursorvers｜安心と継続</title>
     <meta name="description" content="安心と継続の医療AIガバナンスを支えるCursorversの利用規約。サービスの利用条件を定めています。">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        en: ['"Manrope"', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-black': '#0B0C10',
-                        'brand-blue': '#0052CC',
-                    },
-                },
-            },
-        };
-    </script>
+    <link rel="stylesheet" href="/dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: "Noto Sans JP", sans-serif; background: #F9FAFB; color: #1F2933; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
@@ -57,10 +40,9 @@
                 <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition flex items-center gap-1">For Edu <i
-                        class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>
+                    class="hover:text-brand-blue transition flex items-center gap-1">For Edu <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
-                    Journal <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    Journal <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                 </a>
             </nav>
             <div class="flex items-center gap-6">
@@ -68,7 +50,7 @@
                     Contact
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <i class="fa-solid fa-bars"></i>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -131,8 +113,8 @@
             <a href="contact.html" class="hover:text-brand-blue transition">お問い合わせ</a>
         </div>
         <div class="flex justify-center gap-6 text-lg mb-4">
-            <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">
-                <i class="fa-brands fa-linkedin"></i>
+            <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition" aria-label="LinkedIn">
+                <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-linkedin"></use></svg>
             </a>
         </div>
         <p>&copy; 2026 Cursorvers All Rights Reserved.</p>

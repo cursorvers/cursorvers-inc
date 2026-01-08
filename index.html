@@ -18,67 +18,12 @@
     <title>Cursorvers | 安心と継続の医療AIガバナンス</title>
     <meta name="description" content="医療AIを安心して使い続けるために。Cursorversは監査・運用設計・教育で、医療機関とベンダーの継続運用を支える専門機関です。">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="/dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        en: ['"Manrope"', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-black': '#0B0C10',
-                        'brand-blue': '#0052CC',
-                        'brand-cyan': '#00A3FF', /* Darker cyan for visibility on white */
-                        'brand-gray': '#F7F8FA',
-                        'brand-slate': '#475569',
-                        'hero-bg': '#FFFFFF',    /* Changed to White */
-                        'text-primary': '#0B0C10',
-                        'text-secondary': '#374151',
-                        'text-tertiary': '#6B7280',
-                        'text-quaternary': '#9CA3AF',
-                    },
-                    fontSize: {
-                        'display': ['clamp(3.5rem, 8vw, 6rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }], /* Slightly smaller/tighter for Japanese */
-                        'headline': ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
-                        'title': ['clamp(1.75rem, 3.5vw, 2.5rem)', { lineHeight: '1.3', letterSpacing: '-0.01em' }],
-                        'body-lg': ['1.5rem', { lineHeight: '1.8' }],
-                        'body': ['1.25rem', { lineHeight: '1.8' }],
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 40s linear infinite',
-                        'marquee-reverse': 'marquee-reverse 40s linear infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: 0, transform: 'translateY(20px)', filter: 'blur(10px)' },
-                            '100%': { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        },
-                        'marquee-reverse': {
-                            '0%': { transform: 'translateX(-50%)' },
-                            '100%': { transform: 'translateX(0)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
         /* iOS Safe Area Support */
         html {
@@ -352,11 +297,9 @@
                 <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">For Edu <i
-                        class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
+                    class="hover:text-brand-blue transition">For Edu <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">Journal <i
-                        class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1 align-middle"></i></a>
+                    class="hover:text-brand-blue transition">Journal <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html"
@@ -366,7 +309,7 @@
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
                     aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <i class="fa-solid fa-bars"></i>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -400,7 +343,7 @@
                     style="animation-delay: 0.2s;">
                     AIに、<br>
                     <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan">臨床の魂</span>を。
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-cyan-strong">臨床の魂</span>を。
                 </h1>
 
                 <!-- Subheadline -->
@@ -426,14 +369,12 @@
                     <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
                         class="btn-clean group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[240px] bg-brand-black text-white font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:bg-gray-800">
                         <span class="relative z-10 flex items-center gap-3">
-                            3分セルフチェック（無料） <i
-                                class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            3分セルフチェック（無料） <svg class="group-hover:translate-x-1 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </span>
                     </a>
                     <a href="contact.html"
                         class="btn-clean group relative inline-flex items-center justify-center px-8 py-4 md:px-10 md:py-5 min-w-[240px] bg-white border border-gray-200 text-brand-black font-bold text-base md:text-lg tracking-wider rounded-full overflow-hidden font-en hover:bg-gray-50 hover:border-brand-blue/30 transition-colors">
-                        <span class="relative z-10 flex items-center gap-3">診断結果をもとに相談する <i
-                                class="fa-solid fa-calendar-check text-brand-blue"></i></span>
+                        <span class="relative z-10 flex items-center gap-3">診断結果をもとに相談する <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-calendar-check"></use></svg></span>
                     </a>
                 </div>
 
@@ -484,7 +425,7 @@
                         <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
                             onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_selfcheck'})"
                             class="block w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
-                            3分セルフチェック（無料） <i class="fa-solid fa-arrow-right ml-2"></i>
+                            3分セルフチェック（無料） <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                         <a href="services.html"
                             onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_services'})"
@@ -515,7 +456,7 @@
                         <a href="consulting.html"
                             onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})"
                             class="block w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
-                            ベンダー向け支援を見る <i class="fa-solid fa-arrow-right ml-2"></i>
+                            ベンダー向け支援を見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                         <a href="contact.html"
                             onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_contact'})"
@@ -547,12 +488,12 @@
                 <div class="bg-brand-gray border border-gray-200 rounded-2xl p-8 md:p-10">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 bg-brand-blue/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-handshake text-brand-blue text-2xl"></i>
+                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-handshake"></use></svg>
                         </div>
                         <h3 class="text-2xl md:text-3xl font-bold text-brand-black">責任分界の明確化</h3>
                     </div>
                     <div class="mb-6">
-                        <i class="fa-solid fa-quote-left text-brand-blue/20 text-2xl mb-4 block"></i>
+                        <svg class="text-brand-blue/20 text-2xl mb-4 block" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-quote-left"></use></svg>
                         <p class="text-body-lg text-text-secondary leading-relaxed">
                             医療機関と事業者の<span class="text-brand-black font-semibold">役割分担を明確化</span>し、
                             平常時から安心して継続できる運用に落とし込むことが重要
@@ -565,7 +506,7 @@
                         <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/index.html" target="_blank"
                             rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 text-brand-blue hover:underline">
-                            公式ページで確認 <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                            公式ページで確認 <svg class="text-sm" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -574,12 +515,12 @@
                 <div class="bg-brand-gray border border-gray-200 rounded-2xl p-8 md:p-10">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-14 h-14 bg-brand-blue/10 rounded-xl flex items-center justify-center">
-                            <i class="fa-solid fa-clipboard-check text-brand-blue text-2xl"></i>
+                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-clipboard-check"></use></svg>
                         </div>
                         <h3 class="text-2xl md:text-3xl font-bold text-brand-black">定期的な監査の実施</h3>
                     </div>
                     <div class="mb-6">
-                        <i class="fa-solid fa-quote-left text-brand-blue/20 text-2xl mb-4 block"></i>
+                        <svg class="text-brand-blue/20 text-2xl mb-4 block" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-quote-left"></use></svg>
                         <p class="text-body-lg text-text-secondary leading-relaxed">
                             通常時から<span class="text-brand-black font-semibold">定期的に訓練・演習を実施</span>し、
                             安心が続く体制へ継続的に改善する
@@ -592,7 +533,7 @@
                         <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank"
                             rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 text-brand-blue hover:underline">
-                            公式ページで確認 <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                            公式ページで確認 <svg class="text-sm" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -632,7 +573,7 @@
                     <div class="mt-12">
                         <a href="message.html"
                             class="inline-flex items-center gap-3 text-brand-blue font-bold text-lg hover:gap-4 transition-all">
-                            Founder <i class="fa-solid fa-arrow-right"></i>
+                            Founder <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -753,7 +694,7 @@
                         </p>
                         <a href="services.html"
                             class="block mt-6 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
-                            詳しく見る <i class="fa-solid fa-arrow-right ml-2"></i>
+                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -772,7 +713,7 @@
                         </p>
                         <a href="consulting.html"
                             class="block mt-8 w-full py-4 text-center font-bold text-lg bg-brand-black text-white rounded-full hover:bg-brand-blue transition">
-                            詳しく見る <i class="fa-solid fa-arrow-right ml-2"></i>
+                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -796,11 +737,11 @@
                 <div class="bg-gradient-to-r from-brand-black to-gray-800 text-white p-6 md:p-8">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <span class="text-brand-cyan text-sm font-bold tracking-wider">CASE 01</span>
+                            <span class="text-brand-cyan-strong text-sm font-bold tracking-wider">CASE 01</span>
                             <h3 class="text-2xl md:text-3xl font-bold mt-2">梶田医院様</h3>
                         </div>
                         <div class="text-sm text-gray-300">
-                            <p><i class="fa-solid fa-location-dot mr-2"></i>千葉県千葉市</p>
+                            <p><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-location-dot"></use></svg>千葉県千葉市</p>
                         </div>
                     </div>
                 </div>
@@ -833,7 +774,7 @@
                     <div class="p-8 md:p-10 flex flex-col justify-center order-1 md:order-2">
                         <!-- Quote -->
                         <div class="relative mb-8">
-                            <i class="fa-solid fa-quote-left text-4xl text-brand-blue/20 absolute -top-2 -left-2"></i>
+                            <svg class="text-4xl text-brand-blue/20 absolute -top-2 -left-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-quote-left"></use></svg>
                             <p class="text-lg md:text-xl text-brand-black leading-relaxed pl-6 font-medium">
                                 AIを導入したいが、運用が続くかが不安だった。<br>
                                 Cursorversのおかげで、<span class="text-brand-blue">安心して回る体制が整った。</span>
@@ -855,7 +796,7 @@
                         <div class="mt-8 pt-6 border-t border-gray-100">
                             <a href="services.html"
                                 class="inline-flex items-center gap-2 text-brand-blue font-bold hover:gap-3 transition-all">
-                                同様のサービスを見る <i class="fa-solid fa-arrow-right"></i>
+                                同様のサービスを見る <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                             </a>
                         </div>
                     </div>
@@ -910,7 +851,7 @@
                 <div class="relative z-10 p-10 md:p-16 lg:p-20">
                     <div class="max-w-2xl">
                         <span
-                            class="text-brand-cyan text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Get
+                            class="text-brand-cyan-strong text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Get
                             Started</span>
                         <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                             安心と継続の第一歩は、<br class="hidden md:inline">どこから？
@@ -922,8 +863,8 @@
                         <div class="flex flex-col sm:flex-row gap-4 mb-8">
                             <a href="contact.html"
                                 onclick="if(window.gtag)gtag('event','cta_click',{label:'home_getstarted_contact'})"
-                                class="inline-flex items-center justify-center px-10 py-5 bg-brand-cyan text-brand-black font-bold text-lg rounded-full hover:bg-white transition">
-                                無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                                class="inline-flex items-center justify-center px-10 py-5 bg-brand-cyan-strong text-brand-black font-bold text-lg rounded-full hover:bg-white transition">
+                                無料で相談する <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                             </a>
                             <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank"
                                 rel="noopener noreferrer"
@@ -993,7 +934,7 @@
                                 </p>
                                 <p class="text-base text-text-tertiary mt-2 font-en">Security & Audit Collaboration</p>
                             </div>
-                            <i class="fa-solid fa-shield-virus text-3xl text-text-quaternary"></i>
+                            <svg class="text-3xl text-text-quaternary" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-shield-virus"></use></svg>
                         </div>
                         <div class="card-premium flex items-center justify-between p-5 md:p-6 rounded-2xl">
                             <div>
@@ -1003,7 +944,7 @@
                                 <p class="text-base text-text-tertiary mt-2 font-en">Tax Structuring &amp; Compliance
                                     Advisory</p>
                             </div>
-                            <i class="fa-solid fa-scale-balanced text-3xl text-text-quaternary"></i>
+                            <svg class="text-3xl text-text-quaternary" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-scale-balanced"></use></svg>
                         </div>
                         <div class="card-premium flex items-center justify-between p-5 md:p-6 rounded-2xl">
                             <div>
@@ -1013,7 +954,7 @@
                                 <p class="text-base text-text-tertiary mt-2 font-en">Management Consulting &amp; Law
                                     Office</p>
                             </div>
-                            <i class="fa-solid fa-gavel text-3xl text-text-quaternary"></i>
+                            <svg class="text-3xl text-text-quaternary" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-gavel"></use></svg>
                         </div>
                     </div>
                 </div>
@@ -1065,8 +1006,8 @@
                     <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
                     <div class="flex gap-6 text-xl">
                         <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
-                            target="_blank" rel="noopener noreferrer" class="hover:text-white transition">
-                            <i class="fa-brands fa-linkedin"></i>
+                            target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
+                            <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-linkedin"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -1112,7 +1053,7 @@
                                 </span>
                             </a>
                             <button type="button" class="text-black text-2xl" aria-label="メニューを閉じる" id="mobile-menu-close">
-                                <i class="fa-solid fa-xmark"></i>
+                                <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
                             </button>
                         </div>
                         <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>

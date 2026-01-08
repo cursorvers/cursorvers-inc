@@ -55,33 +55,10 @@
     }
     </script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        en: ['"Manrope"', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-black': '#0B0C10',
-                        'brand-blue': '#0052CC',
-                        'brand-cyan': '#66FCF1',
-                        'brand-gray': '#F7F8FA',
-                        'text-primary': '#0B0C10',
-                        'text-secondary': '#374151',
-                        'text-tertiary': '#6B7280',
-                    },
-                }
-            }
-        }
-    </script>
     <style>
         html {
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -231,7 +208,7 @@
                 </a>
                 <span class="hidden md:inline-block text-gray-300">|</span>
                 <a href="services.html" class="hidden md:flex items-center gap-1.5 text-sm text-text-secondary hover:text-brand-blue transition">
-                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <svg class="text-xs" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-left"></use></svg>
                     サービス一覧
                 </a>
             </div>
@@ -276,15 +253,15 @@
                 <!-- Badges -->
                 <div class="flex flex-wrap justify-center gap-4 mb-12">
                     <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
-                        <i class="fa-solid fa-calendar-days text-brand-blue"></i>
+                        <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-calendar-days"></use></svg>
                         8週間（プライベート実施）
                     </span>
                     <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
-                        <i class="fa-solid fa-file-lines text-brand-blue"></i>
+                        <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-file-lines"></use></svg>
                         成果物ベース（規程・台帳・教育）
                     </span>
                     <span class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-200 rounded-full text-base md:text-lg font-medium">
-                        <i class="fa-solid fa-shield-halved text-brand-blue"></i>
+                        <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-shield-halved"></use></svg>
                         PHI不要 / NDA可
                     </span>
                 </div>
@@ -294,13 +271,13 @@
                     <a href="contact.html"
                         class="inline-flex items-center justify-center px-12 py-5 bg-brand-blue text-white font-bold text-xl rounded-full hover:bg-brand-black transition"
                         onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_hero_consult'})">
-                        無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                        無料で相談する <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                     </a>
                     <a href="/brochures/gov-lead.pdf"
                         target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-12 py-5 border-2 border-gray-200 font-bold text-xl rounded-full hover:border-brand-blue hover:text-brand-blue transition"
                         onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_hero_pdf'})">
-                        稟議用の概要資料 <i class="fa-solid fa-file-pdf ml-2"></i>
+                        稟議用の概要資料 <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-file-pdf"></use></svg>
                     </a>
                 </div>
                 <p class="text-center text-text-tertiary">
@@ -318,25 +295,25 @@
                 <div class="grid sm:grid-cols-2 gap-6 mb-12">
                     <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
                         <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                            <svg class="text-xl text-red-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-question"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl font-medium">「誰がAIの責任を持つか」が曖昧</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
                         <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                            <svg class="text-xl text-red-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-question"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl font-medium">ベンダー比較の観点がない</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
                         <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                            <svg class="text-xl text-red-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-question"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl font-medium">研修が単発で終わり、翌年に忘れる</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 flex items-start gap-5">
                         <div class="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-question text-xl text-red-500"></i>
+                            <svg class="text-xl text-red-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-question"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl font-medium">ログ・証跡の管理ルールがない</p>
                     </div>
@@ -362,7 +339,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="bg-white rounded-2xl p-8 card-hover">
                         <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-file-contract text-3xl text-brand-blue"></i>
+                            <svg class="text-3xl text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-file-contract"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">規程と責任分界</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
@@ -371,7 +348,7 @@
                     </div>
                     <div class="bg-white rounded-2xl p-8 card-hover">
                         <div class="w-16 h-16 bg-cyan-50 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-clipboard-check text-3xl text-cyan-600"></i>
+                            <svg class="text-3xl text-cyan-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-clipboard-check"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">評価と教育</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
@@ -380,7 +357,7 @@
                     </div>
                     <div class="bg-white rounded-2xl p-8 card-hover">
                         <div class="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-list-check text-3xl text-emerald-600"></i>
+                            <svg class="text-3xl text-emerald-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-list-check"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">運用と証跡</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
@@ -443,11 +420,11 @@
                         <a href="contact.html"
                             class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white font-bold text-lg rounded-full hover:bg-brand-black transition"
                             onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_selfcheck_consult'})">
-                            無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                            無料で相談する <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                         </a>
                         <a href="#pricing"
                             class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
-                            料金を見る <i class="fa-solid fa-yen-sign ml-2"></i>
+                            料金を見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-yen-sign"></use></svg>
                         </a>
                     </div>
                 </div>
@@ -519,19 +496,19 @@
                 <div class="space-y-6">
                     <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
                         <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-check text-xl"></i>
+                            <svg class="text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl">AI導入済み or 導入予定だが、院内に運用責任者がいない</p>
                     </div>
                     <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
                         <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-check text-xl"></i>
+                            <svg class="text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl">ガイドライン対応を"外部任せ"にせず、院内で回したい</p>
                     </div>
                     <div class="flex items-start gap-5 bg-brand-gray rounded-2xl p-8">
                         <div class="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-check text-xl"></i>
+                            <svg class="text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                         </div>
                         <p class="text-xl md:text-2xl">単発研修ではなく、"役割"として定着させたい</p>
                     </div>
@@ -571,7 +548,7 @@
 
                 <div class="bg-blue-50 rounded-2xl p-8 text-center">
                     <p class="text-xl md:text-2xl">
-                        <i class="fa-solid fa-clock text-brand-blue mr-2"></i>
+                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-clock"></use></svg>
                         <strong>必須条件：</strong>週あたり合計2時間（MTG1h + 課題1h）を確保できる
                     </p>
                 </div>
@@ -587,7 +564,7 @@
                     <div class="space-y-8">
                         <div class="flex items-start gap-5">
                             <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-calendar text-brand-blue text-2xl"></i>
+                                <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-calendar"></use></svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-xl md:text-2xl mb-2">期間</h3>
@@ -596,7 +573,7 @@
                         </div>
                         <div class="flex items-start gap-5">
                             <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-video text-brand-blue text-2xl"></i>
+                                <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-video"></use></svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-xl md:text-2xl mb-2">形式</h3>
@@ -605,7 +582,7 @@
                         </div>
                         <div class="flex items-start gap-5">
                             <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-building-lock text-brand-blue text-2xl"></i>
+                                <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-building-lock"></use></svg>
                             </div>
                             <div>
                                 <h3 class="font-bold text-xl md:text-2xl mb-2">実施形態</h3>
@@ -618,27 +595,27 @@
                         <h3 class="font-bold text-xl md:text-2xl mb-6">成果物（納品物・テンプレ）</h3>
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>AI利用ポリシー（ドラフト）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>RACI + 運用フロー（As-Is / To-Be）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>ベンダー評価チェックリスト</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>院内研修パッケージ（スライド＋確認テスト＋手順書）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>インシデント対応フロー（報告/停止/記録）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg md:text-xl">
-                                <i class="fa-solid fa-check text-brand-blue mt-1"></i>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
                                 <span>監査準備チェックリスト（エビデンス/ログ/台帳）</span>
                             </li>
                         </ul>
@@ -722,7 +699,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="bg-white rounded-2xl p-10 text-center">
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <i class="fa-solid fa-magnifying-glass-chart text-3xl text-gray-600"></i>
+                            <svg class="text-3xl text-gray-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-magnifying-glass-chart"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">48h簡易診断</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
@@ -732,7 +709,7 @@
                     </div>
                     <div class="bg-white rounded-2xl p-10 text-center border-2 border-brand-blue">
                         <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <i class="fa-solid fa-graduation-cap text-3xl text-brand-blue"></i>
+                            <svg class="text-3xl text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-graduation-cap"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">GOV-Lead</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
@@ -742,7 +719,7 @@
                     </div>
                     <div class="bg-white rounded-2xl p-10 text-center">
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <i class="fa-solid fa-handshake text-3xl text-gray-600"></i>
+                            <svg class="text-3xl text-gray-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-handshake"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">顧問/監査</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
@@ -798,18 +775,18 @@
                     <div class="bg-brand-gray rounded-xl p-8">
                         <h3 class="font-bold mb-6 text-xl md:text-2xl">含まれるもの</h3>
                         <ul class="space-y-3 text-lg md:text-xl text-text-secondary">
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>オンラインMTG×8回（60分）</li>
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>課題レビュー（週1回）</li>
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>テンプレ一式</li>
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-blue mt-1"></i>修了判定</li>
+                            <li class="flex items-start gap-3"><svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>オンラインMTG×8回（60分）</li>
+                            <li class="flex items-start gap-3"><svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>課題レビュー（週1回）</li>
+                            <li class="flex items-start gap-3"><svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>テンプレ一式</li>
+                            <li class="flex items-start gap-3"><svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>修了判定</li>
                         </ul>
                     </div>
                     <div class="bg-gray-100 rounded-xl p-8">
                         <h3 class="font-bold mb-6 text-xl md:text-2xl">含まれないもの</h3>
                         <ul class="space-y-3 text-lg md:text-xl text-text-secondary">
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>現地訪問</li>
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>実装作業（電子カルテ連携等）</li>
-                            <li class="flex items-start gap-3"><i class="fa-solid fa-minus text-gray-400 mt-1"></i>法務の最終レビュー</li>
+                            <li class="flex items-start gap-3"><svg class="text-gray-400 mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-minus"></use></svg>現地訪問</li>
+                            <li class="flex items-start gap-3"><svg class="text-gray-400 mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-minus"></use></svg>実装作業（電子カルテ連携等）</li>
+                            <li class="flex items-start gap-3"><svg class="text-gray-400 mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-minus"></use></svg>法務の最終レビュー</li>
                         </ul>
                     </div>
                 </div>
@@ -817,21 +794,21 @@
                 <!-- 税注記 -->
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-8 mb-10">
                     <p class="text-lg md:text-xl text-amber-800">
-                        <i class="fa-solid fa-info-circle mr-2"></i>
+                        <svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-info-circle"></use></svg>
                         ※価格は税別表示を主とし、税込価格を併記しています。インボイス発行不可。
                     </p>
                 </div>
 
                 <!-- 併用割引 -->
                 <div class="bg-blue-50 rounded-xl p-8">
-                    <h3 class="font-bold mb-6 text-xl md:text-2xl text-brand-blue"><i class="fa-solid fa-percent mr-2"></i>併用割引</h3>
+                    <h3 class="font-bold mb-6 text-xl md:text-2xl text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-percent"></use></svg>併用割引</h3>
                     <ul class="space-y-4 text-lg md:text-xl">
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-tag text-brand-blue mt-1"></i>
+                            <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
                             <span>顧問（Standard以上）契約中：<strong>10%OFF</strong></span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-tag text-brand-blue mt-1"></i>
+                            <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
                             <span>監査と同時見積（初回のみ）：<strong>監査費用5%OFF</strong></span>
                         </li>
                     </ul>
@@ -849,7 +826,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden" open>
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">生成AIも対象ですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>はい。医療AI／生成AIいずれも「院内で安心して使い続ける運用」が対象です。</p>
@@ -860,7 +837,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">AI未導入でも受けられますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>受けられます。導入前に役割とルールを作っておく方が、後からの手戻りが減ります。</p>
@@ -871,7 +848,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">患者情報（PHI）は必要ですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p><strong>不要です。</strong>扱うのは運用体制・ルール・教育など「仕組み」の情報のみです。</p>
@@ -882,7 +859,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">ガイドライン準拠を保証してくれますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>保証はできません。関連ガイドライン等を踏まえた論点整理と成果物整備を支援します。最終判断は医療機関側です。</p>
@@ -893,7 +870,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">ベンダー選定を代行してくれますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>代行はしません。中立的な評価観点（チェックリスト・質問票）を整え、院内で判断できる状態を作ります。</p>
@@ -904,7 +881,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">どの職種を選抜すべきですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>事務長／医療安全／情シス／現場リーダーなど、運用を回す権限と時間が確保できる方が適しています（推奨2名）。</p>
@@ -915,7 +892,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">どれくらい時間が必要ですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>1人あたり週2時間が標準です（オンラインMTG1時間＋課題1時間の最小構成）。</p>
@@ -926,7 +903,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">オンラインだけで完結しますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>原則オンラインで完結します。必要に応じてキックオフ（オンライン／現地）も選べます。</p>
@@ -937,7 +914,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">秘密保持は可能ですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>可能です。必要に応じてNDAを締結します。</p>
@@ -948,7 +925,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">認定は公的な資格ですか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>公的資格ではありません。Cursorversによる内部認定です。</p>
@@ -959,7 +936,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">修了後はどう運用を維持しますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>年次アップデート＆再認定（12ヶ月）や、顧問契約で継続改善を支援できます。</p>
@@ -970,7 +947,7 @@
                     <details class="group bg-white border border-gray-200 rounded-xl overflow-hidden">
                         <summary class="flex items-center justify-between p-8 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-xl md:text-2xl pr-4">キャンセル・返金はできますか？</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-8 pb-8 text-lg md:text-xl text-text-secondary leading-relaxed">
                             <p>サービスの特性上、提供開始後の返金は原則不可です。着手前のキャンセルは実費精算分を差し引いて対応します。</p>
@@ -997,13 +974,13 @@
                     <a href="contact.html"
                         class="inline-flex items-center justify-center px-12 py-5 bg-white text-brand-black font-bold text-xl rounded-full hover:bg-brand-cyan transition"
                         onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_final_consult'})">
-                        無料で相談する <i class="fa-solid fa-arrow-right ml-2"></i>
+                        無料で相談する <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
                     </a>
                     <a href="/brochures/gov-lead.pdf"
                         target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-12 py-5 border-2 border-white/30 text-white font-bold text-xl rounded-full hover:border-white hover:bg-white/10 transition"
                         onclick="if(window.gtag)gtag('event','cta_click',{label:'govlead_final_pdf'})">
-                        稟議用の概要資料 <i class="fa-solid fa-file-pdf ml-2"></i>
+                        稟議用の概要資料 <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-file-pdf"></use></svg>
                     </a>
                 </div>
             </div>

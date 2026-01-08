@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
                 </a>
                 <button type="button" class="text-black text-2xl" aria-label="メニューを閉じる" id="mobile-menu-close">
-                    <i class="fa-solid fa-xmark"></i>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
                 </button>
             </div>
             <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
