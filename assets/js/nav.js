@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <nav class="flex-1 flex flex-col items-center justify-center gap-8 text-lg font-medium text-gray-700 font-en" id="mobile-nav-links"></nav>
             <div class="px-6 pb-10 text-center">
-                <a href="contact.html" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">Contact</a>
+                <a href="contact.html" class="inline-block text-xs font-bold border border-brand-black px-8 py-4 rounded-full hover:bg-brand-black hover:text-white transition text-brand-black uppercase tracking-wider font-en">無料で相談する</a>
             </div>
         `;
 
