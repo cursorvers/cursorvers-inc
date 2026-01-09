@@ -19,7 +19,6 @@
     <meta name="description" content="8週間で院内AIガバナンスの中核人材を育成。AI利用ポリシー、ベンダー評価、研修設計など6つの成果物を納品。PHI不要、NDA対応可。">
 
     <!-- OGP -->
-    <!-- TODO: OGP画像を作成（黒背景+シアンライン+"GOV-Lead / 院内AIガバナンス担当者 育成・認定"）して images/og-govlead.png に配置 -->
     <meta property="og:title" content="GOV-Lead｜院内AIガバナンス担当者 育成・認定プログラム">
     <meta property="og:description" content="8週間で院内AIガバナンスの中核人材を育成。担当が変わっても回り続ける体制を。">
     <meta property="og:image" content="https://cursorvers.com/images/og-govlead.png">
@@ -207,10 +206,13 @@
                     </span>
                 </a>
                 <span class="hidden md:inline-block text-gray-300">|</span>
-                <a href="services.html" class="hidden md:flex items-center gap-1.5 text-sm text-text-secondary hover:text-brand-blue transition">
-                    <svg class="text-xs" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-left"></use></svg>
-                    サービス一覧
-                </a>
+                <div class="hidden md:flex items-center gap-4 text-sm text-text-secondary">
+                    <a href="index.html" class="flex items-center gap-1.5 hover:text-brand-blue transition">
+                        <svg class="text-xs" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-left"></use></svg>
+                        ホームへ戻る
+                    </a>
+                    <a href="services.html" class="hover:text-brand-blue transition">サービス一覧</a>
+                </div>
             </div>
             <div class="hidden md:flex items-center gap-4">
                 <a href="contact.html"
@@ -233,12 +235,15 @@
         <section class="relative py-20 md:py-32 px-6 overflow-hidden">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0 select-none pointer-events-none">
-                <img src="govlead_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-50 filter grayscale">
+                <picture>
+                    <source srcset="govlead_hero_bg.webp" type="image/webp">
+                    <img src="govlead_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-50 filter grayscale" fetchpriority="high">
+                </picture>
                 <div class="absolute inset-0 bg-gradient-to-b from-white/70 via-white/80 to-white/95"></div>
             </div>
 
             <div class="relative z-10 max-w-4xl mx-auto text-center">
-                <p class="text-base md:text-lg font-semibold text-brand-blue mb-6 font-en tracking-wider">For Hospitals / 人材育成</p>
+                <p class="text-base md:text-lg font-semibold text-brand-blue mb-6 font-en tracking-wider">医療機関向け / 人材育成</p>
                 <h1 class="text-6xl md:text-7xl font-bold tracking-tight mb-6 font-en">GOV-Lead</h1>
                 <h2 class="text-3xl md:text-4xl font-bold mb-8">
                     院内AIガバナンス担当者<br>
@@ -281,7 +286,7 @@
                     </a>
                 </div>
                 <p class="text-center text-text-tertiary">
-                    <a href="#pricing" class="hover:text-brand-blue transition">料金：36万円〜（税別）</a>
+                    <a href="#pricing" class="hover:text-brand-blue transition">料金：36万円（税別）税込39.6万円</a>
                 </p>
 
             </div>
@@ -321,7 +326,7 @@
 
                 <div class="bg-white rounded-2xl p-10 text-center">
                     <p class="text-xl md:text-2xl text-text-secondary leading-relaxed">
-                        「まずは棚卸しから」なら → <a href="services.html#plans" class="text-brand-blue font-semibold hover:underline">48h簡易診断</a><br>
+                        「まずは棚卸しから」なら → <a href="services.html#plans" class="text-brand-blue font-semibold hover:underline">48h簡易診断（48時間診断キット）</a><br>
                         「担当者を育てたい」なら → このまま読み進める
                     </p>
                 </div>
@@ -462,7 +467,7 @@
                         if (noCount >= 3) {
                             textEl.textContent = 'GOV-Leadが適しています：担当者を育て、成果物を整えるのが最短です。';
                         } else if (noCount >= 1) {
-                            textEl.textContent = '48h診断で棚卸し→GOV-Leadで担当者育成、がスムーズです。';
+                            textEl.textContent = '48h簡易診断（48時間診断キット）で棚卸し→GOV-Leadで担当者育成、がスムーズです。';
                         } else {
                             textEl.textContent = '年次監査・定期レビューで"安心の維持"がテーマです。必要なら相談ください。';
                         }
@@ -577,7 +582,25 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-xl md:text-2xl mb-2">形式</h3>
-                                <p class="text-lg md:text-xl text-text-secondary">週1回 60分（オンライン）＋課題レビュー（週1回）</p>
+                                <p class="text-lg md:text-xl text-text-secondary">週1回 60分のワーキングセッション（オンライン）＋課題レビュー（週1回）</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-book-open"></use></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl md:text-2xl mb-2">オンデマンド学習</h3>
+                                <p class="text-lg md:text-xl text-text-secondary">15〜25分 × 8本（動画＋課題）</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-5">
+                            <div class="w-14 h-14 bg-brand-gray rounded-xl flex items-center justify-center shrink-0">
+                                <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-clock"></use></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-xl md:text-2xl mb-2">想定稼働</h3>
+                                <p class="text-lg md:text-xl text-text-secondary">参加者1人あたり週2時間程度</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-5">
@@ -701,7 +724,7 @@
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
                             <svg class="text-3xl text-gray-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-magnifying-glass-chart"></use></svg>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">48h簡易診断</h3>
+                        <h3 class="text-2xl font-bold mb-4">48h簡易診断<span class="text-base font-normal text-text-tertiary ml-2">（48時間診断キット）</span></h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed mb-6">
                             現状を可視化し「何からやるか」を決める
                         </p>
@@ -795,7 +818,8 @@
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-8 mb-10">
                     <p class="text-lg md:text-xl text-amber-800">
                         <svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-info-circle"></use></svg>
-                        ※価格は税別表示を主とし、税込価格を併記しています。インボイス発行不可。
+                        ※価格は税別表示を主とし、税込価格を併記しています。インボイス発行不可。<br>
+                        ※法務・医療の助言ではありません。最終判断は医療機関側で行ってください。
                     </p>
                 </div>
 
@@ -805,11 +829,7 @@
                     <ul class="space-y-4 text-lg md:text-xl">
                         <li class="flex items-start gap-3">
                             <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
-                            <span>顧問（Standard以上）契約中：<strong>10%OFF</strong></span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
-                            <span>監査と同時見積（初回のみ）：<strong>監査費用5%OFF</strong></span>
+                            <span>顧問（Standard/Premium）契約中：<strong>10%OFF</strong></span>
                         </li>
                     </ul>
                 </div>
@@ -966,7 +986,7 @@
                     定義するところから。
                 </h2>
                 <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
-                    無料相談で貴院の状況をお聞かせください。<br class="hidden md:block">
+                    無料で相談する際に貴院の状況をお聞かせください。<br class="hidden md:block">
                     GOV-Leadが最適かどうか、<br class="md:hidden">率直にお伝えします。
                 </p>
 
@@ -1000,17 +1020,17 @@
                 </div>
                 <div class="flex gap-12">
                     <div>
-                        <h4 class="font-bold mb-4 font-en">Links</h4>
+                        <h4 class="font-bold mb-4">リンク</h4>
                         <ul class="space-y-3 text-gray-400">
-                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
-                            <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
+                            <li><a href="services.html" class="hover:text-white transition">サービス</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">創業者</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold mb-4 font-en">Legal</h4>
+                        <h4 class="font-bold mb-4">法的情報</h4>
                         <ul class="space-y-3 text-gray-400">
-                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
-                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">利用規約</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
                         </ul>
                     </div>
@@ -1018,7 +1038,7 @@
             </div>
             <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm font-en">
                 <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
-                <p class="mt-2 text-xs text-gray-400">Build: <span data-build-id>dev</span></p>
+                <p class="mt-2 text-xs text-gray-400">Build: <span data-build-id>3b7b01e</span></p>
             </div>
         </div>
     </footer>

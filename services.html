@@ -102,36 +102,37 @@
         /* モバイル向け比較表最適化 */
         @media (max-width: 767px) {
             .comparison-table {
-                font-size: 0.6rem;
-                table-layout: fixed;
+                font-size: 0.7rem;
+                min-width: 720px;
+                table-layout: auto;
                 width: 100%;
             }
             .comparison-table th,
             .comparison-table td {
-                padding: 0.3rem 0.15rem !important;
-                font-size: 0.55rem !important;
-                line-height: 1.2;
-                word-break: break-all;
+                padding: 0.45rem 0.25rem !important;
+                font-size: 0.65rem !important;
+                line-height: 1.3;
+                word-break: keep-all;
             }
             .comparison-table th {
-                font-size: 0.5rem !important;
+                font-size: 0.6rem !important;
             }
             .comparison-table th span {
-                font-size: 0.45rem !important;
+                font-size: 0.55rem !important;
             }
             .comparison-table svg {
-                font-size: 0.65rem !important;
+                font-size: 0.75rem !important;
             }
             .feature-category td {
-                font-size: 0.55rem !important;
-                padding: 0.3rem 0.15rem !important;
+                font-size: 0.65rem !important;
+                padding: 0.45rem 0.25rem !important;
             }
             /* text-lgクラスをオーバーライド */
             .comparison-table .text-lg {
-                font-size: 0.55rem !important;
+                font-size: 0.65rem !important;
             }
             .comparison-table .text-xl {
-                font-size: 0.65rem !important;
+                font-size: 0.75rem !important;
             }
             /* 列幅を均等に */
             .comparison-table th:first-child,
@@ -241,19 +242,19 @@
                 </span>
             </a>
             <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
-                <a href="index.html" class="hover:text-brand-blue transition">Home</a>
-                <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
-                <a href="services.html" class="text-brand-blue font-semibold">For Hospitals</a>
-                <a href="consulting.html" class="hover:text-brand-blue transition">For Vendors</a>
+                <a href="index.html" class="hover:text-brand-blue transition">ホーム</a>
+                <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
+                <a href="services.html" class="text-brand-blue font-semibold">医療機関向け</a>
+                <a href="consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">For Edu <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">Journal <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html"
                     class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en"
                     data-mobile-contact>
-                    Contact
+                    無料で相談する
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
                     <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
@@ -268,13 +269,16 @@
         <section class="relative py-20 md:py-32 text-center px-6 overflow-hidden">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0 select-none pointer-events-none">
-                <img src="services_hero_bg.png" alt="" class="w-full h-full object-cover opacity-60 filter grayscale">
+                <picture>
+                    <source srcset="services_hero_bg.webp" type="image/webp">
+                    <img src="services_hero_bg.png" alt="" class="w-full h-full object-cover opacity-60 filter grayscale" fetchpriority="high">
+                </picture>
                 <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-white/70 to-white/90"></div>
             </div>
 
             <!-- Hero Content -->
             <div class="relative z-10 max-w-4xl mx-auto mb-24 md:mb-32">
-                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">For Healthcare Providers</p>
+                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">医療機関向け</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                     医療機関向けサービス
                 </h1>
@@ -302,7 +306,7 @@
                             class="w-16 h-16 md:w-20 md:h-20 bg-brand-blue text-white rounded-full flex items-center justify-center text-2xl md:text-3xl font-bold mb-5 font-en shadow-lg">
                             1</div>
                         <h3 class="text-2xl md:text-3xl font-bold mb-3">現状を知る</h3>
-                        <p class="text-xl md:text-2xl text-text-secondary">セルフチェック・48h診断で<br>安心運用の課題を可視化</p>
+                        <p class="text-xl md:text-2xl text-text-secondary">セルフチェック・48h簡易診断（48時間診断キット）で<br>安心運用の課題を可視化</p>
                     </div>
                     <div class="flex flex-col items-center">
                         <div
@@ -399,8 +403,9 @@
                         <a href="https://cursorversweb.vercel.app/apply/48h"
                             target="_blank" rel="noopener noreferrer"
                             class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition mt-auto">
-                            申し込む
+                            無料で相談する
                         </a>
+                        <p class="text-xs text-text-tertiary mt-3 text-center">※ 診断は有料（10万円/税別）です</p>
                     </div>
                 </div>
             </div>
@@ -413,7 +418,7 @@
                     <span class="step-badge text-white text-sm font-bold px-4 py-2 rounded-full font-en">STEP 2</span>
                     <h2 class="text-3xl md:text-4xl font-bold">体制を整える</h2>
                 </div>
-                <p class="text-xl text-text-secondary mb-4 max-w-3xl">48hで作成した90日運用定着プランを実行。安心が続く体制づくりに伴走します。</p>
+                <p class="text-xl text-text-secondary mb-4 max-w-3xl">48h簡易診断（48時間診断キット）で作成した90日運用定着プランを実行。安心が続く体制づくりに伴走します。</p>
                 <p class="text-lg text-brand-blue font-semibold mb-8"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-info-circle"></use></svg>90日運用定着支援はStandard以上の顧問先に提供</p>
 
                 <!-- GOV-Lead Banner -->
@@ -470,10 +475,10 @@
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
                             AI導入後の安心と継続に不安があり、まずは専門家に相談したい方向け。
                         </p>
-                        <a href="https://cursorversweb.vercel.app/apply/advisor"
+                        <a href="https://cursorversweb.vercel.app/apply/advisor?plan=lite"
                             target="_blank" rel="noopener noreferrer"
                             class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition mt-auto">
-                            申し込む
+                            無料で相談する
                         </a>
                     </div>
 
@@ -494,12 +499,12 @@
                             <span class="text-sm text-text-tertiary block mt-1">税込13.2万円</span>
                         </div>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
-                            48h診断後、90日で安心運用を定着させたい方向け。初回現地訪問付き。
+                            48h簡易診断（48時間診断キット）後、90日で安心運用を定着させたい方向け。初回現地訪問付き。
                         </p>
-                        <a href="https://cursorversweb.vercel.app/apply/advisor"
+                        <a href="https://cursorversweb.vercel.app/apply/advisor?plan=standard"
                             target="_blank" rel="noopener noreferrer"
                             class="block w-full py-4 text-center font-bold text-lg bg-brand-blue text-white rounded-full hover:bg-brand-black transition mt-auto">
-                            申し込む
+                            無料で相談する
                         </a>
                     </div>
 
@@ -517,10 +522,10 @@
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
                             毎月現地訪問、委員会参加など深いコミットメントが必要な方向け。
                         </p>
-                        <a href="https://cursorversweb.vercel.app/apply/advisor"
+                        <a href="https://cursorversweb.vercel.app/apply/advisor?plan=premium"
                             target="_blank" rel="noopener noreferrer"
                             class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition mt-auto">
-                            申し込む
+                            無料で相談する
                         </a>
                     </div>
                 </div>
@@ -530,17 +535,23 @@
                     <div class="p-6 border-b border-gray-200">
                         <h3 class="text-2xl font-bold">プラン比較表</h3>
                     </div>
+                    <div class="px-6 pb-4 text-xs text-text-tertiary md:hidden">
+                        ※横にスクロールできます
+                    </div>
                     <div class="overflow-x-auto">
                         <table class="comparison-table w-full text-left">
                             <thead>
                                 <tr>
                                     <th class="p-4 text-lg font-bold w-1/4"></th>
                                     <th class="p-4 text-lg font-bold text-center">Lite<br><span
-                                            class="text-brand-blue font-normal">5万円/月</span></th>
+                                            class="text-brand-blue font-normal">5万円/月（税別）</span><br><span
+                                            class="text-xs text-text-tertiary font-normal">税込5.5万円</span></th>
                                     <th class="p-4 text-lg font-bold text-center bg-blue-50">Standard<br><span
-                                            class="text-brand-blue font-normal">12万円/月</span></th>
+                                            class="text-brand-blue font-normal">12万円/月（税別）</span><br><span
+                                            class="text-xs text-text-tertiary font-normal">税込13.2万円</span></th>
                                     <th class="p-4 text-lg font-bold text-center">Premium<br><span
-                                            class="text-brand-blue font-normal">25万円/月</span></th>
+                                            class="text-brand-blue font-normal">25万円/月（税別）</span><br><span
+                                            class="text-xs text-text-tertiary font-normal">税込27.5万円</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -663,7 +674,7 @@
                                     <td class="p-4 text-lg text-center font-semibold">15%OFF</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-4 text-lg">48h診断割引</td>
+                                    <td class="p-4 text-lg">48h簡易診断（48時間診断キット）割引</td>
                                     <td class="p-4 text-lg text-center">10%OFF</td>
                                     <td class="p-4 text-lg text-center bg-blue-50/30">20%OFF</td>
                                     <td class="p-4 text-lg text-center">無料</td>
@@ -673,7 +684,7 @@
                     </div>
                     <!-- 凡例 -->
                     <div class="p-4 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-text-tertiary">
-                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg> 含む</span>
+                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg> 含む（重点）</span>
                         <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg> 含む</span>
                         <span class="flex items-center gap-2"><svg class="text-gray-400" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg> 含まない</span>
                         <span class="flex items-center gap-2"><span class="inline-block w-4 h-4 bg-yellow-50 border-l-4 border-l-yellow-400"></span> 重要な差分</span>
@@ -688,7 +699,7 @@
                     </p>
                     <p class="text-lg text-text-secondary">
                         例）Standard：税別12万円/月 × 12ヶ月 → <strong
-                            class="text-brand-black">税別115万円/年</strong>（税込127万円）
+                            class="text-brand-black">税別約115万円/年</strong>（税込約127万円）
                     </p>
                 </div>
 
@@ -737,7 +748,7 @@
                         <div class="bg-blue-50 rounded-xl p-4 mb-8">
                             <p class="text-lg text-brand-blue font-semibold">
                                 <svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-percent"></use></svg>
-                                顧問先は10%OFF
+                                顧問契約中はLite 5%OFF / Standard 10%OFF / Premium 15%OFF
                             </p>
                         </div>
                         <ul class="space-y-3 mb-8 text-lg">
@@ -760,7 +771,7 @@
                         </ul>
                         <a href="contact.html"
                             class="block w-full py-4 text-center font-bold text-lg border-2 border-gray-200 rounded-full hover:border-brand-black hover:text-brand-black transition">
-                            相談する
+                            無料で相談する
                         </a>
                     </div>
 
@@ -826,7 +837,7 @@
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>まずは<strong class="text-brand-black">無料のセルフチェック</strong>をお試しください。その後、<strong
-                                    class="text-brand-black">48h簡易診断（10万円）</strong>で詳細なリスク棚卸しと90日運用定着プランを作成します。そのプランを実行するために顧問契約（Standard以上）をご検討ください。
+                                    class="text-brand-black">48h簡易診断（48時間診断キット、10万円）</strong>で詳細なリスク棚卸しと90日運用定着プランを作成します。そのプランを実行するために顧問契約（Standard以上）をご検討ください。
                             </p>
                         </div>
                     </details>
@@ -838,7 +849,7 @@
                             <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
-                            <p>48h簡易診断で作成した「90日運用定着プラン」を一緒に実行するサービスです。規程整備、研修計画、ベンダー選定など、3ヶ月で安心して運用が回る体制を目指します。<strong
+                            <p>48h簡易診断（48時間診断キット）で作成した「90日運用定着プラン」を一緒に実行するサービスです。規程整備、研修計画、ベンダー選定など、3ヶ月で安心して運用が回る体制を目指します。<strong
                                     class="text-brand-black">Standard以上の顧問先に提供</strong>しています。</p>
                         </div>
                     </details>
@@ -934,19 +945,19 @@
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
-                        <h4 class="text-white font-bold text-lg mb-8 font-en">Links</h4>
+                        <h4 class="text-white font-bold text-lg mb-8">リンク</h4>
                         <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
-                            <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
+                            <li><a href="services.html" class="hover:text-white transition">サービス</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">創業者</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-white font-bold text-lg mb-8 font-en">Legal</h4>
+                        <h4 class="text-white font-bold text-lg mb-8">法的情報</h4>
                         <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
-                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">利用規約</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition">お問い合わせ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -961,7 +972,7 @@
                     </a>
                 </div>
             </div>
-            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>dev</span></p>
+            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>3b7b01e</span></p>
         </div>
     </footer>
 

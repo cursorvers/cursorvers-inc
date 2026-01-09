@@ -163,19 +163,19 @@
             </a>
             <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en"
                 data-desktop-nav>
-                <a href="index.html" class="hover:text-brand-blue transition">Home</a>
-                <a href="message.html" class="hover:text-brand-blue transition">Founder</a>
-                <a href="services.html" class="hover:text-brand-blue transition">For Hospitals</a>
-                <a href="consulting.html" class="text-brand-blue font-semibold">For Vendors</a>
+                <a href="index.html" class="hover:text-brand-blue transition">ホーム</a>
+                <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
+                <a href="services.html" class="hover:text-brand-blue transition">医療機関向け</a>
+                <a href="consulting.html" class="text-brand-blue font-semibold">ベンダー向け</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">For Edu <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">Journal <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html"
                     class="text-xs font-bold border border-brand-black px-6 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black uppercase tracking-wider font-en"
                     data-mobile-contact>
-                    Contact
+                    無料で相談する
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
                     aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
@@ -190,12 +190,15 @@
         <section class="relative py-20 md:py-28 text-center px-6 overflow-hidden">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0 select-none pointer-events-none">
-                <img src="consulting_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-60 filter grayscale">
+                <picture>
+                    <source srcset="consulting_hero_bg.webp" type="image/webp">
+                    <img src="consulting_hero_bg.jpg" alt="" class="w-full h-full object-cover opacity-60 filter grayscale" fetchpriority="high">
+                </picture>
                 <div class="absolute inset-0 bg-gradient-to-b from-white/60 via-white/70 to-white/90"></div>
             </div>
 
             <div class="relative z-10 max-w-4xl mx-auto">
-                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">For AI Vendors</p>
+                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">医療AIベンダー向け</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                     医療AIベンダー向け<br><span class="gradient-text">アドバイザリ</span>
                 </h1>
@@ -209,7 +212,7 @@
                     </a>
                     <a href="contact.html"
                         class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
-                        安心と継続を相談する
+                        無料で相談する
                     </a>
                 </div>
             </div>
@@ -350,7 +353,7 @@
                         年間一括契約で <span class="text-brand-blue">20%OFF</span>
                     </p>
                     <p class="text-lg text-text-secondary">
-                        例）Standard：税別10万円/月 × 12ヶ月 → <strong class="text-brand-black">税別96万円/年</strong>（税込106万円）
+                        例）Standard：税別10万円/月 × 12ヶ月 → <strong class="text-brand-black">税別96万円/年</strong>（税込105万円）
                     </p>
                 </div>
 
@@ -471,19 +474,19 @@
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
-                        <h4 class="text-white font-bold text-lg mb-8 font-en">Links</h4>
+                        <h4 class="text-white font-bold text-lg mb-8">リンク</h4>
                         <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
-                            <li><a href="message.html" class="hover:text-white transition">Founder</a></li>
+                            <li><a href="services.html" class="hover:text-white transition">サービス</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">創業者</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-white font-bold text-lg mb-8 font-en">Legal</h4>
+                        <h4 class="text-white font-bold text-lg mb-8">法的情報</h4>
                         <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="privacy.html" class="hover:text-white transition">Privacy Policy</a></li>
-                            <li><a href="terms.html" class="hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">利用規約</a></li>
                             <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition">お問い合わせ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -498,7 +501,7 @@
                     </a>
                 </div>
             </div>
-            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>dev</span></p>
+            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>3b7b01e</span></p>
         </div>
     </footer>
 
