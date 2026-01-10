@@ -2,9 +2,11 @@ name: Lighthouse CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -13,35 +15,31 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Start local server
-        run: |
-          npx serve . -l 8080 &
-          sleep 5
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.14.x
 
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v11
-        with:
-          urls: |
-            http://localhost:8080/
-            http://localhost:8080/services.html
-            http://localhost:8080/gov-lead.html
-            http://localhost:8080/consulting.html
-          uploadArtifacts: true
-          temporaryPublicStorage: true
-          configPath: ./lighthouserc.json
+        run: |
+          lhci autorun --collect.url=https://cursorvers.com/ \
+                       --collect.url=https://cursorvers.com/services.html \
+                       --collect.url=https://cursorvers.com/gov-lead.html \
+                       --collect.url=https://cursorvers.com/consulting.html \
+                       --assert.preset=lighthouse:recommended \
+                       --assert.assertions.categories:performance=warn \
+                       --assert.assertions.categories:accessibility=error \
+                       --assert.assertions.categories:best-practices=warn \
+                       --assert.assertions.categories:seo=error \
+                       --upload.target=temporary-public-storage
 
-      - name: Upload Lighthouse reports
+      - name: Upload Lighthouse Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: lighthouse-reports
+          name: lighthouse-report
           path: .lighthouseci/
           retention-days: 30
