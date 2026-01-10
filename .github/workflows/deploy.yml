@@ -52,7 +52,7 @@ jobs:
           cp -r *.html dist/ assets/ CNAME _site/ 2>/dev/null || true
           cp -r images/ _site/ 2>/dev/null || true
           cp -r css/ _site/ 2>/dev/null || true
-          cp *.jpeg *.jpg *.png *.ico _site/ 2>/dev/null || true
+          cp *.jpeg *.jpg *.png *.webp *.ico _site/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
