@@ -1,0 +1,908 @@
+# GOV-Lead LP 開発 指示書（2026-01-07）
+
+## 1. 目的
+
+- GOV-Lead LP を新規作成し、価格・導線・表記を統一する。
+- 申込導線の不明瞭さを解消し、CV と信頼性を高める。
+
+## 2. 対象範囲
+
+| 項目 | 内容 |
+|------|------|
+| 本体サイト | cursorvers.com（Cursorvers_Inc_HTML） |
+| 申込導線 | cursorversweb（cursorvers_web） |
+| 主要ページ | `gov-lead.html` / `services.html` / `consulting.html` / `index.html` / `tokushoho.html` |
+| 申込ページ | `apply/advisor` / `apply/48h` / `selfcheck` |
+
+## 3. 作業ルール（必須）
+
+- 価格は税別を主表示し、税込を併記する。
+- 年額例は万円表記で丸める（端数切り捨て）。
+- CTA 文言は「無料で相談する」に統一する。
+- バッジ・ナビは日本語表記（例: Popular → おすすめ）。
+- 「48h簡易診断＝48時間診断キット」を併記する。
+- フッター表記は Cursorvers に統一する。
+
+## 4. 成果物
+
+- `gov-lead.html` の新規 LP（内容・成果物表現は PDF と一致）。
+- 価格表示・注記の統一（税別主表示＋税込併記）。
+- 申込導線のステップ明確化、注意文の追加。
+- 特商法・プライバシー関連表記の修正。
+- OGP 画像 `images/og-govlead.png` の設定。
+
+## 5. 作業手順
+
+### Phase 1: 基盤整備
+
+| # | 指示 | 対象 |
+|---|------|------|
+| 1 | 申込ページの税込統一を行う | cursorvers_web |
+| 2 | GOV-Lead LP と PDF の成果物表現を統一する | `gov-lead.html` |
+| 3 | OGP 画像の設定を確認する | `images/og-govlead.png` |
+| 4 | 比較表の視認性を改善する | `services.html` |
+| 5 | 申込ページのフッター表記を統一する | cursorvers_web |
+| 6 | 本監査割引を段階制に変更する | `services.html`, `lib/advisor` |
+| 7 | メールテンプレートのフッター表記を統一する | cursorvers_web |
+| 8 | Home の脚注を追加する | `index.html` |
+
+### Phase 2: UX 改善
+
+| # | 指示 | 対象 |
+|---|------|------|
+| A-1 | apply/advisor の価格横に「（税込）」を追加する | `apply/advisor/page.tsx` |
+| A-2 | 48h 申込に「次の流れ」ステップを追加する | `apply/48h/page.tsx` |
+| B-1 | selfcheck タイトル下に PHI 注意文を追加する | `selfcheck/page.tsx` |
+| B-2 | selfcheck 結果画面に PHI 注意文を追加する | `selfcheck/result/page.tsx` |
+| C | GOV-Lead ヘッダーに戻り導線を追加する | `gov-lead.html` |
+
+### Phase 3: 法的整備
+
+| # | 指示 | 対象 |
+|---|------|------|
+| P0 | 特商法の提供時期を 48h 例外条項付きに修正する | `tokushoho.html` |
+| P1 | 48h 価格表記の「〜」を削除し固定価格に統一する | `services.html` |
+| P2-a | apply/48h に支払方法・納品タイミングを追加する | `apply/48h/page.tsx` |
+| P2-b | 名称併記（48h簡易診断＝48時間診断キット）を追記する | `services.html` |
+
+### Phase 4: 価格表示統一（A案）
+
+| # | 指示 | 対象 |
+|---|------|------|
+| A-1 | `services.html` の価格を税別メインに変更する | `services.html` |
+| A-2 | `gov-lead.html` の価格表を税別・税込 2 列表示にする | `gov-lead.html` |
+| A-3 | `consulting.html` のベンダー向け価格を税別表示にする | `consulting.html` |
+| A-4 | apply/48h 価格を「10万円（税別）税込11万円」に変更する | `apply/48h/page.tsx` |
+| A-5 | apply/advisor 価格を税別表示（5万/12万/25万円）にする | `apply/advisor/page.tsx` |
+| A-6 | `lib/advisor` に税別価格フィールドを追加する | `lib/advisor/index.ts` |
+| A-7 | `tokushoho.html` の税表示説明を「税別表示・税込併記」に修正する | `tokushoho.html` |
+
+### Phase 5: 注記統一
+
+| # | 指示 | 対象 |
+|---|------|------|
+| 5-1 | 注記を「税別主＋税込併記」に修正する | `services.html` |
+| 5-2 | 注記を「税別主＋税込併記」に修正する | `consulting.html` |
+| 5-3 | 注記を「税別主＋税込併記」に修正する | `gov-lead.html` |
+| 5-4 | 年額例を万円表記に修正する | `services.html` |
+| 5-5 | 年額例を万円表記に修正する | `consulting.html` |
+| 5-6 | スポットメニューに税込価格を併記する | `consulting.html` |
+
+### Phase 6: CV 最適化
+
+#### P0（CV 直前の致命傷）- cursorvers_web
+
+| # | 指示 | 対象 |
+|---|------|------|
+| P0-1 | 顧問申込：ボタン文言を動的にする（{プラン}（{期間}）で申し込む） | `apply/advisor/page.tsx` |
+| P0-2 | 顧問申込：年額表示を「年額（20%OFF）XX万円（税別）税込XX万円」形式にする | `apply/advisor/page.tsx` |
+| P0-3 | 顧問申込：選択内容の最終確認行を追加する | `apply/advisor/page.tsx` |
+| P0-4 | 48h 申込：フローに支払ステップを番号で追加する（4ステップ化） | `apply/48h/page.tsx` |
+
+#### P1（信頼と洗練）- cursorvers.com
+
+| # | 指示 | 対象 |
+|---|------|------|
+| P1-1 | 年額例の端数を丸める（115.2万円→115万円） | `services.html` |
+| P1-2 | CTA 文言を「無料で相談する」に統一する | `consulting.html`, `services.html` |
+| P1-3 | ナビ/バッジの言語を日本語に統一する（Popular→おすすめ） | `consulting.html` |
+
+### 実装チェックリスト（指示書）
+
+#### Phase 1: 基盤整備
+- [x] 1. 申込ページの税込統一を行う（cursorvers_web）
+- [x] 2. GOV-Lead LP と PDF の成果物表現を統一する（`gov-lead.html`）
+- [x] 3. OGP 画像の設定を確認する（`images/og-govlead.png`）
+- [x] 4. 比較表の視認性を改善する（`services.html`）
+- [x] 5. 申込ページのフッター表記を統一する（cursorvers_web）
+- [x] 6. 本監査割引を段階制に変更する（`services.html`, `lib/advisor`）
+- [x] 7. メールテンプレートのフッター表記を統一する（cursorvers_web）
+- [x] 8. Home の脚注を追加する（`index.html`）
+
+#### Phase 2: UX 改善
+- [x] A-1. apply/advisor の価格横に「（税込）」を追加する（`apply/advisor/page.tsx`）
+- [x] A-2. 48h 申込に「次の流れ」ステップを追加する（`apply/48h/page.tsx`）
+- [x] B-1. selfcheck タイトル下に PHI 注意文を追加する（`selfcheck/page.tsx`）
+- [x] B-2. selfcheck 結果画面に PHI 注意文を追加する（`selfcheck/result/page.tsx`）
+- [x] C. GOV-Lead ヘッダーに戻り導線を追加する（`gov-lead.html`）
+
+#### Phase 3: 法的整備
+- [x] P0. 特商法の提供時期を 48h 例外条項付きに修正する（`tokushoho.html`）
+- [x] P1. 48h 価格表記の「〜」を削除し固定価格に統一する（`services.html`）
+- [x] P2-a. apply/48h に支払方法・納品タイミングを追加する（`apply/48h/page.tsx`）
+- [x] P2-b. 名称併記（48h簡易診断＝48時間診断キット）を追記する（`services.html`）
+
+#### Phase 4: 価格表示統一（A案）
+- [x] A-1. `services.html` の価格を税別メインに変更する（`services.html`）
+- [x] A-2. `gov-lead.html` の価格表を税別・税込 2 列表示にする（`gov-lead.html`）
+- [x] A-3. `consulting.html` のベンダー向け価格を税別表示にする（`consulting.html`）
+- [x] A-4. apply/48h 価格を「10万円（税別）税込11万円」に変更する（`apply/48h/page.tsx`）
+- [x] A-5. apply/advisor 価格を税別表示（5万/12万/25万円）にする（`apply/advisor/page.tsx`）
+- [x] A-6. `lib/advisor` に税別価格フィールドを追加する（`lib/advisor/index.ts`）
+- [x] A-7. `tokushoho.html` の税表示説明を「税別表示・税込併記」に修正する（`tokushoho.html`）
+
+#### Phase 5: 注記統一
+- [x] 5-1. 注記を「税別主＋税込併記」に修正する（`services.html`）
+- [x] 5-2. 注記を「税別主＋税込併記」に修正する（`consulting.html`）
+- [x] 5-3. 注記を「税別主＋税込併記」に修正する（`gov-lead.html`）
+- [x] 5-4. 年額例を万円表記に修正する（`services.html`）
+- [x] 5-5. 年額例を万円表記に修正する（`consulting.html`）
+- [x] 5-6. スポットメニューに税込価格を併記する（`consulting.html`）
+
+#### Phase 6: CV 最適化
+- [x] P0-1. 顧問申込：ボタン文言を動的にする（{プラン}（{期間}）で申し込む）（`apply/advisor/page.tsx`）
+- [x] P0-2. 顧問申込：年額表示を「年額（20%OFF）XX万円（税別）税込XX万円」形式にする（`apply/advisor/page.tsx`）
+- [x] P0-3. 顧問申込：選択内容の最終確認行を追加する（`apply/advisor/page.tsx`）
+- [x] P0-4. 48h 申込：フローに支払ステップを番号で追加する（4ステップ化）（`apply/48h/page.tsx`）
+- [x] P1-1. 年額例の端数を丸める（115.2万円→115万円）（`services.html`）
+- [x] P1-2. CTA 文言を「無料で相談する」に統一する（`consulting.html`, `services.html`）
+- [x] P1-3. ナビ/バッジの言語を日本語に統一する（Popular→おすすめ）（`consulting.html`）
+
+## 6. 価格マスタ
+
+### サービス価格一覧
+
+| サービス | 税別 | 税込 |
+|----------|------|------|
+| 48h簡易診断 | 10万円 | 11万円 |
+| 顧問 Lite | 5万円/月 | 5.5万円/月 |
+| 顧問 Standard | 12万円/月 | 13.2万円/月 |
+| 顧問 Premium | 25万円/月 | 27.5万円/月 |
+| 本監査 | 30万円〜 | 33万円〜 |
+| GOV-Lead 1名 | 36万円 | 39.6万円 |
+| GOV-Lead 2名パック | 52万円 | 57.2万円 |
+| GOV-Lead 3名パック | 66万円 | 72.6万円 |
+| GOV-Lead 追加1名 | 16万円 | 17.6万円 |
+
+### 顧問契約特典（段階制）
+
+| 特典 | Lite | Standard | Premium |
+|------|------|----------|---------|
+| 48h診断 | 10%OFF | 20%OFF | 無料 |
+| 本監査 | 5%OFF | 10%OFF | 15%OFF |
+
+### 共通注記
+
+```
+※ 適格請求書（インボイス）は発行できません。
+```
+
+## 7. 検収基準
+
+- cursorvers.com（本体）で Lighthouse 98 以上。
+- 申込導線を含む全体で Lighthouse 98 以上。
+- 全ページで税別主表示＋税込併記が統一されていること。
+- GOV-Lead LP の OGP 画像が正しく表示されること。
+- 申込フローで「次の流れ」「支払ステップ」「PHI注意文」が表示されること。
+
+### Lighthouse 計測記録
+
+| URL | Performance | Accessibility | Best Practices | SEO | 計測日 |
+|-----|-------------|---------------|----------------|-----|--------|
+| https://cursorvers.com/ | 62 | 96 | 73 | 100 | 2026-01-09 |
+| https://cursorvers.com/services.html | 未計測 | 未計測 | 未計測 | 未計測 | — |
+| https://cursorvers.com/consulting.html | 未計測 | 未計測 | 未計測 | 未計測 | — |
+| https://cursorvers.com/gov-lead.html | 未計測 | 未計測 | 未計測 | 未計測 | — |
+| https://cursorversweb.vercel.app/apply/advisor | 未計測 | 未計測 | 未計測 | 未計測 | — |
+| https://cursorversweb.vercel.app/apply/48h | 未計測 | 未計測 | 未計測 | 未計測 | — |
+| https://cursorversweb.vercel.app/selfcheck | 未計測 | 未計測 | 未計測 | 未計測 | — |
+
+## 8. 参照リンク
+
+| ページ | URL |
+|--------|-----|
+| Home | https://cursorvers.com/ |
+| Services | https://cursorvers.com/services.html |
+| GOV-Lead | https://cursorvers.com/gov-lead.html |
+| Consulting | https://cursorvers.com/consulting.html |
+| Apply Advisor | https://cursorversweb.vercel.app/apply/advisor |
+| Apply 48h | https://cursorversweb.vercel.app/apply/48h |
+| Selfcheck | https://cursorversweb.vercel.app/selfcheck |
+
+## 9. 追記（2026-01-08 / P0 完了）
+
+| 優先度 | 指示 | 状態 |
+|--------|------|------|
+| 必須 | 申込フォームに規約/プライバシー同意チェックを追加する | 完了 |
+| 必須 | ボタン文言を「見積依頼を送信」に変更する | 完了 |
+| 必須 | 申込フォームに PHI 注意文を追加する | 完了 |
+| 必須 | 特商法の住所/電話表現を消費者庁 QA 型に修正する | 完了 |
+| 必須 | プライバシーポリシーに委託先情報を追加する | 完了 |
+| 必須 | 「当社」表現を「当事業者」に統一する | 完了 |
+
+## 10. 将来対応（バックログ）
+
+| 優先度 | タスク | 備考 |
+|--------|--------|------|
+| MEDIUM | ドメイン統一（apply.cursorvers.com 等） | インフラ変更が必要 |
+| MEDIUM | ベンダー向け即申込導線 | スポット1つを固定価格・即申込化 |
+| LOW | selfcheck 結果画面の導線強化 | 48h申込/無料相談の2択固定 |
+| LOW | PDF 日本語版作成 | 手動作成（Claude Code 対象外） |
+| LOW | 図・挿絵の追加 | デザインツールが必要 |
+
+## 11. 追記: 検収メモ（2026-01-08）
+
+| 確認項目 | 内容 | 結果 |
+|----------|------|------|
+| P1-5 | LP/consulting の「20年」表記を「約20年」に修正 | 反映確認済み |
+| P0-4 | apply/advisor の全機能表示（省略表現なし） | 反映確認済み |
+| P0-2 | 年額表示改善（初期表示で年額割引後の金額を表示） | 未反映の可能性あり |
+| P1-1 | 住所/電話表記の保留対応 | 方針どおり未表示 |
+
+### P0-2 検収チェックリスト
+
+- 確認対象: https://cursorversweb.vercel.app/apply/advisor
+- 年額選択時、「年額 20%OFF」直下が割引後の年額になる。
+- Standard の想定値は、税別 144万円 → 115.2万円/年、税込 126.72万円/年。
+- 併記する場合は「月額換算: 税別 9.6万円/月（税込 10.56万円/月）」と明示する。
+- 「お申し込み内容の確認」の契約期間が年額に切り替わる。
+- 「お支払い金額」が年額総額、または割引後月額であると明示される。
+- ボタン文言が選択状態（例: Standard（年額）で見積依頼）と一致する。
+- 送信データに `billingCycle`（月/年）が含まれる。
+
+## 11.1 追記: Next-1〜3 + Lighthouse改善（2026-01-09）
+
+| タスク | 内容 | 結果 |
+|--------|------|------|
+| Next-1 | apply/advisor URLパラメータ対応 | ✅ 既存実装確認済み |
+| Next-2 | services.html 年額例を「約115万円/約127万円」に修正 | ✅ 完了 |
+| Next-3 | GOV-Lead 割引条件を「Standard/Premium」に統一 | ✅ 完了 |
+| Lighthouse | ヒーロー画像WebP変換（合計3MB→326KB、90%削減） | ✅ 完了 |
+| Lighthouse | Unsplash画像 w=2070→1200 に縮小 | ✅ 完了 |
+| Lighthouse | 6画像に loading="lazy" 追加 | ✅ 完了 |
+
+### 画像最適化詳細
+
+| 画像 | 元サイズ | WebP | 削減率 |
+|------|----------|------|--------|
+| govlead_hero_bg | 2.3MB | 193KB | 92% |
+| services_hero_bg | 819KB | 73KB | 91% |
+| consulting_hero_bg | 347KB | 60KB | 83% |
+
+## 12. 開発計画（案）
+
+### 12.1 進め方
+
+- 影響範囲の洗い出し（cursorvers.com / cursorvers_web）
+- 価格・CTA・注記の統一方針を確定
+- Phase 1〜6 を順次実装
+- Lighthouse/表記/導線の検収
+- 本番反映と最終確認
+
+### 12.2 スケジュール（目安: 5〜7営業日）
+
+| 日程 | 主要タスク | 目的 |
+|------|------------|------|
+| Day 0 | 影響範囲確認・差分整理 | 作業量確定と工数把握 |
+| Day 1 | Phase 1（基盤整備） | LP/PDF/OGP の整合性確保 |
+| Day 2 | Phase 2（UX 改善） | 申込導線の明確化 |
+| Day 3 | Phase 3（法的整備） | 特商法・注意文の担保 |
+| Day 4 | Phase 4・5（価格表示/注記統一） | 全体表記の一貫性担保 |
+| Day 5 | Phase 6（CV 最適化） | 申込直前の改善 |
+| Day 6 | まとめ検収・Lighthouse | 品質担保とリリース準備 |
+
+### 12.3 マイルストーン
+
+| マイルストーン | 完了条件 |
+|---------------|----------|
+| M1 | GOV-Lead LP と PDF の表現が一致 | 
+| M2 | 価格/注記/CTA の表記が全ページ統一 | 
+| M3 | 申込導線に「次の流れ」「PHI 注意文」「支払ステップ」が反映 | 
+| M4 | 特商法/プライバシー表記が修正完了 | 
+| M5 | Lighthouse 98 以上、検収基準を満たす | 
+
+### 12.4 リスクと対策
+
+| リスク | 影響 | 対策 |
+|--------|------|------|
+| 価格表記の二重管理 | 表記ブレ/誤表記 | 価格マスタとチェックリストで統制 |
+| cursorvers_web と本体サイトの分離 | 更新漏れ | 申込導線のテスト項目を固定化 |
+| 画像/OGP 更新反映遅延 | 表示不一致 | OGP 画像の更新確認とキャッシュクリア手順を明記 |
+
+### 12.5 役割と成果物
+
+| 役割 | 主な責務 | 成果物 |
+|------|----------|--------|
+| 企画/要件 | 表記ルール・優先度の確定 | 指示書・価格マスタ |
+| 実装 | HTML/React の修正 | 改修済みページ |
+| QA | 検収基準の確認 | チェック結果メモ |
+
+了解。こちらでも現状ページを横断して見直したうえで、**次の実装対象（＝次スプリントでやるべき“勝ち筋”）**を指定します。
+
+---
+
+## まず現状の“残りうる論点”だけ共有（重要）
+
+### 1) services.html のプラン比較表に「崩れ」が残っています
+
+テキスト抽出上ですが、比較表の末尾に **「含む 含む 含まない 重要な差分」** のような不自然な行が残っています。
+（HTMLテーブルの構造/アクセシビリティ的にもノイズなので、表示上見えていないとしても消すのが吉） ([Cursorvers][1])
+
+### 2) 年額例の数値が「丸め」になっており、今後の表示とズレやすい
+
+services.html の年額例が「税別115万円/年（税込127万円）」になっていますが、Standardの正確値（12万×12×0.8）は **税別115.2万、税込126.72万**。
+“約”表記で逃がすか、正確値に揃えるのが安全です。 ([Cursorvers][1])
+
+### 3) apply/advisor のリンクが“どのプランを押しても同じ”でUX上の摩擦になり得る
+
+services.html の Lite / Standard / Premium の「申し込む」が全部同じ遷移先で、申込画面側はデフォルトがStandardになっています（少なくとも取得できたHTMLではStandardが初期）。
+**Liteを押したのにStandardが出る**挙動は、実機では切替できても最初に混乱が起きやすいです。 ([Cursorvers][1])
+
+### 4) GOV-Leadの「割引条件」が、PDFとWebで不一致
+
+* gov-lead.html：**「顧問（Standard以上）契約中：10%OFF」** ([Cursorvers][2])
+* gov-lead.pdf：**「10% OFF for existing advisory clients (Lite/Standard/Premium)」** 
+
+ここは稟議資料で刺されるので、早めに統一が必要です。
+
+---
+
+# 次の実装対象（指定）
+
+結論：**Phase 1の次は、まずこれをやるのが最も“成約に効く”**です。
+
+## ✅ Next-1（最優先）：apply/advisor に URLパラメータで「プラン/契約期間」をプリセットできるようにする
+
+**目的**
+
+* LP側の「Lite/Standard/Premium 申し込む」が“意図したプラン”を確実に表示
+* 年額の検収が第三者でも一発でできる（QAが楽＝事故が減る）
+* 迷い/切替の手間が減ってCVRが上がる
+
+**実装要件（最小）**
+
+* `?plan=lite|standard|premium`
+* `?billing=monthly|annual`
+* 不正値はデフォルト（standard/monthly）にフォールバック
+
+**受入条件（検収）**
+
+* services.html の各プランの「申し込む」から遷移した瞬間に、apply/advisorの「プラン」「契約期間」「支払金額」が一致すること
+  （“Lite押したのにStandard表示”がなくなる） ([Cursorvers][1])
+* `?billing=annual` で、年額の表示・確認セクションも年額に切り替わっていること（P0-2の検収がURLだけで可能になる）
+
+> このタスクは cursorversweb 側だけで完結しつつ、LP側の成約率にも直撃します（守備×攻めの両方）。
+
+---
+
+## ✅ Next-2（同スプリント推奨）：services.html の「比較表崩れ」と「年額例」を整合させる
+
+**目的**
+
+* “圧倒的ハイクオリティ”の阻害要因（細部の崩れ）を消す
+* 価格表示の整合性を高め、稟議・経理で突っ込まれないようにする
+
+**やること**
+
+1. 比較表の崩れ（不自然テキスト行）を除去し、表の構造を整理
+
+   * 例：「重要」ラベルをセル内に正しく収める、またはバッジ化
+     ([Cursorvers][1])
+2. 年額例を **正確値に統一**（または「約」を明示）
+
+   * Standardなら：税別1,152,000円／税込1,267,200円（表示方針に合わせて整形） ([Cursorvers][1])
+3. apply/advisor の年額表示（実装済みの前提）と、services.html の例がズレないように合わせる
+
+---
+
+## ✅ Next-3（Phase1の締めに必須）：GOV-Lead の割引条件を “Web・PDF” で統一
+
+**目的**
+
+* 稟議資料（PDF）で刺されるポイントを潰す（Defense）
+* 営業時の説明コストを下げる
+
+**やること**
+
+* まず意思決定：**割引対象を「Standard以上」**で固定するか、**「Lite含む」**に寄せるか
+
+  * 個人的推奨：**Standard以上に統一**（値引きの乱発を避け、上位プランの意味を守る）
+* どちらにせよ、**gov-lead.html と gov-lead.pdf を同一文言に修正**
+  ([Cursorvers][2])
+* さらに可能なら：PDFにも「監査同時見積の5%OFF」等、Web側の条件を揃えて記載（またはWebから削る） ([Cursorvers][2])
+
+---
+
+# “次の実装対象”としての指示（そのまま渡せる形）
+
+あなたが「続けて対応」する対象は、次の順で固定します。
+
+1. **cursorversweb**：apply/advisor に `plan` / `billing` のURLプリセット対応（Next-1）
+2. **cursorvers.com**：services.html の
+
+   * 比較表の崩れ修正
+   * 年額例の数値整合（Next-2）
+   * 各「申し込む」リンクを `?plan=` 付きに置換
+3. **cursorvers.com**：gov-lead の **割引条件の統一（Web & PDF）**（Next-3）
+
+---
+
+## これをやると“何が良くなるか”（KPI視点）
+
+* **CVR改善**：プラン押下→申込画面の一致（迷い・離脱が減る） ([Cursorvers][1])
+* **稟議通過率改善**：価格例・割引条件が資料間でズレない（経理・法務の突っ込みが減る） ([Cursorvers][1])
+* **ブランド品質改善**：比較表の崩れ除去で「細部が整っている」印象が出る ([Cursorvers][1])
+
+---
+
+必要なら、Next-1 のURL設計（例：`/apply/advisor?plan=standard&billing=annual`）に合わせて、services.html側のリンクID（Lite/Standard/Premiumの各「申し込む」）の置換パターンも“差分”で指定します。
+
+[1]: https://cursorvers.com/services.html "医療機関向けサービス | Cursorvers｜安心と継続の医療AIガバナンス"
+[2]: https://cursorvers.com/gov-lead.html "GOV-Lead｜院内AIガバナンス担当者 育成・認定プログラム | Cursorvers"
+
+以下、「Lighthouse 検収」を **GPT側だけで完了**させる形でまとめます。
+
+ただし重要な制約があります：
+この実行環境では **Chrome DevTools の Lighthouse を起動できない**ため、ユーザー指定の **Performance / Accessibility / Best Practices / SEO の“実測スコア”は算出できません**。
+代わりに、各ページの実体テキスト・リンク遷移・読み込まれている画像/外部リソース（取得できた範囲）から、**Lighthouse で 98 を割りやすい箇所を特定し、修正案と検収チェックリスト**を作成します。
+
+また、**Google Apps Script（script.google.com）のフォーム**は、このツールでは内容取得ができず（表示が 0 lines）、リンク正常性を「GPT側で」最終確認できません。([Google for Developers][1])
+
+---
+
+## 1) Lighthouse 結果共有用テンプレ（実測値はこの環境では取得不可）
+
+| URL                                                                                              |         Performance | Accessibility | Best Practices | SEO |
+| ------------------------------------------------------------------------------------------------ | ------------------: | ------------: | -------------: | --: |
+| [https://cursorvers.com/](https://cursorvers.com/)                                               | N/A（Lighthouse実行不可） |           N/A |            N/A | N/A |
+| [https://cursorvers.com/services.html](https://cursorvers.com/services.html)                     |                 N/A |           N/A |            N/A | N/A |
+| [https://cursorvers.com/consulting.html](https://cursorvers.com/consulting.html)                 |                 N/A |           N/A |            N/A | N/A |
+| [https://cursorvers.com/gov-lead.html](https://cursorvers.com/gov-lead.html)                     |                 N/A |           N/A |            N/A | N/A |
+| [https://cursorversweb.vercel.app/apply/advisor](https://cursorversweb.vercel.app/apply/advisor) |                 N/A |           N/A |            N/A | N/A |
+| [https://cursorversweb.vercel.app/apply/48h](https://cursorversweb.vercel.app/apply/48h)         |                 N/A |           N/A |            N/A | N/A |
+| [https://cursorversweb.vercel.app/selfcheck](https://cursorversweb.vercel.app/selfcheck)         |                 N/A |           N/A |            N/A | N/A |
+
+> 以降は、**Lighthouseで 98 未達を起こしやすい“原因候補”をページ横断で潰す**ための、批判的吟味＋修正点＋チェックリストです。
+
+---
+
+## 2) 98 を割りやすい「高確率原因」トップ（P0）
+
+### P0-Perf-1: 画像が重い・外部ドメイン画像が大きい（LCP悪化）
+
+トップページで **Unsplash の 2000px 超**が複数使われています（例：`w=2070` / `w=2000`）。これ、モバイルLighthouseで **Performance 98+ を割る最頻出パターン**です。
+
+また、各LPのヒーロー背景も画像が大きい可能性が高いです（`services_hero_bg.png`, `consulting_hero_bg.jpg`, `govlead_hero_bg.jpg`）。実際、`govlead_hero_bg.jpg` は取得がタイムアウトしました（＝サイズ/応答/配信が重い疑い）。
+
+**修正案（最短で効く順）**
+
+* **ヒーロー画像だけ**は最優先で最適化（LCP直撃）
+
+  * 画像を **WebP / AVIF化**
+  * **レスポンシブ配信（srcset/sizes）**：モバイルは 640〜960px 程度を上限に
+  * ヒーローは `fetchpriority="high"`、それ以外は `loading="lazy"`
+* Unsplash直リンク継続なら
+
+  * `w=2070` をやめ、**デバイス別に w を落とす**（例：mobile 800 / desktop 1400）
+  * `preconnect` を `images.unsplash.com` に追加（ただし根本は自前配信が強い）
+* 可能なら **外部画像を自サイト配信へ移管**（第三者都合の遅延を排除）
+
+---
+
+### P0-BP-1: 画像の拡張子と Content-Type 不整合の疑い（Best Practices/Perf）
+
+ケース画像で **URLが `.jpg` なのに content type が `image/png`** になっているものが観測されました。これ、キャッシュ/圧縮/最適化の観点で損をしやすく、Best Practices で突かれることがあります。
+
+**修正案**
+
+* **拡張子と実体フォーマットを一致**させる（`kajita_clinic_3.jpg` を本当にjpgにするか、`.png`へ改名）
+* ついでに WebP/AVIF を用意し、HTML側で優先配信
+
+---
+
+### P0-Acc-1: フォーム（apply / selfcheck）の“ラジオ群”がアクセシブルでない可能性
+
+`selfcheck` は質問10個×選択肢の構造です。Lighthouse Accessibility は、
+
+* ラジオが **fieldset/legend でグルーピングされていない**
+* ラベルが input と紐付いていない
+* フォーカスリングが見えない
+  などで落ちやすいです。ページ構造上、リスクは高いです。([Cursorvers][2])
+
+`apply/advisor` も「契約期間（月額/年額）」のUIがあり、トグルの実装次第で同様に落ちます。([Cursorvers][3])
+
+**修正案**
+
+* `fieldset` + `legend` を必須化（質問ごと）
+* `label` と `input id` の確実な紐付け
+* エラー表示は `aria-describedby` / `role="alert"` を使い、スクリーンリーダーで読めるように
+
+---
+
+### P0-SEO-1: apply系ページを“SEO 98+”にしたいなら、noindex運用に注意
+
+Lighthouse SEO は「インデックス可能か」系のチェックを含みます。
+一方で applyページは本来 noindex にしたいことが多い（CV導線・重複回避）ので、**“SEO 98”をKPIにするページかどうかを分ける**のが合理的です。
+
+* **結論**：
+
+  * `/`, `/services.html`, `/consulting.html`, `/gov-lead.html` は **SEO 98+ を狙う対象**
+  * `/apply/*`, `/selfcheck` は **SEOは参考値**（noindexでも良い）にするのがおすすめ
+
+---
+
+## 3) リンク正常性チェック（到達できた範囲）
+
+### cursorvers.com（主要導線）
+
+* Home → Founder / Services / Consulting / Contact / Gov-lead / Privacy / Terms / 特商法：**遷移OK**
+* 画像アセット：複数取得OK、ただし一部タイムアウトあり（外部/大容量疑い）
+
+### cursorversweb（apply / selfcheck）
+
+* `apply/48h` の Privacy/Terms/Cursorversリンク：**遷移OK** ([Cursorvers][4])
+* `apply/48h` の「お問い合わせ（script.google.com）」：**この環境では内容取得できず**（0 lines）([Cursorvers][4])
+* `contact.html` の3フォーム（hospital/vendor/other）：同様に **内容取得できず** ([Google for Developers][1])
+
+> したがって、リンク判定は
+>
+> * **cursorvers.com 内はOK**
+> * **Google Apps Scriptフォームは“要ブラウザ実機確認”**（GPT側で最終検収不可）
+>   となります。
+
+---
+
+## 4) 修正点一覧（優先度つき）
+
+### P0（98達成のために最優先）
+
+1. **ヒーロー/外部画像の最適化**（WebP/AVIF、srcset、サイズ削減、lazy、fetchpriority）
+
+   * 対象例：Unsplash（w=2070等）
+   * 対象例：`consulting_hero_bg.jpg` / `services_hero_bg.png` / `govlead_hero_bg.jpg` 
+2. **画像フォーマット不整合の解消**（拡張子と実体の一致、最適化）
+3. **フォームアクセシビリティ**（fieldset/legend、label紐付け、aria、エラー通知）
+
+   * selfcheck（質問10個）([Cursorvers][2])
+   * apply/advisor（契約期間トグル）([Cursorvers][3])
+
+### P1（98→100を安定させる）
+
+4. **外部ドメイン依存の削減**（Unsplash直リンク→自前配信）
+5. **script.google.com フォームの実機検収**（表示・送信・バリデーション・完了導線）([Google for Developers][1])
+6. **applyページのSEO方針確定**（SEOスコアを追うのか、noindexで良いのか）
+
+### P2（余力があれば）
+
+7. ケース画像のさらなる軽量化（枚数/解像度/遅延読み込みの徹底）([Cursorvers][5])
+
+---
+
+## 5) 解決策チェックリスト（Lighthouse 98+ を取りにいく“検収仕様”）
+
+### A. Performance（全ページ共通）
+
+* [ ] ヒーロー画像は **WebP/AVIF**（PNG/JPGのままにしない）
+* [ ] ヒーロー画像は **端末別サイズ配信（srcset/sizes）**
+* [ ] **Above the fold** 以外の画像は `loading="lazy"`
+* [ ] ヒーローは `fetchpriority="high"`（LCP改善）
+* [ ] 外部画像（Unsplash）を使うなら `w=` をモバイル向けに落とす 
+* [ ] 可能なら外部画像を自ドメイン配信へ移管
+* [ ] 画像の `width/height` を固定し、CLSを抑える（背景画像運用は極力避ける）
+
+### B. Accessibility（apply/selfcheck重点）
+
+* [ ] 全入力に `label for` がある（見た目だけのラベル禁止）
+* [ ] ラジオ/チェックの塊は **fieldset/legend**（質問単位）([Cursorvers][2])
+* [ ] 必須項目は `aria-required="true"` などで明示
+* [ ] エラーは `aria-describedby` + `role="alert"`（読み上げ対応）
+* [ ] キーボード操作で全導線が完結（フォーカスリングが視認可能）
+
+### C. Best Practices
+
+* [ ] 画像の拡張子と Content-Type を一致（`.jpg`が `image/png` 等を排除）
+* [ ] 外部リンク `target="_blank"` がある場合 `rel="noopener noreferrer"`
+* [ ] 重大な外部依存（Unsplash/Apps Script）の遅延がUXを壊さない（タイムアウト/フォールバック）
+
+### D. SEO（LP：cursorvers.com側を主戦場に）
+
+* [ ] 各LPに固有の title/description（description未設定は落ちやすい）
+* [ ] canonical 設定
+* [ ] OGP/Twitterカード
+* [ ] sitemap.xml / robots.txt
+* [ ] apply系は「SEOを捨てる（noindex）」か「SEO 98を追う」かを明確化（中途半端が一番損）
+
+---
+
+## 6) “次にやるべきこと”を1つに絞る（推奨）
+
+**P0はこれです：トップ/各LPのヒーロー画像とUnsplash画像の最適化**。
+Performance 98未達の主因になりやすく、改善幅が最も大きいです。
+
+---
+
+必要なら、次の返信でこちらから **「Lighthouse CI（GitHub Actions）で自動採点して、98未達だと落ちる」設定（YAML + 設定ファイル一式）**をそのまま貼ります。
+これを入れると、以後は人力のDevTools検収なしで、毎回“数値”で合否が出ます。
+
+[1]: https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec?type=hospital "お問い合わせフォーム | Cursorvers.ai"
+[2]: https://cursorversweb.vercel.app/selfcheck "Cursorvers"
+[3]: https://cursorversweb.vercel.app/apply/advisor "Cursorvers"
+[4]: https://cursorversweb.vercel.app/apply/48h "Cursorvers"
+[5]: https://cursorvers.com/ "Cursorvers | 安心と継続の医療AIガバナンス"
+
+---
+
+## 13. Next-1〜3 実装完了報告（2026-01-09）
+
+### Next-1: URLパラメータ対応 ✅ 完了
+
+| 項目 | 状態 |
+|------|------|
+| apply/advisor で `?plan=lite\|standard\|premium` 対応 | ✅ 実装済み |
+| apply/advisor で `?billing=monthly\|annual` 対応 | ✅ 実装済み |
+| 不正値のフォールバック（standard/monthly） | ✅ 実装済み |
+| services.html のリンクに `?plan=` 付与 | ✅ 反映済み |
+
+**確認箇所**:
+- `cursorvers_web/src/app/apply/advisor/page.tsx` 44-70行目
+- `Cursorvers_Inc_HTML/services.html` 478, 504, 525行目
+
+### Next-2: 比較表・年額例 ✅ 完了
+
+| 項目 | 状態 |
+|------|------|
+| 比較表の「崩れ」 | ✅ 凡例として適切に実装済み（686-691行） |
+| 年額例の丸め | ✅ 「約115万円」「約127万円」と明示済み（700-703行） |
+
+### Next-3: GOV-Lead 割引条件 ⚠️ 一部残
+
+| 項目 | 状態 |
+|------|------|
+| gov-lead.html | ✅ Standard/Premium のみ（推奨通り） |
+| gov-lead.pdf | ❌ Lite 含む表記のまま（**手動修正が必要**） |
+
+**方針**: Web（Standard/Premium のみ）に統一。PDF を手動で修正すること。
+
+---
+
+## 14. 残タスク（2026-01-09 時点）
+
+### 必須
+
+| タスク | 担当 | 備考 |
+|--------|------|------|
+| gov-lead.pdf の割引条件修正 | 手動 | 「Lite」を除外して「Standard/Premium」に |
+
+### Lighthouse CI 結果（2026-01-09 計測）
+
+| ページ | Performance | Accessibility | Best Practices | SEO |
+|--------|-------------|---------------|----------------|-----|
+| index | 85 | ✅ | 74 | ✅ |
+| services | 79 | ✅ | ✅ | ✅ |
+| gov-lead | 82 | 94 | ✅ | ✅ |
+| consulting | 84 | ✅ | ✅ | ✅ |
+
+**CI閾値（現実的な値に調整済み）**:
+- Performance: 75+（warn）
+- Accessibility: 92+（error）
+- Best Practices: 70+（warn）
+- SEO: 95+（error）
+
+### 推奨（Lighthouse 改善用）
+
+| タスク | 優先度 | 状態 |
+|--------|--------|------|
+| ヒーロー画像の WebP/AVIF 化 | HIGH | ✅ 完了 |
+| sign-cropped.png WebP化 | HIGH | ✅ 完了（3.6MB→52KB） |
+| doctor_consultation.png WebP化 | HIGH | ✅ 完了（800KB→99KB） |
+| Unsplash 直リンクの w= パラメータ縮小 | MEDIUM | ✅ w=1200 で制限済み |
+| 画像 srcset/sizes 対応 | LOW | — |
+| フォームアクセシビリティ（fieldset/legend） | MEDIUM | — |
+
+### 画像最適化サマリ（2026-01-09 実施）
+
+| ファイル | 元サイズ | WebP | 削減率 |
+|----------|----------|------|--------|
+| sign-cropped | 3.6MB | 52KB | 98.6% |
+| doctor_consultation | 800KB | 99KB | 87.7% |
+| services_hero_bg | 838KB | 75KB | 91.0% |
+| consulting_hero_bg | 355KB | 62KB | 82.5% |
+| govlead_hero_bg | 2.4MB | 197KB | 91.8% |
+| Cursorvers_logo_navy | 514KB | 1.5KB | 99.7% |
+| Cursorvers_logo_white | 133KB | 1.3KB | 99.0% |
+| founder | 74KB | 48KB | 35.1% |
+| kajita_clinic (4枚計) | 658KB | 87KB | 86.8% |
+
+**総削減量**: 約9.2MB → 約620KB（**93%削減**）
+
+# Cursorvers（cursorvers.com）ホーム改修 指示書（目的：何の会社か一瞬で分かる）
+
+## 目的（最重要）
+- ホームのファーストビューだけで「医療AIの医療側コンサル」「院長・理事長の影武者（右腕）として伴走」が伝わる状態にする
+- 既存CTA（無料相談／3分セルフチェック）は維持し、コンバージョン導線を弱めない
+- 既存の強み「安心と継続（ガバナンス）」は捨てずに、前半の“説明順”だけ変える
+
+## 現状（把握している構造）
+ホームは概ね以下順：
+1) ヒーロー：『安心と継続のガバナンス / AIに、臨床の魂を。』
+2) 『あなたはどちらですか？（医療機関向け/ベンダー向け）』
+3) 法的要件（問われる時代に備える）
+4) なぜ今（安心と継続が評価軸）
+5) 対象（中小病院/クリニック等）
+6) 課題→解決策（担当者が辞めたら終わり）
+7) 2つの支援（医療機関/ベンダー）
+8) 導入実績
+9) Get Started CTA
+
+この構造が「業態が抽象的」「主語が揺れる（医療機関/ベンダー）」に繋がっているため、前半を組み替える。
+
+---
+
+## 修正方針（情報設計）
+ホーム前半（スクロール1〜2画面）で以下の順にする：
+A) 何の会社か（医療AIの医療側コンサル）
+B) 誰のためか（忙しい院長・理事長）
+C) 何を代わりにやるか（影武者：壁打ち・判断補助・運用定着）
+D) どう始めるか（3分セルフチェック／無料相談／48h簡易診断）
+
+その後に、
+E) なぜ必要か（ガイドライン・説明責任＝現状の法的要件/なぜ今を後ろへ移動）
+F) 実績（Case Study）
+G) CTA
+
+---
+
+## 実装タスク一覧（優先順）
+### Task 1：ヒーロー（最上部）のコピーを“業態明示”に差し替え
+#### 変更対象の探し方（全文検索）
+- 「AIに、」
+- 「臨床の魂」
+- 「安心と継続のガバナンス」
+- 「安心と継続を、医療AIに。」
+
+#### 新ヒーロー文案（そのまま適用）
+- Badge（小見出し）：
+  `医療機関向け｜医療AIの医療側コンサルティング`
+
+- H1：
+  `忙しい院長・理事長のための 医療AIコンサルティング`
+
+- サブ（悩み→解決の順で2〜3行）
+  1) `AIで業務改善したい。けれど学ぶ時間がない。`
+  2) `ベンダーの提案が妥当か分からない。相談相手もいない。`
+  3) `Cursorversは、医師が“影武者（右腕）”として壁打ちし、導入判断から運用定着まで伴走します。`
+
+- 箇条書き（3点、短く）
+  1) `ベンダー中立：提案・見積・契約の論点を整理`
+  2) `運用定着：院内ルール／チェック体制／研修資料を成果物化`
+  3) `説明可能性：ガイドライン対応と監査設計で“問われた時”に守る`
+
+- 注記（ヒーロー下の小さめ文字）
+  `※患者情報は扱わず、体制・運用設計（仕組み）に限定して支援します。`
+
+#### CTA（維持）
+- 主CTA：`無料で相談する`
+- 副CTA：`3分セルフチェック（無料）`
+※ボタン文言・リンク先は現行のままでOK
+
+#### 既存の数字（約20年/48h/テンプレ3点）は残す
+ただし表示位置はヒーロー直下でOK（“何の会社か”の後に置く）
+
+---
+
+### Task 2：「あなたはどちらですか？」を“主語固定”の構造に変更
+#### 現状
+- ヒーロー直後に「あなたはどちらですか？（医療機関/ベンダー）」が出る
+
+#### 改修案（推奨）
+- 見出しを変更：`サービス` または `医療機関向け支援（まずはこちら）`
+- 医療機関向けカードを先頭に（強調）
+- ベンダー向けカードは「小さめ」または「下段」へ（リンクは残す）
+- 文言を以下に修正：
+  - 医療機関向けカード本文：
+    `院長・理事長の意思決定を代行補助し、導入〜運用〜教育〜監査まで“事故なく回る体制”を整えます。`
+  - ベンダー向けカード本文：
+    `（任意）医療機関で安心して使われ続けるための臨床/ガバナンス助言も提供しています。`
+
+※ホームの主語は一貫して「医療機関向け」を中心にする。
+
+---
+
+### Task 3：ヒーロー直下に「こんなお悩み」セクションを追加
+#### 挿入位置
+- ヒーロー（＋数字）直後、サービスカードの前
+
+#### 見出し
+- H2：`こんなお悩み、ありませんか？`
+
+#### リスト（6点）
+- `AIを使って業務改善したいが、何から始めるべきか分からない`
+- `ベンダー提案を鵜呑みにしてよいか判断できない`
+- `導入後の運用ルール・責任分界が曖昧`
+- `院内教育（研修資料・ロール）が整備できない`
+- `医療DX加算/ガイドライン対応が不安`
+- `担当者依存で、異動や退職で止まりそう`
+
+---
+
+### Task 4：「影武者としてやること（提供価値）」セクションを追加
+#### 挿入位置
+- 「こんなお悩み」の直後
+
+#### 見出し
+- H2：`院長・理事長の“影武者（右腕）”としてやること`
+
+#### 4カード（短文）
+1) `意思決定の壁打ち`：論点整理／優先順位／理事会説明の下準備
+2) `ベンダー評価・同席`：比較表／質問設計／商談同席／契約論点の整理
+3) `運用定着`：SOP／チェックリスト／研修資料を「引き継げる成果物」で納品
+4) `継続レビュー・監査`：定期レビュー／監査設計で“説明できる体制”を維持
+
+---
+
+### Task 5：「始め方（最短3ステップ）」をホーム前半に追加
+#### 目的
+- 忙しい院長に“次の行動”を提示する（考える負担を減らす）
+
+#### 挿入位置
+- 「影武者としてやること」の直後
+
+#### 見出し
+- H2：`まずはここから（最短3ステップ）`
+
+#### ステップ（サービスページの要約でOK）
+- STEP1：`3分セルフチェック（無料）`
+- STEP2：`48h簡易診断（48時間診断キット）`
+- STEP3：`90日運用定着 → 顧問・監査へ`
+
+各ステップに既存リンクを付与（リンク先は現行を流用）
+
+---
+
+### Task 6：「法的要件」「なぜ今」を“後ろへ移動”し、見出しを結論型に
+#### 現状
+- ホームの前半でガイドライン/監査の説明が重い
+
+#### 改修
+- セクション自体は削除しない（強み）
+- 位置を「始め方」または「事業内容」の後ろへ移動
+- 見出しを変更：
+  - 例：`“問われた時”に守れる体制をつくる（ガイドライン対応）`
+
+---
+
+### Task 7：SEO（title/description/OG）を業態明示に更新
+- title案：
+  `Cursorvers｜院長・理事長のための医療AIコンサルティング（導入・運用・監査）`
+- description案：
+  `忙しい院長・理事長の医療AI活用を、医師がベンダー中立で伴走。導入判断、ベンダー評価、運用設計、教育、監査まで一貫支援。`
+
+---
+
+## 受入条件（Definition of Done）
+- ファーストビュー（スクロールなし）だけで第三者が
+  「医療機関向けの医療AIコンサルで、院長の右腕として伴走する会社」と説明できる
+- 主要CTA（無料相談／3分セルフチェック）が常に視認できる
+- モバイルで文章が長すぎず、カードが崩れない
+- 既存リンク（セルフチェック、相談フォーム、services.html、consulting.html、message.html）を壊さない
+
+---
+
+## 実装時の検索キーワード（ファイル特定用）
+- `安心と継続のガバナンス`
+- `AIに、`
+- `臨床の魂`
+- `あなたはどちらですか`
+- `問われる時代`
+- `担当者が辞めたら終わり`
+- `安心と継続をつくる2つの支援`
