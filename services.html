@@ -17,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <title>医療機関向けサービス | Cursorvers｜安心と継続の医療AIガバナンス</title>
     <meta name="description" content="中小病院・診療所向け。48時間でリスク棚卸しと運用定着プラン。安心と継続を支えるベンダー中立のAIガバナンス顧問。">
-    <link rel="stylesheet" href="/dist/tailwind.min.css">
+    <link rel="stylesheet" href="dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -228,6 +228,61 @@
 </head>
 
 <body class="antialiased">
+    <!-- Inline SVG Sprite for file:// protocol compatibility -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-arrow-down" viewBox="0 0 384 512">
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+        </symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 448 512">
+            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+        </symbol>
+        <symbol id="icon-arrow-up-right-from-square" viewBox="0 0 512 512">
+            <path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z"/>
+        </symbol>
+        <symbol id="icon-bars" viewBox="0 0 448 512">
+            <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/>
+        </symbol>
+        <symbol id="icon-building" viewBox="0 0 384 512">
+            <path d="M48 0C21.5 0 0 21.5 0 48L0 464c0 26.5 21.5 48 48 48l96 0 0-80c0-26.5 21.5-48 48-48s48 21.5 48 48l0 80 96 0c26.5 0 48-21.5 48-48l0-416c0-26.5-21.5-48-48-48L48 0zM64 240c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32zm112-16l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32zM80 96l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32zM272 96l32 0c8.8 0 16 7.2 16 16l0 32c0 8.8-7.2 16-16 16l-32 0c-8.8 0-16-7.2-16-16l0-32c0-8.8 7.2-16 16-16z"/>
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 448 512">
+            <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+        </symbol>
+        <symbol id="icon-chevron-down" viewBox="0 0 512 512">
+            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
+        </symbol>
+        <symbol id="icon-circle-check" viewBox="0 0 512 512">
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+        </symbol>
+        <symbol id="icon-comments" viewBox="0 0 640 512">
+            <path d="M208 352c114.9 0 208-78.8 208-176S322.9 0 208 0S0 78.8 0 176c0 38.6 14.7 74.3 39.6 103.4c-3.5 9.4-8.7 17.7-14.2 24.7c-4.8 6.2-9.7 11-13.3 14.3c-1.8 1.6-3.3 2.9-4.3 3.7c-.5 .4-.9 .7-1.1 .8l-.2 .2s0 0 0 0s0 0 0 0C1 327.2-1.4 334.4 .8 340.9S9.1 352 16 352c21.8 0 43.8-5.6 62.1-12.5c9.2-3.5 17.8-7.4 25.2-11.4C134.1 343.3 169.8 352 208 352zM448 176c0 112.3-99.1 196.9-216.5 207C255.8 457.4 336.4 512 432 512c38.2 0 73.9-8.7 104.7-23.9c7.5 4 16 7.9 25.2 11.4c18.3 6.9 40.3 12.5 62.1 12.5c6.9 0 13.1-4.5 15.2-11.1c2.1-6.6-.2-13.8-5.8-17.9c0 0 0 0 0 0s0 0 0 0l-.2-.2c-.2-.2-.6-.4-1.1-.8c-1-.8-2.5-2-4.3-3.7c-3.6-3.3-8.5-8.1-13.3-14.3c-5.5-7-10.7-15.4-14.2-24.7c24.9-29 39.6-64.7 39.6-103.4c0-92.8-84.9-168.9-192.6-175.5c.4 5.1 .6 10.3 .6 15.5z"/>
+        </symbol>
+        <symbol id="icon-info-circle" viewBox="0 0 512 512">
+            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+        </symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 448 512">
+            <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </symbol>
+        <symbol id="icon-newspaper" viewBox="0 0 512 512">
+            <path d="M96 96c0-35.3 28.7-64 64-64l288 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L80 480c-44.2 0-80-35.8-80-80L0 128c0-17.7 14.3-32 32-32s32 14.3 32 32l0 272c0 8.8 7.2 16 16 16s16-7.2 16-16L96 96zm64 24l0 80c0 13.3 10.7 24 24 24l112 0c13.3 0 24-10.7 24-24l0-80c0-13.3-10.7-24-24-24L184 96c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16l48 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-48 0c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16l48 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-48 0c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16l256 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-256 0c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16l256 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-256 0c-8.8 0-16 7.2-16 16z"/>
+        </symbol>
+        <symbol id="icon-percent" viewBox="0 0 384 512">
+            <path d="M374.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-320 320c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l320-320zM128 128A64 64 0 1 0 0 128a64 64 0 1 0 128 0zM384 384a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/>
+        </symbol>
+        <symbol id="icon-quote-left" viewBox="0 0 448 512">
+            <path d="M0 216C0 149.7 53.7 96 120 96l8 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-8 0c-30.9 0-56 25.1-56 56l0 8 64 0c35.3 0 64 28.7 64 64l0 64c0 35.3-28.7 64-64 64l-64 0c-35.3 0-64-28.7-64-64l0-32 0-32 0-72zm256 0c0-66.3 53.7-120 120-120l8 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-8 0c-30.9 0-56 25.1-56 56l0 8 64 0c35.3 0 64 28.7 64 64l0 64c0 35.3-28.7 64-64 64l-64 0c-35.3 0-64-28.7-64-64l0-32 0-32 0-72z"/>
+        </symbol>
+        <symbol id="icon-rocket" viewBox="0 0 512 512">
+            <path d="M156.6 384.9L125.7 354c-8.5-8.5-11.5-20.8-7.7-32.2c3-8.9 7-20.5 11.8-33.8L24 288c-8.6 0-16.6-4.6-20.9-12.1s-4.2-16.7 .2-24.1l52.5-88.5c13-21.9 36.5-35.3 61.9-35.3l82.3 0c2.4-4 4.8-7.7 7.2-11.3C289.1-4.1 411.1-8.1 483.9 5.3c11.6 2.1 20.6 11.2 22.8 22.8c13.4 72.9 9.3 194.8-111.4 276.7c-3.5 2.4-7.3 4.8-11.3 7.2l0 82.3c0 25.4-13.4 49-35.3 61.9l-88.5 52.5c-7.4 4.4-16.6 4.5-24.1 .2s-12.1-12.2-12.1-20.9l0-107.2c-14.1 4.9-26.4 8.9-35.7 11.9c-11.2 3.6-23.4 .5-31.8-7.8zM384 168a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>
+        </symbol>
+        <symbol id="icon-tag" viewBox="0 0 448 512">
+            <path d="M0 80L0 229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7L48 32C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+        </symbol>
+        <symbol id="icon-xmark" viewBox="0 0 384 512">
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+        </symbol>
+    </svg>
+
     <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation -->
@@ -246,9 +301,10 @@
                 <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
                 <a href="services.html" class="text-brand-blue font-semibold">医療機関向け</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
+                <a href="subsidy.html" class="hover:text-brand-blue transition">補助金活用</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html"
@@ -257,7 +313,7 @@
                     無料で相談する
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -289,11 +345,11 @@
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#plans"
                         class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
-                        プランを見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-down"></use></svg>
+                        プランを見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
                     </a>
                     <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition bg-white/50 backdrop-blur-sm">
-                        無料セルフチェック <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
+                        無料セルフチェック <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                     </a>
                 </div>
             </div>
@@ -348,21 +404,21 @@
                         </p>
                         <ul class="space-y-3 mb-8 text-lg flex-grow">
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>10問の簡単な質問</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>即座に結果表示</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>優先度の高い項目を提示</span>
                             </li>
                         </ul>
                         <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
                             class="inline-flex items-center justify-center gap-2 w-full py-4 bg-brand-blue text-white font-bold text-lg rounded-full hover:bg-brand-black transition mt-auto">
-                            今すぐチェック <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
+                            今すぐチェック <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                         </a>
                     </div>
 
@@ -384,19 +440,19 @@
                         <p class="text-sm text-text-tertiary mb-6">※ 適格請求書（インボイス）は発行できません。</p>
                         <ul class="space-y-3 mb-8 text-lg">
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>事前アンケート＋30分オンラインヒアリング</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>リスク「赤・黄・青」3段階評価</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>90日運用定着プラン</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>報告レポート（PDF）</span>
                             </li>
                         </ul>
@@ -419,7 +475,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold">体制を整える</h2>
                 </div>
                 <p class="text-xl text-text-secondary mb-4 max-w-3xl">48h簡易診断（48時間診断キット）で作成した90日運用定着プランを実行。安心が続く体制づくりに伴走します。</p>
-                <p class="text-lg text-brand-blue font-semibold mb-8"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-info-circle"></use></svg>90日運用定着支援はStandard以上の顧問先に提供</p>
+                <p class="text-lg text-brand-blue font-semibold mb-8"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-info-circle"></use></svg>90日運用定着支援はStandard以上の顧問先に提供</p>
 
                 <!-- GOV-Lead Banner -->
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 md:p-10 mb-12 border border-blue-100">
@@ -436,15 +492,15 @@
                             </p>
                             <ul class="flex flex-wrap gap-4 text-base text-text-tertiary">
                                 <li class="flex items-center gap-2">
-                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                     週1回 × 8週間
                                 </li>
                                 <li class="flex items-center gap-2">
-                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                     実務演習付き
                                 </li>
                                 <li class="flex items-center gap-2">
-                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                    <svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                     修了認定あり
                                 </li>
                             </ul>
@@ -453,7 +509,7 @@
                             <a href="gov-lead.html"
                                 class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white font-bold text-lg rounded-full hover:bg-brand-black transition whitespace-nowrap"
                                 onclick="if(window.gtag){gtag('event','click_gov_lead_banner',{event_category:'navigation',event_label:'services_step2'});}">
-                                詳細を見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
+                                詳細を見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                             </a>
                         </div>
                     </div>
@@ -471,6 +527,7 @@
                             <span class="text-3xl font-bold">5万円</span>
                             <span class="text-text-tertiary text-xl">/月（税別）</span>
                             <span class="text-sm text-text-tertiary block mt-1">税込5.5万円</span>
+                            <span class="text-sm text-brand-blue block mt-2">▶ 補助金活用で<strong>実質2.5万円〜</strong>/月</span>
                         </div>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
                             AI導入後の安心と継続に不安があり、まずは専門家に相談したい方向け。
@@ -497,6 +554,7 @@
                             <span class="text-3xl font-bold">12万円</span>
                             <span class="text-text-tertiary text-xl">/月（税別）</span>
                             <span class="text-sm text-text-tertiary block mt-1">税込13.2万円</span>
+                            <span class="text-sm text-brand-blue block mt-2">▶ 補助金活用で<strong>実質6万円〜</strong>/月</span>
                         </div>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
                             48h簡易診断（48時間診断キット）後、90日で安心運用を定着させたい方向け。初回現地訪問付き。
@@ -518,6 +576,7 @@
                             <span class="text-3xl font-bold">25万円</span>
                             <span class="text-text-tertiary text-xl">/月（税別）</span>
                             <span class="text-sm text-text-tertiary block mt-1">税込27.5万円</span>
+                            <span class="text-sm text-brand-blue block mt-2">▶ 補助金活用で<strong>実質12.5万円〜</strong>/月</span>
                         </div>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed">
                             毎月現地訪問、委員会参加など深いコミットメントが必要な方向け。
@@ -545,13 +604,16 @@
                                     <th scope="col" class="p-4 text-lg font-bold w-1/4"></th>
                                     <th scope="col" class="p-4 text-lg font-bold text-center">Lite<br><span
                                             class="text-brand-blue font-normal">5万円/月（税別）</span><br><span
-                                            class="text-xs text-text-tertiary font-normal">税込5.5万円</span></th>
+                                            class="text-xs text-text-tertiary font-normal">税込5.5万円</span><br><span
+                                            class="text-xs text-cyan-600 font-normal">実質2.5万円〜</span></th>
                                     <th scope="col" class="p-4 text-lg font-bold text-center bg-blue-50">Standard<br><span
                                             class="text-brand-blue font-normal">12万円/月（税別）</span><br><span
-                                            class="text-xs text-text-tertiary font-normal">税込13.2万円</span></th>
+                                            class="text-xs text-text-tertiary font-normal">税込13.2万円</span><br><span
+                                            class="text-xs text-cyan-600 font-normal">実質6万円〜</span></th>
                                     <th scope="col" class="p-4 text-lg font-bold text-center">Premium<br><span
                                             class="text-brand-blue font-normal">25万円/月（税別）</span><br><span
-                                            class="text-xs text-text-tertiary font-normal">税込27.5万円</span></th>
+                                            class="text-xs text-text-tertiary font-normal">税込27.5万円</span><br><span
+                                            class="text-xs text-cyan-600 font-normal">実質12.5万円〜</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -565,7 +627,7 @@
 
                                 <!-- 相談・コミュニケーション -->
                                 <tr class="feature-category">
-                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-comments"></use></svg>相談・コミュニケーション</td>
+                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-comments"></use></svg>相談・コミュニケーション</td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">オンラインMTG</td>
@@ -588,84 +650,84 @@
 
                                 <!-- 90日運用定着支援 -->
                                 <tr class="feature-category">
-                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-rocket"></use></svg>90日運用定着支援</td>
+                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-rocket"></use></svg>90日運用定着支援</td>
                                 </tr>
                                 <tr class="bg-yellow-50/50 border-l-4 border-l-yellow-400">
                                     <td class="p-4 text-lg font-semibold">90日運用定着プラン実行 <span class="text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded ml-1">重要</span></td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-100/50"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg></td>
-                                    <td class="p-4 text-center bg-yellow-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-100/50"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-circle-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-yellow-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-circle-check"></use></svg></td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">規程・ガイドライン整備支援</td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">ベンダー選定・交渉支援</td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">研修プログラム設計</td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
 
                                 <!-- 現地訪問 -->
                                 <tr class="feature-category">
-                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-building"></use></svg>現地訪問</td>
+                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-building"></use></svg>現地訪問</td>
                                 </tr>
                                 <tr class="bg-yellow-50/50 border-l-4 border-l-yellow-400">
                                     <td class="p-4 text-lg font-semibold">現地訪問 <span class="text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded ml-1">重要</span></td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
                                     <td class="p-4 text-lg text-center bg-blue-100/50 font-semibold">初回1回</td>
                                     <td class="p-4 text-lg text-center bg-yellow-50/30 font-bold">毎月1回</td>
                                 </tr>
                                 <tr class="bg-yellow-50/50 border-l-4 border-l-yellow-400">
                                     <td class="p-4 text-lg font-semibold">委員会・幹部会への陪席 <span class="text-xs bg-yellow-400 text-yellow-900 px-2 py-0.5 rounded ml-1">重要</span></td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg></td>
-                                    <td class="p-4 text-center bg-yellow-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg></td>
+                                    <td class="p-4 text-center bg-yellow-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-circle-check"></use></svg></td>
                                 </tr>
 
                                 <!-- 情報提供 -->
                                 <tr class="feature-category">
-                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-newspaper"></use></svg>情報提供</td>
+                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-newspaper"></use></svg>情報提供</td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">ガイドライン改定情報</td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">月次レポート</td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">四半期レビュー</td>
-                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg>
+                                    <td class="p-4 text-center"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg>
                                     </td>
-                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg></td>
-                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg></td>
+                                    <td class="p-4 text-center bg-blue-50/30"><svg class="text-gray-400 text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg></td>
+                                    <td class="p-4 text-center"><svg class="text-brand-blue text-xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg></td>
                                 </tr>
 
                                 <!-- 特典・割引 -->
                                 <tr class="feature-category">
-                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-percent"></use></svg>特典・割引</td>
+                                    <td colspan="4" class="p-4 text-lg font-bold text-brand-blue"><svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-percent"></use></svg>特典・割引</td>
                                 </tr>
                                 <tr>
                                     <td class="p-4 text-lg">本監査割引</td>
@@ -684,9 +746,9 @@
                     </div>
                     <!-- 凡例 -->
                     <div class="p-4 border-t border-gray-100 flex flex-wrap gap-4 text-sm text-text-tertiary">
-                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-circle-check"></use></svg> 含む（重点）</span>
-                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg> 含む</span>
-                        <span class="flex items-center gap-2"><svg class="text-gray-400" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-xmark"></use></svg> 含まない</span>
+                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-circle-check"></use></svg> 含む（重点）</span>
+                        <span class="flex items-center gap-2"><svg class="text-brand-blue" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg> 含む</span>
+                        <span class="flex items-center gap-2"><svg class="text-gray-400" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-xmark"></use></svg> 含まない</span>
                         <span class="flex items-center gap-2"><span class="inline-block w-4 h-4 bg-yellow-50 border-l-4 border-l-yellow-400"></span> 重要な差分</span>
                     </div>
                 </div>
@@ -694,13 +756,27 @@
                 <!-- Annual Discount -->
                 <div class="bg-white rounded-2xl p-8 text-center mt-10 border border-gray-100 shadow-sm">
                     <p class="text-2xl font-bold mb-2">
-                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
+                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-tag"></use></svg>
                         年間一括契約で <span class="text-brand-blue">20%OFF</span>
                     </p>
                     <p class="text-lg text-text-secondary">
                         例）Standard：税別12万円/月 × 12ヶ月 → <strong
                             class="text-brand-black">税別約115万円/年</strong>（税込約127万円）
                     </p>
+                </div>
+
+                <!-- Subsidy Info -->
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 text-center mt-6 border border-blue-100">
+                    <p class="text-2xl font-bold mb-2">
+                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-building"></use></svg>
+                        IT導入補助金で <span class="text-brand-blue">実質負担50%〜</span>
+                    </p>
+                    <p class="text-lg text-text-secondary mb-4">
+                        例）Standard 年額約115万円 → <strong class="text-brand-black">実質約58万円〜</strong>
+                    </p>
+                    <a href="subsidy.html" class="inline-flex items-center gap-2 text-brand-blue font-semibold hover:underline">
+                        補助金活用の詳細を見る <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+                    </a>
                 </div>
 
                 <p class="text-center text-lg text-text-tertiary mt-8">※価格は税別表示を主とし、税込価格を併記しています。最低契約期間：3ヶ月。インボイス発行不可。</p>
@@ -721,13 +797,13 @@
                     <p class="text-sm font-bold text-brand-blue uppercase tracking-wider mb-3 font-en">3省2ガイドライン対応支援</p>
                     <div class="space-y-3 text-lg text-text-secondary">
                         <div class="flex gap-3">
-                            <svg class="text-brand-blue/30 mt-1 shrink-0" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-quote-left"></use></svg>
+                            <svg class="text-brand-blue/30 mt-1 shrink-0" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-quote-left"></use></svg>
                             <p class="leading-relaxed">通常時から<span
                                     class="font-semibold text-brand-black">定期的に訓練・演習を実施</span>し、安心が続く体制へ改善する</p>
                         </div>
                         <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank" rel="noopener noreferrer"
                             class="text-base text-brand-blue hover:underline inline-flex items-center gap-1 ml-8">
-                            厚労省ガイドライン 第6.0版 <svg class="text-xs" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                            厚労省ガイドライン 第6.0版 <svg class="text-xs" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-up-right-from-square"></use></svg>
                         </a>
                     </div>
                     <p class="text-xs text-text-tertiary mt-3">※ガイドライン準拠の最終判断・責任は各医療機関に帰属します。当サービスは体制構築支援であり、準拠を保証するものではありません。</p>
@@ -747,25 +823,25 @@
                         </div>
                         <div class="bg-blue-50 rounded-xl p-4 mb-8">
                             <p class="text-lg text-brand-blue font-semibold">
-                                <svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-percent"></use></svg>
+                                <svg class="mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-percent"></use></svg>
                                 顧問契約中はLite 5%OFF / Standard 10%OFF / Premium 15%OFF
                             </p>
                         </div>
                         <ul class="space-y-3 mb-8 text-lg">
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>ドキュメント・現場ヒアリング</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>性能・安全性確認＋ログ監査<span class="text-sm text-text-tertiary">（※運用ログのみ、患者情報は対象外）</span></span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>監査報告書＋経営層サマリー</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>報告会（オンライン）1回</span>
                             </li>
                         </ul>
@@ -833,7 +909,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">どこから始めればよいですか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>まずは<strong class="text-brand-black">無料のセルフチェック</strong>をお試しください。その後、<strong
@@ -846,7 +922,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">90日運用定着支援とは何ですか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>48h簡易診断（48時間診断キット）で作成した「90日運用定着プラン」を一緒に実行するサービスです。規程整備、研修計画、ベンダー選定など、3ヶ月で安心して運用が回る体制を目指します。<strong
@@ -858,7 +934,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">LiteプランでもAI導入・運用相談はできますか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>はい、Liteプランでも月2回のオンラインMTGとメール相談で、AI導入・運用に関する相談が可能です。ただし、90日運用定着支援（規程整備、ベンダー選定支援など）はStandard以上のプランに含まれます。
@@ -870,7 +946,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">契約期間の縛りはありますか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>月額契約の場合、<strong
@@ -883,7 +959,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">患者情報を提供する必要はありますか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p><strong
@@ -896,7 +972,7 @@
                         <summary
                             class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition">
                             <span class="font-bold text-lg pr-4">本監査はいつ実施すべきですか？</span>
-                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-chevron-down"></use></svg>
+                            <svg class="text-gray-400 group-open:rotate-180 transition-transform" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 text-text-secondary text-lg leading-relaxed">
                             <p>90日運用定着支援で体制を整えた後、<strong
@@ -917,7 +993,7 @@
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="contact.html"
                         class="inline-flex items-center justify-center px-10 py-5 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
-                        無料で相談する <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
+                        無料で相談する <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                     </a>
                     <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center justify-center px-10 py-5 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
@@ -968,7 +1044,7 @@
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                         target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
-                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-linkedin"></use></svg>
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-linkedin"></use></svg>
                     </a>
                 </div>
             </div>

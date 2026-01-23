@@ -18,7 +18,7 @@
     <title>医療AIベンダー向けアドバイザリ | Cursorvers｜安心と継続</title>
     <meta name="description" content="医療AIが安心して使われ続けるために。臨床視点とガバナンスで継続運用を支えるベンダー向け支援。">
 
-    <link rel="stylesheet" href="/dist/tailwind.min.css">
+    <link rel="stylesheet" href="dist/tailwind.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -147,6 +147,52 @@
 </head>
 
 <body class="antialiased">
+    <!-- Inline SVG Sprite for file:// protocol compatibility -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-arrow-down" viewBox="0 0 384 512">
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/>
+        </symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 448 512">
+            <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/>
+        </symbol>
+        <symbol id="icon-arrow-up-right-from-square" viewBox="0 0 512 512">
+            <path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z"/>
+        </symbol>
+        <symbol id="icon-bars" viewBox="0 0 448 512">
+            <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/>
+        </symbol>
+        <symbol id="icon-book-open" viewBox="0 0 576 512">
+            <path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5l0-370.3c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11L304 456c0 11.4 11.7 19.3 22.4 15.5z"/>
+        </symbol>
+        <symbol id="icon-check" viewBox="0 0 448 512">
+            <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+        </symbol>
+        <symbol id="icon-flask" viewBox="0 0 448 512">
+            <path d="M288 0L160 0 128 0C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 480.9 31.1 512 69.4 512l309.2 0c38.3 0 69.4-31.1 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32L288 0zM192 196.8L192 64l64 0 0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320l-171 0L173 263.9c12.4-20.2 19-43.4 19-67.1z"/>
+        </symbol>
+        <symbol id="icon-handshake" viewBox="0 0 640 512">
+            <path d="M323.4 85.2l-96.8 78.4c-16.1 13-19.2 36.4-7 53.1c12.9 17.8 38 21.3 55.3 7.8l99.3-77.2c7-5.4 17-4.2 22.5 2.8s4.2 17-2.8 22.5l-20.9 16.2L512 316.8 512 128l-.7 0-3.9-2.5L434.8 79c-15.3-9.8-33.2-15-51.4-15c-21.8 0-43 7.5-60 21.2zm22.8 124.4l-51.7 40.2C263 274.4 217.3 268 193.7 235.6c-22.2-30.5-16.6-73.1 12.7-96.8l83.2-67.3c-11.6-4.9-24.1-7.4-36.8-7.4C234 64 215.7 69.6 200 80l-72 48 0 224 28.2 0 91.4 83.4c19.6 17.9 49.9 16.5 67.8-3.1c5.5-6.1 9.2-13.2 11.1-20.6l17 15.6c19.5 17.9 49.9 16.6 67.8-2.9c4.5-4.9 7.8-10.6 9.9-16.5c19.4 13 45.8 10.3 62.1-7.5c17.9-19.5 16.6-49.9-2.9-67.8l-134.2-123zM16 128c-8.8 0-16 7.2-16 16L0 352c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-224-80 0zM48 320a16 16 0 1 1 0 32 16 16 0 1 1 0-32zM544 128l0 224c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-208c0-8.8-7.2-16-16-16l-80 0zm32 208a16 16 0 1 1 32 0 16 16 0 1 1 -32 0z"/>
+        </symbol>
+        <symbol id="icon-hospital-user" viewBox="0 0 576 512">
+            <path d="M48 0C21.5 0 0 21.5 0 48L0 256l144 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L0 288l0 64 144 0c8.8 0 16 7.2 16 16s-7.2 16-16 16L0 384l0 80c0 26.5 21.5 48 48 48l217.9 0c-6.3-10.2-9.9-22.2-9.9-35.1c0-46.9 25.8-87.8 64-109.2l0-95.9L320 48c0-26.5-21.5-48-48-48L48 0zM152 64l16 0c8.8 0 16 7.2 16 16l0 24 24 0c8.8 0 16 7.2 16 16l0 16c0 8.8-7.2 16-16 16l-24 0 0 24c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-24-24 0c-8.8 0-16-7.2-16-16l0-16c0-8.8 7.2-16 16-16l24 0 0-24c0-8.8 7.2-16 16-16zM512 272a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM288 477.1c0 19.3 15.6 34.9 34.9 34.9l218.2 0c19.3 0 34.9-15.6 34.9-34.9c0-51.4-41.7-93.1-93.1-93.1l-101.8 0c-51.4 0-93.1 41.7-93.1 93.1z"/>
+        </symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 448 512">
+            <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </symbol>
+        <symbol id="icon-shield-halved" viewBox="0 0 512 512">
+            <path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0zm0 66.8l0 378.1C394 378 431.1 230.1 432 141.4L256 66.8s0 0 0 0z"/>
+        </symbol>
+        <symbol id="icon-tag" viewBox="0 0 448 512">
+            <path d="M0 80L0 229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7L48 32C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
+        </symbol>
+        <symbol id="icon-user-doctor" viewBox="0 0 448 512">
+            <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1l0 50.8c27.6 7.1 48 32.2 48 62l0 40c0 8.8-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l0-24c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 24c8.8 0 16 7.2 16 16s-7.2 16-16 16l-16 0c-8.8 0-16-7.2-16-16l0-40c0-29.8 20.4-54.9 48-62l0-57.1c-6-.6-12.1-.9-18.3-.9l-91.4 0c-6.2 0-12.3 .3-18.3 .9l0 65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7l0-59.1zM144 448a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/>
+        </symbol>
+        <symbol id="icon-xmark" viewBox="0 0 384 512">
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+        </symbol>
+    </svg>
+
     <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation (same as index.html) -->
@@ -167,9 +213,10 @@
                 <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
                 <a href="services.html" class="hover:text-brand-blue transition">医療機関向け</a>
                 <a href="consulting.html" class="text-brand-blue font-semibold">ベンダー向け</a>
+                <a href="subsidy.html" class="hover:text-brand-blue transition">補助金活用</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition">教育 <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html"
@@ -179,7 +226,7 @@
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
                     aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
-                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -208,7 +255,7 @@
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#pricing"
                         class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
-                        プランを見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-down"></use></svg>
+                        プランを見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
                     </a>
                     <a href="contact.html"
                         class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
@@ -240,15 +287,15 @@
                         </div>
                         <ul class="space-y-4 mb-8 flex-grow">
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>月2回のオンラインMTG（各30分）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>メールでの相談（月5回まで）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>ガイドライン改定情報の共有</span>
                             </li>
                         </ul>
@@ -276,23 +323,23 @@
                         </div>
                         <ul class="space-y-4 mb-8 flex-grow">
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>月3回のオンラインMTG（各45分）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>Slackでの随時相談（無制限）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>ガイドライン改定情報の共有</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span><strong>顧問先医師への紹介</strong></span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>スポットメニュー20%OFF</span>
                             </li>
                         </ul>
@@ -315,27 +362,27 @@
                         </div>
                         <ul class="space-y-4 mb-8 flex-grow">
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>月4回のオンラインMTG（各60分）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span><strong>対面MTG（月1回）</strong></span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>Slackでの随時相談（無制限）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>製品レビュー（月1回）</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>顧問先医師への紹介優先</span>
                             </li>
                             <li class="flex items-start gap-3 text-lg">
-                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg>
+                                <svg class="text-brand-blue mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                                 <span>スポットメニュー30%OFF</span>
                             </li>
                         </ul>
@@ -349,7 +396,7 @@
                 <!-- Annual Discount -->
                 <div class="bg-white rounded-2xl p-8 text-center mt-10 border border-gray-100 shadow-sm">
                     <p class="text-2xl font-bold mb-2">
-                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-tag"></use></svg>
+                        <svg class="text-brand-blue mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-tag"></use></svg>
                         年間一括契約で <span class="text-brand-blue">20%OFF</span>
                     </p>
                     <p class="text-lg text-text-secondary">
@@ -372,7 +419,7 @@
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
                         <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-hospital-user"></use></svg>
+                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-hospital-user"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">医療機関フィードバック</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-grow">
@@ -384,7 +431,7 @@
 
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
                         <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-purple-600 text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-flask"></use></svg>
+                            <svg class="text-purple-600 text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-flask"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">デモ環境協力</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-grow">模擬環境でのテスト、シナリオ検証で製品の完成度を高めます。</p>
@@ -395,7 +442,7 @@
 
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
                         <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-green-600 text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-book-open"></use></svg>
+                            <svg class="text-green-600 text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-book-open"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">ガイドライン解説</h3>
                         <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-grow">厚労省・学会のガイドラインを、安心と継続の要件として製品開発に落とし込みます。</p>
@@ -416,7 +463,7 @@
                     <div>
                         <div
                             class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-user-doctor"></use></svg>
+                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-user-doctor"></use></svg>
                         </div>
                         <h3 class="font-bold text-xl mb-4">臨床医の視点</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">救急・集中治療領域で約20年の臨床経験を持つ臨床医が、安心と継続を前提に現場目線でフィードバック。</p>
@@ -425,7 +472,7 @@
                     <div>
                         <div
                             class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-shield-halved"></use></svg>
+                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-shield-halved"></use></svg>
                         </div>
                         <h3 class="font-bold text-xl mb-4">ガバナンス専門</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">医療AIガバナンスに特化。安心と継続の要件を製品設計に落とし込む知見。</p>
@@ -434,7 +481,7 @@
                     <div>
                         <div
                             class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
-                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-handshake"></use></svg>
+                            <svg class="text-brand-blue text-3xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-handshake"></use></svg>
                         </div>
                         <h3 class="font-bold text-xl mb-4">医療機関ネットワーク</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">顧問先医療機関への紹介・共同検証で、継続運用の検証機会を提供。</p>
@@ -454,7 +501,7 @@
                 </p>
                 <a href="contact.html"
                     class="inline-flex items-center justify-center px-10 py-5 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
-                    無料で相談する <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-right"></use></svg>
+                    無料で相談する <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                 </a>
             </div>
         </section>
@@ -500,7 +547,7 @@
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                         target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
-                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-linkedin"></use></svg>
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-linkedin"></use></svg>
                     </a>
                 </div>
             </div>
