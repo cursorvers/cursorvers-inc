@@ -23,3 +23,42 @@ button:focus-visible {
 .skip-link:focus {
   left: 0;
 }
+
+/* 改行・テキストレイアウト対策 */
+.text-balance {
+  text-wrap: balance;
+}
+
+.keep-together {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* 日本語禁則処理の最適化 */
+.text-optimize {
+  word-break: auto-phrase;
+  overflow-wrap: break-word;
+  line-break: strict;
+}
+
+/* レスポンシブ対応：モバイルでの左揃え */
+@media (max-width: 640px) {
+  .sm-text-left {
+    text-align: left !important;
+  }
+
+  .card-description {
+    text-align: left;
+  }
+}
+
+/* ぶら下がりインデント（リスト項目用） */
+.hanging-indent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.hanging-indent > :last-child {
+  flex: 1;
+}
