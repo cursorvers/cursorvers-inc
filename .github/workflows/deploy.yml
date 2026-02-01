@@ -53,6 +53,9 @@ jobs:
           cp -r images/ _site/ 2>/dev/null || true
           cp -r css/ _site/ 2>/dev/null || true
           cp *.jpeg *.jpg *.png *.webp *.ico _site/ 2>/dev/null || true
+          # PWA files
+          cp manifest.json sw.js cursorvers-icon.svg .nojekyll _site/ 2>/dev/null || true
+          cp -r icons/ _site/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
