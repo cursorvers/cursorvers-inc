@@ -1,3 +1,10 @@
 node_modules/
 playwright-report/
 test-results/
+
+# Claude Code (ローカル設定・ログ)
+.claude/logs/
+.claude/state/
+
+# Icons backup
+icons/backup/

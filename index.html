@@ -14,7 +14,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Cursorvers">
     <meta name="format-detection" content="telephone=no">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0B0C10">
+    <meta name="msapplication-TileColor" content="#0B0C10">
+    <meta name="msapplication-TileImage" content="/icons/icon-144.png">
+
     <title>Cursorvers｜院長・理事長に伴走する医療AIコンサル（導入・運用・監査）</title>
     <meta name="description" content="忙しい院長・理事長（経営者）の医療AI活用に、臨床経験のある医師が伴走。導入判断、ベンダー評価、運用設計、教育、監査まで一貫支援。">
 
@@ -283,15 +298,15 @@
     <!-- Navigation -->
     <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root
         data-mobile-menu-theme="light">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-4 group" data-mobile-brand>
+        <div class="max-w-7xl mx-auto px-6 h-24 max-md:h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 max-md:gap-2 group" data-mobile-brand>
                 <picture>
                     <source srcset="Cursorvers_logo_navy.webp" type="image/webp">
-                    <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers primary logomark" class="h-12 w-12 mix-blend-multiply">
+                    <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers primary logomark" class="h-12 w-12 max-md:h-9 max-md:w-9 mix-blend-multiply">
                 </picture>
                 <span class="flex flex-col justify-center leading-tight">
-                    <span class="text-2xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
-                    <span class="text-xs font-semibold text-text-tertiary tracking-[0.2em]">カーソルバース</span>
+                    <span class="text-2xl max-md:text-lg font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
+                    <span class="text-xs max-md:text-[10px] font-semibold text-text-tertiary tracking-[0.2em]">カーソルバース</span>
                 </span>
             </a>
             <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
@@ -304,11 +319,12 @@
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer"
                     class="hover:text-brand-blue transition">ジャーナル <svg class="text-[10px] ml-1 align-middle" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
             </nav>
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 max-md:gap-2">
                 <a href="contact.html"
-                    class="text-sm font-bold border border-brand-black px-8 py-3 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black tracking-wider whitespace-nowrap"
+                    class="text-sm max-md:text-xs font-bold border border-brand-black px-8 max-md:px-5 py-3 max-md:py-2 rounded-full hover:bg-brand-black hover:text-white transition duration-300 text-brand-black tracking-wider whitespace-nowrap"
                     data-mobile-contact>
-                    無料で相談する
+                    <span class="max-md:hidden">無料で相談する</span>
+                    <span class="md:hidden">相談</span>
                 </a>
                 <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open
                     aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
@@ -1027,7 +1043,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>b688993</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>55bfbef</span></p>
             </div>
         </div>
     </footer>
@@ -1113,6 +1129,19 @@
                 // Fallback: log to console for debugging
                 console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
             });
+
+            // PWA Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then((registration) => {
+                            console.log('[PWA] Service Worker registered:', registration.scope);
+                        })
+                        .catch((error) => {
+                            console.log('[PWA] Service Worker registration failed:', error);
+                        });
+                });
+            }
         });
     </script>
 </body>
