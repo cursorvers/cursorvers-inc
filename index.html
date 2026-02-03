@@ -36,57 +36,25 @@
     <link rel="stylesheet" href="dist/tailwind.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* iOS Safe Area Support */
-        html {
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-        }
+        body { font-family: "Noto Sans JP", sans-serif; background: #fff; color: #1A202C; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
 
-        body {
-            background-color: #FFFFFF;
-            color: #0B0C10;
-            overflow-x: hidden;
-            font-feature-settings: "palt";
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-        }
-
-        /* iOS Touch Optimization */
-        a,
-        button {
-            min-height: 44px;
-            min-width: 44px;
-        }
-
-        /* Mobile font size optimization */
-        @media (max-width: 767px) {
-            body {
-                font-size: 16px;
-                -webkit-text-size-adjust: 100%;
-            }
-        }
-
-        /* --- Hero Section (Video Background Style - White Base) - COPIED FROM EDU --- */
+        /* Page-specific styles for index.html */
         .hero-wrapper {
             position: relative;
             min-height: 100vh;
-            min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
             width: 100%;
             background: #FFFFFF;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-top: calc(96px + env(safe-area-inset-top, 0px)); /* Header (PC: 96px) + iOS safe area */
+            padding-top: 96px;
         }
 
-        /* Mobile: Adjust for h-20 (80px) header */
-        @media (max-width: 767px) {
-            .hero-wrapper {
-                padding-top: calc(80px + env(safe-area-inset-top, 0px)); /* Header (Mobile: 80px) + iOS safe area */
-            }
-        }
-
-        /* Video Background */
         .hero-video-container {
             position: absolute;
             top: 0;
@@ -110,7 +78,6 @@
             filter: brightness(1.1) saturate(0.9);
         }
 
-        /* White overlay for text readability - Premium Light Style */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -124,20 +91,11 @@
             z-index: 1;
         }
 
-        /* Glass Nav (White compatible) */
         .hero-content {
             position: relative;
             z-index: 10;
         }
 
-        /* Glass Nav */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        /* Clean Buttons */
         .btn-clean {
             position: relative;
             overflow: hidden;
@@ -150,12 +108,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        .text-glow {
-            /* Removed glow for clean look, replaced with slight gradient or shadow if needed */
-            text-shadow: none;
-        }
-
-        /* --- Premium Section Styling --- */
         .section-padding {
             padding-top: 160px;
             padding-bottom: 160px;
@@ -166,7 +118,6 @@
             padding-bottom: 200px;
         }
 
-        /* Premium Card Effects */
         .card-hover {
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid rgba(0, 0, 0, 0.06);
@@ -179,7 +130,6 @@
             border-color: transparent;
         }
 
-        /* Premium Card with Glow */
         .card-premium {
             background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
             border: 1px solid rgba(0, 0, 0, 0.04);
@@ -192,41 +142,36 @@
             transform: translateY(-4px);
         }
 
-        /* Text Balance for Headlines */
         .text-balance {
             text-wrap: balance;
         }
 
-        /* PC向け大きめフォント（年配経営者向け） */
         @media (min-width: 768px) {
             .text-body-lg {
-                font-size: 1.625rem !important;
-                /* 26px */
+                font-size: 1.625rem;
                 line-height: 1.75;
             }
 
             .text-body {
-                font-size: 1.375rem !important;
-                /* 22px */
+                font-size: 1.375rem;
                 line-height: 1.75;
             }
 
-            /* カード見出し */
             .card-premium h3,
             .card-hover h3 {
-                font-size: 1.5rem !important;
-                /* 24px */
+                font-size: 1.5rem;
             }
 
-            /* テーブル */
             table {
-                font-size: 1.25rem !important;
-                /* 20px */
+                font-size: 1.25rem;
             }
         }
 
-        /* Mobile polish */
         @media (max-width: 767px) {
+            .hero-wrapper {
+                padding-top: 80px;
+            }
+
             .section-padding {
                 padding-top: 96px;
                 padding-bottom: 96px;
@@ -238,14 +183,12 @@
             }
 
             .text-body-lg {
-                font-size: 1.125rem !important;
-                /* 18px */
+                font-size: 1.125rem;
                 line-height: 1.85;
             }
 
             .text-body {
-                font-size: 1rem !important;
-                /* 16px */
+                font-size: 1rem;
                 line-height: 1.85;
             }
         }
@@ -288,10 +231,6 @@
         .img-clean:hover img {
             transform: scale(1.05);
         }
-
-        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
-        .skip-link:focus { left: 0; }
     </style>
 </head>
 
@@ -1040,7 +979,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>2e6b1c5</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>0451d62</span></p>
             </div>
         </div>
     </footer>
