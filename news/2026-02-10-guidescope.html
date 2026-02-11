@@ -15,13 +15,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <title>GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ | Cursorvers</title>
-    <meta name="description" content="Cursorversは、医療機関における一次資料（添付文書・ガイドライン・論文）の探索を効率化するツール「GuideScope」の開発に着手しました。">
+    <title>GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ | Cursorvers</title>
+    <meta name="description" content="Cursorversは、医療機関の一次資料（省令・通知・ガイドライン・添付文書）と実務文書を突合・検証するツール「GuideScope」の開発に着手しました。">
     <link rel="canonical" href="https://cursorvers.com/news/2026-02-10-guidescope.html">
 
     <!-- OGP -->
-    <meta property="og:title" content="GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ | Cursorvers">
-    <meta property="og:description" content="医療機関における一次資料の探索を効率化するツール「GuideScope」の開発に着手しました。">
+    <meta property="og:title" content="GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ | Cursorvers">
+    <meta property="og:description" content="医療機関の一次資料と実務文書を突合・検証するツール「GuideScope」の開発に着手しました。">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://cursorvers.com/news/2026-02-10-guidescope.html">
     <meta property="article:published_time" content="2026-02-10">
@@ -105,7 +105,7 @@
                     <time datetime="2026-02-10" class="text-sm text-gray-500 font-en">2026.02.10</time>
                     <span class="inline-block bg-brand-cyan/15 text-brand-blue text-xs font-bold px-3 py-1 rounded">プロダクト</span>
                 </div>
-                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight">GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ</h1>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight">GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ</h1>
             </div>
         </section>
 
@@ -117,7 +117,7 @@
                 <div class="border-l-4 border-brand-blue bg-blue-50 p-6 md:p-8 rounded-r-lg mb-10">
                     <p class="text-sm font-bold text-brand-blue mb-2 font-en uppercase tracking-wider">Executive Summary</p>
                     <p class="text-base md:text-lg text-brand-black leading-relaxed">
-                        Cursorversは、医療機関における一次資料（添付文書・ガイドライン・論文）の探索を効率化するツール「GuideScope」の開発に着手しました。臨床現場での情報アクセスを根本的に改善します。
+                        Cursorversは、医療機関の一次資料（省令・通知・ガイドライン・添付文書）と実務文書を突合・検証するツール「GuideScope」の開発に着手しました。院内マニュアルのGL準拠確認から、システム契約チェック、診療報酬改定の影響分析まで——「正しい原典」に基づく経営判断を支援します。
                     </p>
                 </div>
 
@@ -125,31 +125,56 @@
                 <div class="article-body text-gray-700">
                     <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">開発の背景</h2>
                     <p>
-                        医療AIの導入が加速する中、臨床現場では「AIが提示する情報の根拠」を迅速に確認するニーズが急増しています。しかし、添付文書・診療ガイドライン・学術論文といった一次資料へのアクセスは依然として煩雑であり、多忙な臨床医の意思決定を遅延させる一因となっています。
+                        医療機関の経営者は、増え続ける規制・改定への対応に追われています。厚労省通知、3省2ガイドライン、診療報酬改定告示——確認すべき一次資料は膨大ですが、事務長やコンサルタントだけでは対応しきれず、「ベンダーの言い値で契約更新」「5年前のマニュアルを放置」という状況が生まれています。
                     </p>
                     <p>
-                        Cursorversは、医療AIガバナンスの伴走支援を通じて、この課題に繰り返し直面してきました。医療機関の経営者・臨床医から寄せられた声を元に、一次資料探索の効率化に特化したツールの開発を決定しました。
-                    </p>
-
-                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">医療AIにおける一次資料の重要性</h2>
-                    <p>
-                        医療AIの出力を臨床判断に活用するためには、その根拠となる一次資料の確認が不可欠です。AI生成コンテンツの信頼性を担保するのは、最終的には原典へのトレーサビリティです。
-                    </p>
-                    <p>
-                        GuideScopeは、AIが参照する可能性のある一次資料群を構造的に整理し、臨床医が必要な情報に最短経路でたどり着ける環境を構築することを目指します。
+                        Cursorversは、医療AIガバナンスの伴走支援を通じて、この課題に繰り返し直面してきました。医療機関の経営者から寄せられた声を元に、一次資料と実務文書の突合・検証に特化したツールの開発を決定しました。
                     </p>
 
                     <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">GuideScope の概要</h2>
                     <p>
-                        GuideScopeは、医薬品添付文書・診療ガイドライン・学術論文などの一次資料を横断的に探索できるツールです。自然言語での検索に対応し、関連する一次資料を構造化して提示します。
+                        GuideScopeは、厚労省通知・ガイドライン・添付文書・診療報酬告示などの一次資料と、院内マニュアル・契約書・SLAなどの実務文書を突合し、抜け漏れや不整合を根拠付きで提示するツールです。単なる検索エンジンではなく、「差分レポート＋不足項目＋根拠引用」を出力します。
                     </p>
-                    <p>
-                        臨床現場での利用を想定し、検索結果の即座の閲覧性と、出典の明確な表示を最優先に設計しています。詳細な機能仕様は、開発の進捗に合わせて順次公開してまいります。
-                    </p>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">想定される活用シーン</h2>
+                    <ul class="space-y-4 mb-6 list-none pl-0">
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">1</span>
+                            <span><strong class="text-brand-black">院内マニュアルのGL準拠確認</strong> — 感染対策・医療安全などのガイドライン改定時に、院内マニュアルとの差分を自動検出</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">2</span>
+                            <span><strong class="text-brand-black">電カル・システム契約チェック</strong> — 3省2ガイドラインとベンダー契約書・SLAを照合し、セキュリティ要件の充足状況を可視化</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">3</span>
+                            <span><strong class="text-brand-black">診療報酬改定の影響分析</strong> — 改定告示・通知から自院の算定に影響する変更点を抽出し、対応すべき項目を提示</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">4</span>
+                            <span><strong class="text-brand-black">施設基準の充足確認</strong> — 施設基準告示と自院の人員・設備・実績を照合し、更新時の準備負荷を軽減</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">5</span>
+                            <span><strong class="text-brand-black">適時調査・個別指導の事前準備</strong> — 保険診療ルールとカルテ記載・算定状況を照合し、指摘されやすい論点を事前に検出</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">6</span>
+                            <span><strong class="text-brand-black">補助金・助成金の要件チェック</strong> — 公募要領と申請書を突合し、要件の抜け漏れを検出</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">7</span>
+                            <span><strong class="text-brand-black">医療AI出力の根拠検証</strong> — AI生成コンテンツの根拠を添付文書・論文と照合し、トレーサビリティを確保</span>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">8</span>
+                            <span><strong class="text-brand-black">医療機器の適正使用確認</strong> — 添付文書・承認条件と院内SOPを照合し、適正使用の逸脱リスクを検出</span>
+                        </li>
+                    </ul>
 
                     <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">今後の展望</h2>
                     <p>
-                        GuideScopeは、Cursorversが提供する医療AIガバナンスサービスの一環として位置づけられます。導入監査・運用定着支援と組み合わせることで、医療機関におけるAI活用の信頼性と安全性を総合的に向上させることを目指します。
+                        GuideScopeは、Cursorversが提供する医療AIガバナンスサービスの一環として位置づけられます。まずは院内マニュアルGL準拠確認とシステム契約チェックからMVPを提供し、段階的に対応領域を拡大してまいります。
                     </p>
                     <p>
                         開発状況やリリーススケジュールについては、本ページおよびCursorvers公式サイトにてお知らせいたします。
