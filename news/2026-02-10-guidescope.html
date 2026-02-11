@@ -136,38 +136,48 @@
                         GuideScopeは、厚労省通知・ガイドライン・添付文書・診療報酬告示などの一次資料と、院内マニュアル・契約書・SLAなどの実務文書を突合し、抜け漏れや不整合を根拠付きで提示するツールです。単なる検索エンジンではなく、「差分レポート＋不足項目＋根拠引用」を出力します。
                     </p>
 
-                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">想定される活用シーン</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">コア機能：文書×文書の突合・検証</h2>
+                    <p>
+                        GuideScopeの中核は、公的な一次資料と院内の実務文書——いずれも「文書」同士を突合する技術です。外部システム連携なしで即座に導入でき、差分・不足・根拠を提示します。
+                    </p>
                     <ul class="space-y-4 mb-6 list-none pl-0">
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">1</span>
-                            <span><strong class="text-brand-black">院内マニュアルのGL準拠確認</strong> — 感染対策・医療安全などのガイドライン改定時に、院内マニュアルとの差分を自動検出</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold mt-0.5">1</span>
+                            <span><strong class="text-brand-black">院内マニュアルのガイドライン準拠確認</strong> — 感染対策・医療安全などのガイドライン改定時に、院内マニュアルとの差分を自動検出。更新が必要な箇所を根拠付きで提示します。</span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">2</span>
-                            <span><strong class="text-brand-black">電カル・システム契約チェック</strong> — 3省2ガイドラインとベンダー契約書・SLAを照合し、セキュリティ要件の充足状況を可視化</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold mt-0.5">2</span>
+                            <span><strong class="text-brand-black">電カル・システム契約チェック</strong> — 3省2ガイドラインとベンダー契約書・SLAを照合し、セキュリティ要件や責任分界の充足状況を可視化。契約更新時の判断材料を提供します。</span>
+                        </li>
+                    </ul>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">発展的な活用シーン</h2>
+                    <p>
+                        以下の活用シーンは、文書突合に加えてレセプトデータ・人事台帳・電子カルテなどとの連携技術を並走開発することで実現を目指します。
+                    </p>
+                    <ul class="space-y-4 mb-6 list-none pl-0">
+                        <li class="flex gap-3 items-start">
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">3</span>
+                            <span><strong class="text-brand-black">診療報酬改定の影響分析</strong> — 改定告示・通知から自院の算定に影響する変更点を抽出<span class="text-text-tertiary">（レセプトデータ連携が必要）</span></span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">3</span>
-                            <span><strong class="text-brand-black">診療報酬改定の影響分析</strong> — 改定告示・通知から自院の算定に影響する変更点を抽出し、対応すべき項目を提示</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">4</span>
+                            <span><strong class="text-brand-black">施設基準の充足確認</strong> — 施設基準告示と自院の人員・設備・実績を照合<span class="text-text-tertiary">（人事台帳・設備管理との連携が必要）</span></span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">4</span>
-                            <span><strong class="text-brand-black">施設基準の充足確認</strong> — 施設基準告示と自院の人員・設備・実績を照合し、更新時の準備負荷を軽減</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">5</span>
+                            <span><strong class="text-brand-black">適時調査・個別指導の事前準備</strong> — 保険診療ルールとカルテ記載を照合<span class="text-text-tertiary">（電子カルテ連携・PHI対応が必要）</span></span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">5</span>
-                            <span><strong class="text-brand-black">適時調査・個別指導の事前準備</strong> — 保険診療ルールとカルテ記載・算定状況を照合し、指摘されやすい論点を事前に検出</span>
-                        </li>
-                        <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">6</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">6</span>
                             <span><strong class="text-brand-black">補助金・助成金の要件チェック</strong> — 公募要領と申請書を突合し、要件の抜け漏れを検出</span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">7</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">7</span>
                             <span><strong class="text-brand-black">医療AI出力の根拠検証</strong> — AI生成コンテンツの根拠を添付文書・論文と照合し、トレーサビリティを確保</span>
                         </li>
                         <li class="flex gap-3 items-start">
-                            <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/10 text-brand-blue flex items-center justify-center text-xs font-bold mt-0.5">8</span>
+                            <span class="shrink-0 w-6 h-6 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold mt-0.5">8</span>
                             <span><strong class="text-brand-black">医療機器の適正使用確認</strong> — 添付文書・承認条件と院内SOPを照合し、適正使用の逸脱リスクを検出</span>
                         </li>
                     </ul>
