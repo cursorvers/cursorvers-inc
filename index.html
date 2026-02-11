@@ -169,7 +169,7 @@
 
         @media (max-width: 767px) {
             .hero-wrapper {
-                padding-top: 80px;
+                padding-top: 96px;
             }
 
             .section-padding {
@@ -359,6 +359,62 @@
             <div class="hidden md:block"></div>
         </div>
     </div>
+
+    <!-- お知らせ Section (常設) -->
+    <section class="py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="お知らせ">
+        <div class="max-w-5xl mx-auto px-6 md:px-12">
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 md:mb-14">
+                <div>
+                    <p class="text-sm font-bold text-brand-blue uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
+                </div>
+                <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-brand-blue hover:underline transition shrink-0">
+                    すべてのお知らせ
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <!-- News Card: GuideScope -->
+            <article class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-brand-blue/20 transition-all duration-300 overflow-hidden">
+                <div class="p-8 md:p-10">
+                    <!-- Meta -->
+                    <div class="flex flex-wrap items-center gap-3 mb-4">
+                        <span class="inline-flex items-center gap-1.5 bg-brand-blue/8 text-brand-blue text-xs font-bold px-3 py-1.5 rounded-full">
+                            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+                            プロダクト
+                        </span>
+                        <time datetime="2026-02-10" class="text-sm text-gray-400 font-en">2026.02.10</time>
+                    </div>
+
+                    <!-- Title -->
+                    <h3 class="text-xl md:text-2xl font-bold text-brand-black mb-5 leading-snug">
+                        <a href="news/2026-02-10-guidescope.html" class="hover:text-brand-blue transition-colors">
+                            GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ
+                        </a>
+                    </h3>
+
+                    <!-- Executive Summary -->
+                    <div class="border-l-3 border-brand-blue bg-gradient-to-r from-blue-50/80 to-transparent pl-5 py-4 pr-4 rounded-r-lg mb-6" style="border-left-width: 3px;">
+                        <p class="text-base text-gray-700 leading-relaxed">
+                            Cursorversは、医療機関における一次資料（添付文書・ガイドライン・論文）の探索を効率化するツール「GuideScope」の開発に着手しました。臨床現場での情報アクセスを根本的に改善します。
+                        </p>
+                    </div>
+
+                    <!-- Body Preview -->
+                    <p class="text-base text-text-secondary leading-relaxed mb-6">
+                        医療AIの導入が加速する中、「AIが提示する情報の根拠」を迅速に確認するニーズが急増しています。GuideScopeは、医薬品添付文書・診療ガイドライン・学術論文を横断的に探索し、臨床医が必要な情報に最短経路でたどり着ける環境を構築します。
+                    </p>
+
+                    <!-- Read More -->
+                    <a href="news/2026-02-10-guidescope.html" class="inline-flex items-center gap-2 text-brand-blue hover:text-brand-black text-sm font-bold transition-colors group/link">
+                        詳しく読む
+                        <svg class="group-hover/link:translate-x-1 transition-transform" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </section>
 
     <!-- Audience Split Section: 2レーン分岐 -->
     <section class="py-16 md:py-24 bg-brand-gray relative z-10">
@@ -951,6 +1007,7 @@
                         <ul class="space-y-5 text-gray-400 text-base">
                             <li><a href="services.html" class="hover:text-white transition">サービス</a></li>
                             <li><a href="message.html" class="hover:text-white transition">創業者</a></li>
+                            <li><a href="news.html" class="hover:text-white transition">お知らせ</a></li>
                             <li><a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Cursorvers.edu <span class="text-xs text-gray-500">（個人向け）</span></a></li>
                         </ul>
                     </div>
@@ -979,7 +1036,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>67f1457</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>e07b898</span></p>
             </div>
         </div>
     </footer>

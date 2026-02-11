@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX3Y6G4XWJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TX3Y6G4XWJ');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ | Cursorvers</title>
+    <meta name="description" content="Cursorversは、医療機関における一次資料（添付文書・ガイドライン・論文）の探索を効率化するツール「GuideScope」の開発に着手しました。">
+    <link rel="canonical" href="https://cursorvers.com/news/2026-02-10-guidescope.html">
+
+    <!-- OGP -->
+    <meta property="og:title" content="GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ | Cursorvers">
+    <meta property="og:description" content="医療機関における一次資料の探索を効率化するツール「GuideScope」の開発に着手しました。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cursorvers.com/news/2026-02-10-guidescope.html">
+    <meta property="article:published_time" content="2026-02-10">
+
+    <link rel="stylesheet" href="../dist/tailwind.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: "Noto Sans JP", sans-serif; background: #fff; color: #1A202C; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
+
+        .article-body p {
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .article-body p {
+                font-size: 1.0625rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-3 group" data-mobile-brand>
+                <picture>
+                    <source srcset="../Cursorvers_logo_navy.webp" type="image/webp">
+                    <img src="../Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
+                </picture>
+                <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+                <a href="../index.html" class="hover:text-brand-blue transition">ホーム</a>
+                <a href="../message.html" class="hover:text-brand-blue transition">創業者</a>
+                <a href="../services.html" class="hover:text-brand-blue transition">医療機関向け</a>
+                <a href="../consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
+                <a href="../subsidy.html" class="hover:text-brand-blue transition">DX資金調達</a>
+                <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
+                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                </a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <a href="../contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-charcoal px-6 py-3 rounded-full hover:bg-brand-charcoal hover:text-white transition duration-300 text-brand-charcoal uppercase tracking-wider font-en" data-mobile-contact>
+                    無料で相談する
+                </a>
+                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="pt-24">
+        <!-- Article Header -->
+        <section class="bg-brand-gray py-16 md:py-20 px-6">
+            <div class="max-w-3xl mx-auto">
+                <!-- Breadcrumb -->
+                <nav aria-label="パンくずリスト" class="mb-6">
+                    <ol class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+                        <li><a href="../index.html" class="hover:text-brand-blue transition">ホーム</a></li>
+                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li><a href="../news.html" class="hover:text-brand-blue transition">お知らせ</a></li>
+                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li class="text-brand-black font-medium truncate max-w-[200px] sm:max-w-none" aria-current="page">GuideScope 開発開始</li>
+                    </ol>
+                </nav>
+                <div class="flex items-center gap-3 mb-4">
+                    <time datetime="2026-02-10" class="text-sm text-gray-500 font-en">2026.02.10</time>
+                    <span class="inline-block bg-brand-cyan/15 text-brand-blue text-xs font-bold px-3 py-1 rounded">プロダクト</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight">GuideScope — 医療AI一次資料探索ツール 開発開始のお知らせ</h1>
+            </div>
+        </section>
+
+        <!-- Article Body -->
+        <article class="py-12 md:py-16 px-6">
+            <div class="max-w-3xl mx-auto">
+
+                <!-- Executive Summary -->
+                <div class="border-l-4 border-brand-blue bg-blue-50 p-6 md:p-8 rounded-r-lg mb-10">
+                    <p class="text-sm font-bold text-brand-blue mb-2 font-en uppercase tracking-wider">Executive Summary</p>
+                    <p class="text-base md:text-lg text-brand-black leading-relaxed">
+                        Cursorversは、医療機関における一次資料（添付文書・ガイドライン・論文）の探索を効率化するツール「GuideScope」の開発に着手しました。臨床現場での情報アクセスを根本的に改善します。
+                    </p>
+                </div>
+
+                <!-- Body Text -->
+                <div class="article-body text-gray-700">
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">開発の背景</h2>
+                    <p>
+                        医療AIの導入が加速する中、臨床現場では「AIが提示する情報の根拠」を迅速に確認するニーズが急増しています。しかし、添付文書・診療ガイドライン・学術論文といった一次資料へのアクセスは依然として煩雑であり、多忙な臨床医の意思決定を遅延させる一因となっています。
+                    </p>
+                    <p>
+                        Cursorversは、医療AIガバナンスの伴走支援を通じて、この課題に繰り返し直面してきました。医療機関の経営者・臨床医から寄せられた声を元に、一次資料探索の効率化に特化したツールの開発を決定しました。
+                    </p>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">医療AIにおける一次資料の重要性</h2>
+                    <p>
+                        医療AIの出力を臨床判断に活用するためには、その根拠となる一次資料の確認が不可欠です。AI生成コンテンツの信頼性を担保するのは、最終的には原典へのトレーサビリティです。
+                    </p>
+                    <p>
+                        GuideScopeは、AIが参照する可能性のある一次資料群を構造的に整理し、臨床医が必要な情報に最短経路でたどり着ける環境を構築することを目指します。
+                    </p>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">GuideScope の概要</h2>
+                    <p>
+                        GuideScopeは、医薬品添付文書・診療ガイドライン・学術論文などの一次資料を横断的に探索できるツールです。自然言語での検索に対応し、関連する一次資料を構造化して提示します。
+                    </p>
+                    <p>
+                        臨床現場での利用を想定し、検索結果の即座の閲覧性と、出典の明確な表示を最優先に設計しています。詳細な機能仕様は、開発の進捗に合わせて順次公開してまいります。
+                    </p>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">今後の展望</h2>
+                    <p>
+                        GuideScopeは、Cursorversが提供する医療AIガバナンスサービスの一環として位置づけられます。導入監査・運用定着支援と組み合わせることで、医療機関におけるAI活用の信頼性と安全性を総合的に向上させることを目指します。
+                    </p>
+                    <p>
+                        開発状況やリリーススケジュールについては、本ページおよびCursorvers公式サイトにてお知らせいたします。
+                    </p>
+                </div>
+
+                <!-- Cooperation Section -->
+                <section class="mt-12 pt-8 border-t border-gray-200">
+                    <h2 class="text-lg font-bold text-brand-black mb-4">協力企業</h2>
+                    <p class="text-base text-gray-600 leading-relaxed">
+                        本プロジェクトは、Cursorversのパートナー企業との連携のもと推進しています。セキュリティ監査、法務、税務の各分野において、専門家チームによる支援を受けています。
+                    </p>
+                </section>
+
+                <!-- PHI Warning -->
+                <div class="mt-10 border-l-4 border-amber-500 bg-amber-50 p-6 rounded-r-lg" role="alert">
+                    <div class="flex items-start gap-3">
+                        <svg class="shrink-0 text-amber-600 mt-0.5" width="20" height="20" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.168 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                        </svg>
+                        <div>
+                            <p class="font-bold text-amber-800 text-sm mb-1">PHI（保護対象健康情報）に関するご注意</p>
+                            <p class="text-sm text-amber-700 leading-relaxed">
+                                本ツールは保護対象健康情報（PHI）を取り扱う可能性があります。ご利用にあたっては、所属機関のプライバシーポリシーおよび関連法規をご確認ください。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="mt-12 flex flex-col sm:flex-row gap-4">
+                    <a href="../news.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-black text-white font-bold rounded-full hover:bg-brand-blue transition text-base">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                        お知らせ一覧に戻る
+                    </a>
+                    <a href="../contact.html" class="inline-flex items-center justify-center px-8 py-4 border-2 border-brand-black text-brand-black font-bold rounded-full hover:bg-brand-black hover:text-white transition text-base">
+                        お問い合わせ
+                    </a>
+                    <a href="https://cursorversweb.vercel.app/selfcheck" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 text-gray-600 font-bold rounded-full hover:border-brand-blue hover:text-brand-blue transition text-base">
+                        3分セルフチェック
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-24">
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-4 mb-8">
+                        <picture>
+                            <source srcset="../Cursorvers_logo_white.webp" type="image/webp">
+                            <img src="../Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 rounded-full border border-white/20">
+                        </picture>
+                        <span class="flex flex-col leading-none">
+                            <span class="text-white font-bold text-2xl font-en tracking-widest">Cursorvers</span>
+                            <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
+                        </span>
+                    </div>
+                    <p class="text-lg leading-relaxed text-gray-400">安心と継続の医療AIガバナンス</p>
+                </div>
+                <div class="flex gap-16 md:gap-24">
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-8">リンク</h3>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="../services.html" class="hover:text-white transition">サービス</a></li>
+                            <li><a href="../message.html" class="hover:text-white transition">創業者</a></li>
+                            <li><a href="../news.html" class="hover:text-white transition">お知らせ</a></li>
+                            <li><a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Cursorvers.edu <span class="text-xs text-gray-500">（個人向け）</span></a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-8">法的情報</h3>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="../privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
+                            <li><a href="../terms.html" class="hover:text-white transition">利用規約</a></li>
+                            <li><a href="../tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
+                            <li><a href="../contact.html" class="hover:text-white transition">お問い合わせ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
+                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
+                <div class="flex gap-6 text-xl">
+                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
+                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-linkedin"></use></svg>
+                    </a>
+                </div>
+            </div>
+            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>67f1457</span></p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/nav.js" defer></script>
+</body>
+
+</html>
