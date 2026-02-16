@@ -137,6 +137,28 @@
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* News scroll container */
+        .news-scroll-wrapper { position: relative; }
+        .news-scroll {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
+        }
+        .news-scroll::-webkit-scrollbar { width: 4px; }
+        .news-scroll::-webkit-scrollbar-track { background: transparent; }
+        .news-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        @media (max-width: 767px) {
+            .news-scroll::-webkit-scrollbar { display: none; }
+            .news-scroll { scrollbar-width: none; }
+        }
+        .news-scroll-fade {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 48px; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+            transition: opacity 0.3s ease;
+            z-index: 2;
+        }
+        .news-scroll-fade.is-end { opacity: 0; }
+
         .card-premium:hover {
             box-shadow: 0 24px 48px -12px rgba(0, 82, 204, 0.15);
             transform: translateY(-4px);
@@ -375,8 +397,9 @@
                 </a>
             </div>
 
-            <!-- News Items (Compact cards with max-height scroll) -->
-            <div class="space-y-4 max-h-[480px] overflow-y-auto pr-1" style="scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent;">
+            <!-- News Items (Fixed-height scrollable container) -->
+            <div class="news-scroll-wrapper">
+            <div class="space-y-4 max-h-[280px] md:max-h-[320px] overflow-y-auto news-scroll" id="newsScroll" style="scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent;">
                 <!-- G-gen Partnership -->
                 <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-brand-blue/20 hover:shadow-md transition-all duration-300">
                     <div class="flex flex-col md:flex-row md:items-start md:gap-5">
@@ -425,6 +448,8 @@
                         <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
                 </article>
+            </div>
+            <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
             </div>
         </div>
     </section>
@@ -1062,7 +1087,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>94b53c4</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>ed3e071</span></p>
             </div>
         </div>
     </footer>
@@ -1148,6 +1173,20 @@
                 // Fallback: log to console for debugging
                 console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
             });
+
+            // News scroll fade control
+            const newsEl = document.getElementById('newsScroll');
+            const fadeEl = document.getElementById('newsScrollFade');
+            if (newsEl && fadeEl) {
+                const checkFade = () => {
+                    const atEnd = newsEl.scrollHeight - newsEl.scrollTop - newsEl.clientHeight < 8;
+                    const noScroll = newsEl.scrollHeight <= newsEl.clientHeight;
+                    fadeEl.classList.toggle('is-end', atEnd || noScroll);
+                };
+                newsEl.addEventListener('scroll', checkFade, { passive: true });
+                checkFade();
+                window.addEventListener('resize', checkFade);
+            }
 
             // PWA Service Worker Registration
             if ('serviceWorker' in navigator) {
