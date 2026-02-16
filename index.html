@@ -375,44 +375,57 @@
                 </a>
             </div>
 
-            <!-- News Card: GuideScope -->
-            <article class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-brand-blue/20 transition-all duration-300 overflow-hidden">
-                <div class="p-8 md:p-10">
-                    <!-- Meta -->
-                    <div class="flex flex-wrap items-center gap-3 mb-4">
-                        <span class="inline-flex items-center gap-1.5 bg-brand-blue/8 text-brand-blue text-xs font-bold px-3 py-1.5 rounded-full">
+            <!-- News Items (Compact cards with max-height scroll) -->
+            <div class="space-y-4 max-h-[480px] overflow-y-auto pr-1" style="scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent;">
+                <!-- G-gen Partnership -->
+                <article class="group bg-white rounded-xl border border-gray-200 p-6 hover:border-brand-blue/20 hover:shadow-md transition-all duration-300">
+                    <div class="flex items-start gap-5">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-3 mb-3">
+                                <span class="inline-flex items-center gap-1.5 bg-green-600/10 text-green-700 text-xs font-bold px-3 py-1 rounded-full">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                    パートナーシップ
+                                </span>
+                                <time datetime="2026-02-16" class="text-sm text-gray-400 font-en">2026.02.16</time>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
+                                Google Cloud プレミアパートナー<br class="hidden md:inline"> 株式会社G-gen とパートナーシップを締結
+                            </h3>
+                            <p class="text-sm text-text-secondary leading-relaxed mb-3">
+                                Googleプロダクトを活用した「安心・安全」な医療AI環境の構築を共同で推進します。
+                            </p>
+                            <a href="news/2026-02-16-ggen-partnership.html" class="inline-flex items-center gap-2 text-brand-blue hover:text-brand-black text-sm font-bold transition-colors group/link">
+                                詳しく読む
+                                <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                        <a href="https://g-gen.co.jp/" target="_blank" rel="noopener noreferrer" class="shrink-0 flex bg-white rounded-lg p-4 border border-gray-100 shadow-sm items-center justify-center self-center hover:shadow-md transition-shadow">
+                            <img src="images/logo-ggen.png" alt="G-gen logo" class="h-16 w-auto object-contain" loading="lazy">
+                        </a>
+                    </div>
+                </article>
+
+                <!-- GuideScope -->
+                <article class="group bg-white rounded-xl border border-gray-200 p-6 hover:border-brand-blue/20 hover:shadow-md transition-all duration-300">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="inline-flex items-center gap-1.5 bg-brand-blue/8 text-brand-blue text-xs font-bold px-3 py-1 rounded-full">
                             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
                             プロダクト
                         </span>
                         <time datetime="2026-02-10" class="text-sm text-gray-400 font-en">2026.02.10</time>
                     </div>
-
-                    <!-- Title -->
-                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 leading-snug">
-                        <a href="news/2026-02-10-guidescope.html" class="hover:text-brand-blue transition-colors">
-                            GuideScope — 医療一次資料の突合・検証ツール<br class="hidden md:inline"> 開発開始のお知らせ
-                        </a>
+                    <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
+                        GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ
                     </h3>
-
-                    <!-- Executive Summary -->
-                    <div class="border-l-3 border-brand-blue bg-gradient-to-r from-blue-50/80 to-transparent pl-5 py-4 pr-4 rounded-r-lg mb-6" style="border-left-width: 3px;">
-                        <p class="text-body text-gray-700 leading-relaxed">
-                            Cursorversは、医療機関の一次資料（省令・通知・ガイドライン・添付文書）と実務文書を突合・検証するツール「GuideScope」の開発に着手しました。まずは院内マニュアルのGL準拠確認とシステム契約チェックを中核に提供し、段階的に対応領域を拡大します。
-                        </p>
-                    </div>
-
-                    <!-- Body Preview -->
-                    <p class="text-body text-text-secondary leading-relaxed mb-6">
-                        ガイドライン改定時の院内マニュアル更新漏れ、ベンダー契約の要件充足確認——「正しい原典」と照合したいのに、時間もノウハウも足りない。GuideScopeは文書同士を突合し、差分・不足・根拠を提示。外部システム連携なしで導入できます。
+                    <p class="text-sm text-text-secondary leading-relaxed mb-3">
+                        院内マニュアルのGL準拠確認とシステム契約チェックを中核に、段階的に対応領域を拡大します。
                     </p>
-
-                    <!-- Read More -->
-                    <a href="news/2026-02-10-guidescope.html" class="inline-flex items-center gap-2 text-brand-blue hover:text-brand-black text-base font-bold transition-colors group/link">
+                    <a href="news/2026-02-10-guidescope.html" class="inline-flex items-center gap-2 text-brand-blue hover:text-brand-black text-sm font-bold transition-colors group/link">
                         詳しく読む
-                        <svg class="group-hover/link:translate-x-1 transition-transform" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
-                </div>
-            </article>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -952,6 +965,18 @@
                         <div class="card-premium flex items-center justify-between p-5 md:p-6 rounded-2xl">
                             <div>
                                 <p class="font-bold text-brand-black text-lg md:text-xl"><a
+                                        href="https://g-gen.co.jp/" target="_blank" rel="noopener noreferrer"
+                                        class="hover:text-brand-blue transition">株式会社G-gen</a>
+                                </p>
+                                <p class="text-base text-text-tertiary mt-2 font-en">Google Cloud Premier Partner — Healthcare AI Infrastructure</p>
+                            </div>
+                            <a href="https://g-gen.co.jp/" target="_blank" rel="noopener noreferrer" class="shrink-0 ml-4 bg-white rounded-lg p-2 border border-gray-100">
+                                <img src="images/logo-ggen.png" alt="G-gen logo" class="h-8 w-auto object-contain" loading="lazy">
+                            </a>
+                        </div>
+                        <div class="card-premium flex items-center justify-between p-5 md:p-6 rounded-2xl">
+                            <div>
+                                <p class="font-bold text-brand-black text-lg md:text-xl"><a
                                         href="https://health-isac-japan.jp/" target="_blank" rel="noopener noreferrer"
                                         class="hover:text-brand-blue transition">Health ISAC Japan</a>
                                 </p>
@@ -1037,7 +1062,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>a322e3a</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>1282af2</span></p>
             </div>
         </div>
     </footer>
