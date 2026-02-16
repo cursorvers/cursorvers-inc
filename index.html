@@ -140,18 +140,26 @@
         /* News scroll container */
         .news-scroll-wrapper { position: relative; }
         .news-scroll {
-            -webkit-overflow-scrolling: touch;
             overscroll-behavior-y: contain;
+            touch-action: pan-y;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #CBD5E1 transparent;
         }
         .news-scroll::-webkit-scrollbar { width: 4px; }
         .news-scroll::-webkit-scrollbar-track { background: transparent; }
         .news-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
         @media (min-width: 768px) {
-            .news-scroll { max-height: 320px !important; }
+            .news-scroll { height: 320px; }
         }
         @media (max-width: 767px) {
-            .news-scroll::-webkit-scrollbar { display: none; }
-            .news-scroll { scrollbar-width: none; }
+            .news-scroll {
+                height: 280px;
+                overflow-y: scroll !important;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .news-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
         }
         .news-scroll-fade {
             position: absolute; bottom: 0; left: 0; right: 0;
@@ -161,6 +169,15 @@
             z-index: 2;
         }
         .news-scroll-fade.is-end { opacity: 0; }
+        .news-scroll-hint {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            width: 32px; height: 4px; background: rgba(0,0,0,0.12);
+            border-radius: 2px; z-index: 3;
+            animation: scrollHint 2s ease-in-out infinite;
+        }
+        .news-scroll-hint.is-end { opacity: 0; transition: opacity 0.3s; }
+        @keyframes scrollHint { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+        @media (min-width: 768px) { .news-scroll-hint { display: none; } }
 
         .card-premium:hover {
             box-shadow: 0 24px 48px -12px rgba(0, 82, 204, 0.15);
@@ -402,7 +419,7 @@
 
             <!-- News Items (Fixed-height scrollable container) -->
             <div class="news-scroll-wrapper">
-            <div class="space-y-4 overflow-y-auto news-scroll" id="newsScroll" style="max-height: 280px; scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent;">
+            <div class="space-y-4 news-scroll" id="newsScroll">
                 <!-- G-gen Partnership -->
                 <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-brand-blue/20 hover:shadow-md transition-all duration-300">
                     <div class="flex flex-col md:flex-row md:items-start md:gap-5">
@@ -453,6 +470,7 @@
                 </article>
             </div>
             <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
+            <div class="news-scroll-hint" id="newsScrollHint" aria-hidden="true"></div>
             </div>
         </div>
     </section>
@@ -1090,7 +1108,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>c06edae</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>3ef0a43</span></p>
             </div>
         </div>
     </footer>
@@ -1177,14 +1195,17 @@
                 console.log('[CTA Click]', name, { path: location.pathname, referrer: document.referrer });
             });
 
-            // News scroll fade control
+            // News scroll fade + hint control
             const newsEl = document.getElementById('newsScroll');
             const fadeEl = document.getElementById('newsScrollFade');
+            const hintEl = document.getElementById('newsScrollHint');
             if (newsEl && fadeEl) {
                 const checkFade = () => {
                     const atEnd = newsEl.scrollHeight - newsEl.scrollTop - newsEl.clientHeight < 8;
                     const noScroll = newsEl.scrollHeight <= newsEl.clientHeight;
-                    fadeEl.classList.toggle('is-end', atEnd || noScroll);
+                    const isEnd = atEnd || noScroll;
+                    fadeEl.classList.toggle('is-end', isEnd);
+                    if (hintEl) hintEl.classList.toggle('is-end', isEnd);
                 };
                 newsEl.addEventListener('scroll', checkFade, { passive: true });
                 checkFade();
