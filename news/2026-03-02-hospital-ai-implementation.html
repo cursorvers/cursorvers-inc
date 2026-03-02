@@ -59,30 +59,6 @@
             font-weight: 700;
         }
 
-        /* 4-Quadrant Matrix */
-        .quadrant-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            background: #e5e7eb;
-            border-radius: 0.75rem;
-            overflow: hidden;
-        }
-        .quadrant-cell {
-            padding: 1.25rem;
-            background: #fff;
-        }
-        .quadrant-cell:nth-child(1) { background: #eff6ff; }
-        .quadrant-cell:nth-child(2) { background: #f0fdf4; }
-        .quadrant-cell:nth-child(3) { background: #fefce8; }
-        .quadrant-cell:nth-child(4) { background: #faf5ff; }
-
-        @media (max-width: 639px) {
-            .quadrant-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* Blockquote highlight */
         .quote-highlight {
             position: relative;
@@ -206,57 +182,14 @@
                         勝俣氏は松尾研のAI経営講座で学んだフレームワークを、病院の文脈に翻訳しています。AIの実装パターンを「入力が何か」「出力が何か」で4象限に分けると、病院で使えるAIの全体像が見えてきます。
                     </p>
 
-                    <!-- 4-Quadrant Matrix Diagram -->
-                    <div class="my-8">
-                        <div class="mb-4 flex items-center gap-4">
-                            <div class="flex items-center gap-2 text-sm text-gray-500">
-                                <span class="font-bold text-brand-black">縦軸:</span> 入力の種類
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-500">
-                                <span class="font-bold text-brand-black">横軸:</span> 出力の種類
-                            </div>
-                        </div>
-
-                        <!-- Axis Labels + Grid -->
-                        <div class="relative">
-                            <!-- Column headers -->
-                            <div class="grid grid-cols-2 gap-2 mb-2 pl-0 sm:pl-24">
-                                <div class="text-center text-sm font-bold text-gray-600">出力: 自然言語</div>
-                                <div class="text-center text-sm font-bold text-gray-600">出力: 構造化データ</div>
-                            </div>
-                            <div class="flex gap-2">
-                                <!-- Row labels -->
-                                <div class="hidden sm:flex flex-col justify-around w-20 shrink-0 text-right pr-2">
-                                    <div class="text-sm font-bold text-gray-600 leading-tight">入力:<br>自然言語</div>
-                                    <div class="text-sm font-bold text-gray-600 leading-tight">入力:<br>構造化データ</div>
-                                </div>
-                                <!-- Grid -->
-                                <div class="quadrant-grid flex-1">
-                                    <div class="quadrant-cell">
-                                        <p class="text-xs font-bold text-blue-700 mb-1 font-en">Quadrant 1</p>
-                                        <p class="font-bold text-brand-black text-sm mb-1">カルテ生成・要約</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed">患者の訴え（自然言語）→ カルテ文書（自然言語）。最もLLMの得意領域。</p>
-                                    </div>
-                                    <div class="quadrant-cell">
-                                        <p class="text-xs font-bold text-green-700 mb-1 font-en">Quadrant 2</p>
-                                        <p class="font-bold text-brand-black text-sm mb-1">AI問診・オーダー抽出</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed">患者の訴え（自然言語）→ 検査オーダー・病名コード（構造化データ）。</p>
-                                    </div>
-                                    <div class="quadrant-cell">
-                                        <p class="text-xs font-bold text-yellow-700 mb-1 font-en">Quadrant 3</p>
-                                        <p class="font-bold text-brand-black text-sm mb-1">検査値の解釈</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed">検査結果（構造化データ）→ 患者向け説明文（自然言語）。</p>
-                                    </div>
-                                    <div class="quadrant-cell">
-                                        <p class="text-xs font-bold text-purple-700 mb-1 font-en">Quadrant 4</p>
-                                        <p class="font-bold text-brand-black text-sm mb-1">DPC分析・予測</p>
-                                        <p class="text-xs text-gray-600 leading-relaxed">診療データ（構造化データ）→ 在院日数予測・コスト分析（構造化データ）。</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="mt-3 text-xs text-gray-400 text-right">勝俣氏の投稿をもとにCursorversが再構成</p>
-                    </div>
+                    <!-- 4-Quadrant Matrix Diagram (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-quadrant.png"
+                            alt="AI実装には「順番」がある — 言語の4象限。縦軸が入力（自然言語/構造化データ）、横軸が出力（自然言語/構造化データ）。セオリーは①から順。いきなり④をやるな。"
+                            class="w-full rounded-xl border border-gray-200 shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-right">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
 
                     <p>
                         この4象限で重要なのは、<strong>すべてを同時に導入する必要はない</strong>という点です。自院がどの象限から着手すべきかを見極めることが、AI導入の最初のステップになります。
@@ -268,44 +201,14 @@
                         勝俣氏は、病院のAI導入状況を5段階で整理しています。多くの病院は「導入したが使われていない」段階で止まっているのが実態です。
                     </p>
 
-                    <!-- Checklist Diagram -->
-                    <div class="my-8 space-y-3">
-                        <div class="flex items-start gap-3 bg-red-50 border border-red-100 rounded-lg p-4">
-                            <span class="shrink-0 w-8 h-8 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-sm font-bold">1</span>
-                            <div class="flex-1">
-                                <p class="font-bold text-brand-black text-sm">AI？聞いたことはあるが検討していない</p>
-                                <p class="text-xs text-gray-500 mt-1">対応: まず情報収集。セミナー参加や事例研究から。</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3 bg-orange-50 border border-orange-100 rounded-lg p-4">
-                            <span class="shrink-0 w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-sm font-bold">2</span>
-                            <div class="flex-1">
-                                <p class="font-bold text-brand-black text-sm">検討中だが、何から手を付ければいいかわからない</p>
-                                <p class="text-xs text-gray-500 mt-1">対応: 4象限で「自院にとって最も効果の高い領域」を特定する。</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3 bg-amber-50 border border-amber-100 rounded-lg p-4">
-                            <span class="shrink-0 w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-sm font-bold">3</span>
-                            <div class="flex-1">
-                                <p class="font-bold text-brand-black text-sm">導入したが、現場で使われていない</p>
-                                <p class="text-xs text-gray-500 mt-1">対応: 技術の問題ではなくオペレーションの問題。業務フロー再設計が必要。</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-lg p-4">
-                            <span class="shrink-0 w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">4</span>
-                            <div class="flex-1">
-                                <p class="font-bold text-brand-black text-sm">一部で運用中。効果測定はこれから</p>
-                                <p class="text-xs text-gray-500 mt-1">対応: KPI設定と定期レビュー体制の構築。ガバナンスの仕組み化。</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3 bg-green-50 border border-green-100 rounded-lg p-4">
-                            <span class="shrink-0 w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-sm font-bold">5</span>
-                            <div class="flex-1">
-                                <p class="font-bold text-brand-black text-sm">複数領域で運用中。次の展開を計画している</p>
-                                <p class="text-xs text-gray-500 mt-1">対応: 全体最適の視点でロードマップを策定。組織横断のガバナンス体制へ。</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Checklist Diagram (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-checklist.png"
+                            alt="あなたの病院、クリニックの「AI導入の現在地」チェック。AIツールを導入しているか→使われているか→オペレーション問題か→データが経営に活かせているか、のフローチャート。"
+                            class="w-full max-w-lg mx-auto rounded-xl border border-gray-200 shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-center">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
 
                     <!-- Section 2 -->
                     <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 mt-12">「環境はある。オペレーションが変わっていない」</h2>
@@ -327,66 +230,14 @@
                         もうひとつの重要なフレームワークが、認知科学の「System 1 / System 2」の枠組みを医療AIに適用した整理です。どの業務をAIに委ね、どの業務を医師が守るべきか — その仕分けの基準を提示しています。
                     </p>
 
-                    <!-- System 1 / System 2 Cards -->
-                    <div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- System 2: AI側 -->
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6">
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-gray-200 text-gray-700 flex items-center justify-center text-sm font-bold font-en">S2</span>
-                                <div>
-                                    <p class="font-bold text-brand-black text-sm">System 2 — AIに任せる</p>
-                                    <p class="text-xs text-gray-500">遅い思考・定型処理</p>
-                                </div>
-                            </div>
-                            <ul class="space-y-2 text-sm text-gray-700">
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-gray-400" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-                                    カルテの定型文生成
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-gray-400" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-                                    検査値の異常フラグ
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-gray-400" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-                                    クリニカルパス内の標準処理
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-gray-400" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
-                                    DPCコーディングの自動化
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- System 1: 医師側 -->
-                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                            <div class="flex items-center gap-2 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-brand-blue text-white flex items-center justify-center text-sm font-bold font-en">S1</span>
-                                <div>
-                                    <p class="font-bold text-brand-black text-sm">System 1 — 医師が守る</p>
-                                    <p class="text-xs text-gray-500">速い思考・直感的判断</p>
-                                </div>
-                            </div>
-                            <ul class="space-y-2 text-sm text-gray-700">
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-brand-blue" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v2m0 4h.01M5.07 19h13.86c1.1 0 1.79-1.19 1.24-2.12l-6.93-12c-.55-.95-1.92-.95-2.47 0l-6.93 12c-.55.93.14 2.12 1.24 2.12z"/></svg>
-                                    患者の顔色・表情から読み取る異変
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-brand-blue" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v2m0 4h.01M5.07 19h13.86c1.1 0 1.79-1.19 1.24-2.12l-6.93-12c-.55-.95-1.92-.95-2.47 0l-6.93 12c-.55.93.14 2.12 1.24 2.12z"/></svg>
-                                    クリニカルパスから外れた判断
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-brand-blue" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v2m0 4h.01M5.07 19h13.86c1.1 0 1.79-1.19 1.24-2.12l-6.93-12c-.55-.95-1.92-.95-2.47 0l-6.93 12c-.55.93.14 2.12 1.24 2.12z"/></svg>
-                                    家族を含めた意思決定の支援
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <svg class="shrink-0 mt-0.5 text-brand-blue" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v2m0 4h.01M5.07 19h13.86c1.1 0 1.79-1.19 1.24-2.12l-6.93-12c-.55-.95-1.92-.95-2.47 0l-6.93 12c-.55.93.14 2.12 1.24 2.12z"/></svg>
-                                    倫理的判断・インフォームドコンセント
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <!-- 3つのフレームワーク (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-framework.png"
+                            alt="病院AI導入の3つのフレームワーク。1: 4象限で順番を決める。いきなり④をやるな、①から順に。2: オペレーションを再設計する。薬を出したのに飲ませていない医師になるな。3: 手放すノウハウと残すノウハウを仕分ける。パスの中はAI。パスの外は医師。"
+                            class="w-full max-w-lg mx-auto rounded-xl shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-center">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
 
                     <div class="quote-highlight">
                         クリニカルパスの中はAI。パスの外は医師。— この線引きが、安全と効率を両立させる鍵になる。
