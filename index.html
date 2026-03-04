@@ -188,6 +188,20 @@
             text-wrap: balance;
         }
 
+        /* Name-origin title sizing: keep mobile compact, emphasize on desktop */
+        .name-origin-title {
+            font-size: 1.875rem;
+            line-height: 1.18;
+            letter-spacing: -0.02em;
+        }
+
+        @media (min-width: 768px) {
+            .name-origin-title {
+                font-size: clamp(2.8rem, 4.8vw, 4.2rem);
+                line-height: 1.12;
+            }
+        }
+
         @media (min-width: 768px) {
             .text-body-lg {
                 font-size: 1.625rem;
@@ -533,12 +547,12 @@
         <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="text-center mb-12 md:mb-16">
                 <span class="text-brand-blue text-sm font-bold tracking-[0.2em] block mb-4">名称の由来</span>
-                <h2 class="text-3xl sm:text-4xl md:text-headline font-bold text-brand-black leading-tight text-optimize">
+                <h2 class="name-origin-title font-bold text-brand-black text-optimize">
                     <span class="keep-together">「Cursorvers」という</span><br>
                     <span class="keep-together">社名に込めたもの</span>
                 </h2>
                 <p class="text-text-secondary text-body mt-4 text-optimize">
-                    Cursorvers（カーソルバース）は、Cursor（判断点）と vers（turn＝向きを変える）を掛け合わせた造語です。
+                    Cursorvers（カーソルバース）は、Cursor（判断点）と<br class="hidden md:block">vers（turn＝向きを変える）を掛け合わせた造語です。
                 </p>
             </div>
 
@@ -1222,7 +1236,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>f43ae44</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>3dd6ffa</span></p>
             </div>
         </div>
     </footer>
