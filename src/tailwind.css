@@ -68,3 +68,8 @@ button:focus-visible {
 .hanging-indent > :last-child {
   flex: 1;
 }
+
+/* ヘッダーナビ保護: min-height: 44px がナビリンクに波及して2段折り返しになるのを防止 */
+[data-desktop-nav] a {
+  min-height: auto !important;
+}
