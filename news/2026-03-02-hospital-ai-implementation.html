@@ -27,11 +27,9 @@
     <meta property="article:published_time" content="2026-03-02">
 
     <link rel="stylesheet" href="../dist/tailwind.min.css?v=385a39f">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- System fonts: no external loading needed -->
     <style>
-        body { font-family: "Noto Sans JP", sans-serif; background: #fff; color: #1A202C; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background: #fff; color: #1d1d1f; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
@@ -55,7 +53,7 @@
         }
 
         .article-body strong {
-            color: #1A202C;
+            color: #1d1d1f;
             font-weight: 700;
         }
 
@@ -101,24 +99,24 @@
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
-            <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+            <nav class="hidden lg:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
                 <a href="../index.html" class="hover:text-brand-blue transition">ホーム</a>
                 <a href="../message.html" class="hover:text-brand-blue transition">創業者</a>
                 <a href="../services.html" class="hover:text-brand-blue transition">医療機関向け</a>
                 <a href="../consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
                 <a href="../subsidy.html" class="hover:text-brand-blue transition">DX資金調達</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
-                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                 </a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="../contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-charcoal px-6 py-3 rounded-full hover:bg-brand-charcoal hover:text-white transition duration-300 text-brand-charcoal uppercase tracking-wider font-en" data-mobile-contact>
                     無料で相談する
                 </a>
-                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
+                <button type="button" class="lg:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -155,7 +153,7 @@
                     <a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer"
                         class="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-brand-blue transition bg-gray-50 px-3 py-2 rounded-lg">
                         元記事を見る
-                        <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                        <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="..../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                     </a>
                 </div>
             </div>
@@ -306,7 +304,7 @@
                                 </p>
                                 <p class="text-base md:text-lg text-gray-300 leading-relaxed">
                                     導入後に「使い続けられる」仕組みを、一緒に作りましょう。<br>
-                                    Cursorversは<strong class="text-white font-bold">医療AIの顧問</strong>として、安心と継続を届けます。
+                                    Cursorversは<strong class="text-white font-bold">医療AIの顧問</strong>として、AI運用の安全と継続を届けます。
                                 </p>
                             </div>
                         </div>
@@ -330,7 +328,7 @@
                         <a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 text-brand-blue hover:underline font-semibold text-sm">
                             元記事を読む（X / @casegenlab）
-                            <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                            <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="..../assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                         </a>
                     </div>
                 </section>
@@ -340,11 +338,11 @@
                     <p class="text-2xl md:text-3xl font-bold text-brand-black mb-3">まずは無料でご相談ください</p>
                     <p class="text-base text-gray-600 mb-8 max-w-lg mx-auto leading-relaxed">「どの象限から始めるべきか」「現場にどう定着させるか」— 貴院の状況に合わせた具体的なアドバイスをお伝えします。</p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="../contact.html" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold rounded-full hover:bg-blue-700 transition text-base shadow-lg shadow-brand-blue/20">
+                        <a href="../contact.html" class="inline-flex items-center justify-center px-10 py-4 sm:min-w-[240px] bg-brand-blue text-white font-bold rounded-full hover:bg-blue-700 transition text-base shadow-lg shadow-brand-blue/20">
                             無料で相談する
                         </a>
-                        <a href="../news.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-gray-300 text-gray-600 font-bold rounded-full hover:border-brand-black hover:text-brand-black transition text-base">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                        <a href="../news.html" class="relative inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] border-2 border-gray-300 text-gray-600 font-bold rounded-full hover:border-brand-black hover:text-brand-black transition text-base">
+                            <svg class="absolute left-4 top-1/2 -translate-y-1/2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
                             お知らせ一覧
                         </a>
                     </div>
@@ -368,7 +366,7 @@
                             <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
                         </span>
                     </div>
-                    <p class="text-lg leading-relaxed text-gray-400">安心と継続の医療AIガバナンス</p>
+                    <p class="text-lg leading-relaxed text-gray-400">医療AIの"産業医" — 病院・診療所を守る</p>
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
@@ -396,7 +394,7 @@
                 <div class="flex gap-6 text-xl">
                     <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
                         target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
-                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="../assets/icons.svg#icon-linkedin"></use></svg>
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="..../assets/icons.svg#icon-linkedin"></use></svg>
                     </a>
                 </div>
             </div>
@@ -405,6 +403,6 @@
     </footer>
 
     <script src="../assets/js/nav.js" defer></script>
-</body>
+    <script src="../assets/js/cookie-consent.js" defer></script></body>
 
 </html>

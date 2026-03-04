@@ -19,13 +19,11 @@
     <meta name="description" content="医療AI導入の資金調達は補助金だけではありません。融資・診療報酬加算・リースなど複数の選択肢を整理し、中立な立場で情報提供します。申請代行・融資斡旋は行いません。">
 
     <link rel="stylesheet" href="dist/tailwind.min.css?v=385a39f">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Manrope:wght@400;600;800&display=swap"
+        _REMOVED_
         rel="stylesheet">
     <style>
-        body { font-family: "Noto Sans JP", sans-serif; background: #fff; color: #1A202C; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background: #fff; color: #1d1d1f; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
@@ -177,22 +175,22 @@
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
-            <nav class="hidden md:flex items-center gap-10 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+            <nav class="hidden lg:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
                 <a href="index.html" class="hover:text-brand-blue transition">ホーム</a>
                 <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
                 <a href="services.html" class="hover:text-brand-blue transition">医療機関向け</a>
                 <a href="consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
                 <a href="subsidy.html" class="text-brand-blue font-semibold">DX資金調達</a>
                 <a href="https://cursorvers.github.io/cursorvers-edu/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
                 <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
-                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                 </a>
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-charcoal px-6 py-3 rounded-full hover:bg-brand-charcoal hover:text-white transition duration-300 text-brand-charcoal uppercase tracking-wider font-en" data-mobile-contact>無料で相談する</a>
-                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
-                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="/assets/icons.svg#icon-bars"></use></svg>
+                <button type="button" class="lg:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
         </div>
@@ -200,7 +198,16 @@
 
     <main id="main" class="pt-24">
         <!-- Hero -->
-        <section class="relative py-20 md:py-28 text-center px-6 overflow-hidden bg-gradient-to-b from-blue-50 to-white">
+        <section class="relative py-20 md:py-28 text-center px-6 overflow-hidden min-h-[60vh] flex items-center justify-center">
+            <!-- Background Image -->
+            <picture>
+                <source srcset="images/hero-wallstreet.webp" type="image/webp">
+                <source media="(max-width: 768px)" srcset="images/hero-wallstreet-sm.jpg">
+                <img src="images/hero-wallstreet.jpg"
+                    alt="資金調達イメージ" class="absolute inset-0 w-full h-full object-cover" loading="eager"
+                    style="filter: brightness(1.05) saturate(0.85);">
+            </picture>
+            <div class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white/90"></div>
             <div class="relative z-10 max-w-4xl mx-auto">
                 <p class="text-lg font-semibold text-brand-blue mb-4 font-en">Medical AI Consulting</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
@@ -210,10 +217,10 @@
                     補助金・融資・診療報酬加算・リース。<br>どの手段が最適かを一緒に整理します。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#funding" class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
-                        資金調達の選択肢を見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+                    <a href="#funding" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
+                        資金調達の選択肢を見る
                     </a>
-                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-200 font-bold text-lg rounded-full hover:border-brand-blue hover:text-brand-blue transition">
+                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] border-2 border-brand-black text-brand-black font-bold text-lg rounded-full bg-white/80 backdrop-blur-sm hover:bg-brand-blue hover:text-white hover:border-brand-blue transition">
                         無料相談を申し込む
                     </a>
                 </div>
@@ -273,6 +280,10 @@
                             <span class="text-red-500 font-bold flex-shrink-0">×</span>
                             <span><strong class="text-brand-black">採択・交付・補助額の保証</strong>：審査結果を約束することはできません。</span>
                         </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 font-bold flex-shrink-0">×</span>
+                            <span><strong class="text-brand-black">融資斡旋・融資の媒介</strong>：特定の金融機関への融資の斡旋・媒介は行いません。</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -310,7 +321,7 @@
                                 <td class="py-4 px-3 font-semibold text-brand-black">融資</td>
                                 <td class="py-4 px-3">必要</td>
                                 <td class="py-4 px-3">なし</td>
-                                <td class="py-4 px-3">あり（比較的確実）</td>
+                                <td class="py-4 px-3">あり（金融機関の審査基準による）</td>
                                 <td class="py-4 px-3">1-2ヶ月</td>
                             </tr>
                             <tr class="border-b border-gray-100">
@@ -339,21 +350,23 @@
                     </div>
                     <div class="bg-white rounded-2xl p-6 md:p-8">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">融資</h3>
-                        <p class="text-lg text-text-secondary leading-relaxed">銀行・日本政策金融公庫等からの借入。審査通過率は補助金より高く、スケジュールも読みやすい。返済計画が必要ですが、導入時期を自分で決められます。</p>
+                        <p class="text-lg text-text-secondary leading-relaxed">銀行・日本政策金融公庫等からの借入。審査基準は補助金と異なり、信用力に応じた判断となります。返済計画が必要ですが、導入時期を自分で決められます。</p>
+                        <p class="text-sm text-text-tertiary mt-2">※当社は融資の斡旋・媒介は行いません</p>
                     </div>
                     <div class="bg-white rounded-2xl p-6 md:p-8">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">診療報酬（医療DX加算）</h3>
-                        <p class="text-lg text-text-secondary leading-relaxed">AI導入後に算定できる診療報酬の加算。初期投資の回収手段として有効。オンライン資格確認、電子処方箋等の要件あり。</p>
+                        <p class="text-lg text-text-secondary leading-relaxed">AI導入後に算定できる診療報酬の加算。初期投資の回収手段として検討の余地があります。オンライン資格確認、電子処方箋等の要件あり。</p>
+                        <p class="text-sm text-text-tertiary mt-2">※要件は診療報酬改定により変更されることがあります。最新の施設基準をご確認ください。</p>
                     </div>
                     <div class="bg-white rounded-2xl p-6 md:p-8">
                         <h3 class="text-xl font-bold mb-3 text-brand-black">リース・サブスク</h3>
-                        <p class="text-lg text-text-secondary leading-relaxed">初期投資を抑え、月額費用で導入。審査は与信ベースで比較的通りやすい。ベンダーによって条件が異なります。</p>
+                        <p class="text-lg text-text-secondary leading-relaxed">初期投資を抑え、月額費用で導入。与信審査の結果はリース会社により異なります。ベンダーによって条件が異なります。</p>
                     </div>
                 </div>
 
                 <!-- 注意書き -->
-                <div class="mt-8 bg-orange-50 rounded-xl p-6 border border-orange-200">
-                    <p class="text-base text-text-secondary"><strong class="text-brand-black">ご注意：</strong>上記は一般的な特徴であり、個別の条件は制度・金融機関・ベンダーにより異なります。詳細は各窓口にご確認ください。</p>
+                <div class="mt-8 bg-brand-gray rounded-2xl p-6 md:p-8 border border-gray-200">
+                    <p class="text-lg text-text-secondary"><strong class="text-brand-black">ご注意：</strong>上記は一般的な特徴であり、個別の条件は制度・金融機関・ベンダーにより異なります。詳細は各窓口にご確認ください。当社は融資の斡旋・媒介は行いません。</p>
                 </div>
             </div>
         </section>
@@ -398,8 +411,9 @@
                             <svg class="text-brand-blue text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-building"></use></svg>
                         </div>
                         <h3 class="text-2xl md:text-3xl font-bold mb-4 text-brand-blue">当社</h3>
-                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed">全体設計・進行管理・成果物の品質チェック</p>
-                        <p class="text-base md:text-lg text-text-tertiary mt-3">（申請者が作成できる状態に整える）</p>
+                        <p class="text-lg md:text-xl text-text-secondary leading-relaxed">AI導入の全体設計・進行管理・導入計画の品質チェック</p>
+                        <p class="text-base md:text-lg text-text-tertiary mt-3">（AI導入の要件を整理し、お客様が自ら計画・申請できるよう情報を提供する）</p>
+                        <p class="text-sm md:text-base text-text-tertiary mt-2">※官公署提出書類の作成・提出は業務範囲外です</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 text-center">
                         <div class="w-20 h-20 md:w-24 md:h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -453,7 +467,7 @@
                             <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
-                            必要に応じて、認定支援機関等の外部専門家（例：中小企業診断士等）をご紹介します。<strong>契約主体はお客様と専門家の直接契約</strong>となり、専門家の役割は「助言・レビュー」（指南役）です。
+                            必要に応じて、認定支援機関等の外部専門家（例：中小企業診断士等）をご紹介します。<strong>契約主体はお客様と専門家の直接契約</strong>となり、専門家の役割は「助言・レビュー」（指南役）です。なお、ご紹介は認定支援機関の認定を受けた専門家を確約するものではありません。
                         </div>
                     </details>
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
@@ -522,8 +536,12 @@
                         <span>「補助事業の遂行に必要な専門家経費」等が対象となる場合がありますが、申請書・報告書など<strong class="text-brand-black">"事務局提出書類の作成・提出に係る費用"は対象外</strong>となる場合があります。</span>
                     </li>
                     <li class="flex items-start gap-3">
+                        <svg class="text-red-500 mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
+                        <span><strong class="text-brand-black">当社は融資の斡旋・媒介は行いません</strong>。資金調達の選択肢に関する一般的な情報提供のみを行います。</span>
+                    </li>
+                    <li class="flex items-start gap-3">
                         <svg class="text-brand-blue mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-shield-halved"></use></svg>
-                        <span>不適切な成功報酬契約や経費の水増し提案等は<strong class="text-brand-black">一切行いません</strong>。</span>
+                        <span>補助金の採択を条件とする成功報酬契約や、経費の水増し提案等は<strong class="text-brand-black">一切行いません</strong>。</span>
                     </li>
                 </ul>
             </div>
@@ -556,7 +574,7 @@
                             <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
                         </span>
                     </div>
-                    <p class="text-lg leading-relaxed text-gray-400">安心と継続の医療AIガバナンス</p>
+                    <p class="text-lg leading-relaxed text-gray-400">医療AIの"産業医" — 病院・診療所を守る</p>
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
@@ -590,12 +608,12 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>385a39f</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>82fc1c1</span></p>
             </div>
         </div>
     </footer>
 
     <script src="assets/js/nav.js" defer></script>
-</body>
+    <script src="assets/js/cookie-consent.js" defer></script></body>
 
 </html>

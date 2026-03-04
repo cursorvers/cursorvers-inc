@@ -52,6 +52,12 @@ button:focus-visible {
   }
 }
 
+/* ヘッダーナビ防御: ページ固有CSSの a,button{min-height} がナビに波及するのを防止 */
+[data-desktop-nav] a {
+  min-height: auto !important;
+  min-width: auto !important;
+}
+
 /* ぶら下がりインデント（リスト項目用） */
 .hanging-indent {
   display: flex;
