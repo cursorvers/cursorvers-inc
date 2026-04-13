@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
         header.style.top = '0';
         header.style.left = '0';
         header.style.right = '0';
-        header.style.transform = 'translateZ(0)';
-        header.style.webkitTransform = 'translateZ(0)';
+        if (!header.classList.contains('hero-nav-reveal')) {
+            header.style.transform = 'translateZ(0)';
+            header.style.webkitTransform = 'translateZ(0)';
+        }
         header.style.backfaceVisibility = 'hidden';
         header.style.webkitBackfaceVisibility = 'hidden';
     }

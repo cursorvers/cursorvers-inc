@@ -3,8 +3,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', '"Hiragino Kaku Gothic ProN"', '"Hiragino Sans"', 'Meiryo', 'sans-serif'],
-        en: ['"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', '"Helvetica Neue"', 'sans-serif'],
+        sans: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
+        en: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
+        serif: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
       },
       colors: {
         "brand-black": "#1d1d1f",

@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --cursorvers-serif: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+}
+
+html,
+body,
+.font-en,
+.font-serif {
+  font-family: var(--cursorvers-serif);
+}
+
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid #0052CC;

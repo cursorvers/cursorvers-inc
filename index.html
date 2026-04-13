@@ -48,11 +48,18 @@
     <link rel="stylesheet" href="dist/tailwind.min.css?v=385a39f">
     <!-- System fonts: no external loading needed -->
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; background: #fff; color: #1d1d1f; }
+        body { font-family: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif; background: #fff; color: #1d1d1f; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
+        .hero-nav-reveal {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate3d(0, -120%, 0);
+            visibility: hidden;
+            animation: heroNavReveal 1.55s cubic-bezier(0.16, 1, 0.3, 1) 1.25s forwards;
+        }
 
         /* Page-specific styles for index.html */
         .hero-wrapper {
@@ -106,6 +113,63 @@
         .hero-content {
             position: relative;
             z-index: 10;
+        }
+
+        .hero-motion-title {
+            font-family: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+            font-weight: 900;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .hero-motion-title .hero-subline {
+            font-weight: 800;
+        }
+
+        .hero-motion-line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-motion-token,
+        .hero-motion-subline {
+            display: inline-block;
+            opacity: 0;
+            transform: translate3d(0, 110%, 0);
+            animation: heroMotionPop 1.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: calc(0.95s + var(--hero-stagger, 0s));
+        }
+
+        .hero-motion-subline {
+            animation-duration: 1.55s;
+        }
+
+        @keyframes heroNavReveal {
+            0% {
+                opacity: 1;
+                pointer-events: none;
+                transform: translate3d(0, -120%, 0);
+                visibility: visible;
+            }
+            100% {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translate3d(0, 0, 0);
+                visibility: visible;
+            }
+        }
+
+        @keyframes heroMotionPop {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 110%, 0);
+            }
+            8% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
         }
 
         .btn-clean {
@@ -483,6 +547,27 @@
         .img-clean:hover img {
             transform: scale(1.05);
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-motion-title {
+                transform: none;
+            }
+
+            .hero-motion-token,
+            .hero-motion-subline {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .hero-nav-reveal {
+                opacity: 1;
+                pointer-events: auto;
+                transform: none;
+                animation: none;
+                visibility: visible;
+            }
+        }
     </style>
 </head>
 
@@ -490,7 +575,7 @@
     <a href="#main" class="skip-link">本文へスキップ</a>
 
     <!-- Navigation -->
-    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
+    <header class="hero-nav-reveal fixed w-full z-50 glass-nav" style="opacity: 0; pointer-events: none; transform: translate3d(0, -120%, 0); visibility: hidden;" data-mobile-menu-root data-mobile-menu-theme="light">
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
                 <picture>
@@ -538,11 +623,16 @@
         <div class="hero-content max-w-6xl mx-auto px-6 flex items-center justify-center h-full text-center">
             <div class="z-10 max-w-5xl mx-auto">
                 <!-- Headline -->
-                <h1 class="text-display font-black tracking-tighter text-brand-black animate-fade-in-up text-balance leading-tight"
-                    style="animation-delay: 0.1s;">
-                    <span class="block">AIに、<br class="md:hidden">臨床の魂を</span>
-                    <span class="hero-subline mt-7 block text-2xl md:text-4xl lg:text-5xl font-bold tracking-normal leading-snug text-brand-blue">
-                        医療AIを、現場に届く言葉へ
+                <h1 class="hero-motion-title text-display font-black tracking-tighter text-brand-black text-balance leading-tight"
+                    data-hero-motion aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+                    <span class="hero-motion-line" aria-hidden="true">
+                        <span class="hero-motion-token" style="--hero-stagger: 0s;">AIに、</span><br class="md:hidden"><span class="hero-motion-token" style="--hero-stagger: 0.28s;">臨床の</span><span class="hero-motion-token" style="--hero-stagger: 0.56s;">魂を</span>
+                    </span>
+                    <span class="hero-motion-line mt-7 block" aria-hidden="true">
+                        <span class="hero-subline hero-motion-subline text-2xl md:text-4xl lg:text-5xl font-bold tracking-normal leading-snug text-brand-blue"
+                            style="--hero-stagger: 0.98s;">医療AIを、</span><span class="hero-subline hero-motion-subline text-2xl md:text-4xl lg:text-5xl font-bold tracking-normal leading-snug text-brand-blue"
+                            style="--hero-stagger: 1.26s;">現場に</span><span class="hero-subline hero-motion-subline text-2xl md:text-4xl lg:text-5xl font-bold tracking-normal leading-snug text-brand-blue"
+                            style="--hero-stagger: 1.54s;">届く言葉へ</span>
                     </span>
                 </h1>
             </div>
@@ -1452,7 +1542,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>22272c6</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>a649e80</span></p>
             </div>
         </div>
     </footer>
