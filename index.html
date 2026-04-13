@@ -236,49 +236,84 @@
         }
 
         /* News scroll container */
-        .news-scroll-wrapper { position: relative; }
+        .news-scroll-wrapper {
+            position: relative;
+        }
         .news-scroll {
-            overscroll-behavior-y: contain;
-            touch-action: pan-y;
-            overflow-y: scroll;
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-x: contain;
+            touch-action: pan-x;
+            scroll-snap-type: x mandatory;
+            scroll-padding-inline: 6px;
+            padding: 4px 6px 14px;
+            margin: -4px -6px 0;
             scrollbar-width: thin;
             scrollbar-color: #CBD5E1 transparent;
+            -webkit-overflow-scrolling: touch;
         }
-        .news-scroll::-webkit-scrollbar { width: 4px; }
+        .news-scroll:focus-visible {
+            outline: 2px solid rgba(0, 119, 212, 0.35);
+            outline-offset: 4px;
+            border-radius: 12px;
+        }
+        .news-scroll > article {
+            flex: 0 0 clamp(300px, 28vw, 340px);
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-scroll > article > div {
+            width: 100%;
+        }
+        .news-scroll .news-logo-lockup {
+            display: none !important;
+        }
+        .news-scroll::-webkit-scrollbar { height: 4px; }
         .news-scroll::-webkit-scrollbar-track { background: transparent; }
         .news-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
-        @media (min-width: 768px) {
-            .news-scroll { height: 320px; }
-        }
         @media (max-width: 767px) {
             .news-scroll {
-                height: auto;
-                overflow: visible !important;
+                gap: 14px;
+                margin: -2px 0 0;
+                padding: 2px 0 14px;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
             }
-            .news-scroll article:nth-of-type(n+3) { display: none; }
+            .news-scroll > article {
+                flex-basis: min(84vw, 340px);
+                min-height: 340px;
+            }
             .news-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
-            .news-scroll-fade,
-            .news-scroll-hint { display: none; }
         }
         .news-scroll-fade {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            height: 48px; pointer-events: none;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 12px;
+            width: 64px;
+            pointer-events: none;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 90%);
             transition: opacity 0.3s ease;
             z-index: 2;
         }
         .news-scroll-fade.is-end { opacity: 0; }
         .news-scroll-hint {
-            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-            width: 32px; height: 4px; background: rgba(0,0,0,0.12);
-            border-radius: 2px; z-index: 3;
-            animation: scrollHint 2s ease-in-out infinite;
+            position: absolute;
+            right: 6px;
+            bottom: 1px;
+            width: 44px;
+            height: 3px;
+            background: rgba(0, 119, 212, 0.28);
+            border-radius: 999px;
+            z-index: 3;
+            transition: opacity 0.3s ease;
         }
-        .news-scroll-hint.is-end { opacity: 0; transition: opacity 0.3s; }
-        @keyframes scrollHint { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-        @media (min-width: 768px) { .news-scroll-hint { display: none; } }
+        .news-scroll-hint.is-end { opacity: 0; }
 
         .card-premium:hover {
             box-shadow: 0 24px 48px -12px rgba(0, 82, 204, 0.15);
@@ -831,8 +866,8 @@
     </section>
 
     <!-- お知らせ Section (常設) -->
-    <section class="py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="お知らせ">
-        <div class="max-w-5xl mx-auto px-6 md:px-12">
+    <section id="news" class="py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="お知らせ">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
             <!-- Section Header -->
             <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 md:mb-14">
                 <div>
@@ -845,9 +880,9 @@
                 </a>
             </div>
 
-            <!-- News Items (Fixed-height scrollable container) -->
+            <!-- News Items (horizontal scroll rail) -->
             <div class="news-scroll-wrapper">
-            <div class="space-y-4 news-scroll" id="newsScroll">
+            <div class="news-scroll" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
                 <!-- 医療AI導入の順番 -->
                 <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-brand-blue/20 hover:shadow-md transition-all duration-300">
                     <div class="flex flex-col md:flex-row md:items-start md:gap-5">
@@ -895,7 +930,7 @@
                                 <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
                         </div>
-                        <div class="shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と Health ISAC Japan">
+                        <div class="news-logo-lockup shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と Health ISAC Japan">
                             <span class="flex h-12 w-28 items-center justify-center rounded-md bg-slate-50 px-3 font-en text-xs font-bold tracking-wide text-brand-charcoal uppercase" aria-label="Cursorvers">Cursorvers</span>
                             <span class="text-brand-blue text-xl font-bold" aria-hidden="true">×</span>
                             <a href="https://health-isac-japan.jp/" target="_blank" rel="noopener noreferrer" class="flex h-12 w-28 items-center justify-center hover:opacity-80 transition-opacity">
@@ -927,7 +962,7 @@
                                 <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
                         </div>
-                        <div class="shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と G-gen">
+                        <div class="news-logo-lockup shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と G-gen">
                             <span class="flex h-12 w-28 items-center justify-center rounded-md bg-slate-50 px-3 font-en text-xs font-bold tracking-wide text-brand-charcoal uppercase" aria-label="Cursorvers">Cursorvers</span>
                             <span class="text-brand-blue text-xl font-bold" aria-hidden="true">×</span>
                             <a href="https://g-gen.co.jp/" target="_blank" rel="noopener noreferrer" class="flex h-12 w-28 items-center justify-center hover:opacity-80 transition-opacity">
@@ -1648,7 +1683,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>9c8b42b</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>995bf8a</span></p>
             </div>
         </div>
     </footer>
@@ -1690,13 +1725,22 @@
             const hintEl = document.getElementById('newsScrollHint');
             if (newsEl && fadeEl) {
                 const checkFade = () => {
-                    const atEnd = newsEl.scrollHeight - newsEl.scrollTop - newsEl.clientHeight < 8;
-                    const noScroll = newsEl.scrollHeight <= newsEl.clientHeight;
+                    const atEnd = newsEl.scrollWidth - newsEl.scrollLeft - newsEl.clientWidth < 8;
+                    const noScroll = newsEl.scrollWidth <= newsEl.clientWidth + 1;
                     const isEnd = atEnd || noScroll;
                     fadeEl.classList.toggle('is-end', isEnd);
                     if (hintEl) hintEl.classList.toggle('is-end', isEnd);
                 };
                 newsEl.addEventListener('scroll', checkFade, { passive: true });
+                newsEl.addEventListener('keydown', (event) => {
+                    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+                    event.preventDefault();
+                    const direction = event.key === 'ArrowRight' ? 1 : -1;
+                    newsEl.scrollBy({
+                        left: direction * Math.round(newsEl.clientWidth * 0.82),
+                        behavior: 'smooth'
+                    });
+                });
                 checkFade();
                 window.addEventListener('resize', checkFade);
             }
