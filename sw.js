@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.1'; // Updated: 2026-02-02 - UI/UX fix
+const CACHE_VERSION = '1.0.2'; // Updated: 2026-04-13 - Typography cache refresh
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
