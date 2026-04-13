@@ -280,13 +280,23 @@
             .news-scroll {
                 gap: 14px;
                 margin: -2px 0 0;
-                padding: 2px 0 14px;
+                padding: 2px 0 16px;
+                scroll-padding-inline: 0;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
             }
             .news-scroll > article {
-                flex-basis: min(84vw, 340px);
+                flex-basis: clamp(268px, 72vw, 304px);
                 min-height: 340px;
+            }
+            .news-scroll-fade {
+                width: 38px;
+                bottom: 16px;
+                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.82) 100%);
+            }
+            .news-scroll-hint {
+                right: 12px;
+                width: 52px;
             }
             .news-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
         }
@@ -1683,7 +1693,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>995bf8a</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>6d8984c</span></p>
             </div>
         </div>
     </footer>
