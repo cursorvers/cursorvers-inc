@@ -272,6 +272,14 @@
             text-wrap: balance;
         }
 
+        .details-summary-clean {
+            list-style: none;
+        }
+
+        .details-summary-clean::-webkit-details-marker {
+            display: none;
+        }
+
         #main ~ section .text-body,
         #main ~ section .text-body-lg,
         #main ~ section p.text-text-secondary:not(.font-bold):not(.font-semibold),
@@ -920,15 +928,25 @@
                 </div>
 
                 <div class="mobile-tight-card bg-brand-gray border border-gray-200 rounded-xl p-5 md:p-7">
-                    <p class="text-brand-blue text-xs font-bold tracking-[0.18em] mb-3">意味するもの</p>
-                    <div class="space-y-4 text-sm md:text-base text-text-secondary leading-relaxed">
-                        <p>
-                            AI導入の成否は、製品比較より先に「<span class="font-semibold text-brand-black">判断点</span>」の設計で決まります。<span class="font-semibold text-brand-black">誰が判断し、誰が検証し、問題時に誰が止めるか</span>。<span class="font-semibold text-brand-black">責任分界</span>が曖昧なままでは、現場は回っても組織は守れません。
-                        </p>
-                        <p>
-                            Cursorversの「<span class="font-semibold text-brand-black">vers</span>」には、複数の意味を重ねています。<span class="font-semibold text-brand-black">Reverse</span>（向け直す）、<span class="font-semibold text-brand-black">Version</span>（更新し続ける）、<span class="font-semibold text-brand-black">Versus</span>（責任の対峙点を明確にする）、<span class="font-semibold text-brand-black">Versatile</span>（現場に合わせて整える）。意思決定のカーソルを正しい位置に置き、導入を「<span class="font-semibold text-brand-black">安心と継続</span>」へ変える。それが、Cursorversという名前に込めた意思です。
-                        </p>
-                    </div>
+                    <details class="group">
+                        <summary class="details-summary-clean cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-blue">
+                            <span class="flex items-center justify-between gap-4">
+                                <span class="text-brand-blue text-xs font-bold tracking-[0.18em]">意味するもの</span>
+                                <span class="inline-flex items-center gap-2 text-sm md:text-base font-bold text-brand-black">
+                                    社名に込めた意思を読む
+                                    <svg class="w-4 h-4 transition-transform group-open:rotate-180" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.25" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                                </span>
+                            </span>
+                        </summary>
+                        <div class="mt-4 space-y-4 text-sm md:text-base text-text-secondary leading-relaxed">
+                            <p>
+                                AI導入の成否は、製品比較より先に「<span class="font-semibold text-brand-black">判断点</span>」の設計で決まります。<span class="font-semibold text-brand-black">誰が判断し、誰が検証し、問題時に誰が止めるか</span>。<span class="font-semibold text-brand-black">責任分界</span>が曖昧なままでは、現場は回っても組織は守れません。
+                            </p>
+                            <p>
+                                Cursorversの「<span class="font-semibold text-brand-black">vers</span>」には、複数の意味を重ねています。<span class="font-semibold text-brand-black">Reverse</span>（向け直す）、<span class="font-semibold text-brand-black">Version</span>（更新し続ける）、<span class="font-semibold text-brand-black">Versus</span>（責任の対峙点を明確にする）、<span class="font-semibold text-brand-black">Versatile</span>（現場に合わせて整える）。意思決定のカーソルを正しい位置に置き、導入を「<span class="font-semibold text-brand-black">安心と継続</span>」へ変える。それが、Cursorversという名前に込めた意思です。
+                            </p>
+                        </div>
+                    </details>
 
                     <details class="mt-5 pt-5 border-t border-gray-200 group">
                         <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-brand-blue">
@@ -1586,7 +1604,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>9d4d732</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>438cd13</span></p>
             </div>
         </div>
     </footer>
