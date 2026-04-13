@@ -23,10 +23,10 @@ module.exports = {
       },
       fontSize: {
         display: ["clamp(3.5rem, 8vw, 6rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-        headline: ["clamp(2.5rem, 5vw, 4rem)", { lineHeight: "1.2", letterSpacing: "-0.02em" }],
-        title: ["clamp(1.75rem, 3.5vw, 2.5rem)", { lineHeight: "1.3", letterSpacing: "-0.01em" }],
-        "body-lg": ["1.5rem", { lineHeight: "1.52" }],
-        body: ["1.25rem", { lineHeight: "1.52" }],
+        headline: ["clamp(2.25rem, 4vw, 3rem)", { lineHeight: "1.2", letterSpacing: "0" }],
+        title: ["clamp(1.875rem, 3vw, 2.5rem)", { lineHeight: "1.3", letterSpacing: "0" }],
+        "body-lg": ["1.125rem", { lineHeight: "1.8" }],
+        body: ["1rem", { lineHeight: "1.8" }],
       },
       animation: {
         "fade-in-up": "fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards",
