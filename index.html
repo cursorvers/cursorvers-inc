@@ -11,6 +11,9 @@
         gtag('js', new Date());
         gtag('config', 'G-TX3Y6G4XWJ');
     </script>
+    <script>
+        document.documentElement.classList.add('hero-motion-armed');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -169,6 +172,20 @@
                 transform: translate3d(0, 110%, 0);
             }
             8% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        @keyframes heroMotionPopMobile {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 125%, 0);
+            }
+            14% {
                 opacity: 1;
             }
             100% {
@@ -405,6 +422,29 @@
                 letter-spacing: 0;
             }
 
+            .hero-motion-token,
+            .hero-motion-subline {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .hero-motion-armed .hero-motion-token,
+            .hero-motion-armed .hero-motion-subline {
+                opacity: 0;
+                transform: translate3d(0, 125%, 0);
+            }
+
+            .hero-motion-ready .hero-motion-token,
+            .hero-motion-ready .hero-motion-subline {
+                animation: heroMotionPopMobile 1.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                animation-delay: calc(0.8s + var(--hero-stagger, 0s));
+            }
+
+            .hero-motion-ready .hero-motion-subline {
+                animation-duration: 1.85s;
+            }
+
             .mobile-tight-section {
                 padding-top: 3rem;
                 padding-bottom: 3rem;
@@ -609,6 +649,13 @@
 
             .hero-motion-token,
             .hero-motion-subline {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .hero-motion-armed .hero-motion-token,
+            .hero-motion-armed .hero-motion-subline {
                 opacity: 1;
                 transform: none;
                 animation: none;
@@ -1601,7 +1648,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>1043ff6</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>9c8b42b</span></p>
             </div>
         </div>
     </footer>
@@ -1610,6 +1657,10 @@
     <script src="assets/js/cookie-consent.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            window.setTimeout(() => {
+                document.documentElement.classList.add('hero-motion-ready');
+            }, 650);
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
