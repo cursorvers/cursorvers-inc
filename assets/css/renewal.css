@@ -1,0 +1,979 @@
+/* Cursorvers Inc. Renewal Design System v1
+ * Source of truth: 00_spec/design-system.md
+ * Aligned with auditscope (cursorvers.jp/tools/auditscope)
+ */
+
+:root {
+  --c-flame: #FF4500;
+  --c-gold: #FF5A1F;
+  --c-bg: #FFFFFF;
+  --c-surface: #F8FAFC;
+  --c-gray: #F1F5F9;
+  --c-text: #0F172A;
+  --c-text-sub: #475569;
+  --c-text-mute: #64748B;
+  --c-border: #E2E8F0;
+  --c-footer-bg: #0F172A;
+  --c-footer-text: #CBD5E1;
+  --c-footer-border: #1E293B;
+
+  --font-sans: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-en: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 0.75rem;
+  --radius-btn: 0.5rem;
+  --radius-pill: 9999px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,.05), 0 2px 4px -1px rgba(0,0,0,.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,.05), 0 10px 10px -5px rgba(0,0,0,.02);
+  --shadow-flame: 0 8px 18px -6px rgba(255,69,0,.45);
+}
+
+/* ---- Base ---- */
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans) !important;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.7;
+}
+.font-en { font-family: var(--font-en) !important; letter-spacing: 0.04em; }
+.uppercase-en { font-family: var(--font-en) !important; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; }
+
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--c-flame); }
+img { max-width: 100%; height: auto; }
+
+/* ---- Skip link ---- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 0.875rem 1.5rem;
+  background: var(--c-flame);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-btn) 0;
+}
+.skip-link:focus { left: 0; }
+
+/* ---- Focus ---- */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--c-flame);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- Typography ---- */
+.hero-h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+  margin-bottom: 1.5rem;
+}
+.hero-sub {
+  font-size: clamp(1.05rem, 1.2vw + .9rem, 1.375rem);
+  line-height: 1.7;
+  color: var(--c-text-sub);
+  font-weight: 500;
+  max-width: 56rem;
+  margin: 0 auto 2rem;
+}
+.section-h2 {
+  font-size: clamp(1.5rem, 1.5vw + 1rem, 2rem);
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.section-eyebrow {
+  font-family: var(--font-en);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--c-flame);
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+.section-sub {
+  font-size: 1.0625rem;
+  color: var(--c-text-sub);
+  line-height: 1.8;
+}
+.section-padding { padding-top: 80px; padding-bottom: 80px; }
+@media (max-width: 768px) {
+  .section-padding { padding-top: 56px; padding-bottom: 56px; }
+}
+
+/* ---- Container ---- */
+.container-wide { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+.container-base { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+.container-narrow { max-width: 56rem; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---- Glass nav ---- */
+.glass-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.glass-nav__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.glass-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 700;
+  color: var(--c-text);
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+.glass-nav__brand img { height: 32px; width: 32px; border-radius: 999px; border: 1px solid var(--c-border); }
+.glass-nav__brand:hover { color: var(--c-flame); }
+.glass-nav__links {
+  display: none;
+  gap: 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--c-text-sub);
+}
+@media (min-width: 900px) { .glass-nav__links { display: flex; } }
+.glass-nav__links a:hover { color: var(--c-flame); }
+.glass-nav__links a.is-active {
+  color: var(--c-flame);
+  font-weight: 700;
+}
+.glass-nav__cta {
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-sub);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: all .2s ease;
+}
+.glass-nav__cta:hover {
+  background: var(--c-flame);
+  border-color: var(--c-flame);
+  color: #fff;
+}
+
+/* mobile menu toggle */
+.glass-nav__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--c-text);
+}
+@media (min-width: 900px) { .glass-nav__toggle { display: none; } }
+.glass-nav__mobile {
+  display: none;
+  border-top: 1px solid var(--c-border);
+  background: #fff;
+}
+.glass-nav__mobile.is-open { display: block; }
+.glass-nav__mobile a {
+  display: block;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid var(--c-gray);
+  color: var(--c-text-sub);
+  font-weight: 500;
+}
+.glass-nav__mobile a.is-active { color: var(--c-flame); font-weight: 700; }
+
+/* ---- Pill eyebrow ---- */
+.pill-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid rgba(255,69,0,0.4);
+  background: #fff;
+  color: var(--c-flame);
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+}
+.pill-eyebrow .dot-pulse {
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: var(--c-flame);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pill-eyebrow .dot-pulse { animation: none; }
+}
+
+/* ---- Cards ---- */
+.content-card {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  transition: all .3s ease;
+}
+.content-card:hover {
+  background: var(--c-surface);
+  border-color: var(--c-flame);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-card:hover { transform: none; }
+}
+.content-card__icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius-card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,69,0,0.08);
+  color: var(--c-flame);
+  font-size: 1.25rem;
+}
+.content-card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--c-text);
+  margin-bottom: 0.5rem;
+}
+.content-card__body {
+  color: var(--c-text-sub);
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+/* ---- Buttons ---- */
+.btn-primary, .btn-secondary, .btn-flame {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  transition: all .2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-primary {
+  padding: 0.875rem 1.5rem;
+  background: var(--c-text);
+  color: #fff;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--c-text);
+}
+.btn-primary:hover { background: #1E293B; color: #fff; }
+
+.btn-secondary {
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-sub);
+  background: #fff;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-en);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+}
+.btn-secondary:hover {
+  background: var(--c-flame);
+  border-color: var(--c-flame);
+  color: #fff;
+}
+
+.btn-flame {
+  padding: 0.875rem 1.625rem;
+  background: var(--c-flame);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-flame);
+  box-shadow: var(--shadow-flame);
+}
+.btn-flame:hover { background: var(--c-gold); border-color: var(--c-gold); color: #fff; }
+
+.btn-arrow { transition: transform .2s ease; }
+.btn-primary:hover .btn-arrow,
+.btn-flame:hover .btn-arrow { transform: translateX(3px); }
+
+/* ---- Tag chip ---- */
+.tag-chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--c-gray);
+  color: #334155;
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.tag-chip--flame { background: rgba(255,69,0,0.1); color: var(--c-flame); }
+
+/* ---- Schedule badge ---- */
+.schedule-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 1.25rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-pill);
+  color: var(--c-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.schedule-badge i { color: var(--c-flame); }
+
+/* ---- Hero wrapper ---- */
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+}
+.hero-section--video { min-height: 92vh; display: flex; align-items: center; }
+.hero-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-video-bg video, .hero-video-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.65) brightness(1.05) saturate(0.85);
+}
+.hero-video-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0.95) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ---- Page header (sub pages) ---- */
+.page-header {
+  background: var(--c-surface);
+  padding: 7.5rem 1.5rem 4rem;
+  border-bottom: 1px solid var(--c-border);
+}
+.page-header__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+.page-header__breadcrumb {
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-mute);
+  margin-bottom: 0.75rem;
+}
+.page-header__breadcrumb a:hover { color: var(--c-flame); }
+
+/* ---- Footer ---- */
+.site-footer {
+  background: var(--c-footer-bg);
+  color: var(--c-footer-text);
+  padding: 4rem 1.5rem 2rem;
+  border-top: 1px solid var(--c-footer-border);
+}
+.site-footer__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+}
+@media (max-width: 900px) { .site-footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+@media (max-width: 560px) { .site-footer__inner { grid-template-columns: 1fr; } }
+.site-footer__brand img { height: 36px; }
+.site-footer__brand p { color: #94A3B8; font-size: 0.875rem; line-height: 1.7; margin-top: 0.75rem; }
+.site-footer__col h4 {
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #94A3B8;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.site-footer__col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.site-footer__col a { color: var(--c-footer-text); font-size: 0.9rem; }
+.site-footer__col a:hover { color: var(--c-flame); }
+.site-footer__bottom {
+  max-width: 80rem;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--c-footer-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: #94A3B8;
+}
+
+/* ---- Section helpers ---- */
+.section-bg-surface { background: var(--c-surface); }
+.divider {
+  height: 1px;
+  background: var(--c-border);
+  margin: 0;
+}
+
+/* ---- Featured grid (3 columns) ---- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 900px) { .feature-grid { grid-template-columns: 1fr; } }
+.feature-grid--2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 768px) { .feature-grid--2 { grid-template-columns: 1fr; } }
+
+/* ---- Lists prose ---- */
+.prose {
+  color: var(--c-text-sub);
+  line-height: 1.9;
+  font-size: 1.0625rem;
+}
+.prose h2 { color: var(--c-text); font-size: 1.5rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+.prose h3 { color: var(--c-text); font-size: 1.125rem; font-weight: 700; margin: 2rem 0 0.5rem; }
+.prose p { margin: 1rem 0; }
+.prose ul, .prose ol { margin: 1rem 0 1rem 1.5rem; }
+.prose li { margin: 0.4rem 0; }
+.prose a { color: var(--c-flame); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- News list ---- */
+.news-list { list-style: none; padding: 0; margin: 0; }
+.news-list li {
+  border-top: 1px solid var(--c-border);
+  padding: 1.25rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.news-list li:last-child { border-bottom: 1px solid var(--c-border); }
+.news-list time {
+  font-family: var(--font-en);
+  color: var(--c-text-mute);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  min-width: 6.5rem;
+}
+.news-list a { color: var(--c-text); font-weight: 500; flex: 1; }
+.news-list a:hover { color: var(--c-flame); }
+
+/* ---- Notice / alert ---- */
+.notice {
+  border-left: 4px solid var(--c-flame);
+  background: rgba(255,69,0,0.06);
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--radius-btn) var(--radius-btn) 0;
+  color: var(--c-text);
+}
+.notice--info { border-color: #0EA5E9; background: rgba(14,165,233,.08); }
+
+/* ---- Override existing legacy classes (defensive) ---- */
+/* Legacy navy (#0052CC) → brand slate-900 */
+.bg-brand-blue { background-color: var(--c-slate-900) !important; }
+.text-brand-blue { color: var(--c-slate-900) !important; }
+.border-brand-blue { border-color: var(--c-slate-900) !important; }
+.hover\:bg-brand-blue:hover { background-color: var(--c-slate-900) !important; }
+.hover\:text-brand-blue:hover { color: var(--c-flame) !important; }
+
+/* Legacy black backgrounds → slate-900 */
+.bg-brand-black { background-color: var(--c-footer-bg) !important; }
+.text-brand-charcoal { color: var(--c-text) !important; }
+
+/* Legacy mincho/serif fonts → Noto Sans JP */
+.font-mincho, .font-serif,
+[class*="font-mincho"] {
+  font-family: var(--font-sans) !important;
+  font-feature-settings: "palt" !important;
+  letter-spacing: 0.02em;
+}
+
+/* Accent color remapping: use flame as accent */
+.text-amber-500, .text-amber-600, .text-yellow-500, .text-yellow-600 { color: var(--c-flame) !important; }
+.bg-amber-500, .bg-amber-600, .bg-yellow-500, .bg-yellow-600 { background-color: var(--c-flame) !important; }
+.border-amber-500, .border-amber-600, .border-yellow-500, .border-yellow-600 { border-color: var(--c-flame) !important; }
+
+/* Rule: Tailwind pastel blue/cyan/yellow backgrounds → gray gradient (no rule-violating accent) */
+.bg-blue-50, .bg-blue-100, .bg-blue-100\/50, .bg-blue-50\/30, .bg-blue-50\/50,
+.bg-cyan-50, .bg-cyan-100, .bg-sky-50, .bg-sky-100,
+.bg-indigo-50, .bg-indigo-100,
+.bg-yellow-50, .bg-yellow-100, .bg-yellow-50\/30, .bg-yellow-50\/50,
+.bg-amber-50, .bg-amber-100,
+.bg-green-50, .bg-green-100, .bg-emerald-50, .bg-emerald-100,
+.bg-purple-50, .bg-purple-100, .bg-violet-50, .bg-violet-100,
+.bg-pink-50, .bg-pink-100, .bg-red-50, .bg-red-100 {
+  background-color: #F8FAFC !important; /* slate-50 */
+}
+/* Solid accent backgrounds (yellow-400 badges etc.) → flame */
+.bg-yellow-400, .bg-yellow-500, .bg-amber-400, .bg-amber-500 {
+  background-color: var(--c-flame) !important;
+  color: #fff !important;
+}
+.text-yellow-900, .text-yellow-800, .text-amber-900, .text-amber-800 { color: #fff !important; }
+
+/* Gradient backgrounds with blue/cyan/yellow → gray gradient */
+.bg-gradient-to-r.from-blue-50, .bg-gradient-to-br.from-blue-50,
+.bg-gradient-to-r.from-cyan-50, .bg-gradient-to-br.from-cyan-50,
+.bg-gradient-to-r.from-sky-50, .bg-gradient-to-br.from-sky-50,
+.bg-gradient-to-r.from-yellow-50, .bg-gradient-to-br.from-yellow-50,
+.bg-gradient-to-r.from-amber-50, .bg-gradient-to-br.from-amber-50,
+.bg-gradient-to-r.from-indigo-50, .bg-gradient-to-br.from-indigo-50,
+.bg-gradient-to-r.from-purple-50, .bg-gradient-to-br.from-purple-50,
+.bg-gradient-to-r.from-green-50, .bg-gradient-to-br.from-green-50 {
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 60%, #E2E8F0 100%) !important;
+}
+
+/* Border colors in blue/yellow families → border-flame or slate */
+.border-blue-100, .border-blue-200, .border-cyan-100, .border-cyan-200,
+.border-sky-100, .border-sky-200, .border-indigo-100, .border-indigo-200 {
+  border-color: var(--c-border) !important;
+}
+.border-l-yellow-400, .border-l-yellow-500, .border-l-amber-400, .border-l-amber-500,
+.border-yellow-400, .border-yellow-500 {
+  border-color: var(--c-flame) !important;
+}
+
+/* Text in yellow family → slate for readability */
+.text-yellow-400, .text-yellow-500, .text-yellow-600, .text-yellow-700,
+.text-amber-400, .text-amber-700 { color: var(--c-flame) !important; }
+.text-blue-500, .text-blue-600, .text-blue-700, .text-blue-800,
+.text-cyan-500, .text-cyan-600, .text-cyan-700,
+.text-sky-500, .text-sky-600, .text-sky-700,
+.text-indigo-500, .text-indigo-600, .text-indigo-700 { color: var(--c-slate-900) !important; }
+
+/* Rule: no purple/violet/green accents — neutralize to slate-900 */
+[class*="text-purple"], [class*="text-violet"], [class*="text-fuchsia"], [class*="text-pink"],
+[class*="text-green"], [class*="text-emerald"], [class*="text-teal"], [class*="text-lime"],
+[class*="text-sky"], [class*="text-cyan"], [class*="text-indigo"] {
+  color: var(--c-slate-900) !important;
+}
+[class*="bg-purple"], [class*="bg-violet"], [class*="bg-fuchsia"], [class*="bg-pink"],
+[class*="bg-green"], [class*="bg-emerald"], [class*="bg-teal"], [class*="bg-lime"],
+[class*="bg-sky"], [class*="bg-cyan"], [class*="bg-indigo"] {
+  background-color: #F1F5F9 !important; /* slate-100: neutral icon backdrop */
+  color: var(--c-slate-900) !important;
+}
+/* But keep flame explicitly if someone applied it */
+.text-brand-flame, .text-flame { color: var(--c-flame) !important; }
+.bg-brand-flame, .bg-flame { background-color: var(--c-flame) !important; }
+
+/* Hero subtitle: flame accent (replacement for text-brand-blue on subline) */
+.hero-subline, .hero-motion-subline { color: var(--c-flame) !important; }
+
+/* Hero main title accent override (stronger weight via font stack) */
+.hero-motion-title { font-family: var(--font-sans) !important; color: var(--c-slate-900) !important; }
+
+/* Badges / pills with legacy brand-blue */
+.border-brand-blue\/20 { border-color: rgba(255,69,0,.25) !important; }
+.bg-brand-blue\/5 { background-color: rgba(255,69,0,.06) !important; }
+.bg-brand-blue\/10 { background-color: rgba(255,69,0,.10) !important; }
+/* Proof metric (text-brand-blue 4xl numbers) → slate-900 with flame underline */
+.proof-metric, .text-brand-blue.font-bold.text-4xl, .text-brand-blue.font-bold.text-5xl {
+  color: var(--c-slate-900) !important;
+  border-bottom: 3px solid var(--c-flame);
+  display: inline-block;
+  padding-bottom: .25rem;
+}
+
+/* Flame glow scoped to 4 allowed card classes only (AC5) */
+.card-hover,
+.content-card,
+.card-premium,
+.service-card {
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--radius-card) !important;
+  background: #fff;
+  position: relative;
+}
+.card-hover:hover,
+.content-card:hover,
+.card-premium:hover,
+.service-card:hover,
+a.card-hover:focus-visible,
+a.content-card:focus-visible,
+a.card-premium:focus-visible,
+a.service-card:focus-visible {
+  transform: translateY(-4px) !important;
+  border-color: var(--c-flame) !important;
+  box-shadow:
+    0 0 0 1px var(--c-flame),
+    0 18px 44px -12px rgba(255,69,0,.28),
+    0 8px 24px -10px rgba(15,23,42,.12) !important;
+}
+
+/* Legacy inline glass-nav override (sub-pages have navy border) */
+header.glass-nav,
+.glass-nav {
+  background: rgba(255,255,255,0.88) !important;
+  backdrop-filter: blur(14px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+  border-bottom: 1px solid rgba(15,23,42,.06) !important;
+}
+
+/* Body font force — inherits from body, works even if a page sets its own */
+body, html {
+  font-family: var(--font-sans) !important;
+  font-feature-settings: "palt" !important;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+}
+body * { font-family: inherit; }
+.font-en,
+[class*="font-en"],
+h1 .font-en, h2 .font-en, h3 .font-en {
+  font-family: var(--font-en) !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Buttons: legacy <a class="bg-brand-blue text-white px-*"> auto-styles as btn-primary-like */
+a.bg-brand-blue, button.bg-brand-blue {
+  background-color: var(--c-slate-900) !important;
+  color: #fff !important;
+  border-radius: 9999px !important;
+  transition: background-color .2s ease, transform .2s ease !important;
+}
+a.bg-brand-blue:hover, button.bg-brand-blue:hover {
+  background-color: var(--c-flame) !important;
+  transform: translateY(-1px);
+}
+
+/* Utility: orange accent divider */
+.section-divider--flame {
+  width: 64px; height: 3px; background: var(--c-flame); border: 0; margin: 0 0 1.25rem 0;
+}
+
+/* Legacy phi-notice / notice amber → flame */
+.phi-notice {
+  background: linear-gradient(135deg, rgba(255,69,0,.08) 0%, rgba(255,90,31,.12) 100%) !important;
+  border-left: 4px solid var(--c-flame) !important;
+}
+
+/* News / article body: better reading rhythm */
+main article, main .prose {
+  line-height: 1.85;
+}
+main article h2, main .prose h2 {
+  margin-top: 2.5rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--c-flame);
+  font-weight: 700;
+}
+
+/* Legacy gradient hero backgrounds — tone down */
+.bg-gradient-to-br, .bg-gradient-to-r {
+  /* keep gradient but ensure text contrast is inherited properly */
+}
+
+/* ---- Hero time-staggered reveal (preserved from original) ---- */
+@keyframes heroNavReveal {
+  0%   { opacity: 0; transform: translate3d(0, -120%, 0); visibility: visible; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0);     visibility: visible; pointer-events: auto; }
+}
+@keyframes heroTokenReveal {
+  0%   { opacity: 0; transform: translate3d(0, 32px, 0) scale(.98); filter: blur(8px); }
+  60%  { opacity: 1; transform: translate3d(0, 0, 0) scale(1);     filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1);     filter: blur(0); }
+}
+
+.hero-nav-reveal {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -120%, 0);
+  visibility: hidden;
+  animation: heroNavReveal 1.55s cubic-bezier(0.16, 1, 0.3, 1) 1.25s forwards;
+}
+
+.hero-motion-title .hero-motion-token,
+.hero-motion-title .hero-motion-subline {
+  display: inline-block;
+  opacity: 0;
+  animation: heroTokenReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-stagger, 0s) forwards;
+  will-change: opacity, transform, filter;
+}
+
+/* Hero title: lighter weight per user feedback, remove Mincho */
+.hero-motion-title {
+  font-family: var(--font-sans) !important;
+  font-size: clamp(2.75rem, 8.2vw, 6.75rem) !important;
+  line-height: 1.06 !important;
+  letter-spacing: -0.03em !important;
+  font-weight: 500 !important; /* was 900 → 500: significantly lighter */
+}
+.hero-motion-title .hero-motion-token {
+  font-weight: 500 !important;
+}
+.hero-motion-title .hero-motion-subline,
+.hero-motion-title .hero-subline {
+  font-family: "Zen Old Mincho", "Kaisei Tokumin", "Noto Serif JP",
+               "Shippori Antique B1", "Hiragino Mincho ProN",
+               "Yu Mincho", YuMincho, serif !important;
+  font-size: clamp(1.5rem, 3vw, 2.5rem) !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.02em !important;
+  font-weight: 900 !important;
+}
+
+/* Keep the video halation (white wash) — user explicitly wants it preserved.
+   Only zero out box-level fills that sit directly behind text letters. */
+.hero-content,
+.hero-motion-title,
+.hero-motion-line,
+.hero-motion-token,
+.hero-motion-subline {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Token stagger: add base delay so hero waits for nav reveal (nav ends around 2.8s) */
+.hero-motion-title .hero-motion-token,
+.hero-motion-title .hero-motion-subline {
+  animation-delay: calc(var(--hero-stagger, 0s) + 1.6s) !important;
+}
+
+/* Reduced motion: respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-nav-reveal,
+  .hero-motion-title .hero-motion-token,
+  .hero-motion-title .hero-motion-subline {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* =========================================================
+   v20260420d 追加パッチ
+   1) proof-metric 数字を Noto Sans JP に統一（明朝fallback封じ）
+   2) Hero 1行目「AIに、臨床の魂を」を毛筆化
+   3) hover glow セレクタ拡張（div/article/details を包含）
+   4) 規約違反の差し色（purple/green-100等）を中立化
+   5) services.html ライトレビュー gradient → white
+   6) subsidy 3ステップ（ヒアリング等）をカード化
+   ========================================================= */
+
+/* ---- 1. proof-metric font force ---- */
+.proof-metric,
+.mobile-proof-grid p[class*="text-4xl"],
+.mobile-proof-grid p[class*="text-5xl"],
+.mobile-proof-grid .proof-metric span {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
+  font-feature-settings: "palt" !important;
+}
+/* ---- 1b. 「約20年」カードの視覚ウェイト調整（製品中立・3つの論点と墨量を揃える） ---- */
+.proof-metric .proof-metric-unit {
+  font-size: 0.72em !important;   /* 20 の 72% → 1.5rem時代（48%）より大幅強化 */
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  vertical-align: 0.06em;           /* ベースライン微調整 */
+}
+
+/* ---- 2. Hero 書体（strong & stylish）for 1st line only ----
+   候補 — font-family 先頭を入れ替えるだけで全面切替:
+     ▼ 伝統・カリグラフィ系（力強い × 格調）
+       - "Zen Old Mincho" @900     … 伝統書体の重厚感（current default）
+       - "Kaisei Tokumin" @800     … 端正で現代的な明朝（ロゴ映え）
+       - "Noto Serif JP" @900      … モダン明朝の鉄板
+     ▼ 毛筆・手書き系（墨跡感）
+       - "New Tegomin"             … 細筆の手書きブラシ
+       - "Yuji Mai"                … 躍動的な草書
+       - "Yuji Syuku"              … 祝儀書体
+     ▼ アンティーク・手紙系
+       - "Shippori Antique B1"     … アンティーク明朝
+       - "Klee One" @600           … 教科書体ベースの温かい手書き
+*/
+.hero-motion-brush,
+.hero-motion-brush .hero-motion-token {
+  font-family: "Zen Old Mincho", "Kaisei Tokumin", "Noto Serif JP",
+               "Shippori Antique B1", "Yuji Mai",
+               "Hiragino Mincho ProN", "Yu Mincho", YuMincho, serif !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em !important;
+  font-size: clamp(3.75rem, 11vw, 9rem) !important;
+  line-height: 1.08 !important;
+  /* リアル 900 weight があるので stroke は控えめ、だが墨だまり感を残す */
+  -webkit-text-stroke: 1.2px currentColor;
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 1px currentColor,
+    0.8px 0 0 currentColor,
+    -0.8px 0 0 currentColor,
+    0 0.8px 0 currentColor,
+    0 -0.8px 0 currentColor;
+}
+
+/* ---- 3. Hover glow scoped to 4 allowed card classes only ----
+   AC5 (v20260420k): broad div[class*="rounded-xl"] セレクタを全廃し、
+   意味的な4クラス (.content-card, .card-hover, .card-premium, .service-card)
+   に限定。news list / footer decorative div の orange 誤発火を停止。 */
+.content-card,
+.card-hover,
+.card-premium,
+.service-card {
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease !important;
+  border: 1px solid transparent;
+}
+.content-card:hover,
+.card-hover:hover,
+.card-premium:hover,
+.service-card:hover {
+  transform: translateY(-4px) !important;
+  border-color: var(--c-flame) !important;
+  box-shadow:
+    0 0 0 1px var(--c-flame),
+    0 18px 44px -12px rgba(255,69,0,.28),
+    0 8px 24px -10px rgba(15,23,42,.12) !important;
+}
+
+/* ---- 4. Violation palette neutralization (purple/green/pink 100/600 等) ---- */
+.bg-purple-100, .bg-purple-50, .bg-pink-100, .bg-pink-50,
+.bg-green-100, .bg-green-50, .bg-emerald-100, .bg-emerald-50,
+.bg-teal-100, .bg-teal-50, .bg-cyan-100, .bg-cyan-50,
+.bg-indigo-100, .bg-indigo-50, .bg-violet-100, .bg-violet-50,
+.bg-red-100, .bg-red-50, .bg-rose-100 {
+  background-color: rgba(15,23,42,0.06) !important;
+}
+.text-purple-600, .text-purple-700, .text-purple-500,
+.text-green-600, .text-green-700, .text-green-500,
+.text-pink-600, .text-pink-700,
+.text-emerald-600, .text-emerald-700,
+.text-teal-600, .text-teal-700,
+.text-indigo-600, .text-indigo-700,
+.text-violet-600, .text-violet-700 {
+  color: var(--c-slate-900, #0F172A) !important;
+}
+/* News tag pills: purple→slate, red→flame */
+.bg-purple-600\/10 { background-color: rgba(15,23,42,0.08) !important; }
+.bg-purple-600 { background-color: var(--c-slate-900, #0F172A) !important; }
+.bg-red-600\/10 { background-color: rgba(255,69,0,0.10) !important; }
+.bg-red-600 { background-color: var(--c-flame) !important; }
+.text-red-600, .text-red-700 { color: var(--c-flame) !important; }
+
+/* ---- 5. services.html ライトレビュー: unify with white ---- */
+.bg-gradient-to-br.from-blue-50,
+.bg-gradient-to-br.from-blue-50.to-cyan-50,
+.bg-gradient-to-br.from-cyan-50,
+.bg-gradient-to-r.from-blue-50 {
+  background: #fff !important;
+  border: 1px solid var(--c-border) !important;
+}
+
+/* ---- 6. subsidy 3ステップのカード化（.text-center wrap with gap-8 grid） ---- */
+section#flow .grid > .text-center {
+  background: #fff;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-card);
+  padding: 2rem 1.5rem;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+section#flow .grid > .text-center:hover {
+  transform: translateY(-4px);
+  border-color: var(--c-flame);
+  box-shadow:
+    0 0 0 1px var(--c-flame),
+    0 18px 44px -12px rgba(255,69,0,.28),
+    0 8px 24px -10px rgba(15,23,42,.12);
+}
+/* 数字バッジは flame に揃える */
+section#flow .grid > .text-center .rounded-full.bg-brand-blue {
+  background-color: var(--c-flame) !important;
+}
+
+/* ---- Subsidy: 3ロール（当社/外部専門家/申請者）内部テキストもflame/navyに ---- */
+.subsidy-role-card h3 { color: var(--c-slate-900, #0F172A) !important; }
+
+/* ---- Hero Follow-up heading：問い（H2）+ 答え（リード段落）へ分割 ---- */
+.hero-followup-heading {
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+  line-break: strict !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.01em !important;
+  font-feature-settings: "palt" !important;
+  /* 問いを一行で効かせるサイズ感（Tailwind text-5xl相当まで許容） */
+  font-size: clamp(1.625rem, 3.6vw, 2.75rem) !important;
+}
+@media (min-width: 1280px) {
+  .hero-followup-heading {
+    font-size: clamp(2rem, 2.6vw, 3rem) !important;
+  }
+}
+.hero-followup-lede {
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+  line-break: strict !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.01em !important;
+  font-size: clamp(1rem, 1.6vw, 1.25rem) !important;
+}
+@media (min-width: 1024px) {
+  .hero-followup-lede { font-size: clamp(1.125rem, 1.4vw, 1.375rem) !important; }
+}
+
+/* End */
+

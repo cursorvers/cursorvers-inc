@@ -31,17 +31,22 @@
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
     <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
-    <link
-        _REMOVED_
-        rel="stylesheet">
+    <!-- renewal:start -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260420k">
+    <!-- renewal:end -->
+    
     <style>
-        body { font-family: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif; background: #fff; color: #1d1d1f; }
+        body { font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; font-feature-settings: "palt"; background: #fff; color: #1d1d1f; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         a:focus-visible, button:focus-visible { outline: 2px solid #0052CC; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0052CC; color: #fff; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
         .gradient-text {
-            background: linear-gradient(135deg, #0052CC 0%, #66FCF1 100%);
+            background: linear-gradient(90deg, #FF6B35 0%, #FF7A3D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -188,14 +193,14 @@
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
             <nav class="hidden md:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
-                <a href="index.html" class="hover:text-brand-blue transition">ホーム</a>
-                <a href="message.html" class="hover:text-brand-blue transition">創業者</a>
-                <a href="services.html" class="hover:text-brand-blue transition">医療機関向け</a>
-                <a href="consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
-                <a href="subsidy.html" class="text-brand-blue font-semibold">DX資金調達</a>
+                <a href="index.html" class="hover:text-flame transition">ホーム</a>
+                <a href="message.html" class="hover:text-flame transition">創業者</a>
+                <a href="services.html" class="hover:text-flame transition">医療機関向け</a>
+                <a href="consulting.html" class="hover:text-flame transition">ベンダー向け</a>
+                <a href="subsidy.html" class="text-flame font-semibold">DX資金調達</a>
                 <a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
+                    class="hover:text-flame transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-flame transition flex items-center gap-1">
                     ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                 </a>
             </nav>
@@ -221,7 +226,7 @@
             </picture>
             <div class="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white/90"></div>
             <div class="relative z-10 max-w-4xl mx-auto">
-                <p class="text-lg font-semibold text-brand-blue mb-4 font-en">Medical AI Consulting</p>
+                <p class="text-lg font-semibold text-flame mb-4 font-en">Medical AI Consulting</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
                     医療AI導入、<br class="hidden md:inline">資金の選択肢は<br class="md:hidden"><span class="whitespace-nowrap">一つではありません</span>
                 </h1>
@@ -229,10 +234,10 @@
                     補助金・融資・診療報酬加算・リース。<br>どの手段が最適かを一緒に整理します。
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#funding" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
+                    <a href="#funding" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] bg-brand-black text-white font-bold text-lg rounded-full hover:bg-flame transition">
                         資金調達の選択肢を見る
                     </a>
-                    <a href="contact.html" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] border-2 border-brand-black text-brand-black font-bold text-lg rounded-full bg-white/80 backdrop-blur-sm hover:bg-brand-blue hover:text-white hover:border-brand-blue transition">
+                    <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'subsidy_hero_contact'})" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] border-2 border-brand-black text-brand-black font-bold text-lg rounded-full bg-white/80 backdrop-blur-sm hover:bg-flame hover:text-white hover:border-flame transition">
                         無料相談を申し込む
                     </a>
                 </div>
@@ -248,29 +253,29 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
-                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-clipboard-check"></use></svg>
+                        <div class="w-14 h-14 bg-flame/5 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="text-flame text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-clipboard-check"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">導入前の課題と優先度整理</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">医療現場の業務・データ・体制を可視化し、AI導入で解決したいテーマを整理。意思決定のための材料を整えます。</p>
                     </div>
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
-                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-file-lines"></use></svg>
+                        <div class="w-14 h-14 bg-flame/5 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="text-flame text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-file-lines"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">導入計画と設計サポート</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">要件定義、ワークフロー設計、関係部署との調整を中立に支援。押し付けず、必要な選択肢だけを並べます。</p>
                     </div>
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
-                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-cogs"></use></svg>
+                        <div class="w-14 h-14 bg-flame/5 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="text-flame text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-cogs"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">運用立ち上げと伴走支援</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">初期運用のモニタリング、改善ポイントの共有、スタッフ教育まで、現場に寄り添って安定稼働を支えます。</p>
                     </div>
                     <div class="p-8 bg-white rounded-2xl card-hover flex flex-col">
-                        <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
-                            <svg class="text-brand-blue text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-handshake"></use></svg>
+                        <div class="w-14 h-14 bg-flame/5 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="text-flame text-2xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-handshake"></use></svg>
                         </div>
                         <h3 class="text-xl font-bold mb-3">使える支援制度の整理</h3>
                         <p class="text-lg text-text-secondary leading-relaxed">必要に応じて補助金・助成金の情報を整理し、要件や手続きの見通しを共有。最終判断はお客様に委ねます。</p>
@@ -281,19 +286,19 @@
                     <h3 class="text-xl font-bold mb-6 text-center text-brand-black">当社がしないこと（明確化）</h3>
                     <ul class="space-y-4 text-lg text-text-secondary">
                         <li class="flex items-start gap-3">
-                            <span class="text-red-500 font-bold flex-shrink-0">×</span>
+                            <span class="text-flame font-bold flex-shrink-0">×</span>
                             <span><strong class="text-brand-black">申請代行</strong>：申請書の作成・提出は行いません。</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <span class="text-red-500 font-bold flex-shrink-0">×</span>
+                            <span class="text-flame font-bold flex-shrink-0">×</span>
                             <span><strong class="text-brand-black">申請書作成</strong>：事業計画書の直接執筆は行いません。</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <span class="text-red-500 font-bold flex-shrink-0">×</span>
+                            <span class="text-flame font-bold flex-shrink-0">×</span>
                             <span><strong class="text-brand-black">採択・交付・補助額の保証</strong>：審査結果を約束することはできません。</span>
                         </li>
                         <li class="flex items-start gap-3">
-                            <span class="text-red-500 font-bold flex-shrink-0">×</span>
+                            <span class="text-flame font-bold flex-shrink-0">×</span>
                             <span><strong class="text-brand-black">融資斡旋・融資の媒介</strong>：特定の金融機関への融資の斡旋・媒介は行いません。</span>
                         </li>
                     </ul>
@@ -392,17 +397,17 @@
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center">
-                        <div class="w-24 h-24 md:w-28 md:h-28 bg-brand-blue text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">1</div>
+                        <div class="w-24 h-24 md:w-28 md:h-28 bg-flame text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">1</div>
                         <h3 class="text-2xl md:text-3xl font-bold mb-4">ヒアリング</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">導入目的・時期・体制・予算感を整理します。</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-24 h-24 md:w-28 md:h-28 bg-brand-blue text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">2</div>
+                        <div class="w-24 h-24 md:w-28 md:h-28 bg-flame text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">2</div>
                         <h3 class="text-2xl md:text-3xl font-bold mb-4">資金手段の検討</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">4つの選択肢から最適な組み合わせを一緒に検討します。</p>
                     </div>
                     <div class="text-center">
-                        <div class="w-24 h-24 md:w-28 md:h-28 bg-brand-blue text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">3</div>
+                        <div class="w-24 h-24 md:w-28 md:h-28 bg-flame text-white rounded-full flex items-center justify-center mx-auto mb-6 text-4xl md:text-5xl font-bold">3</div>
                         <h3 class="text-2xl md:text-3xl font-bold mb-4">導入支援</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">導入計画の設計・運用立ち上げまで伴走します。</p>
                     </div>
@@ -419,28 +424,28 @@
                 </div>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="bg-white rounded-2xl p-8 text-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="text-brand-blue text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-building"></use></svg>
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-flame/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="text-flame text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-building"></use></svg>
                         </div>
-                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-brand-blue">当社</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-flame">当社</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">AI導入の全体設計・進行管理・導入計画の品質チェック</p>
                         <p class="text-base md:text-lg text-text-tertiary mt-3">（AI導入の要件を整理し、お客様が自ら計画・申請できるよう情報を提供する）</p>
                         <p class="text-sm md:text-base text-text-tertiary mt-2">※官公署提出書類の作成・提出は業務範囲外です</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 text-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="text-purple-600 text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-user-doctor"></use></svg>
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-navy/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="text-navy text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-user-doctor"></use></svg>
                         </div>
-                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-purple-600">外部専門家<span class="whitespace-nowrap">（指南役）</span></h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-navy">外部専門家<span class="whitespace-nowrap">（指南役）</span></h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">制度要件に関する助言・レビュー</p>
                         <p class="text-base md:text-lg text-text-tertiary mt-3">（代行ではなく"指南"）</p>
                         <p class="text-sm md:text-base text-text-tertiary mt-2">※契約はお客様と専門家の直接契約</p>
                     </div>
                     <div class="bg-white rounded-2xl p-8 text-center">
-                        <div class="w-20 h-20 md:w-24 md:h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="text-green-600 text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-hospital"></use></svg>
+                        <div class="w-20 h-20 md:w-24 md:h-24 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="text-emerald-700 text-3xl md:text-4xl" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-hospital"></use></svg>
                         </div>
-                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-green-600">申請者（お客様）</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-emerald-700">申請者（お客様）</h3>
                         <p class="text-lg md:text-xl text-text-secondary leading-relaxed">最終的な事業計画の作成・電子申請・提出</p>
                         <p class="text-base md:text-lg text-text-tertiary mt-3">（原則）</p>
                     </div>
@@ -458,7 +463,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>コンサル費用は補助対象になりますか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             制度により対象となる場合と対象外となる場合があります。<strong>当社は補助対象化を前提としたサービス設計をしておりません</strong>。補助金を検討される場合の詳細は、紹介先の外部専門家にご確認ください。
@@ -467,7 +472,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>申請の代行はしてもらえますか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             <strong>申請代行・申請書作成は行いません</strong>。当社の役割は医療AI導入の計画づくりと運用立ち上げです。補助金を検討される場合、外部専門家（指南役）をご紹介しますが、その場合も申請はお客様ご自身で行っていただきます。
@@ -476,7 +481,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>外部専門家は誰ですか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             必要に応じて、認定支援機関等の外部専門家（例：中小企業診断士等）をご紹介します。<strong>契約主体はお客様と専門家の直接契約</strong>となり、専門家の役割は「助言・レビュー」（指南役）です。なお、ご紹介は認定支援機関の認定を受けた専門家を確約するものではありません。
@@ -485,7 +490,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>補助金でいくらもらえますか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             <strong>採択・交付・補助額は審査により決定され、保証はできません</strong>。制度・公募回・従業員規模・要件により上限が異なり、公募期間中に変更される場合もあります。まずは導入計画を整理することが先決です。
@@ -494,7 +499,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>どの段階から相談できますか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             構想段階から可能です。導入内容・時期・体制を早めに整理することで、スケジュールと要件の"地雷"を避けやすくなります。
@@ -503,7 +508,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>補助金が取れなかったらどうなりますか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             補助金は資金調達の一手段です。融資・リース・自己資金など、状況に応じた方法をご検討ください。必要に応じて、各分野の外部専門家をご紹介することも可能です。
@@ -512,7 +517,7 @@
                     <details class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
                         <summary class="p-6 md:p-8 flex items-center justify-between font-bold text-lg md:text-xl">
                             <span>医療DX加算とは何ですか？</span>
-                            <svg class="faq-icon text-brand-blue text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                            <svg class="faq-icon text-flame text-xl flex-shrink-0 ml-4" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
                         </summary>
                         <div class="px-6 pb-6 md:px-8 md:pb-8 text-lg text-text-secondary leading-relaxed">
                             電子カルテ・オンライン資格確認等を整備した医療機関が算定できる診療報酬の加算です。AI導入と併せて検討することで、投資回収の見通しが立てやすくなります。
@@ -528,11 +533,11 @@
                 <h3 class="text-xl font-bold mb-6 text-center">重要な注意事項</h3>
                 <ul class="space-y-5 text-base text-text-secondary">
                     <li class="flex items-start gap-3">
-                        <svg class="text-red-500 mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
+                        <svg class="text-flame mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
                         <span><strong class="text-brand-black">当社は申請代行・申請書作成を行いません</strong>。申請はお客様ご自身で行っていただきます。</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <svg class="text-red-500 mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
+                        <svg class="text-flame mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
                         <span><strong class="text-brand-black">事前着手（交付決定前の契約・発注・支払い）は補助対象外</strong>となる場合があります。スケジュールにご注意ください。</span>
                     </li>
                     <li class="flex items-start gap-3">
@@ -548,11 +553,11 @@
                         <span>「補助事業の遂行に必要な専門家経費」等が対象となる場合がありますが、申請書・報告書など<strong class="text-brand-black">"事務局提出書類の作成・提出に係る費用"は対象外</strong>となる場合があります。</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <svg class="text-red-500 mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
+                        <svg class="text-flame mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-triangle-exclamation"></use></svg>
                         <span><strong class="text-brand-black">当社は融資の斡旋・媒介は行いません</strong>。資金調達の選択肢に関する一般的な情報提供のみを行います。</span>
                     </li>
                     <li class="flex items-start gap-3">
-                        <svg class="text-brand-blue mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-shield-halved"></use></svg>
+                        <svg class="text-flame mt-0.5 flex-shrink-0 text-lg" width="1.2em" height="1.2em" fill="currentColor" aria-hidden="true"><use href="#icon-shield-halved"></use></svg>
                         <span>補助金の採択を条件とする成功報酬契約や、経費の水増し提案等は<strong class="text-brand-black">一切行いません</strong>。</span>
                     </li>
                 </ul>
@@ -566,7 +571,7 @@
                 <p class="text-xl md:text-2xl text-text-secondary mb-10 leading-relaxed">
                     導入内容や資金手段が決まっていなくても大丈夫です。<br class="hidden sm:inline">どの選択肢が合うかも含めて、一緒に整理します。
                 </p>
-                <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'subsidy_cta_contact'})" class="inline-flex items-center justify-center px-10 py-5 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-brand-blue transition">
+                <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'subsidy_cta_contact'})" class="inline-flex items-center justify-center px-10 py-5 bg-brand-black text-white font-bold text-lg rounded-full hover:bg-flame transition">
                     無料相談を申し込む <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                 </a>
                 <p class="mt-6 text-sm text-text-secondary">※申請代行・申請書作成・融資斡旋は行いません</p>
@@ -586,7 +591,7 @@
                             <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
                         </span>
                     </div>
-                    <p class="text-lg leading-relaxed text-gray-400">医療AIの"産業医" — 病院・診療所を守る</p>
+                    <p class="text-lg leading-relaxed text-gray-400">医療AIの"産業医" — 提案前に、責任分界を整える</p>
                 </div>
                 <div class="flex gap-16 md:gap-24">
                     <div>
@@ -620,7 +625,7 @@
                         </a>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>5953cff</span></p>
+                <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>24aac5a</span></p>
             </div>
         </div>
     </footer>

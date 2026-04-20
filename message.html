@@ -26,9 +26,16 @@
     <meta name="twitter:description" content="Cursorvers創業者・大田原正幸のメッセージとプロフィール。医療AIガバナンスを守る思想と実践を紹介します。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
+    <!-- renewal:start -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260420k">
+    <!-- renewal:end -->
     <!-- System fonts: no external loading needed -->
     <style>
-        body { font-family: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif; background: #fff; color: #1d1d1f; }
+        body { font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; font-feature-settings: "palt"; background: #fff; color: #1d1d1f; }
         .prose p { margin-bottom: 1.8em; line-height: 1.9; }
         .sign-img { height: 140px; width: auto; display: block; margin-bottom: 0.5rem; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
@@ -50,14 +57,14 @@
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
             <nav class="hidden md:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
-                <a href="index.html" class="hover:text-brand-blue transition">ホーム</a>
-                <a href="message.html" class="text-brand-blue font-semibold" aria-current="page">創業者</a>
-                <a href="services.html" class="hover:text-brand-blue transition">医療機関向け</a>
-                <a href="consulting.html" class="hover:text-brand-blue transition">ベンダー向け</a>
-                <a href="subsidy.html" class="hover:text-brand-blue transition">DX資金調達</a>
+                <a href="index.html" class="hover:text-flame transition">ホーム</a>
+                <a href="message.html" class="text-flame font-semibold" aria-current="page">創業者</a>
+                <a href="services.html" class="hover:text-flame transition">医療機関向け</a>
+                <a href="consulting.html" class="hover:text-flame transition">ベンダー向け</a>
+                <a href="subsidy.html" class="hover:text-flame transition">DX資金調達</a>
                 <a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer"
-                    class="hover:text-brand-blue transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
-                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-brand-blue transition flex items-center gap-1">
+                    class="hover:text-flame transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-flame transition flex items-center gap-1">
                     ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
                 </a>
             </nav>
@@ -75,7 +82,7 @@
     <main id="main" class="pt-32 pb-24 px-6">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-brand-blue text-xs font-bold tracking-[0.2em] uppercase font-en block mb-6">Founder</span>
+                <span class="text-flame text-xs font-bold tracking-[0.2em] uppercase font-en block mb-6">Founder</span>
                 <h1 class="text-4xl md:text-5xl font-bold mt-6 leading-tight">
                     AI運用の安全と継続を、<br class="md:hidden">
                     <span class="whitespace-nowrap">医療AIに。</span>
@@ -144,16 +151,53 @@
         </div>
     </main>
 
-    <footer class="bg-white py-12 text-center text-xs text-gray-500 font-en border-t border-gray-100">
-        <div class="max-w-4xl mx-auto flex flex-col gap-4">
-            <div class="flex flex-wrap justify-center gap-6 text-gray-500">
-                <a href="privacy.html" class="hover:text-brand-blue transition">プライバシーポリシー</a>
-                <a href="terms.html" class="hover:text-brand-blue transition">利用規約</a>
-                <a href="tokushoho.html" class="hover:text-brand-blue transition">特定商取引法に基づく表記</a>
-                <a href="contact.html" class="hover:text-brand-blue transition">お問い合わせ</a>
+    <footer class="bg-brand-black text-white py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-24">
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-4 mb-8">
+                        <picture>
+                            <source srcset="Cursorvers_logo_white.webp" type="image/webp">
+                            <img src="Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers inverted logomark" class="h-10 w-10 rounded-full border border-white/20">
+                        </picture>
+                        <span class="flex flex-col leading-none">
+                            <span class="text-white font-bold text-2xl font-en tracking-widest">Cursorvers</span>
+                            <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
+                        </span>
+                    </div>
+                    <p class="text-lg leading-relaxed text-gray-400">病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関</p>
+                </div>
+                <div class="footer-link-columns flex flex-col sm:flex-row gap-16 md:gap-24">
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-8">リンク</h3>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="services.html" class="hover:text-white transition">サービス</a></li>
+                            <li><a href="message.html" class="hover:text-white transition">創業者</a></li>
+                            <li><a href="news.html" class="hover:text-white transition">お知らせ</a></li>
+                            <li><a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Cursorvers.edu <span class="text-xs text-gray-500">（個人向け）</span></a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-8">法的情報</h3>
+                        <ul class="space-y-5 text-gray-400 text-base">
+                            <li><a href="privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition">利用規約</a></li>
+                            <li><a href="tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition">お問い合わせ</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
-            <p class="text-gray-400">Build: <span data-build-id>5953cff</span></p>
+            <div class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
+                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
+                <div class="flex gap-6 text-xl">
+                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
+                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
+                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-linkedin"></use></svg>
+                    </a>
+                </div>
+            </div>
+            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>24aac5a</span></p>
         </div>
     </footer>
 
