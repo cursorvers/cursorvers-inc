@@ -237,55 +237,46 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-brand-black text-white py-24 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-24">
-                <div class="max-w-sm">
-                    <div class="flex items-center gap-4 mb-8">
-                        <picture>
-                            <source srcset="../Cursorvers_logo_white.webp" type="image/webp">
-                            <img src="../Cursorvers_logo_white.jpeg" onerror="this.style.display='none'" alt="Cursorvers" class="h-10 w-10 rounded-full border border-white/20">
-                        </picture>
-                        <span class="flex flex-col leading-none">
-                            <span class="text-white font-bold text-2xl font-en tracking-widest">Cursorvers</span>
-                            <span class="text-xs font-semibold text-gray-400 tracking-[0.25em]">カーソルバース</span>
-                        </span>
-                    </div>
-                    <p class="text-lg leading-relaxed text-gray-400">医療AIの"産業医" — 提案前に、責任分界を整える</p>
-                </div>
-                <div class="flex gap-16 md:gap-24">
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-8">リンク</h3>
-                        <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="../services.html" class="hover:text-white transition">サービス</a></li>
-                            <li><a href="../message.html" class="hover:text-white transition">創業者</a></li>
-                            <li><a href="../news.html" class="hover:text-white transition">お知らせ</a></li>
-                            <li><a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">Cursorvers.edu <span class="text-xs text-gray-500">（個人向け）</span></a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-8">法的情報</h3>
-                        <ul class="space-y-5 text-gray-400 text-base">
-                            <li><a href="../privacy.html" class="hover:text-white transition">プライバシーポリシー</a></li>
-                            <li><a href="../terms.html" class="hover:text-white transition">利用規約</a></li>
-                            <li><a href="../tokushoho.html" class="hover:text-white transition">特定商取引法に基づく表記</a></li>
-                            <li><a href="../contact.html" class="hover:text-white transition">お問い合わせ</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-20 pt-10 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 font-en text-base text-gray-500">
-                <p>&copy; 2026 Cursorvers All Rights Reserved.</p>
-                <div class="flex gap-6 text-xl">
-                    <a href="https://www.linkedin.com/in/%E6%AD%A3%E5%B9%B8-%E5%A4%A7%E7%94%B0%E5%8E%9F-28bb54103/"
-                        target="_blank" rel="noopener noreferrer" class="hover:text-white transition" aria-label="LinkedIn">
-                        <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-linkedin"></use></svg>
-                    </a>
-                </div>
-            </div>
-            <p class="mt-4 text-center text-xs text-gray-400">Build: <span data-build-id>67f1457</span></p>
-        </div>
-    </footer>
+    <footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="../Cursorvers_logo_white.webp" alt="Cursorvers" onerror="this.onerror=null;this.src='../Cursorvers_logo_white.jpeg';">
+      <p>病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関。</p>
+    </div>
+    <div class="site-footer__col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services.html">医療機関向け</a></li>
+        <li><a href="../consulting.html">ベンダー向け</a></li>
+        <li><a href="../subsidy.html">DX資金調達</a></li>
+        <li><a href="../gov-lead.html">GOV-Lead</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../message.html">創業者メッセージ</a></li>
+        <li><a href="../news.html">お知らせ</a></li>
+        <li><a href="https://cursorvers.jp/" target="_blank" rel="noopener">Cursorvers.edu ↗</a></li>
+        <li><a href="https://cursorvers.jp/tools/auditscope/" target="_blank" rel="noopener">AuditScope ↗</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy.html">プライバシーポリシー</a></li>
+        <li><a href="../terms.html">利用規約</a></li>
+        <li><a href="../tokushoho.html">特定商取引法に基づく表記</a></li>
+        <li><a href="../contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
+    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
+  </div>
+</footer>
+<script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 
     <script src="../assets/js/nav.js" defer></script>
     <script src="../assets/js/cookie-consent.js" defer></script></body>
