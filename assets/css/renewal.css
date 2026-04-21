@@ -673,6 +673,7 @@ header.glass-nav,
 body, html {
   font-family: var(--font-sans) !important;
   font-feature-settings: "palt" !important;
+  overflow-x: clip;
   color: var(--c-text);
   background-color: var(--c-bg);
 }
@@ -1115,4 +1116,3 @@ h1.text-display {
 .news-visual-lockup-card .news-visual-caption { color: #6b7280; font-size: 11px; letter-spacing: 0.06em; }
 
 /* End */
-

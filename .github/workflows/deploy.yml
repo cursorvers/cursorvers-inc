@@ -57,6 +57,8 @@ jobs:
           # PWA files
           cp manifest.json sw.js cursorvers-icon.svg .nojekyll _site/ 2>/dev/null || true
           cp -r icons/ _site/ 2>/dev/null || true
+          cp -r brochures/ _site/ 2>/dev/null || true
+          cp *.mp4 _site/ 2>/dev/null || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
