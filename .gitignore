@@ -8,3 +8,9 @@ test-results/
 
 # Icons backup
 icons/backup/
+
+# Staging workspace (preview only, not deployed)
+_workspace/
+
+# OS
+.DS_Store

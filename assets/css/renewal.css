@@ -70,11 +70,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* ---- Typography ---- */
 .hero-h1 {
-  font-family: var(--font-sans);
+  font-family: "Zen Old Mincho", "Noto Serif JP", serif;
   font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 900;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--c-text);
   margin-bottom: 1.5rem;
 }
@@ -619,7 +619,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .hero-subline, .hero-motion-subline { color: var(--c-flame) !important; }
 
 /* Hero main title accent override (stronger weight via font stack) */
-.hero-motion-title { font-family: var(--font-sans) !important; color: var(--c-slate-900) !important; }
+.hero-motion-title { font-family: "Zen Old Mincho", "Noto Serif JP", serif !important; font-weight: 900 !important; color: var(--c-slate-900) !important; }
 
 /* Badges / pills with legacy brand-blue */
 .border-brand-blue\/20 { border-color: rgba(255,69,0,.25) !important; }
@@ -974,6 +974,145 @@ section#flow .grid > .text-center .rounded-full.bg-brand-blue {
 @media (min-width: 1024px) {
   .hero-followup-lede { font-size: clamp(1.125rem, 1.4vw, 1.375rem) !important; }
 }
+
+/* =========================================================
+   v20260421 サイズ感調整（cursorvers.jp と同程度の密度に）
+   - Hero 1行目「AIに、臨床の魂を」を一段小さく
+   - 主要見出しとリード段落を ~15% スケールダウン
+   ========================================================= */
+.hero-motion-brush,
+.hero-motion-brush .hero-motion-token {
+  font-size: clamp(3.25rem, 9.5vw, 7.5rem) !important;   /* was clamp(3.75rem, 11vw, 9rem) */
+  line-height: 1.08 !important;
+}
+
+.hero-motion-title {
+  font-size: clamp(2.5rem, 7.2vw, 5.75rem) !important;   /* was clamp(2.75rem, 8.2vw, 6.75rem) */
+}
+
+.hero-motion-title .hero-motion-subline,
+.hero-motion-title .hero-subline {
+  font-size: clamp(1.375rem, 2.6vw, 2.125rem) !important;    /* was clamp(1.5rem, 3vw, 2.5rem) */
+}
+
+.hero-content h1.text-display,
+h1.text-display {
+  font-size: clamp(2.5rem, 6.2vw, 4.25rem) !important;
+  line-height: 1.1 !important;
+}
+
+.hero-followup-heading {
+  font-size: clamp(1.5rem, 3.2vw, 2.5rem) !important;   /* was clamp(1.625rem, 3.6vw, 2.75rem) */
+}
+@media (min-width: 1280px) {
+  .hero-followup-heading {
+    font-size: clamp(1.75rem, 2.4vw, 2.625rem) !important;   /* was clamp(2rem, 2.6vw, 3rem) */
+  }
+}
+.hero-followup-lede {
+  font-size: clamp(0.9375rem, 1.4vw, 1.125rem) !important;   /* was clamp(1rem, 1.6vw, 1.25rem) */
+}
+@media (min-width: 1024px) {
+  .hero-followup-lede { font-size: clamp(1rem, 1.2vw, 1.1875rem) !important; }
+}
+
+/* ==========================================================================
+   v20260421 News cards v2 (visual-first)
+   絵のある上段ビジュアル + 本文のプレスカード型
+   ========================================================================== */
+.news-scroll-v2 { gap: 1.25rem; }
+.news-card-v2 {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: clamp(260px, 78vw, 320px);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+@media (min-width: 768px) { .news-card-v2 { width: 320px; } }
+.news-card-v2:hover {
+  border-color: rgba(229, 88, 18, 0.28);
+  box-shadow: 0 10px 30px -12px rgba(17, 24, 39, 0.18);
+  transform: translateY(-2px);
+}
+.news-card-v2-link { display: block; color: inherit; text-decoration: none; }
+.news-card-v2-visual {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid #f3f4f6;
+}
+.news-card-v2-visual > .news-visual-lockup,
+.news-card-v2-visual > .news-visual-caption {
+  position: relative;
+  z-index: 1;
+}
+.news-card-v2-body { padding: 18px 18px 20px; }
+.news-card-v2-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.news-card-v2-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  padding: 4px 10px; border-radius: 3px; color: #fff; line-height: 1.4;
+}
+.news-tag-flame   { background: #E55812; }
+.news-tag-navy    { background: #1f2937; }
+.news-tag-emerald { background: #047857; }
+.news-card-v2-date {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px; color: #9ca3af; letter-spacing: 0.02em;
+}
+.news-card-v2-title {
+  font-size: 15px; font-weight: 700; color: #1d1d1f;
+  line-height: 1.55; margin: 0 0 8px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+@media (min-width: 768px) { .news-card-v2-title { font-size: 16px; } }
+.news-card-v2-lede {
+  font-size: 12.5px; color: #6b7280; line-height: 1.7; margin: 0 0 12px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.news-card-v2-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 700; color: #E55812;
+}
+.news-card-v2-cta svg { transition: transform .25s ease; }
+.news-card-v2:hover .news-card-v2-cta svg { transform: translateX(3px); }
+
+/* Visual variants */
+.news-visual-caption {
+  font-size: 11.5px; color: rgba(255,255,255,0.72); letter-spacing: 0.02em;
+}
+
+.news-visual-lockup-card {
+  background: #ffffff;
+  display: flex; flex-direction: column; gap: 10px; padding: 18px 22px;
+  align-items: center; justify-content: center;
+}
+.news-visual-lockup-card--emerald {
+  background: #ffffff;
+}
+.news-visual-lockup { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
+.news-visual-lockup--solo { justify-content: center; }
+.news-visual-brand {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: #1d1d1f;
+  padding: 8px 12px; border-radius: 6px; background: #fff; border: 1px solid #e5e7eb;
+  text-transform: uppercase; white-space: nowrap;
+}
+.news-visual-wordmark {
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+  font-size: 15px; font-weight: 800; letter-spacing: 0.02em;
+  padding: 8px 12px; border-radius: 6px;
+  background: #fff; border: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+.news-visual-wordmark--flame { color: #E55812; }
+.news-visual-x { color: #E55812; font-weight: 800; font-size: 18px; }
+.news-visual-logo { max-height: 32px; max-width: 130px; object-fit: contain; }
+.news-visual-lockup-card .news-visual-caption { color: #6b7280; font-size: 11px; letter-spacing: 0.06em; }
 
 /* End */
 
