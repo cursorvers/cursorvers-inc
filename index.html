@@ -54,7 +54,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Manrope:wght@400;600;800&family=Zen+Old+Mincho:wght@700;900&family=Kaisei+Tokumin:wght@700;800&family=Shippori+Antique+B1&family=New+Tegomin&family=Noto+Serif+JP:wght@700;900&family=Yuji+Mai&family=Yuji+Syuku&family=Klee+One:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260420k">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260421g">
     <!-- renewal:end -->
     <style>
         body { font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; font-feature-settings: "palt"; background: #fff; color: #0F172A; }
@@ -866,7 +866,7 @@
 
             <div class="mobile-proof-grid mt-12 md:mt-16 pt-8 border-t border-gray-200 grid sm:grid-cols-3 gap-6 md:gap-10">
                 <div>
-                    <p class="proof-metric text-flame text-4xl md:text-5xl leading-none"><span class="proof-metric-unit mr-1">約</span>２０<span class="proof-metric-unit ml-1">年</span></p>
+                    <p class="text-flame font-bold text-4xl md:text-5xl leading-none">約20年</p>
                     <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">医療現場の運用経験を、AI導入判断に接続します。</p>
                 </div>
                 <div>
@@ -896,116 +896,124 @@
                 </a>
             </div>
 
-            <!-- News Items (horizontal scroll rail) -->
+            <!-- News Items (horizontal scroll rail, visual-first cards) -->
             <div class="news-scroll-wrapper">
-            <div class="news-scroll" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
+            <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
                 <!-- 医療AI導入の順番 -->
-                <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-flame/20 hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col md:flex-row md:items-start md:gap-5">
-                        <div class="flex-1 min-w-0">
-                            <div class="flex flex-wrap items-center gap-3 mb-3">
-                                <span class="inline-flex items-center gap-1.5 bg-navy/10 text-navy text-xs font-bold px-3 py-1 rounded-full">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-navy"></span>
-                                    コラム
-                                </span>
-                                <time datetime="2026-03-02" class="text-sm text-gray-400 font-en">2026.03.02</time>
+                <article class="news-card-v2 group">
+                    <a href="news/2026-03-02-hospital-ai-implementation.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers Column">
+                            <div class="news-visual-lockup news-visual-lockup--solo">
+                                <span class="news-visual-brand">Cursorvers</span>
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
+                            <span class="news-visual-caption">内科医 × エンジニア 共同執筆</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-navy">コラム</span>
+                                <time datetime="2026-03-02" class="news-card-v2-date">2026.03.02</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
                                 「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図
                             </h3>
-                            <p class="text-sm text-text-secondary leading-relaxed mb-3">
-                                松尾研AI経営講座を受講した内科医が整理した、病院AI導入の3つのフレームワーク。Cursorversのガバナンス支援との接点を解説します。
+                            <p class="news-card-v2-lede">
+                                松尾研AI経営講座を受講した内科医が整理した、病院AI導入の3つのフレームワーク。
                             </p>
-                            <a href="news/2026-03-02-hospital-ai-implementation.html" class="inline-flex items-center gap-2 text-flame hover:text-brand-black text-sm font-bold transition-colors group/link">
+                            <span class="news-card-v2-cta">
                                 詳しく読む
-                                <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
                         </div>
-                    </div>
+                    </a>
                 </article>
 
                 <!-- Health ISAC Japan -->
-                <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-flame/20 hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col md:flex-row md:items-start md:gap-5">
-                        <div class="flex-1 min-w-0">
-                            <div class="flex flex-wrap items-center gap-3 mb-3">
-                                <span class="inline-flex items-center gap-1.5 bg-flame/10 text-flame text-xs font-bold px-3 py-1 rounded-full">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-flame"></span>
-                                    セキュリティ
-                                </span>
-                                <time datetime="2026-02-18" class="text-sm text-gray-400 font-en">2026.02.18</time>
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-18-health-isac-japan.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
+                            <span class="news-visual-caption">医療サイバーセキュリティ協賛会員</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-flame">セキュリティ</span>
+                                <time datetime="2026-02-18" class="news-card-v2-date">2026.02.18</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
                                 Health ISAC Japan の協賛会員として登録されました
                             </h3>
-                            <p class="text-sm text-text-secondary leading-relaxed mb-3">
-                                医療サイバーセキュリティの情報共有組織に参加し、ガバナンス支援をセキュリティの側面からも強化します。
+                            <p class="news-card-v2-lede">
+                                医療サイバーセキュリティの情報共有組織に参加し、ガバナンス支援を強化します。
                             </p>
-                            <a href="news/2026-02-18-health-isac-japan.html" class="inline-flex items-center gap-2 text-flame hover:text-brand-black text-sm font-bold transition-colors group/link">
+                            <span class="news-card-v2-cta">
                                 詳しく読む
-                                <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
                         </div>
-                        <div class="news-logo-lockup shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と Health ISAC Japan">
-                            <span class="flex h-12 w-28 items-center justify-center rounded-md bg-slate-50 px-3 font-en text-xs font-bold tracking-wide text-brand-charcoal uppercase" aria-label="Cursorvers">Cursorvers</span>
-                            <span class="text-flame text-xl font-bold" aria-hidden="true">×</span>
-                            <a href="https://health-isac-japan.jp/" target="_blank" rel="noopener noreferrer" class="flex h-12 w-28 items-center justify-center hover:opacity-80 transition-opacity">
-                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="max-h-10 max-w-28 object-contain" loading="lazy">
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 </article>
 
                 <!-- G-gen Partnership -->
-                <article class="group bg-white rounded-xl border border-gray-200 p-5 md:p-6 hover:border-flame/20 hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-col md:flex-row md:items-start md:gap-5">
-                        <div class="flex-1 min-w-0">
-                            <div class="flex flex-wrap items-center gap-3 mb-3">
-                                <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                                    パートナーシップ
-                                </span>
-                                <time datetime="2026-02-16" class="text-sm text-gray-400 font-en">2026.02.16</time>
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-16-ggen-partnership.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card news-visual-lockup-card--emerald" aria-label="Cursorvers × G-gen">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/logo-ggen.png" alt="G-gen logo" class="news-visual-logo" loading="lazy">
                             </div>
-                            <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
-                                Google Cloud プレミアパートナー<br class="hidden md:inline"> 株式会社G-gen とパートナーシップを締結
+                            <span class="news-visual-caption">Google Cloud Premier Partner 協業</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-emerald">パートナーシップ</span>
+                                <time datetime="2026-02-16" class="news-card-v2-date">2026.02.16</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                Google Cloud プレミアパートナー 株式会社G-gen とパートナーシップを締結
                             </h3>
-                            <p class="text-sm text-text-secondary leading-relaxed mb-3">
+                            <p class="news-card-v2-lede">
                                 Googleプロダクトを活用した「安心・安全」な医療AI環境の構築を共同で推進します。
                             </p>
-                            <a href="news/2026-02-16-ggen-partnership.html" class="inline-flex items-center gap-2 text-flame hover:text-brand-black text-sm font-bold transition-colors group/link">
+                            <span class="news-card-v2-cta">
                                 詳しく読む
-                                <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
                         </div>
-                        <div class="news-logo-lockup shrink-0 hidden md:flex bg-white rounded-lg px-4 py-3 border border-gray-100 shadow-sm items-center justify-center self-center gap-3" aria-label="Cursorvers と G-gen">
-                            <span class="flex h-12 w-28 items-center justify-center rounded-md bg-slate-50 px-3 font-en text-xs font-bold tracking-wide text-brand-charcoal uppercase" aria-label="Cursorvers">Cursorvers</span>
-                            <span class="text-flame text-xl font-bold" aria-hidden="true">×</span>
-                            <a href="https://g-gen.co.jp/" target="_blank" rel="noopener noreferrer" class="flex h-12 w-28 items-center justify-center hover:opacity-80 transition-opacity">
-                                <img src="images/logo-ggen.png" alt="G-gen logo" class="max-h-10 max-w-28 object-contain" loading="lazy">
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 </article>
 
                 <!-- GuideScope -->
-                <article class="group bg-white rounded-xl border border-gray-200 p-6 hover:border-flame/20 hover:shadow-md transition-all duration-300">
-                    <div class="flex flex-wrap items-center gap-3 mb-3">
-                        <span class="inline-flex items-center gap-1.5 bg-flame/8 text-flame text-xs font-bold px-3 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-flame"></span>
-                            プロダクト
-                        </span>
-                        <time datetime="2026-02-10" class="text-sm text-gray-400 font-en">2026.02.10</time>
-                    </div>
-                    <h3 class="text-lg md:text-xl font-bold text-brand-black mb-2 leading-snug">
-                        GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ
-                    </h3>
-                    <p class="text-sm text-text-secondary leading-relaxed mb-3">
-                        院内マニュアルのGL準拠確認とシステム契約チェックを中核に、段階的に対応領域を拡大します。
-                    </p>
-                    <a href="news/2026-02-10-guidescope.html" class="inline-flex items-center gap-2 text-flame hover:text-brand-black text-sm font-bold transition-colors group/link">
-                        詳しく読む
-                        <svg class="group-hover/link:translate-x-1 transition-transform" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-10-guidescope.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × GuideScope">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--flame">GuideScope</span>
+                            </div>
+                            <span class="news-visual-caption">自社プロダクト 開発中</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-flame">プロダクト</span>
+                                <time datetime="2026-02-10" class="news-card-v2-date">2026.02.10</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                GuideScope — 医療一次資料の突合・検証ツール 開発開始のお知らせ
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                院内マニュアルのGL準拠確認とシステム契約チェックを中核に、段階的に対応領域を拡大します。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
                     </a>
                 </article>
             </div>
@@ -1021,7 +1029,7 @@
             <div class="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-14 lg:gap-16 items-center">
                 <div>
                     <span class="text-flame text-xs font-bold tracking-[0.18em] block mb-3">名称の由来</span>
-                    <h2 class="font-bold text-brand-black text-2xl md:text-4xl leading-tight text-balance">「Cursorvers」という社名に込めたもの</h2>
+                    <h2 class="font-bold text-brand-black text-2xl md:text-4xl leading-tight text-balance" style="word-break: keep-all; overflow-wrap: break-word;"><span class="whitespace-nowrap">「Cursorvers」という</span><span class="whitespace-nowrap">社名に込めたもの</span></h2>
                     <p class="text-text-secondary text-sm md:text-base leading-relaxed mt-4">
                         Cursorvers（カーソルバース）は、Cursor（判断点）とvers（turn＝向きを変える）を掛け合わせた造語です。
                     </p>
@@ -1065,7 +1073,7 @@
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">2つの入口</h2>
                 </div>
                 <p class="text-sm md:text-base text-text-secondary leading-relaxed max-w-xl">
-                    医療機関には導入判断と監査観点を。医療AIベンダーには病院に届く説明責任の整理を返します。
+                    医療機関には導入判断と監査観点を。<br>医療AIベンダーには病院に届く説明責任の整理を返します。
                 </p>
             </div>
 
@@ -1107,6 +1115,9 @@
                     <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-5">病院提案の前に、懸念点を言語化する。</h3>
                     <p class="text-text-secondary text-base md:text-lg leading-relaxed flex-grow">
                         提案書・責任分界・院内説明を、医療機関の稟議と現場運用の観点で赤入れします。
+                    </p>
+                    <p class="text-xs md:text-sm text-text-tertiary mt-3 mb-0 leading-snug">
+                        スポット 18万円〜／ライト顧問 15〜30万円/月(税別)
                     </p>
 
                     <div class="space-y-3 mt-7">
