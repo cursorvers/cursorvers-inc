@@ -5,6 +5,7 @@
 
 :root {
   --c-flame: #FF4500;
+  --c-flame-rgb: 255, 69, 0;
   --c-gold: #FF5A1F;
   --c-bg: #FFFFFF;
   --c-surface: #F8FAFC;
@@ -715,6 +716,27 @@ a.bg-brand-blue:hover, button.bg-brand-blue:hover {
   font-size: .65rem;
   color: #94A3B8;
   opacity: .7;
+}
+
+/* Interactive comparison cards: flame-orange glow on hover/focus (accent only, no background) */
+.card-interactive {
+  border: 2px solid transparent;
+  transition: box-shadow .25s ease, border-color .25s ease, transform .25s ease;
+}
+@media (hover: hover) {
+  .card-interactive:hover {
+    border-color: var(--c-flame);
+    box-shadow: 0 0 0 1px var(--c-flame), 0 10px 28px -8px rgba(var(--c-flame-rgb), .35);
+    transform: translateY(-2px);
+  }
+}
+.card-interactive:focus-within {
+  border-color: var(--c-flame);
+  box-shadow: 0 0 0 2px var(--c-flame), 0 10px 28px -8px rgba(var(--c-flame-rgb), .45);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-interactive { transition: none; }
+  .card-interactive:hover { transform: none; }
 }
 
 /* News / article body: better reading rhythm */
