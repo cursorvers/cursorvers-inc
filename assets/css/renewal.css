@@ -70,11 +70,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* ---- Typography ---- */
 .hero-h1 {
-  font-family: var(--font-sans);
+  font-family: "Zen Old Mincho", "Noto Serif JP", serif;
   font-size: clamp(2rem, 4vw + 1rem, 3.25rem);
-  line-height: 1.2;
+  line-height: 1.25;
   font-weight: 900;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--c-text);
   margin-bottom: 1.5rem;
 }
@@ -619,7 +619,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .hero-subline, .hero-motion-subline { color: var(--c-flame) !important; }
 
 /* Hero main title accent override (stronger weight via font stack) */
-.hero-motion-title { font-family: var(--font-sans) !important; color: var(--c-slate-900) !important; }
+.hero-motion-title { font-family: "Zen Old Mincho", "Noto Serif JP", serif !important; font-weight: 900 !important; color: var(--c-slate-900) !important; }
 
 /* Badges / pills with legacy brand-blue */
 .border-brand-blue\/20 { border-color: rgba(255,69,0,.25) !important; }
