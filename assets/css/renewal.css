@@ -709,6 +709,14 @@ a.bg-brand-blue:hover, button.bg-brand-blue:hover {
   border-left: 4px solid var(--c-flame) !important;
 }
 
+/* Footer build-id stamp (replaced at deploy time by scripts/update-build-id.js) */
+.site-footer__build {
+  letter-spacing: .08em;
+  font-size: .65rem;
+  color: #94A3B8;
+  opacity: .7;
+}
+
 /* News / article body: better reading rhythm */
 main article, main .prose {
   line-height: 1.85;
