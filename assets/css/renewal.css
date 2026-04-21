@@ -703,9 +703,9 @@ a.bg-brand-blue:hover, button.bg-brand-blue:hover {
   width: 64px; height: 3px; background: var(--c-flame); border: 0; margin: 0 0 1.25rem 0;
 }
 
-/* Legacy phi-notice / notice amber → flame */
+/* phi-notice: neutral surface + flame border-only (orange as accent only, not background) */
 .phi-notice {
-  background: linear-gradient(135deg, rgba(255,69,0,.08) 0%, rgba(255,90,31,.12) 100%) !important;
+  background: var(--c-surface) !important;
   border-left: 4px solid var(--c-flame) !important;
 }
 
