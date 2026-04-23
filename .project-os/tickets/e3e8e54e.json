@@ -1,0 +1,25 @@
+{
+  "ticket_id": "e3e8e54e",
+  "purpose": "GuideScope LP 更新: news/2026-02-10-guidescope.html, index.html news card, news.html を '開発開始' → '提供開始 (LLM プロンプト生成ツール MVP)' に整合。live=https://cursorvers.jp/tools/guidescope/。詳細 spec は ~/.claude/state/runs/guidescope-20260423-132234/phase-a-summary.md を必ず load して従うこと。変更 3 ファイル以内・150 行以内。外部リンクに rel=noopener noreferrer 必須。canonical 据え置き。PR まで出すが merge はしない。",
+  "priority": "medium",
+  "acceptance_criteria": [
+    "9-step execution flow is followed",
+    "CLI supports --task/--project/--tier/--resume/--status",
+    "Votes auto-continue per verdict rules",
+    "Summary fits within 2000 characters"
+  ],
+  "definition_of_done": {
+    "syntax_check": true,
+    "unit_test": true,
+    "auto_review_min_score": 5,
+    "code_review_min_score": 7,
+    "integration_test": true
+  },
+  "status": "blocked",
+  "planning_diversity_evidence": 2,
+  "implementation_subagents": [
+    "codex-implementer",
+    "glm-advisor"
+  ],
+  "authority_scope": "fugue_execution"
+}
