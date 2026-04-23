@@ -17,3 +17,6 @@ _workspace/
 
 # Superset harness (machine-local hook config)
 .github/hooks/
+
+# FUGUE orchestration state
+.project-os/
