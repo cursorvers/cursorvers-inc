@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.3'; // Updated: 2026-04-25 - Invalidate hero video cache after compression swap (PR #15)
+const CACHE_VERSION = '1.0.4'; // Updated: 2026-04-25 - Force navigate clients to refresh stuck iPhone tabs after PR #15
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
@@ -36,18 +36,26 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[SW] Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    await Promise.all(
+      cacheNames
+        .filter((cacheName) => cacheName !== CACHE_NAME)
+        .map((cacheName) => {
+          console.log('[SW] Deleting old cache:', cacheName);
+          return caches.delete(cacheName);
         })
-      );
-    })
-  );
+    );
+    await self.clients.claim();
+    const windowClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const client of windowClients) {
+      try {
+        await client.navigate(client.url);
+      } catch (_e) {
+        // Ignore clients that cannot be navigated
+      }
+    }
+  })());
 });
 
 // Fetch event - Network First for HTML, Cache First for static assets
@@ -57,7 +65,7 @@ self.addEventListener('fetch', (event) => {
   // Network First for HTML pages
   if (event.request.mode === 'navigate' || url.pathname.endsWith('.html')) {
     event.respondWith(
-      fetch(event.request)
+      fetch(new Request(event.request.url, { cache: 'reload', credentials: event.request.credentials, headers: event.request.headers }))
         .then((response) => {
           // Clone and cache the fresh response
           const responseToCache = response.clone();
