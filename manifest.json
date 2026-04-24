@@ -1,7 +1,7 @@
 {
   "name": "Cursorvers - 医療AIコンサル",
   "short_name": "Cursorvers",
-  "description": "院長・理事長に伴走する医療AIコンサルティング（導入・運用・アセスメント）",
+  "description": "院長・理事長に伴走する医療AIコンサルティング（導入・運用・監査）",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
