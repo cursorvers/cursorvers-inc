@@ -1765,13 +1765,7 @@
                     navigator.serviceWorker.register('/sw.js')
                         .then((registration) => {
                             console.log('[PWA] Service Worker registered:', registration.scope);
-                            // One-time cleanup for the PR #15 hero video cache-swap.
                             registration.update().catch(() => {});
-                            if ('caches' in window) {
-                                caches.keys().then(keys => keys
-                                    .filter(k => k.startsWith('cursorvers-v') && k !== 'cursorvers-v1.0.3')
-                                    .forEach(k => caches.delete(k)));
-                            }
                         })
                         .catch((error) => {
                             console.log('[PWA] Service Worker registration failed:', error);
