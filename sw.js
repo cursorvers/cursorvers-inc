@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.4'; // Updated: 2026-04-25 - Force navigate clients to refresh stuck iPhone tabs after PR #15
+const CACHE_VERSION = '1.0.5'; // Updated: 2026-04-25 - URL query bump to force iPhone stale cache miss after PR #20 source swap
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
