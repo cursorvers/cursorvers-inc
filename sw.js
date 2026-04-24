@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.2'; // Updated: 2026-04-13 - Typography cache refresh
+const CACHE_VERSION = '1.0.3'; // Updated: 2026-04-25 - Invalidate hero video cache after compression swap (PR #15)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
@@ -75,6 +75,12 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Cache First for static assets
+  // Bypass Service Worker cache for media files.
+  if (url.pathname.endsWith('.mp4') || url.pathname.endsWith('.webm') || url.pathname.endsWith('.mov') || url.pathname.endsWith('.m4v') || url.pathname.endsWith('.ogg')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
