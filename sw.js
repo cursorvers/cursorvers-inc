@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.7'; // Updated: 2026-04-25 - URL key bump to ?v=20260425d to remediate Cloudflare cache poisoning of v=20260425c
+const CACHE_VERSION = '1.0.8'; // Updated: 2026-04-25 - corrected hero video to user-specified source ~/Downloads/hero_wave_new.mp4; URL key bump to ?v=20260425e
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
