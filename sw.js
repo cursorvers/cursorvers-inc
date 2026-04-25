@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.5'; // Updated: 2026-04-25 - URL query bump to force iPhone stale cache miss after PR #20 source swap
+const CACHE_VERSION = '1.0.6'; // Updated: 2026-04-25 - mobile video unified with desktop content; URL key bump to ?v=20260425c
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
