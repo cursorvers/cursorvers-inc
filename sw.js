@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.6'; // Updated: 2026-04-25 - mobile video unified with desktop content; URL key bump to ?v=20260425c
+const CACHE_VERSION = '1.0.7'; // Updated: 2026-04-25 - URL key bump to ?v=20260425d to remediate Cloudflare cache poisoning of v=20260425c
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
