@@ -1,0 +1,252 @@
+import { execFileSync } from 'node:child_process';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+import * as parse5 from 'parse5';
+
+const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov', '.m4v', '.ogv'];
+const EXCLUDED_DIRS = new Set(['.git', 'node_modules', '_site', 'dist']);
+const POLICY_REF = '.claude/CLAUDE.md "メディア資産デプロイ — iOS Safari cache 落とし穴"';
+
+const findings = [];
+
+function isExternalUrl(value) {
+  return /^https?:\/\//i.test(value);
+}
+
+function videoExtensionFromPathname(value) {
+  const withoutHash = value.split('#')[0];
+  const pathname = withoutHash.split('?')[0].toLowerCase();
+  return VIDEO_EXTENSIONS.find((ext) => pathname.endsWith(ext));
+}
+
+function addFinding(rule, level, file, line, message) {
+  findings.push({
+    rule,
+    level,
+    file,
+    line: line || 1,
+    message: `Rule ${rule}: ${message} See ${POLICY_REF}.`,
+  });
+}
+
+function walkFiles(dir, predicate, acc = []) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (EXCLUDED_DIRS.has(entry.name)) continue;
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkFiles(fullPath, predicate, acc);
+    } else if (entry.isFile() && predicate(fullPath)) {
+      acc.push(fullPath);
+    }
+  }
+  return acc;
+}
+
+function relativePath(filePath) {
+  return path.relative(process.cwd(), filePath) || filePath;
+}
+
+function getAttr(node, name) {
+  return node.attrs?.find((attr) => attr.name.toLowerCase() === name.toLowerCase())?.value;
+}
+
+function getAttrLine(node, name) {
+  return node.sourceCodeLocation?.attrs?.[name]?.startLine || node.sourceCodeLocation?.startLine || 1;
+}
+
+function visit(node, callback) {
+  callback(node);
+  for (const child of node.childNodes || []) {
+    visit(child, callback);
+  }
+}
+
+function lintHtmlSources() {
+  const htmlFiles = walkFiles(process.cwd(), (file) => file.toLowerCase().endsWith('.html'));
+
+  for (const file of htmlFiles) {
+    const rel = relativePath(file);
+    const html = readFileSync(file, 'utf8');
+    const document = parse5.parse(html, { sourceCodeLocationInfo: true });
+
+    visit(document, (node) => {
+      if (node.nodeName === 'source') {
+        const src = getAttr(node, 'src');
+        if (!src || isExternalUrl(src)) return;
+
+        if (videoExtensionFromPathname(src) && src.includes('?')) {
+          addFinding(
+            'R1',
+            'error',
+            rel,
+            getAttrLine(node, 'src'),
+            `Local video source "${src}" uses a query string. iOS Safari AVPlayer cache is path-keyed, so rename the file path instead, e.g. "git mv old.mp4 old_v2.mp4" and update <source src="old_v2.mp4">.`
+          );
+        }
+      }
+
+      if (node.nodeName === 'video') {
+        lintVideoSourceOrder(node, rel);
+      }
+    });
+  }
+}
+
+function lintVideoSourceOrder(videoNode, rel) {
+  const sources = (videoNode.childNodes || []).filter((child) => child.nodeName === 'source');
+  const sourceMeta = sources.map((source) => ({
+    node: source,
+    media: getAttr(source, 'media') || '',
+    src: getAttr(source, 'src') || '',
+  }));
+
+  for (let index = 0; index < sourceMeta.length; index += 1) {
+    const current = sourceMeta[index];
+    if (!/min-width/i.test(current.media)) continue;
+
+    const laterMax = sourceMeta.slice(index + 1).find((candidate) => /max-width/i.test(candidate.media));
+    if (laterMax) {
+      addFinding(
+        'R5',
+        'error',
+        rel,
+        getAttrLine(current.node, 'media'),
+        `Desktop/min-width source "${current.src || current.media}" appears before mobile/max-width source "${laterMax.src || laterMax.media}". Put mobile max-width <source> first, then desktop min-width.`
+      );
+    }
+  }
+}
+
+function resolveDiffRange() {
+  const envBase = process.env.PR_BASE_SHA;
+  const envHead = process.env.PR_HEAD_SHA;
+  if (envBase && envHead) return { base: envBase, head: envHead };
+
+  const candidates = ['origin/main', 'main', 'origin/master', 'master'];
+  for (const candidate of candidates) {
+    try {
+      const base = execFileSync('git', ['merge-base', 'HEAD', candidate], { encoding: 'utf8' }).trim();
+      if (base) return { base, head: 'HEAD' };
+    } catch {
+      // Try the next candidate.
+    }
+  }
+
+  return null;
+}
+
+function lintVideoModifyWithoutRename() {
+  const range = resolveDiffRange();
+  if (!range) {
+    addFinding(
+      'R2',
+      'warning',
+      'git',
+      1,
+      'Could not resolve PR_BASE_SHA/PR_HEAD_SHA or a local merge-base; skipped video modify-without-rename diff check.'
+    );
+    return;
+  }
+
+  let output = '';
+  try {
+    output = execFileSync('git', ['diff', '--name-status', `${range.base}...${range.head}`], { encoding: 'utf8' });
+  } catch (error) {
+    addFinding('R2', 'error', 'git', 1, `Failed to run git diff for ${range.base}...${range.head}: ${error.message}`);
+    return;
+  }
+
+  for (const line of output.split('\n').filter(Boolean)) {
+    const fields = line.split('\t');
+    const status = fields[0];
+    const file = fields.at(-1);
+    if (status === 'M' && file && videoExtensionFromPathname(file)) {
+      addFinding(
+        'R2',
+        'error',
+        file,
+        1,
+        `Video file "${file}" was modified in place. iOS Safari may keep the old path-keyed media cache; rename instead, e.g. "git mv ${file} ${file.replace(/(\.[^.]+)$/i, '_v2$1')}" and update HTML references.`
+      );
+    }
+  }
+}
+
+function lintServiceWorkerBypass() {
+  const swPath = path.join(process.cwd(), 'sw.js');
+  if (!existsSync(swPath)) return;
+
+  const source = readFileSync(swPath, 'utf8');
+  const hasVideoExtensionCheck = VIDEO_EXTENSIONS.some((ext) => source.toLowerCase().includes(ext));
+  const hasFetchBypass = /fetch\s*\(\s*event\.request\s*\)/.test(source);
+
+  if (!hasVideoExtensionCheck || !hasFetchBypass) {
+    addFinding(
+      'R3',
+      'warning',
+      'sw.js',
+      1,
+      'Service Worker should bypass cache for video paths with "event.respondWith(fetch(event.request))" near mp4/webm/mov/m4v/ogv handling.'
+    );
+  }
+}
+
+function lintCursorversCurlProbe() {
+  const targetExtensions = new Set(['.sh', '.yml', '.mjs', '.js']);
+  const files = walkFiles(process.cwd(), (file) => targetExtensions.has(path.extname(file).toLowerCase()));
+
+  for (const file of files) {
+    const rel = relativePath(file);
+    const lines = readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, index) => {
+      if (!/curl\b.*https:\/\/cursorvers\.com/i.test(line)) return;
+      if (line.includes('# probe-after-deploy')) return;
+      addFinding(
+        'R4',
+        'warning',
+        rel,
+        index + 1,
+        'Found a curl probe against https://cursorvers.com. Avoid pre-deploy live URL probes that can poison CDN 404 cache, or mark an allowed post-deploy probe with "# probe-after-deploy".'
+      );
+    });
+  }
+}
+
+function hasOverrideLabel() {
+  try {
+    const labels = JSON.parse(process.env.PR_LABELS || '[]');
+    return Array.isArray(labels) && labels.some((label) => label?.name === 'media-asset-policy-ack');
+  } catch {
+    addFinding('Override', 'warning', 'PR_LABELS', 1, 'Could not parse PR_LABELS JSON; media-asset-policy-ack override was not applied.');
+    return false;
+  }
+}
+
+function emitFindings(override) {
+  let errorCount = 0;
+  let warningCount = 0;
+
+  for (const finding of findings) {
+    const annotationLevel = finding.level === 'error' && !override ? 'error' : 'warning';
+    if (finding.level === 'error') errorCount += 1;
+    if (finding.level === 'warning' || annotationLevel === 'warning') warningCount += 1;
+
+    const output = `${annotationLevel === 'error' ? '::error' : '::warning'} file=${finding.file},line=${finding.line}::${finding.message}`;
+    if (annotationLevel === 'error') {
+      console.error(output);
+    } else {
+      console.warn(output);
+    }
+  }
+
+  const status = errorCount === 0 ? 'PASS' : override ? 'PASS_WITH_OVERRIDE' : 'FAIL';
+  console.log(`Media Asset Policy summary: ${status}; errors=${errorCount}; warnings=${warningCount}; override=${override ? 'media-asset-policy-ack' : 'none'}`);
+
+  if (errorCount > 0 && !override) process.exitCode = 1;
+}
+
+lintHtmlSources();
+lintVideoModifyWithoutRename();
+lintServiceWorkerBypass();
+lintCursorversCurlProbe();
+emitFindings(hasOverrideLabel());
