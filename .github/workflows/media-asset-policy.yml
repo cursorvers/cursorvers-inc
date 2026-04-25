@@ -1,0 +1,42 @@
+name: Media Asset Policy
+on:
+  pull_request:
+    paths:
+      - '**/*.html'
+      - '**/*.mp4'
+      - '**/*.webm'
+      - '**/*.mov'
+      - '**/*.m4v'
+      - '**/*.ogv'
+      - 'sw.js'
+      - 'scripts/lint-media-asset-policy.mjs'
+      - '.github/workflows/media-asset-policy.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  media-asset-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for git diff)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Install lint deps
+        run: npm ci
+
+      - name: Run media asset policy lint
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_LABELS: ${{ toJSON(github.event.pull_request.labels) }}
+        run: node scripts/lint-media-asset-policy.mjs
