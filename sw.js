@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.10'; // Updated: 2026-04-25 - hero video files renamed to hero_v6_pc.mp4 / hero_v6_mobile.mp4 / hero_v6_poster.jpg to break iOS AVPlayer + Safari HTTP cache (path-keyed, query-key independent). Removes ?v= URL strategy in favor of path versioning.
+const CACHE_VERSION = '1.0.11'; // Updated: 2026-05-02 - hero video files renamed to hero_v7_pc.mp4 / hero_v7_mobile.mp4 / hero_v7_poster.jpg and the stale Pexels fallback source was removed to prevent iPhone Safari from falling through to the old ocean video.
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
