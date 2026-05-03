@@ -763,7 +763,7 @@
     <div id="main" class="hero-wrapper">
         <!-- Video Background - EXACTLY same as edu -->
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="hero_v7_poster.jpg">
+            <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="hero_v7_poster.jpg" data-hero-video aria-hidden="true">
                 <source src="hero_v7_mobile.mp4" type="video/mp4" media="(max-width: 767px)">
                 <source src="hero_v7_pc.mp4" type="video/mp4" media="(min-width: 768px)">
             </video>
@@ -1707,6 +1707,42 @@
             window.setTimeout(() => {
                 document.documentElement.classList.add('hero-motion-ready');
             }, 650);
+
+            const heroVideo = document.querySelector('[data-hero-video]');
+            if (heroVideo) {
+                const playHeroVideo = () => {
+                    heroVideo.muted = true;
+                    heroVideo.defaultMuted = true;
+                    heroVideo.playsInline = true;
+                    heroVideo.setAttribute('muted', '');
+                    heroVideo.setAttribute('playsinline', '');
+                    heroVideo.setAttribute('webkit-playsinline', '');
+
+                    const playAttempt = heroVideo.play();
+                    if (playAttempt && typeof playAttempt.catch === 'function') {
+                        playAttempt.catch(() => {
+                            heroVideo.load();
+                            window.setTimeout(() => {
+                                const retryAttempt = heroVideo.play();
+                                if (retryAttempt && typeof retryAttempt.catch === 'function') {
+                                    retryAttempt.catch(() => {});
+                                }
+                            }, 160);
+                        });
+                    }
+                };
+
+                if (document.readyState === 'complete') {
+                    playHeroVideo();
+                } else {
+                    window.addEventListener('load', playHeroVideo, { once: true });
+                }
+
+                window.addEventListener('pageshow', playHeroVideo);
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden) playHeroVideo();
+                });
+            }
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

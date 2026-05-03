@@ -22,7 +22,7 @@ const htmlFiles = fs.readdirSync(process.cwd()).filter((file) => file.endsWith("
 test.describe("Build ID", () => {
   for (const file of htmlFiles) {
     test(`renders build id on ${file}`, async ({ page }) => {
-      await page.goto(`/${file}`);
+      await page.goto(`/${file}`, { waitUntil: "domcontentloaded" });
 
       const buildIdLocator = page.locator("span[data-build-id]");
       const buildIdCount = await buildIdLocator.count();

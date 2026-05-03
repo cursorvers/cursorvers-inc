@@ -50,6 +50,10 @@ function getAttr(node, name) {
   return node.attrs?.find((attr) => attr.name.toLowerCase() === name.toLowerCase())?.value;
 }
 
+function hasAttr(node, name) {
+  return node.attrs?.some((attr) => attr.name.toLowerCase() === name.toLowerCase()) || false;
+}
+
 function getAttrLine(node, name) {
   return node.sourceCodeLocation?.attrs?.[name]?.startLine || node.sourceCodeLocation?.startLine || 1;
 }
@@ -87,8 +91,39 @@ function lintHtmlSources() {
 
       if (node.nodeName === 'video') {
         lintVideoSourceOrder(node, rel);
+        lintHeroVideoAutoplayContract(node, rel);
       }
     });
+  }
+}
+
+function lintHeroVideoAutoplayContract(videoNode, rel) {
+  const className = getAttr(videoNode, 'class') || '';
+  const isHeroVideo = /\bhero-video\b/.test(className) || hasAttr(videoNode, 'data-hero-video');
+  if (!isHeroVideo) return;
+
+  const requiredBooleanAttrs = ['autoplay', 'muted', 'loop', 'playsinline', 'webkit-playsinline'];
+  for (const attr of requiredBooleanAttrs) {
+    if (!hasAttr(videoNode, attr)) {
+      addFinding(
+        'R6',
+        'error',
+        rel,
+        getAttrLine(videoNode, 'class'),
+        `Hero background video is missing "${attr}". iPhone Safari background autoplay needs muted inline playback attributes on the element.`
+      );
+    }
+  }
+
+  const preload = getAttr(videoNode, 'preload');
+  if (preload && preload !== 'metadata') {
+    addFinding(
+      'R6',
+      'warning',
+      rel,
+      getAttrLine(videoNode, 'preload'),
+      'Hero background video should avoid aggressive preloading; keep preload="metadata" and let the muted play retry fetch media data.'
+    );
   }
 }
 
@@ -191,6 +226,26 @@ function lintServiceWorkerBypass() {
   }
 }
 
+function lintHeroVideoAutoplayScript() {
+  const indexPath = path.join(process.cwd(), 'index.html');
+  if (!existsSync(indexPath)) return;
+
+  const source = readFileSync(indexPath, 'utf8');
+  const hasHeroTarget = /data-hero-video/.test(source);
+  const hasMutedFixup = /defaultMuted\s*=\s*true/.test(source) && /muted\s*=\s*true/.test(source);
+  const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source);
+
+  if (!hasHeroTarget || !hasMutedFixup || !hasPlayRetry) {
+    addFinding(
+      'R7',
+      'error',
+      'index.html',
+      1,
+      'Hero background video needs an iOS Safari autoplay arming script that fixes muted/defaultMuted, calls play(), and retries on pageshow/visibilitychange.'
+    );
+  }
+}
+
 function lintCursorversCurlProbe() {
   const targetExtensions = new Set(['.sh', '.yml', '.mjs', '.js']);
   const files = walkFiles(process.cwd(), (file) => targetExtensions.has(path.extname(file).toLowerCase()));
@@ -248,5 +303,6 @@ function emitFindings(override) {
 lintHtmlSources();
 lintVideoModifyWithoutRename();
 lintServiceWorkerBypass();
+lintHeroVideoAutoplayScript();
 lintCursorversCurlProbe();
 emitFindings(hasOverrideLabel());
