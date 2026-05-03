@@ -36,8 +36,8 @@ test.describe("Hero background video", () => {
       playsinlineAttr: true,
       webkitPlaysinlineAttr: true,
       preload: "metadata",
-      mobileSrc: "hero_v8_mobile.mp4",
-      desktopSrc: "hero_v8_pc.mp4",
+      mobileSrc: "hero_v9_mobile.mp4",
+      desktopSrc: "hero_v9_pc.mp4",
       sourceCount: 0,
       muted: true,
       playsInline: true,
@@ -45,7 +45,7 @@ test.describe("Hero background video", () => {
 
     await page.waitForFunction(() => {
       const heroVideo = document.querySelector("[data-hero-video]");
-      return heroVideo?.currentSrc.endsWith("hero_v8_mobile.mp4");
+      return heroVideo?.currentSrc.endsWith("hero_v9_mobile.mp4");
     });
 
     await expect.poll(async () => video.evaluate((element) => element.paused)).toBe(false);
