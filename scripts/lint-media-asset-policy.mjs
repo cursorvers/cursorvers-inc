@@ -139,13 +139,25 @@ function lintHeroVideoAutoplayContract(videoNode, rel) {
   }
 
   const preload = getAttr(videoNode, 'preload');
-  if (preload && preload !== 'metadata') {
+  if (preload !== 'auto') {
     addFinding(
       'R6',
-      'warning',
+      'error',
       rel,
       getAttrLine(videoNode, 'preload'),
-      'Hero background video should avoid aggressive preloading; keep preload="metadata" and let the muted play retry fetch media data.'
+      'Hero background video should use preload="auto" so iPhone Safari can begin fetching media as soon as the hero video element is parsed.'
+    );
+  }
+
+  const initialSrc = getAttr(videoNode, 'src');
+  const mobileSrc = getAttr(videoNode, 'data-src-mobile');
+  if (!initialSrc || initialSrc !== mobileSrc) {
+    addFinding(
+      'R6',
+      'error',
+      rel,
+      getAttrLine(videoNode, 'src'),
+      'Hero background video should set src to the mobile asset in HTML so iPhone Safari starts fetching before JavaScript reaches DOMContentLoaded.'
     );
   }
 }
@@ -259,14 +271,24 @@ function lintHeroVideoAutoplayScript() {
   const hasDirectSourceSelection = /matchMedia\s*\(\s*['"]\(max-width:\s*767px\)['"]\s*\)/.test(source)
     && /setAttribute\s*\(\s*['"]src['"]/.test(source);
   const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source) && /touchstart/.test(source);
+  const hasMobilePreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_mobile\.mp4"[^>]*fetchpriority="high"/.test(source);
+  const hasDesktopPreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_pc\.mp4"[^>]*fetchpriority="high"/.test(source);
+  const earlyArmIndex = source.indexOf("performance.mark('hero-video-armed')");
+  const followupIndex = source.indexOf('<!-- Hero Follow-up Section -->');
+  const domContentLoadedIndex = source.indexOf("document.addEventListener('DOMContentLoaded'");
+  const hasEarlyArm = earlyArmIndex > -1
+    && followupIndex > -1
+    && domContentLoadedIndex > -1
+    && earlyArmIndex < followupIndex
+    && earlyArmIndex < domContentLoadedIndex;
 
-  if (!hasHeroTarget || !hasMutedFixup || !hasDirectSourceSelection || !hasPlayRetry) {
+  if (!hasHeroTarget || !hasMutedFixup || !hasDirectSourceSelection || !hasPlayRetry || !hasMobilePreload || !hasDesktopPreload || !hasEarlyArm) {
     addFinding(
       'R7',
       'error',
       'index.html',
       1,
-      'Hero background video needs an iOS Safari autoplay arming script that fixes muted/defaultMuted, sets video.src directly, calls play(), and retries on pageshow/visibilitychange/touchstart.'
+      'Hero background video needs high-priority preload links and an iOS Safari autoplay arming script immediately after the hero video element: fix muted/defaultMuted, set video.src directly, call play(), mark hero-video-armed before DOMContentLoaded, and retry on pageshow/visibilitychange/touchstart.'
     );
   }
 }

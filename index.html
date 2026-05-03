@@ -48,6 +48,8 @@
     <meta name="twitter:description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
+    <link rel="preload" as="video" href="hero_v9_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v9_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
     <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -763,9 +765,88 @@
     <div id="main" class="hero-wrapper">
         <!-- Video Background - EXACTLY same as edu -->
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="hero_v7_poster.jpg" data-hero-video data-src-mobile="hero_v9_mobile.mp4" data-src-desktop="hero_v9_pc.mp4" aria-hidden="true"></video>
+            <video class="hero-video" src="hero_v9_mobile.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="hero_v7_poster.jpg" data-hero-video data-src-mobile="hero_v9_mobile.mp4" data-src-desktop="hero_v9_pc.mp4" aria-hidden="true"></video>
             <div class="hero-overlay"></div>
         </div>
+        <script>
+            (() => {
+                const heroVideo = document.querySelector('[data-hero-video]');
+                if (!heroVideo) return;
+
+                let heroVideoRetry = null;
+                let heroVideoPlayAttempts = 0;
+
+                const armHeroVideo = () => {
+                    heroVideo.muted = true;
+                    heroVideo.defaultMuted = true;
+                    heroVideo.playsInline = true;
+                    heroVideo.autoplay = true;
+                    heroVideo.loop = true;
+                    heroVideo.setAttribute('muted', '');
+                    heroVideo.setAttribute('autoplay', '');
+                    heroVideo.setAttribute('playsinline', '');
+                    heroVideo.setAttribute('webkit-playsinline', '');
+                };
+
+                const resolveHeroVideoSrc = () => (
+                    window.matchMedia('(max-width: 767px)').matches
+                        ? heroVideo.dataset.srcMobile
+                        : heroVideo.dataset.srcDesktop
+                );
+
+                const syncHeroVideoSrc = () => {
+                    const nextSrc = resolveHeroVideoSrc();
+                    if (!nextSrc) return false;
+
+                    const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
+                    if (!currentSrc.endsWith(nextSrc)) {
+                        heroVideo.setAttribute('src', nextSrc);
+                        heroVideo.load();
+                    }
+
+                    return true;
+                };
+
+                const scheduleHeroVideoPlay = (delay = 0) => {
+                    if (heroVideoPlayAttempts >= 8) return;
+                    window.clearTimeout(heroVideoRetry);
+                    heroVideoRetry = window.setTimeout(playHeroVideo, delay);
+                };
+
+                const playHeroVideo = () => {
+                    armHeroVideo();
+                    if (!syncHeroVideoSrc()) return;
+                    heroVideoPlayAttempts += 1;
+
+                    const playAttempt = heroVideo.play();
+                    if (playAttempt && typeof playAttempt.catch === 'function') {
+                        playAttempt.catch(() => {
+                            scheduleHeroVideoPlay(320);
+                        });
+                    }
+                };
+
+                armHeroVideo();
+                playHeroVideo();
+                document.documentElement.dataset.heroVideoArmed = 'early';
+                if (window.performance && typeof window.performance.mark === 'function') {
+                    window.performance.mark('hero-video-armed');
+                }
+
+                heroVideo.addEventListener('loadedmetadata', () => scheduleHeroVideoPlay(0));
+                heroVideo.addEventListener('canplay', () => scheduleHeroVideoPlay(0));
+                window.addEventListener('load', playHeroVideo, { once: true });
+                window.addEventListener('pageshow', playHeroVideo);
+                window.addEventListener('resize', () => scheduleHeroVideoPlay(100));
+                document.addEventListener('visibilitychange', () => {
+                    if (!document.hidden) playHeroVideo();
+                });
+                document.addEventListener('touchstart', () => {
+                    heroVideoPlayAttempts = 0;
+                    playHeroVideo();
+                }, { once: true, passive: true });
+            })();
+        </script>
 
         <div class="hero-content max-w-6xl mx-auto px-6 flex items-center justify-center h-full text-center">
             <div class="z-10 max-w-5xl mx-auto">
@@ -1420,13 +1501,13 @@
                     <!-- Image Slideshow -->
                     <div class="bg-gray-100 order-2 md:order-1 relative overflow-hidden min-h-[350px]"
                         id="case-slideshow">
-                        <img src="kajita_clinic.jpg" alt="梶田医院 院長"
+                        <img src="kajita_clinic.jpg" alt="梶田医院 院長" loading="lazy"
                             class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100">
-                        <img src="kajita_clinic_2.jpg" alt="梶田医院 院長"
+                        <img src="kajita_clinic_2.jpg" alt="梶田医院 院長" loading="lazy"
                             class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-                        <img src="kajita_clinic_3.jpg" alt="梶田医院 受付"
+                        <img src="kajita_clinic_3.jpg" alt="梶田医院 受付" loading="lazy"
                             class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-                        <img src="kajita_clinic_4.jpg" alt="梶田医院 病棟"
+                        <img src="kajita_clinic_4.jpg" alt="梶田医院 病棟" loading="lazy"
                             class="case-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
                         <!-- Slide indicators -->
                         <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -1704,77 +1785,6 @@
             window.setTimeout(() => {
                 document.documentElement.classList.add('hero-motion-ready');
             }, 650);
-
-            const heroVideo = document.querySelector('[data-hero-video]');
-            if (heroVideo) {
-                let heroVideoRetry = null;
-                let heroVideoPlayAttempts = 0;
-
-                const armHeroVideo = () => {
-                    heroVideo.muted = true;
-                    heroVideo.defaultMuted = true;
-                    heroVideo.playsInline = true;
-                    heroVideo.autoplay = true;
-                    heroVideo.loop = true;
-                    heroVideo.setAttribute('muted', '');
-                    heroVideo.setAttribute('autoplay', '');
-                    heroVideo.setAttribute('playsinline', '');
-                    heroVideo.setAttribute('webkit-playsinline', '');
-                };
-
-                const resolveHeroVideoSrc = () => (
-                    window.matchMedia('(max-width: 767px)').matches
-                        ? heroVideo.dataset.srcMobile
-                        : heroVideo.dataset.srcDesktop
-                );
-
-                const syncHeroVideoSrc = () => {
-                    const nextSrc = resolveHeroVideoSrc();
-                    if (!nextSrc) return false;
-
-                    const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
-                    if (!currentSrc.endsWith(nextSrc)) {
-                        heroVideo.setAttribute('src', nextSrc);
-                        heroVideo.load();
-                    }
-
-                    return true;
-                };
-
-                const scheduleHeroVideoPlay = (delay = 0) => {
-                    if (heroVideoPlayAttempts >= 8) return;
-                    window.clearTimeout(heroVideoRetry);
-                    heroVideoRetry = window.setTimeout(playHeroVideo, delay);
-                };
-
-                const playHeroVideo = () => {
-                    armHeroVideo();
-                    if (!syncHeroVideoSrc()) return;
-                    heroVideoPlayAttempts += 1;
-
-                    const playAttempt = heroVideo.play();
-                    if (playAttempt && typeof playAttempt.catch === 'function') {
-                        playAttempt.catch(() => {
-                            scheduleHeroVideoPlay(320);
-                        });
-                    }
-                };
-
-                armHeroVideo();
-                playHeroVideo();
-                heroVideo.addEventListener('loadedmetadata', () => scheduleHeroVideoPlay(0));
-                heroVideo.addEventListener('canplay', () => scheduleHeroVideoPlay(0));
-                window.addEventListener('load', playHeroVideo, { once: true });
-                window.addEventListener('pageshow', playHeroVideo);
-                window.addEventListener('resize', () => scheduleHeroVideoPlay(100));
-                document.addEventListener('visibilitychange', () => {
-                    if (!document.hidden) playHeroVideo();
-                });
-                document.addEventListener('touchstart', () => {
-                    heroVideoPlayAttempts = 0;
-                    playHeroVideo();
-                }, { once: true, passive: true });
-            }
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

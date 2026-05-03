@@ -22,6 +22,7 @@ test.describe("Hero background video", () => {
       playsinlineAttr: element.hasAttribute("playsinline"),
       webkitPlaysinlineAttr: element.hasAttribute("webkit-playsinline"),
       preload: element.getAttribute("preload"),
+      initialSrc: element.getAttribute("src"),
       mobileSrc: element.dataset.srcMobile,
       desktopSrc: element.dataset.srcDesktop,
       sourceCount: element.querySelectorAll("source").length,
@@ -35,13 +36,30 @@ test.describe("Hero background video", () => {
       loop: true,
       playsinlineAttr: true,
       webkitPlaysinlineAttr: true,
-      preload: "metadata",
+      preload: "auto",
+      initialSrc: "hero_v9_mobile.mp4",
       mobileSrc: "hero_v9_mobile.mp4",
       desktopSrc: "hero_v9_pc.mp4",
       sourceCount: 0,
       muted: true,
       playsInline: true,
     });
+
+    const startupTiming = await page.evaluate(() => {
+      const navigation = performance.getEntriesByType("navigation")[0];
+      const mark = performance.getEntriesByName("hero-video-armed")[0];
+
+      return {
+        armedState: document.documentElement.dataset.heroVideoArmed,
+        armedAt: mark?.startTime ?? null,
+        domContentLoadedAt: navigation?.domContentLoadedEventStart ?? null,
+      };
+    });
+
+    expect(startupTiming.armedState).toBe("early");
+    expect(startupTiming.armedAt).not.toBeNull();
+    expect(startupTiming.domContentLoadedAt).not.toBeNull();
+    expect(startupTiming.armedAt).toBeLessThan(startupTiming.domContentLoadedAt);
 
     await page.waitForFunction(() => {
       const heroVideo = document.querySelector("[data-hero-video]");
