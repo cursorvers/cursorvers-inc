@@ -17,7 +17,11 @@ try {
   const page = await context.newPage();
   const startedAt = Date.now();
 
-  await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 45000 });
+  await page.goto(baseUrl, { waitUntil: "commit", timeout: 15000 });
+  await page.waitForFunction(
+    () => performance.getEntriesByType("navigation")[0]?.domContentLoadedEventStart > 0,
+    { timeout: 10000 },
+  );
   const domMs = Date.now() - startedAt;
 
   await page.waitForSelector("[data-hero-video]", { timeout: 10000 });

@@ -10,7 +10,7 @@ test.describe("Hero background video", () => {
   });
 
   test("keeps the iPhone autoplay contract and selects the mobile source", async ({ page }) => {
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.goto("/", { waitUntil: "commit" });
 
     await page.waitForSelector("[data-hero-video]", { state: "attached" });
 
@@ -47,6 +47,10 @@ test.describe("Hero background video", () => {
       muted: true,
       playsInline: true,
     });
+
+    await page.waitForFunction(
+      () => performance.getEntriesByType("navigation")[0]?.domContentLoadedEventStart > 0,
+    );
 
     const startupTiming = await page.evaluate(() => {
       const navigation = performance.getEntriesByType("navigation")[0];
