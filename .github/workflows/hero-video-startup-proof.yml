@@ -1,0 +1,41 @@
+name: Hero Video Startup Proof
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Production URL to verify
+        required: false
+        default: https://cursorvers.com/
+      startup_limit_ms:
+        description: Maximum allowed time until currentTime exceeds 0.1s
+        required: false
+        default: "5000"
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  hero-video-startup-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Measure production hero video startup
+        run: node scripts/measure-hero-video-startup.mjs
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          HERO_VIDEO_STARTUP_LIMIT_MS: ${{ inputs.startup_limit_ms }}
