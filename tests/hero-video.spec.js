@@ -12,23 +12,26 @@ test.describe("Hero background video", () => {
   test("keeps the iPhone autoplay contract and selects the mobile source", async ({ page }) => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    const video = page.locator("[data-hero-video]");
-    await expect(video).toHaveCount(1);
+    await page.waitForSelector("[data-hero-video]", { state: "attached" });
 
-    const contract = await video.evaluate((element) => ({
-      autoplay: element.hasAttribute("autoplay"),
-      mutedAttr: element.hasAttribute("muted"),
-      loop: element.hasAttribute("loop"),
-      playsinlineAttr: element.hasAttribute("playsinline"),
-      webkitPlaysinlineAttr: element.hasAttribute("webkit-playsinline"),
-      preload: element.getAttribute("preload"),
-      initialSrc: element.getAttribute("src"),
-      mobileSrc: element.dataset.srcMobile,
-      desktopSrc: element.dataset.srcDesktop,
-      sourceCount: element.querySelectorAll("source").length,
-      muted: element.muted,
-      playsInline: element.playsInline,
-    }));
+    const contract = await page.evaluate(() => {
+      const element = document.querySelector("[data-hero-video]");
+
+      return {
+        autoplay: element.hasAttribute("autoplay"),
+        mutedAttr: element.hasAttribute("muted"),
+        loop: element.hasAttribute("loop"),
+        playsinlineAttr: element.hasAttribute("playsinline"),
+        webkitPlaysinlineAttr: element.hasAttribute("webkit-playsinline"),
+        preload: element.getAttribute("preload"),
+        initialSrc: element.getAttribute("src"),
+        mobileSrc: element.dataset.srcMobile,
+        desktopSrc: element.dataset.srcDesktop,
+        sourceCount: element.querySelectorAll("source").length,
+        muted: element.muted,
+        playsInline: element.playsInline,
+      };
+    });
 
     expect(contract).toMatchObject({
       autoplay: true,
@@ -66,7 +69,11 @@ test.describe("Hero background video", () => {
       return heroVideo?.currentSrc.endsWith("hero_v9_mobile.mp4");
     });
 
-    await expect.poll(async () => video.evaluate((element) => element.paused)).toBe(false);
-    await expect.poll(async () => video.evaluate((element) => element.currentTime)).toBeGreaterThan(0.1);
+    await expect
+      .poll(async () => page.evaluate(() => document.querySelector("[data-hero-video]")?.paused))
+      .toBe(false);
+    await expect
+      .poll(async () => page.evaluate(() => document.querySelector("[data-hero-video]")?.currentTime ?? 0))
+      .toBeGreaterThan(0.1);
   });
 });
