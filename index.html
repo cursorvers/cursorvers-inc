@@ -763,10 +763,7 @@
     <div id="main" class="hero-wrapper">
         <!-- Video Background - EXACTLY same as edu -->
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="hero_v7_poster.jpg" data-hero-video aria-hidden="true">
-                <source src="hero_v7_mobile.mp4" type="video/mp4" media="(max-width: 767px)">
-                <source src="hero_v7_pc.mp4" type="video/mp4" media="(min-width: 768px)">
-            </video>
+            <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="hero_v7_poster.jpg" data-hero-video data-src-mobile="hero_v8_mobile.mp4" data-src-desktop="hero_v8_pc.mp4" aria-hidden="true"></video>
             <div class="hero-overlay"></div>
         </div>
 
@@ -1710,38 +1707,73 @@
 
             const heroVideo = document.querySelector('[data-hero-video]');
             if (heroVideo) {
-                const playHeroVideo = () => {
+                let heroVideoRetry = null;
+                let heroVideoPlayAttempts = 0;
+
+                const armHeroVideo = () => {
                     heroVideo.muted = true;
                     heroVideo.defaultMuted = true;
                     heroVideo.playsInline = true;
+                    heroVideo.autoplay = true;
+                    heroVideo.loop = true;
                     heroVideo.setAttribute('muted', '');
+                    heroVideo.setAttribute('autoplay', '');
                     heroVideo.setAttribute('playsinline', '');
                     heroVideo.setAttribute('webkit-playsinline', '');
+                };
+
+                const resolveHeroVideoSrc = () => (
+                    window.matchMedia('(max-width: 767px)').matches
+                        ? heroVideo.dataset.srcMobile
+                        : heroVideo.dataset.srcDesktop
+                );
+
+                const syncHeroVideoSrc = () => {
+                    const nextSrc = resolveHeroVideoSrc();
+                    if (!nextSrc) return false;
+
+                    const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
+                    if (!currentSrc.endsWith(nextSrc)) {
+                        heroVideo.setAttribute('src', nextSrc);
+                        heroVideo.load();
+                    }
+
+                    return true;
+                };
+
+                const scheduleHeroVideoPlay = (delay = 0) => {
+                    if (heroVideoPlayAttempts >= 8) return;
+                    window.clearTimeout(heroVideoRetry);
+                    heroVideoRetry = window.setTimeout(playHeroVideo, delay);
+                };
+
+                const playHeroVideo = () => {
+                    armHeroVideo();
+                    if (!syncHeroVideoSrc()) return;
+                    heroVideoPlayAttempts += 1;
 
                     const playAttempt = heroVideo.play();
                     if (playAttempt && typeof playAttempt.catch === 'function') {
                         playAttempt.catch(() => {
-                            heroVideo.load();
-                            window.setTimeout(() => {
-                                const retryAttempt = heroVideo.play();
-                                if (retryAttempt && typeof retryAttempt.catch === 'function') {
-                                    retryAttempt.catch(() => {});
-                                }
-                            }, 160);
+                            scheduleHeroVideoPlay(320);
                         });
                     }
                 };
 
-                if (document.readyState === 'complete') {
-                    playHeroVideo();
-                } else {
-                    window.addEventListener('load', playHeroVideo, { once: true });
-                }
-
+                armHeroVideo();
+                playHeroVideo();
+                heroVideo.addEventListener('loadedmetadata', () => scheduleHeroVideoPlay(0));
+                heroVideo.addEventListener('canplay', () => scheduleHeroVideoPlay(0));
+                window.addEventListener('load', playHeroVideo, { once: true });
                 window.addEventListener('pageshow', playHeroVideo);
+                window.addEventListener('resize', () => scheduleHeroVideoPlay(100));
                 document.addEventListener('visibilitychange', () => {
                     if (!document.hidden) playHeroVideo();
                 });
+                document.addEventListener('touchstart', () => {
+                    heroVideoPlayAttempts = 0;
+                    playHeroVideo();
+                }, { once: true, passive: true });
             }
 
             const observer = new IntersectionObserver((entries) => {

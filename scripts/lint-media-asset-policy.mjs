@@ -115,6 +115,29 @@ function lintHeroVideoAutoplayContract(videoNode, rel) {
     }
   }
 
+  for (const attr of ['data-src-mobile', 'data-src-desktop']) {
+    if (!getAttr(videoNode, attr)) {
+      addFinding(
+        'R6',
+        'error',
+        rel,
+        getAttrLine(videoNode, 'class'),
+        `Hero background video is missing "${attr}". Set the video src directly from JavaScript instead of relying on <source media> selection in iPhone Safari.`
+      );
+    }
+  }
+
+  const sources = (videoNode.childNodes || []).filter((child) => child.nodeName === 'source');
+  if (sources.length > 0) {
+    addFinding(
+      'R6',
+      'error',
+      rel,
+      getAttrLine(sources[0], 'src'),
+      'Hero background video should not use <source media> children; iPhone Safari has been observed to show the first frame without reliably playing. Use data-src-mobile/data-src-desktop and set video.src directly.'
+    );
+  }
+
   const preload = getAttr(videoNode, 'preload');
   if (preload && preload !== 'metadata') {
     addFinding(
@@ -233,16 +256,101 @@ function lintHeroVideoAutoplayScript() {
   const source = readFileSync(indexPath, 'utf8');
   const hasHeroTarget = /data-hero-video/.test(source);
   const hasMutedFixup = /defaultMuted\s*=\s*true/.test(source) && /muted\s*=\s*true/.test(source);
-  const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source);
+  const hasDirectSourceSelection = /matchMedia\s*\(\s*['"]\(max-width:\s*767px\)['"]\s*\)/.test(source)
+    && /setAttribute\s*\(\s*['"]src['"]/.test(source);
+  const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source) && /touchstart/.test(source);
 
-  if (!hasHeroTarget || !hasMutedFixup || !hasPlayRetry) {
+  if (!hasHeroTarget || !hasMutedFixup || !hasDirectSourceSelection || !hasPlayRetry) {
     addFinding(
       'R7',
       'error',
       'index.html',
       1,
-      'Hero background video needs an iOS Safari autoplay arming script that fixes muted/defaultMuted, calls play(), and retries on pageshow/visibilitychange.'
+      'Hero background video needs an iOS Safari autoplay arming script that fixes muted/defaultMuted, sets video.src directly, calls play(), and retries on pageshow/visibilitychange/touchstart.'
     );
+  }
+}
+
+function lintHeroVideoAssets() {
+  const indexPath = path.join(process.cwd(), 'index.html');
+  if (!existsSync(indexPath)) return;
+
+  const source = readFileSync(indexPath, 'utf8');
+  const assetMatches = Array.from(source.matchAll(/data-src-(mobile|desktop)="([^"]+\.mp4)"/g));
+  const assets = new Map(assetMatches.map((match) => [match[1], match[2]]));
+
+  for (const required of ['mobile', 'desktop']) {
+    const src = assets.get(required);
+    if (!src) continue;
+
+    const filePath = path.join(process.cwd(), src);
+    if (!existsSync(filePath)) {
+      addFinding('R8', 'error', src, 1, `Hero ${required} video asset "${src}" does not exist.`);
+      continue;
+    }
+
+    lintHeroVideoFastStart(src, filePath);
+    lintHeroVideoCodec(required, src, filePath);
+  }
+}
+
+function lintHeroVideoFastStart(src, filePath) {
+  const bytes = readFileSync(filePath);
+  const moovOffset = bytes.indexOf(Buffer.from('moov'));
+  const mdatOffset = bytes.indexOf(Buffer.from('mdat'));
+
+  if (moovOffset < 0 || mdatOffset < 0 || moovOffset > mdatOffset) {
+    addFinding(
+      'R8',
+      'error',
+      src,
+      1,
+      `Hero video "${src}" is not faststart. Encode with "-movflags +faststart" so iPhone Safari can start playback without downloading the full file.`
+    );
+  }
+}
+
+function lintHeroVideoCodec(kind, src, filePath) {
+  let probe;
+  try {
+    probe = JSON.parse(execFileSync('ffprobe', [
+      '-v', 'error',
+      '-show_entries', 'stream=index,codec_type,codec_name,profile,pix_fmt,width,height',
+      '-of', 'json',
+      filePath,
+    ], { encoding: 'utf8' }));
+  } catch (error) {
+    addFinding('R8', 'warning', src, 1, `Could not inspect hero video codec with ffprobe: ${error.message}`);
+    return;
+  }
+
+  const streams = Array.isArray(probe.streams) ? probe.streams : [];
+  const videoStreams = streams.filter((stream) => stream.codec_type === 'video');
+  const audioStreams = streams.filter((stream) => stream.codec_type === 'audio');
+  const video = videoStreams[0];
+
+  if (audioStreams.length > 0) {
+    addFinding('R8', 'error', src, 1, `Hero video "${src}" has an audio track. iPhone Safari background autoplay is more reliable with video-only MP4.`);
+  }
+
+  if (videoStreams.length !== 1 || !video) {
+    addFinding('R8', 'error', src, 1, `Hero video "${src}" must contain exactly one video stream.`);
+    return;
+  }
+
+  if (video.codec_name !== 'h264' || !/baseline/i.test(video.profile || '') || video.pix_fmt !== 'yuv420p') {
+    addFinding(
+      'R8',
+      'error',
+      src,
+      1,
+      `Hero video "${src}" should be H.264 Constrained Baseline yuv420p for older iPhone Safari compatibility; found codec=${video.codec_name}, profile=${video.profile}, pix_fmt=${video.pix_fmt}.`
+    );
+  }
+
+  const maxWidth = kind === 'mobile' ? 960 : 1280;
+  if (Number(video.width) > maxWidth) {
+    addFinding('R8', 'error', src, 1, `Hero ${kind} video "${src}" is ${video.width}px wide; keep it at or below ${maxWidth}px for iPhone Safari startup reliability.`);
   }
 }
 
@@ -304,5 +412,6 @@ lintHtmlSources();
 lintVideoModifyWithoutRename();
 lintServiceWorkerBypass();
 lintHeroVideoAutoplayScript();
+lintHeroVideoAssets();
 lintCursorversCurlProbe();
 emitFindings(hasOverrideLabel());
