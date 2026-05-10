@@ -1146,3 +1146,17 @@ h1.text-display {
 .news-visual-lockup-card .news-visual-caption { color: #6b7280; font-size: 11px; letter-spacing: 0.06em; }
 
 /* End */
+
+/* =========================================================
+   v20260510 mobile overflow fix — iPhone 13 Pro Max での
+   .hero-followup-lede が word-break: keep-all で改行できず
+   右側に overflow していた件への修正。BR を常に visible 化
+   + モバイルで word-break を緩和。
+   ========================================================= */
+@media (max-width: 767px) {
+  .hero-followup-lede {
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+    line-break: auto !important;
+  }
+}
