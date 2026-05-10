@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.14'; // Updated: 2026-05-10 - mobile hero overlay 0.85->0.45 lightened + video brightness 1.1->0.95 to fix iPhone whiteout. Text shadow added to hero-content h1 / followup-lede for legibility on lighter overlay.
+const CACHE_VERSION = '1.0.15'; // Updated: 2026-05-10 - mobile hero video heavy darken (brightness 0.55 + contrast 1.45 + saturate 1.7 + hue -12deg) + dark navy overlay 0.30->0.85 + white text. Source mp4 was mostly white snow scene causing whiteout, fixed at CSS layer.
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
