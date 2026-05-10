@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.13'; // Updated: 2026-05-02 - hero video files renamed to hero_v7_pc.mp4 / hero_v7_mobile.mp4 / hero_v7_poster.jpg and the stale Pexels fallback source was removed to prevent iPhone Safari from falling through to the old ocean video.
+const CACHE_VERSION = '1.0.14'; // Updated: 2026-05-10 - mobile hero overlay 0.85->0.45 lightened + video brightness 1.1->0.95 to fix iPhone whiteout. Text shadow added to hero-content h1 / followup-lede for legibility on lighter overlay.
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First

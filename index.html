@@ -121,6 +121,26 @@
             z-index: 1;
         }
 
+        /* Mobile: 白オーバーレイを軽くして動画を見やすく + 動画 brightness 加算を解除 */
+        @media (max-width: 767px) {
+            .hero-video {
+                filter: brightness(0.95) saturate(1.0);
+            }
+            .hero-overlay {
+                background: linear-gradient(180deg,
+                        rgba(255, 255, 255, 0.45) 0%,
+                        rgba(255, 255, 255, 0.30) 50%,
+                        rgba(255, 255, 255, 0.20) 100%);
+            }
+            /* 軽オーバーレイ + 動画ありに対して dark text 可読性を確保 */
+            .hero-content h1,
+            .hero-content h1 .hero-subline,
+            .hero-followup-lede {
+                text-shadow: 0 1px 2px rgba(255, 255, 255, 0.65),
+                             0 0 6px rgba(255, 255, 255, 0.35);
+            }
+        }
+
         .hero-content {
             position: relative;
             z-index: 10;
@@ -1785,7 +1805,7 @@
   <div class="site-footer__bottom">
     <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
     <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
-    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>92be872</span></span>
+    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>8c21c84</span></span>
   </div>
 </footer>
 <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
