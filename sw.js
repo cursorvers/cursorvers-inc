@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.16'; // Updated: 2026-05-10 - mobile text-shadow blur reduced (was 8px/12px/24px causing font fuzziness, now 1-2px crisp). Overlay bottom 0.85->0.92 for stronger text legibility. Video filter and dark navy gradient retained.
+const CACHE_VERSION = '1.0.17'; // Updated: 2026-05-10 - removed legacy mobile .hero-overlay white-gradient override (was overriding the new dark navy overlay, causing white-on-white invisible text). Now mobile dark navy overlay + white text fully active.
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
