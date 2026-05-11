@@ -285,6 +285,10 @@
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">病院提案・アップデートレビュー商品</h2>
                     <p class="text-xl text-text-secondary">継続契約の前に、まずは提案書・責任分界・院内説明を固定価格でレビューします。</p>
+                    <div class="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-flame/5 border border-flame/20 rounded-full">
+                        <svg class="text-flame" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-info-circle"></use></svg>
+                        <span class="text-base text-text-secondary">スポットレビューは単発の固定価格。<strong class="text-flame">月額顧問契約は最低契約期間6ヶ月</strong>（<a href="services.html#faq-contract" class="underline hover:text-flame">詳細</a>）</span>
+                    </div>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
@@ -408,18 +412,20 @@
                 </div>
 
                 <!-- Annual Plan -->
-                <div class="bg-white rounded-2xl p-8 text-center mt-10 border border-gray-100 shadow-sm">
+                <div class="bg-white rounded-2xl p-8 text-center mt-10 border-2 border-flame/30 shadow-sm">
                     <p class="text-2xl font-bold mb-2">
                         <svg class="text-flame mr-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="#icon-check"></use></svg>
                         レビュー後のライト顧問
+                        <span class="ml-2 inline-block bg-flame text-white text-xs font-bold px-2 py-0.5 rounded-full align-middle">月額サブスク</span>
                     </p>
                     <p class="text-xl font-bold text-flame mt-3 mb-2">
-                        目安 15〜30万円/月(税別)／3か月〜
-                        <span class="block text-sm text-text-tertiary font-normal mt-1">スコープ・面談頻度により個別設計</span>
+                        目安 15〜30万円/月(税別)／<span class="inline-block bg-flame/10 px-2 py-0.5 rounded">最低契約期間6ヶ月</span>
+                        <span class="block text-sm text-text-tertiary font-normal mt-1">スコープ・面談頻度により個別設計。7ヶ月目以降は1ヶ月単位での継続・解約が可能</span>
                     </p>
                     <p class="text-lg text-text-secondary">
                         スポットレビュー後に必要な場合のみ、月2回30分の定例相談とQ&A対応を、範囲を切って別途設計します。
                     </p>
+                    <p class="text-sm text-text-tertiary mt-4">※2026年5月11日以降の新規契約に適用。最低契約期間内の中途解約は残存期間分の料金（税別）。詳細は<a href="services.html#faq-contract" class="underline hover:text-flame">FAQ</a>または<a href="terms.html" class="underline hover:text-flame">利用規約第7条</a>をご確認ください。</p>
                 </div>
 
                 <p class="text-center text-lg text-text-tertiary mt-10">※開発・運用保守・問い合わせ一次対応・法的適合性保証は対象外です。患者情報は原則取り扱いません。</p>
@@ -560,7 +566,7 @@
   <div class="site-footer__bottom">
     <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
     <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
-    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>6e6fba6</span></span>
+    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>2ac80ca</span></span>
   </div>
 </footer>
 <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
