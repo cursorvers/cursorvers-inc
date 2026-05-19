@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --cursorvers-serif: "リュウミン B-KL JIS2004", "Ryumin B-KL", "DNP 秀英にじみ明朝", "DNP Shuei NijimiMincho", "DNP Shuei Nijimi Mincho", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
+  --cursorvers-serif: "Noto Sans JP", system-ui, sans-serif;
 }
 
 html,

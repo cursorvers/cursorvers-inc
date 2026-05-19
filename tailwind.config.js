@@ -3,9 +3,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
-        en: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
-        serif: ['"リュウミン B-KL JIS2004"', '"Ryumin B-KL"', '"DNP 秀英にじみ明朝"', '"DNP Shuei NijimiMincho"', '"DNP Shuei Nijimi Mincho"', '"Hiragino Mincho ProN"', '"Yu Mincho"', 'YuMincho', '"Noto Serif JP"', 'serif'],
+        sans: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
+        en: ['"Manrope"', '"Noto Sans JP"', 'sans-serif'],
+        serif: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
       },
       colors: {
         "brand-black": "#1d1d1f",
