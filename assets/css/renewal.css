@@ -879,7 +879,7 @@ main article h2, main .prose h2 {
 */
 .hero-motion-brush,
 .hero-motion-brush .hero-motion-token {
-  font-family: "Klee One", "Shippori Antique B1", "Zen Old Mincho", serif !important;
+  font-family: "Zen Old Mincho", "Noto Serif JP", "Shippori Antique B1", serif !important;
   font-weight: 900 !important;
   letter-spacing: 0.04em !important;
   font-size: clamp(3.75rem, 11vw, 9rem) !important;
