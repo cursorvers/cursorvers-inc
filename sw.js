@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.20'; // Updated: 2026-05-25 - hero font cascade fix: .hero-motion-brush rule was overriding .hero-motion-title with Klee One. Now both use Zen Old Mincho 900.
+const CACHE_VERSION = '1.0.21'; // Updated: 2026-05-25 - hero font Pattern C (Noto Serif JP 900)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
