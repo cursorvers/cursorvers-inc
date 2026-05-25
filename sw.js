@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.17'; // Updated: 2026-05-10 - removed legacy mobile .hero-overlay white-gradient override (was overriding the new dark navy overlay, causing white-on-white invisible text). Now mobile dark navy overlay + white text fully active.
+const CACHE_VERSION = '1.0.18'; // Updated: 2026-05-25 - hero title kaisho fix, force-invalidate SW caches
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
