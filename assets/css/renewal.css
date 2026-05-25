@@ -782,16 +782,17 @@ main article h2, main .prose h2 {
   will-change: opacity, transform, filter;
 }
 
-/* Hero title: lighter weight per user feedback, remove Mincho */
+/* Hero title: editorial Mincho-style (Shippori Antique B1) per 2026-05-25 user feedback */
 .hero-motion-title {
-  font-family: var(--font-sans) !important;
+  font-family: "Shippori Antique B1", "Zen Old Mincho", "Noto Serif JP", serif !important;
   font-size: clamp(2.75rem, 8.2vw, 6.75rem) !important;
-  line-height: 1.06 !important;
-  letter-spacing: -0.03em !important;
-  font-weight: 500 !important; /* was 900 → 500: significantly lighter */
+  line-height: 1.1 !important;
+  letter-spacing: 0.02em !important;
+  font-weight: 400 !important;
 }
 .hero-motion-title .hero-motion-token {
-  font-weight: 500 !important;
+  font-family: "Shippori Antique B1", "Zen Old Mincho", "Noto Serif JP", serif !important;
+  font-weight: 400 !important;
 }
 .hero-motion-title .hero-motion-subline,
 .hero-motion-title .hero-subline {
