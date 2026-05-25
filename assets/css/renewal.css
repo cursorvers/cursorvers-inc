@@ -782,16 +782,16 @@ main article h2, main .prose h2 {
   will-change: opacity, transform, filter;
 }
 
-/* Hero title: editorial Mincho-style (Shippori Antique B1) per 2026-05-25 user feedback */
+/* Hero title: brush calligraphy (Yuji Mai) per 2026-05-25 user feedback */
 .hero-motion-title {
-  font-family: "Shippori Antique B1", "Zen Old Mincho", "Noto Serif JP", serif !important;
+  font-family: "Yuji Mai", "Yuji Syuku", "New Tegomin", "Klee One", serif !important;
   font-size: clamp(2.75rem, 8.2vw, 6.75rem) !important;
-  line-height: 1.1 !important;
-  letter-spacing: 0.02em !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0.03em !important;
   font-weight: 400 !important;
 }
 .hero-motion-title .hero-motion-token {
-  font-family: "Shippori Antique B1", "Zen Old Mincho", "Noto Serif JP", serif !important;
+  font-family: "Yuji Mai", "Yuji Syuku", "New Tegomin", "Klee One", serif !important;
   font-weight: 400 !important;
 }
 .hero-motion-title .hero-motion-subline,
