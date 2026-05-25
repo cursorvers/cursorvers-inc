@@ -1087,6 +1087,7 @@ h1.text-display {
 .news-tag-flame   { background: #E55812; }
 .news-tag-navy    { background: #1f2937; }
 .news-tag-emerald { background: #047857; }
+.news-tag-amber   { background: #B45309; }
 .news-card-v2-date {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 12px; color: #9ca3af; letter-spacing: 0.02em;
@@ -1137,6 +1138,7 @@ h1.text-display {
   white-space: nowrap;
 }
 .news-visual-wordmark--flame { color: #E55812; }
+.news-visual-wordmark--amber { color: #B45309; }
 .news-visual-x { color: #E55812; font-weight: 800; font-size: 18px; }
 .news-visual-logo { max-height: 32px; max-width: 130px; object-fit: contain; }
 .news-visual-lockup-card .news-visual-caption { color: #6b7280; font-size: 11px; letter-spacing: 0.06em; }
