@@ -784,15 +784,15 @@ main article h2, main .prose h2 {
 
 /* Hero title: kaisho (Kaisei Tokumin 800) per 2026-05-25 user feedback */
 .hero-motion-title {
-  font-family: "Kaisei Tokumin", "Yuji Syuku", "Zen Old Mincho", serif !important;
+  font-family: "Zen Old Mincho", "Noto Serif JP", "Shippori Antique B1", serif !important;
   font-size: clamp(2.75rem, 8.2vw, 6.75rem) !important;
   line-height: 1.18 !important;
   letter-spacing: 0.03em !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 .hero-motion-title .hero-motion-token {
-  font-family: "Kaisei Tokumin", "Yuji Syuku", "Zen Old Mincho", serif !important;
-  font-weight: 800 !important;
+  font-family: "Zen Old Mincho", "Noto Serif JP", "Shippori Antique B1", serif !important;
+  font-weight: 900 !important;
 }
 .hero-motion-title .hero-motion-subline,
 .hero-motion-title .hero-subline {

@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.18'; // Updated: 2026-05-25 - hero title kaisho fix, force-invalidate SW caches
+const CACHE_VERSION = '1.0.19'; // Updated: 2026-05-25 - hero font Zen Old Mincho 900 (thicker classic mincho)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
