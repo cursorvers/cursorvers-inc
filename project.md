@@ -634,7 +634,7 @@ Performance 98未達の主因になりやすく、改善幅が最も大きいで
 必要なら、次の返信でこちらから **「Lighthouse CI（GitHub Actions）で自動採点して、98未達だと落ちる」設定（YAML + 設定ファイル一式）**をそのまま貼ります。
 これを入れると、以後は人力のDevTools検収なしで、毎回“数値”で合否が出ます。
 
-[1]: https://script.google.com/macros/s/AKfycbwDP0d67qtifyms2h67LawjNWJi_Lh44faPC7Z4axfS_Gdmjzcd50rcl_kmTYBTysKirQ/exec?type=hospital "お問い合わせフォーム | Cursorvers.ai"
+[1]: https://script.google.com/macros/s/AKfycbx-983qcPNlVWuAQF7kvQ5llwzvKqfzD_vv21keIQfxYjT7SWbUUre9Uq0_BBjQ3doI/exec?type=hospital "お問い合わせフォーム | Cursorvers.ai"
 [2]: https://cursorversweb.vercel.app/selfcheck "Cursorvers"
 [3]: https://cursorversweb.vercel.app/apply/advisor "Cursorvers"
 [4]: https://cursorversweb.vercel.app/apply/48h "Cursorvers"
