@@ -1304,6 +1304,18 @@ button.bg-brand-blue:hover {
 }
 [class*="marquee"]:hover { animation-play-state: paused; }
 
+@media (max-width: 767px) {
+  .br-pc { display: none; }
+  h1,
+  h2,
+  h3,
+  .section-h2,
+  .hero-followup-heading,
+  .hero-h1 {
+    word-break: auto-phrase;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms;
