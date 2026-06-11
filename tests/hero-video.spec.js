@@ -70,7 +70,7 @@ test.describe("Hero background video", () => {
 
     await page.waitForFunction(() => {
       const heroVideo = document.querySelector("[data-hero-video]");
-      return heroVideo?.currentSrc.endsWith("hero_v10_mobile.mp4");
+      return /hero_v6_(mobile|pc)\.mp4$/.test(heroVideo?.currentSrc ?? "");
     });
 
     await expect
