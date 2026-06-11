@@ -29,8 +29,8 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0B0C10">
-    <meta name="msapplication-TileColor" content="#0B0C10">
+    <meta name="theme-color" content="#101D33">
+    <meta name="msapplication-TileColor" content="#101D33">
     <meta name="msapplication-TileImage" content="/icons/icon-144.png">
 
     <title>Cursorvers｜病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関</title>
@@ -48,21 +48,21 @@
     <meta name="twitter:description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
-    <link rel="preload" as="video" href="hero_v10_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
-    <link rel="preload" as="video" href="hero_v10_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
+    <link rel="preload" as="video" href="hero_v6_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v6_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260611a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Manrope:wght@400;600;800&family=Zen+Old+Mincho:wght@700;900&family=Kaisei+Tokumin:wght@700;800&family=Shippori+Antique+B1&family=New+Tegomin&family=Noto+Serif+JP:wght@700;900&family=Yuji+Boku&family=Yuji+Mai&family=Yuji+Syuku&family=Klee+One:wght@600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260525h">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260611a">
     <!-- renewal:end -->
     <style>
-        body { font-family: "Noto Sans JP", system-ui, sans-serif; font-feature-settings: "palt"; background: #fff; color: #0F172A; }
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-        a:focus-visible, button:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0F172A; color: #fff; font-weight: bold; text-decoration: none; }
+        :root { --c-azure-soft: #7FA3CC; }
+        body { font-family: "Noto Sans JP", system-ui, sans-serif; font-feature-settings: "palt"; background: #F4F1EA; color: #13243F; }
+        .glass-nav { background: rgba(244, 241, 234, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
         .hero-nav-reveal {
             opacity: 0;
@@ -77,7 +77,7 @@
             position: relative;
             min-height: 100vh;
             width: 100%;
-            background: #FFFFFF;
+            background: #F4F1EA;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -114,32 +114,49 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg,
-                    rgba(255, 255, 255, 0.85) 0%,
-                    rgba(255, 255, 255, 0.75) 40%,
-                    rgba(255, 255, 255, 0.65) 100%);
+            background: linear-gradient(180deg, rgba(16,29,51,.22) 0%, rgba(16,29,51,.48) 55%, rgba(16,29,51,.62) 82%, #F4F1EA 100%);
             z-index: 1;
         }
 
-        /* Mobile: 動画素材白雪のため強フィルタ + 濃紺オーバーレイで dark moody 化。テキストは滲ませず crisp に */
+        .hero-content h1,
+        .hero-content h1 .hero-subline {
+            color: #F4F1EA !important;
+        }
+
+        .hero-content .hero-cta-primary,
+        .hero-content [data-hero-cta="primary"] {
+            background: #3E6FA8;
+            color: #F4F1EA;
+            border-color: #3E6FA8;
+        }
+
+        .hero-content .hero-cta-primary:hover,
+        .hero-content [data-hero-cta="primary"]:hover {
+            background: #36618F;
+            border-color: #36618F;
+        }
+
+        .hero-content .hero-cta-secondary,
+        .hero-content [data-hero-cta="secondary"] {
+            background: transparent;
+            color: #F4F1EA;
+            border: 1.5px solid #F4F1EA;
+        }
+
+        /* Mobile: dark moody 化。テキストは滲ませず crisp に */
         @media (max-width: 767px) {
             .hero-video {
                 filter: brightness(0.55) contrast(1.45) saturate(1.7) hue-rotate(-12deg);
             }
             .hero-overlay {
-                background: linear-gradient(180deg,
-                        rgba(10, 22, 48, 0.35) 0%,
-                        rgba(10, 22, 48, 0.65) 45%,
-                        rgba(10, 22, 48, 0.92) 100%);
+                background: linear-gradient(180deg, rgba(16,29,51,.22) 0%, rgba(16,29,51,.48) 55%, rgba(16,29,51,.62) 82%, #F4F1EA 100%);
             }
             .hero-content h1,
             .hero-content h1 .hero-subline {
-                color: #FFFFFF !important;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+                color: #F4F1EA !important;
             }
             .hero-followup-lede {
-                color: #F1F5F9 !important;
-                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+                color: #F4F1EA !important;
             }
         }
 
@@ -149,7 +166,7 @@
         }
 
         .hero-motion-title {
-            font-family: "Klee One", "Shippori Antique B1", "Zen Old Mincho", serif;
+            font-family: "Noto Serif JP", "Hiragino Mincho ProN", Georgia, serif;
             font-weight: 600;
             transform: translate3d(0, 0, 0);
         }
@@ -159,7 +176,7 @@
         }
 
         .proof-metric {
-            font-family: "Klee One", "Shippori Antique B1", "Zen Old Mincho", serif;
+            font-family: "Noto Serif JP", "Hiragino Mincho ProN", Georgia, serif;
             font-weight: 600;
         }
 
@@ -171,10 +188,9 @@
         .hero-motion-token,
         .hero-motion-subline {
             display: inline-block;
-            opacity: 0;
-            transform: translate3d(0, 110%, 0);
-            animation: heroMotionPop 1.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: calc(0.95s + var(--hero-stagger, 0s));
+            opacity: 1;
+            transform: none;
+            animation: none;
         }
 
         .hero-motion-subline {
@@ -259,7 +275,7 @@
         }
 
         .card-premium {
-            background: linear-gradient(180deg, #FFFFFF 0%, #FAFBFC 100%);
+            background: linear-gradient(180deg, #FBFAF5 0%, #F4F1EA 100%);
             border: 1px solid rgba(0, 0, 0, 0.04);
             box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.06);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -281,7 +297,7 @@
             padding: 4px 6px 14px;
             margin: -4px -6px 0;
             scrollbar-width: thin;
-            scrollbar-color: #CBD5E1 transparent;
+            scrollbar-color: #D8D4C8 transparent;
             -webkit-overflow-scrolling: touch;
         }
         .news-scroll:focus-visible {
@@ -290,7 +306,7 @@
             border-radius: 12px;
         }
         .news-scroll > article {
-            flex: 0 0 clamp(300px, 28vw, 340px);
+            flex: 0 0 clamp(280px, calc((100% - 36px) / 3 - 24px), 340px);
             scroll-snap-align: start;
             scroll-snap-stop: always;
             min-height: 300px;
@@ -303,9 +319,26 @@
         .news-scroll .news-logo-lockup {
             display: none !important;
         }
+        .news-scroll .news-visual-lockup {
+            flex-wrap: wrap;
+            row-gap: 6px;
+            min-width: 0;
+            padding-inline: 10px;
+        }
+        .news-scroll .news-visual-brand {
+            font-size: 11px;
+            padding: 6px 10px;
+        }
+        .news-scroll .news-visual-wordmark {
+            font-size: 13px;
+            padding: 6px 10px;
+            white-space: normal;
+            text-align: center;
+            max-width: 100%;
+        }
         .news-scroll::-webkit-scrollbar { height: 4px; }
         .news-scroll::-webkit-scrollbar-track { background: transparent; }
-        .news-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        .news-scroll::-webkit-scrollbar-thumb { background: #D8D4C8; border-radius: 4px; }
         @media (max-width: 767px) {
             .news-scroll {
                 gap: 14px;
@@ -322,7 +355,7 @@
             .news-scroll-fade {
                 width: 38px;
                 bottom: 16px;
-                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.82) 100%);
+                background: linear-gradient(to right, rgba(244,241,234,0) 0%, rgba(244,241,234,0.82) 100%);
             }
             .news-scroll-hint {
                 right: 12px;
@@ -337,7 +370,7 @@
             bottom: 12px;
             width: 64px;
             pointer-events: none;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 90%);
+            background: linear-gradient(to right, rgba(244,241,234,0) 0%, rgba(244,241,234,1) 90%);
             transition: opacity 0.3s ease;
             z-index: 2;
         }
@@ -396,13 +429,11 @@
 
             .hero-motion-title {
                 -webkit-text-stroke: 0.24px currentColor;
-                text-shadow: 0.012em 0 0 currentColor, -0.012em 0 0 currentColor;
             }
 
             .hero-motion-title .hero-subline {
                 font-weight: 900;
                 -webkit-text-stroke: 0.16px currentColor;
-                text-shadow: 0.01em 0 0 currentColor, -0.01em 0 0 currentColor;
             }
         }
 
@@ -469,7 +500,6 @@
             .hero-wrapper {
                 min-height: 100vh;
                 min-height: 100svh;
-                height: 100svh;
                 padding-top: 76px;
             }
 
@@ -512,17 +542,13 @@
             .hero-motion-armed .hero-motion-token,
             .hero-motion-armed .hero-motion-subline {
                 opacity: 0;
-                transform: translate3d(0, 125%, 0);
+                transform: translate3d(0, 18px, 0);
             }
 
-            .hero-motion-ready .hero-motion-token,
-            .hero-motion-ready .hero-motion-subline {
-                animation: heroMotionPopMobile 1.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-                animation-delay: calc(0.8s + var(--hero-stagger, 0s));
-            }
-
-            .hero-motion-ready .hero-motion-subline {
-                animation-duration: 1.85s;
+            .hero-motion-armed .hero-motion-token,
+            .hero-motion-armed .hero-motion-subline {
+                animation: heroMotionPopMobile .9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                animation-delay: calc(.12s + var(--hero-stagger, 0s));
             }
 
             .mobile-tight-section {
@@ -575,10 +601,10 @@
 
             .mobile-proof-grid > div {
                 min-width: 0;
-                border: 1px solid #e5e7eb;
+                border: 1px solid #D8D4C8;
                 border-radius: 0.5rem;
                 padding: 0.85rem 0.7rem;
-                background: #fff;
+                background: #F4F1EA;
             }
 
             .mobile-proof-grid > div p:first-child {
@@ -760,8 +786,7 @@
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
                 <picture>
-                    <source srcset="Cursorvers_logo_navy.webp" type="image/webp">
-                    <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
+                    <img src="assets/brand/cvr_logo_dark.png" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
@@ -792,7 +817,7 @@
     <div id="main" class="hero-wrapper">
         <!-- Video Background - EXACTLY same as edu -->
         <div class="hero-video-container">
-            <video class="hero-video" src="hero_v10_mobile.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="hero_v10_poster.jpg" data-hero-video data-src-mobile="hero_v10_mobile.mp4" data-src-desktop="hero_v10_pc.mp4" aria-hidden="true"></video>
+            <video class="hero-video" src="hero_v6_mobile.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="hero_v6_poster.jpg" data-hero-video data-src-mobile="hero_v6_mobile.mp4" data-src-desktop="hero_v6_pc.mp4" aria-hidden="true"></video>
             <div class="hero-overlay"></div>
         </div>
         <script>
@@ -860,8 +885,6 @@
                     window.performance.mark('hero-video-armed');
                 }
 
-                heroVideo.addEventListener('loadedmetadata', () => scheduleHeroVideoPlay(0));
-                heroVideo.addEventListener('canplay', () => scheduleHeroVideoPlay(0));
                 window.addEventListener('load', playHeroVideo, { once: true });
                 window.addEventListener('pageshow', playHeroVideo);
                 window.addEventListener('resize', () => scheduleHeroVideoPlay(100));
@@ -1283,7 +1306,7 @@
 
     <!-- Social Proof Section -->
     <section class="py-20 md:py-28 bg-white relative z-10">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="text-center mb-12 md:mb-16">
                 <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">法的要件</span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">「問われる時代」に備える</h2>
@@ -1352,7 +1375,7 @@
 
     <!-- Philosophy Section -->
     <section id="philosophy" class="section-padding-lg bg-white relative z-10">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
 
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
@@ -1478,14 +1501,14 @@
 
     <!-- Business Section -->
     <section id="business" class="section-padding-lg bg-brand-gray relative z-10">
-        <div class="max-w-screen-xl mx-auto px-6 md:px-8">
+        <div class="max-w-6xl mx-auto px-6 md:px-8">
             <div class="text-center mb-14 md:mb-20">
                 <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">事業内容</span>
                 <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">提案前・導入前を守る、2つの支援</h2>
                 <p class="text-text-secondary text-body-lg">AIベンダーと医療機関の間に、製品中立のレビューを挟みます。</p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
                 <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
                     <div class="h-52 md:h-64 img-cover">
                         <img src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?q=80&w=1200&auto=format&fit=crop"
@@ -1692,41 +1715,41 @@
 
     <!-- Company Section -->
     <section id="company" class="section-padding-lg bg-white relative z-10">
-        <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="grid md:grid-cols-2 gap-12 md:gap-32">
                 <div>
                     <h3 class="text-2xl font-bold text-brand-black mb-8 md:mb-12 border-b-2 border-gray-100 pb-6">
                         Corporate Info</h3>
                     <div class="space-y-0 text-body">
-                        <div class="flex items-center py-4 md:py-6 border-b border-gray-100">
-                            <span class="w-28 md:w-44 text-text-tertiary font-semibold shrink-0">商号</span>
-                            <span class="flex flex-col leading-tight flex-1">
+                        <div class="flex flex-col sm:flex-row sm:items-center py-4 md:py-6 border-b border-gray-100">
+                            <span class="sm:w-28 md:w-44 text-text-tertiary font-semibold shrink-0 mb-2 sm:mb-0">商号</span>
+                            <span class="flex flex-col leading-tight flex-1" style="word-break: keep-all; overflow-wrap: anywhere;">
                                 <span class="text-brand-black font-semibold">Cursorvers株式会社</span>
                                 <span class="text-xs text-text-tertiary tracking-[0.2em]">カーソルバース株式会社</span>
                                 <span class="text-sm text-text-secondary font-en mt-1">Cursorvers Inc.</span>
                             </span>
-                            <a href="message.html" class="shrink-0 ml-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                            <a href="message.html" class="shrink-0 mt-4 sm:mt-0 sm:ml-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
                                 <img src="images/cursorvers-brand-logo.jpeg" alt="Cursorvers brand logo" class="h-16 w-auto object-contain" loading="lazy">
                             </a>
                         </div>
-                        <div class="flex py-4 md:py-6 border-b border-gray-100">
-                            <span class="w-28 md:w-44 text-text-tertiary font-semibold font-en">Founder &amp; Director</span>
-                            <a href="message.html" class="text-brand-black hover:text-flame transition">
+                        <div class="flex flex-col sm:flex-row py-4 md:py-6 border-b border-gray-100">
+                            <span class="sm:w-28 md:w-44 text-text-tertiary font-semibold font-en shrink-0 mb-2 sm:mb-0">Founder &amp; Director</span>
+                            <a href="message.html" class="text-brand-black hover:text-flame transition" style="word-break: keep-all; overflow-wrap: anywhere;">
                                 <span class="block font-semibold">大田原 正幸</span>
                                 <span class="block text-sm text-text-tertiary font-en mt-1">Masayuki Otawara</span>
                             </a>
                         </div>
-                        <div class="flex py-4 md:py-6 border-b border-gray-100">
-                            <span class="w-28 md:w-44 text-text-tertiary font-semibold">所在地</span>
-                            <span class="text-brand-black">〒102-0074 東京都千代田区九段南1-5-6 りそな九段ビル5F KSフロア</span>
+                        <div class="flex flex-col sm:flex-row py-4 md:py-6 border-b border-gray-100">
+                            <span class="sm:w-28 md:w-44 text-text-tertiary font-semibold shrink-0 mb-2 sm:mb-0">所在地</span>
+                            <span class="text-brand-black" style="word-break: keep-all; overflow-wrap: anywhere;">〒102-0074 東京都千代田区九段南1-5-6 りそな九段ビル5F KSフロア</span>
                         </div>
-                        <div class="flex py-4 md:py-6 border-b border-gray-100">
-                            <span class="w-28 md:w-44 text-text-tertiary font-semibold">電話番号</span>
-                            <span class="text-brand-black">03-6403-9882</span>
+                        <div class="flex flex-col sm:flex-row py-4 md:py-6 border-b border-gray-100">
+                            <span class="sm:w-28 md:w-44 text-text-tertiary font-semibold shrink-0 mb-2 sm:mb-0">電話番号</span>
+                            <span class="text-brand-black" style="word-break: keep-all; overflow-wrap: anywhere;">03-6403-9882</span>
                         </div>
-                        <div class="flex py-4 md:py-6 border-b border-gray-100">
-                            <span class="w-28 md:w-44 text-text-tertiary font-semibold">事業内容</span>
-                            <div class="text-brand-black">
+                        <div class="flex flex-col sm:flex-row py-4 md:py-6 border-b border-gray-100">
+                            <span class="sm:w-28 md:w-44 text-text-tertiary font-semibold shrink-0 mb-2 sm:mb-0">事業内容</span>
+                            <div class="text-brand-black" style="word-break: keep-all; overflow-wrap: anywhere;">
                                 医療AI運用アセスメント・ガバナンス構築<br>
                                 医療AIベンダー支援<br>
                                 教育研修事業
@@ -1797,7 +1820,7 @@
     <footer class="site-footer" role="contentinfo">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <img src="Cursorvers_logo_white.webp" alt="Cursorvers" onerror="this.onerror=null;this.src='Cursorvers_logo_white.jpeg';">
+      <img src="assets/brand/cvr_logo_light.png" alt="Cursorvers" onerror="this.onerror=null;this.src='assets/brand/cvr_logo_light.png';">
       <p>病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関。</p>
     </div>
     <div class="site-footer__col">
@@ -1830,20 +1853,17 @@
   </div>
   <div class="site-footer__bottom">
     <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
-    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
-    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>75f4032</span></span>
+    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#6B7280;">Medical AI Assurance &amp; Continuity</span>
+    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>3617b07</span></span>
   </div>
 </footer>
 <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 
     <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
     <script src="assets/js/cookie-consent.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.setTimeout(() => {
-                document.documentElement.classList.add('hero-motion-ready');
-            }, 650);
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1884,9 +1904,10 @@
                     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
                     event.preventDefault();
                     const direction = event.key === 'ArrowRight' ? 1 : -1;
+                    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                     newsEl.scrollBy({
                         left: direction * Math.round(newsEl.clientWidth * 0.82),
-                        behavior: 'smooth'
+                        behavior: reduceMotion ? 'auto' : 'smooth'
                     });
                 });
                 checkFade();

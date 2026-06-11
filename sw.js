@@ -1,15 +1,22 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '1.0.21'; // Updated: 2026-05-25 - hero font Pattern C (Noto Serif JP 900)
+const CACHE_VERSION = '2.0.0'; // Updated: 2026-06-11 - Design System v2.0
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
+  '/assets/css/renewal.css?v=20260611a',
   '/dist/tailwind.min.css',
+  '/dist/tailwind.min.css?v=20260611a',
+  '/assets/js/nav.js',
+  '/assets/js/reveal.js',
+  '/assets/js/cookie-consent.js',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/apple-touch-icon.png',
-  '/Cursorvers_logo_navy.webp',
-  '/Cursorvers_logo_white.webp'
+  '/assets/brand/cvr_logo_dark.png',
+  '/assets/brand/cvr_logo_light.png',
+  '/assets/brand/cvr_icon_dark.png',
+  '/assets/brand/cvr_icon_light.png'
 ];
 
 // HTML pages - Network First

@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let mobileMenu = null;
     let lastFocusedElement = null;
+    let savedScrollY = 0;
+    let isScrollLocked = false;
 
     const brandHref = (brandLink && brandLink.getAttribute('href')) || 'index.html';
     const brandImg = brandLink ? brandLink.querySelector('img') : null;
@@ -37,7 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const closeMenu = () => {
         if (mobileMenu) mobileMenu.style.display = 'none';
-        document.body.style.overflow = '';
+        if (isScrollLocked) {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, savedScrollY);
+            isScrollLocked = false;
+        }
         menuBtn.setAttribute('aria-expanded', 'false');
         if (lastFocusedElement) {
             lastFocusedElement.focus();
@@ -63,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </picture>
                     <span class="text-xl font-bold tracking-widest font-en text-brand-black uppercase">Cursorvers</span>
                 </a>
-                <button type="button" class="text-black text-2xl leading-none font-light" aria-label="メニューを閉じる" id="mobile-menu-close">
+                <button type="button" class="inline-flex items-center justify-center text-black text-2xl leading-none font-light" style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;" aria-label="メニューを閉じる" id="mobile-menu-close">
                     ✕
                 </button>
             </div>
@@ -92,8 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const openMenu = () => {
         lastFocusedElement = document.activeElement;
         createMenu();
+        savedScrollY = window.scrollY || window.pageYOffset || 0;
         mobileMenu.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${savedScrollY}px`;
+        document.body.style.width = '100%';
+        isScrollLocked = true;
         menuBtn.setAttribute('aria-expanded', 'true');
         // Focus close button for accessibility
         const closeBtn = mobileMenu.querySelector('#mobile-menu-close');

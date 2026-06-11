@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --minify",
+    "build:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --minify && node scripts/normalize-palette-css.js",
     "build:id": "node scripts/update-build-id.js",
     "test:smoke": "npx playwright test",
     "watch:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --watch"

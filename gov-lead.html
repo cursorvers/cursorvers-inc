@@ -58,13 +58,12 @@
     }
     </script>
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260611a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260422j">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260611a">
     <!-- renewal:end -->
     <!-- System fonts: no external loading needed -->
     <style>
@@ -74,8 +73,8 @@
 
         body {
             font-family: "Noto Sans JP", system-ui, sans-serif;
-            background-color: #FFFFFF;
-            color: #0B0C10;
+            background-color: #FBFAF5;
+            color: #13243F;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -84,7 +83,7 @@
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(244,241,234,0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -102,7 +101,7 @@
             left: 0;
             right: 0;
             z-index: 40;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(244,241,234,0.98);
             backdrop-filter: blur(12px);
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             padding: 12px 16px;
@@ -186,8 +185,8 @@
             }
         }
 
-        a:focus-visible, button:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0F172A; color: #fff; font-weight: bold; text-decoration: none; }
+        a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
     </style>
 </head>
@@ -200,8 +199,7 @@
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
                 <picture>
-                    <source srcset="Cursorvers_logo_navy.webp" type="image/webp">
-                    <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
+                    <img src="assets/brand/cvr_logo_dark.png" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
@@ -292,7 +290,7 @@
 
         <!-- よくある課題（Pain First） -->
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
-            <div class="max-w-5xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">こんな課題、ありませんか？</h2>
 
                 <div class="grid sm:grid-cols-2 gap-6 mb-12">
@@ -333,7 +331,7 @@
 
         <!-- 成果物：8週間で院内に残るもの -->
         <section class="py-20 md:py-28 px-6">
-            <div class="max-w-5xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-6">8週間で、院内に残るもの</h2>
                 <p class="text-xl md:text-2xl text-text-secondary text-center mb-16 max-w-3xl mx-auto leading-relaxed">
                     テンプレートを渡して終わりではありません。貴院の状況に合わせて作り上げます。
@@ -493,7 +491,7 @@
 
         <!-- 対象 -->
         <section class="py-20 md:py-28 px-6">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">GOV-Leadが向いている医療機関</h2>
 
                 <div class="space-y-6">
@@ -521,7 +519,7 @@
 
         <!-- 推奨する選抜者 -->
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">誰を選抜すべきか</h2>
                 <p class="text-xl md:text-2xl text-text-secondary text-center mb-16">失敗しない条件</p>
 
@@ -560,7 +558,7 @@
 
         <!-- プログラム概要 -->
         <section class="py-20 md:py-28 px-6">
-            <div class="max-w-5xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">プログラム概要</h2>
 
                 <div class="grid md:grid-cols-2 gap-10 mb-12">
@@ -647,7 +645,7 @@
 
         <!-- 8週間カリキュラム -->
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">8週間カリキュラム</h2>
 
                 <div class="space-y-5">
@@ -713,7 +711,7 @@
 
         <!-- どれを選ぶべきか（比較） -->
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
-            <div class="max-w-5xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">どれを選ぶべきか</h2>
                 <p class="text-xl md:text-2xl text-text-secondary text-center mb-16">迷わせない</p>
 
@@ -754,7 +752,7 @@
 
         <!-- 価格 -->
         <section id="pricing" class="py-20 md:py-28 px-6">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">料金</h2>
                 <p class="text-center text-xl md:text-2xl text-text-secondary mb-16">1医療機関あたりの価格です</p>
 
@@ -1009,7 +1007,7 @@
     <footer class="site-footer" role="contentinfo">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <img src="Cursorvers_logo_white.webp" alt="Cursorvers" onerror="this.onerror=null;this.src='Cursorvers_logo_white.jpeg';">
+      <img src="assets/brand/cvr_logo_light.png" alt="Cursorvers" onerror="this.onerror=null;this.src='assets/brand/cvr_logo_light.png';">
       <p>病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関。</p>
     </div>
     <div class="site-footer__col">
@@ -1042,13 +1040,14 @@
   </div>
   <div class="site-footer__bottom">
     <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
-    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
-    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>75f4032</span></span>
+    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#6B7280;">Medical AI Assurance &amp; Continuity</span>
+    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>3617b07</span></span>
   </div>
 </footer>
 <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 
     <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
     <script src="assets/js/cookie-consent.js" defer></script>
     <!-- Mobile Sticky CTA -->
     <div class="sticky-cta md:hidden">

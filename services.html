@@ -29,37 +29,33 @@
     <meta name="twitter:title" content="医療機関向けAI導入・運用アセスメントレビュー | Cursorvers">
     <meta name="twitter:description" content="AIベンダー提案を承認する前に、そして使い始めた後も。責任分界、患者情報、院内運用、アセスメント観点を、臨床経験のある医師が製品中立でレビューします。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260413-typography">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260611a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260421i">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260611a">
     <!-- renewal:end -->
     
     <style>
-        body { font-family: "Noto Sans JP", system-ui, sans-serif; font-feature-settings: "palt"; background: #fff; color: #1d1d1f; }
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-        a:focus-visible, button:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0F172A; color: #fff; font-weight: bold; text-decoration: none; }
+        body { font-family: "Noto Sans JP", system-ui, sans-serif; font-feature-settings: "palt"; background: #FBFAF5; color: #13243F; }
+        .glass-nav { background: rgba(244,241,234,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
 
         .gradient-text {
-            background: linear-gradient(90deg, #FF6B35 0%, #FF7A3D 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #3E6FA8;
         }
 
         /* .card-hover: base/hover rules moved to assets/css/renewal.css (flame glow canonical) */
 
         .popular-badge {
-            background: linear-gradient(90deg, #FF6B35 0%, #FF7A3D 100%);
+            background: #3E6FA8;
         }
 
         .step-badge {
-            background: linear-gradient(135deg, #0F172A 0%, #0F172A 100%);
+            background: linear-gradient(135deg, #13243F 0%, #13243F 100%);
         }
 
         .comparison-table {
@@ -71,12 +67,12 @@
         }
 
         .comparison-table th {
-            background: #F7F8FA;
+            background: #F4F1EA;
         }
 
         .comparison-table td,
         .comparison-table th {
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 1px solid #D8D4C8;
         }
 
         .comparison-table tr:last-child td {
@@ -84,7 +80,7 @@
         }
 
         .feature-category {
-            background: #F0F7FF;
+            background: rgba(62,111,168,.08);
         }
 
         /* モバイル向け比較表最適化 */
@@ -209,8 +205,8 @@
             }
         }
 
-        a:focus-visible, button:focus-visible { outline: 2px solid #0F172A; outline-offset: 2px; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #0F172A; color: #fff; font-weight: bold; text-decoration: none; }
+        a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
     </style>
 </head>
@@ -278,8 +274,7 @@
         <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 group" data-mobile-brand>
                 <picture>
-                    <source srcset="Cursorvers_logo_navy.webp" type="image/webp">
-                    <img src="Cursorvers_logo_navy.jpeg" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
+                    <img src="assets/brand/cvr_logo_dark.png" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
@@ -371,7 +366,7 @@
 
         <!-- Positioning Section -->
         <section class="py-16 md:py-20 px-6 bg-white">
-            <div class="max-w-5xl mx-auto text-center">
+            <div class="max-w-6xl mx-auto text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">製品を選ぶ前に、使い続けるための判断軸を整える</h2>
                 <p class="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto mb-10">
                     医療AIの導入は、機能比較だけでは決められません。責任分界、患者情報、現場運用、説明責任、運用後のアセスメント観点を、製品中立の立場で点検します。
@@ -620,7 +615,7 @@
                     <div class="px-6 pb-4 text-sm text-text-tertiary md:hidden">
                         ※横にスクロールできます
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto" style="-webkit-overflow-scrolling: touch;">
                         <table class="comparison-table w-full text-left">
                             <colgroup>
                                 <col style="width: 25%;">
@@ -896,7 +891,7 @@
 
         <!-- FAQ -->
         <section class="py-20 md:py-28 bg-brand-gray px-6">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold tracking-tight">よくあるご質問</h2>
                 </div>
@@ -1006,7 +1001,7 @@
     <footer class="site-footer" role="contentinfo">
   <div class="site-footer__inner">
     <div class="site-footer__brand">
-      <img src="Cursorvers_logo_white.webp" alt="Cursorvers" onerror="this.onerror=null;this.src='Cursorvers_logo_white.jpeg';">
+      <img src="assets/brand/cvr_logo_light.png" alt="Cursorvers" onerror="this.onerror=null;this.src='assets/brand/cvr_logo_light.png';">
       <p>病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関。</p>
     </div>
     <div class="site-footer__col">
@@ -1039,13 +1034,14 @@
   </div>
   <div class="site-footer__bottom">
     <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
-    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#64748B;">Medical AI Assurance &amp; Continuity</span>
-    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>75f4032</span></span>
+    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#6B7280;">Medical AI Assurance &amp; Continuity</span>
+    <span class="site-footer__build" aria-hidden="true">build <span data-build-id>3617b07</span></span>
   </div>
 </footer>
 <script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
 
     <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
     <script src="assets/js/cookie-consent.js" defer></script>
 
 </body>

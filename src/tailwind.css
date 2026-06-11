@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --cursorvers-serif: "Noto Sans JP", system-ui, sans-serif;
+  --cursorvers-serif: "Noto Serif JP", "Hiragino Mincho ProN", Georgia, serif;
+  --cursorvers-sans: "Noto Sans JP", "Hiragino Sans", system-ui, sans-serif;
 }
 
 html,
-body,
+body {
+  font-family: var(--cursorvers-sans);
+}
+
 .font-en,
 .font-serif {
   font-family: var(--cursorvers-serif);
@@ -15,7 +19,7 @@ body,
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #0052CC;
+  outline: 2px solid #3E6FA8;
   outline-offset: 2px;
 }
 
@@ -25,8 +29,8 @@ button:focus-visible {
   top: 0;
   z-index: 9999;
   padding: 1rem 1.5rem;
-  background: #0052CC;
-  color: #fff;
+  background: #13243F;
+  color: #F4F1EA;
   font-weight: bold;
   text-decoration: none;
 }

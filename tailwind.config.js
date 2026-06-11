@@ -5,21 +5,34 @@ module.exports = {
       fontFamily: {
         sans: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
         en: ['"Manrope"', '"Noto Sans JP"', 'sans-serif'],
-        serif: ['"Noto Sans JP"', 'system-ui', 'sans-serif'],
+        serif: ['"Noto Serif JP"', '"Hiragino Mincho ProN"', 'Georgia', 'serif'],
       },
       colors: {
-        "brand-black": "#1d1d1f",
-        "brand-charcoal": "#1d1d1f",
-        "brand-blue": "#0071e3",
-        "brand-cyan": "#66FCF1",
-        "brand-cyan-strong": "#0077ED",
-        "brand-gray": "#f5f5f7",
-        "brand-slate": "#6e6e73",
-        "hero-bg": "#FFFFFF",
-        "text-primary": "#1d1d1f",
-        "text-secondary": "#424245",
-        "text-tertiary": "#6e6e73",
-        "text-quaternary": "#86868b",
+        // Mirrors assets/css/renewal.css v2 primitives for this static Tailwind build.
+        white: "#FBFAF5",
+        slate: {
+          50: "#F4F1EA",
+          800: "#2A3A55",
+          900: "#13243F",
+        },
+        gray: {
+          400: "#6B7280",
+          800: "#6B6557",
+        },
+        "brand-black": "#13243F",
+        "brand-charcoal": "#13243F",
+        "brand-blue": "#3E6FA8",
+        "brand-cyan": "#7FA3CC",
+        "brand-cyan-strong": "#36618F",
+        "brand-gray": "#ECE7DB",
+        "brand-slate": "#6B7280",
+        flame: "#3E6FA8",
+        orange: "#3E6FA8",
+        "hero-bg": "#F4F1EA",
+        "text-primary": "#13243F",
+        "text-secondary": "#6B6557",
+        "text-tertiary": "#6B7280",
+        "text-quaternary": "#6B7280",
       },
       fontSize: {
         display: ["clamp(3.5rem, 8vw, 6rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
@@ -31,8 +44,8 @@ module.exports = {
       animation: {
         "fade-in-up": "fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        marquee: "marquee 40s linear infinite",
-        "marquee-reverse": "marquee-reverse 40s linear infinite",
+        marquee: "marquee 64s linear infinite",
+        "marquee-reverse": "marquee-reverse 64s linear infinite",
       },
       keyframes: {
         fadeInUp: {
