@@ -1179,6 +1179,19 @@
     </section>
 
     <!-- Name Meaning Section -->
+    <!-- iOS Safari mobile fix: 単一カラム grid の implicit 列が、分割不能な H2 (word-break:keep-all で
+         和文がスペース無し=改行不能) の max-content まで広がり、左カラム (H2/本文) が画面右端から
+         はみ出していた (grid blowout)。desktop Chrome/WebKit では再現せず iOS Safari/Chrome のみ発生。
+         モバイルで列を minmax(0,1fr) に拘束し、H2/本文/summary を改行可能にする。
+         <style> を index.html に置くのは SW が HTML=network-first のため (CSS キャッシュ非依存で即時反映)。 -->
+    <style>
+    @media (max-width: 767px) {
+      #name-meaning .grid { grid-template-columns: minmax(0, 1fr) !important; }
+      #name-meaning h2,
+      #name-meaning p,
+      #name-meaning summary { word-break: normal !important; overflow-wrap: anywhere !important; }
+    }
+    </style>
     <section id="name-meaning" class="mobile-tight-section py-10 md:py-14 bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-14 lg:gap-16 items-center">
@@ -1207,7 +1220,7 @@
                     </details>
 
                     <details class="mt-5 pt-5 border-t border-gray-200 group">
-                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame" style="word-break: normal; overflow-wrap: anywhere; white-space: normal;">
+                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame">
                             なぜ Cursorverse ではなく Cursorvers なのですか？
                         </summary>
                         <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
