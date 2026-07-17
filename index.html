@@ -1688,6 +1688,29 @@
     </section>
 
 
+    <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し (お知らせ一覧は #news 後置のまま。
+         2026-07-18 折衷裁定。記載は全て #news 既載の事実、<style> は SW HTML=network-first
+         即時反映の site 前例に従い inline) -->
+    <aside class="trust-bar relative z-10" aria-label="第三者認定・提携">
+        <style>
+            .trust-bar { background: #FBFAF5; border-top: 1px solid rgba(0, 0, 0, .05); border-bottom: 1px solid rgba(0, 0, 0, .05); }
+            .trust-bar ul { max-width: 72rem; margin: 0 auto; padding: 1.3rem 1.5rem;
+                display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+                gap: .55rem 2.4rem; list-style: none;
+                font-family: 'Noto Sans JP', sans-serif; font-size: clamp(12px, 1vw, 13.5px);
+                letter-spacing: .09em; color: rgba(19, 36, 63, .72); }
+            .trust-bar a { color: rgba(19, 36, 63, .72); text-decoration: underline;
+                text-underline-offset: 4px; text-decoration-color: rgba(19, 36, 63, .25); }
+            .trust-bar a:hover { color: #13243F; }
+        </style>
+        <ul>
+            <li>Health ISAC Japan 協賛会員</li>
+            <li>Google Cloud プレミアパートナー G-gen と提携</li>
+            <li>DX/AI Runner Expo 2026 登壇</li>
+            <li><a href="#news">お知らせ →</a></li>
+        </ul>
+    </aside>
+
     <!-- Name Meaning Section -->
     <!-- iOS Safari mobile fix: 単一カラム grid の implicit 列が、分割不能な H2 (word-break:keep-all で
          和文がスペース無し=改行不能) の max-content まで広がり、左カラム (H2/本文) が画面右端から
