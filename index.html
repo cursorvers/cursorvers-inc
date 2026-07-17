@@ -11,6 +11,21 @@
         gtag('js', new Date());
         gtag('config', 'G-TX3Y6G4XWJ');
     </script>
+    <script>
+        /* イントロ暗幕の arm 判定 (fail-closed: JS が張る側。JS 死亡=幕なし通常表示)
+           表示条件: 非 static / 非 reduced-motion / セッション初回のみ */
+        (function () {
+            var state = 'skipped';
+            try {
+                var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+                var isStatic = /[?&]static=1/.test(location.search);
+                var seen = false;
+                try { seen = sessionStorage.getItem('cv_intro_seen_v1') === '1'; } catch (e) { }
+                if (!rm && !isStatic && !seen) { state = 'pending'; }
+            } catch (e) { }
+            document.documentElement.dataset.intro = state;
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -347,6 +362,82 @@
             font-style: normal;
             color: #C8922E;
             margin-right: 64px;
+        }
+
+        /* ============================================================
+           イントロ暗幕 (lp-draft-v4 冒頭より移植 / fail-closed 反転)
+           base = 非表示。head の arm script が data-intro="pending" を
+           付けた時だけ幕が張られる。JS 死亡 = 幕なし通常ヒーロー。
+           ============================================================ */
+        #intro { display: none; }
+
+        html[data-intro="pending"] #intro {
+            display: flex;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #F4F1EA;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(.19,.7,.28,1), background .9s ease;
+        }
+
+        html[data-intro="pending"] #intro.dark {
+            background: #101D33;
+        }
+
+        html[data-intro="pending"] #intro.done {
+            transform: translateY(-100%);
+        }
+
+        #intro .intro-lines { text-align: center; }
+
+        #intro .ln {
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 600;
+            font-size: clamp(18px, 3.4vw, 26px);
+            line-height: 2.4;
+            letter-spacing: .1em;
+            color: #13243F;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity .9s ease, transform .9s ease, color .9s ease;
+        }
+
+        #intro .ln.show { opacity: 1; transform: none; }
+        #intro .ln.dim { opacity: .22; }
+        #intro .ln em { font-style: normal; color: #b3372b; transition: color .9s ease; }
+
+        #intro.dark .ln { color: rgba(244,241,234,.88); }
+        #intro.dark .ln.dim { opacity: .25; }
+        #intro.dark .ln em { color: #E3B865; }
+
+        #intro .intro-skip {
+            position: absolute;
+            right: 28px;
+            bottom: 26px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 12px;
+            letter-spacing: .24em;
+            color: rgba(19,36,63,.55);
+            background: none;
+            border: none;
+            border-bottom: 1px solid #D8D4C8;
+            padding: 10px 8px;
+            min-width: 44px;
+            min-height: 44px;
+            cursor: pointer;
+        }
+
+        #intro .intro-skip:hover { color: #13243F; border-color: #13243F; }
+        #intro.dark .intro-skip { color: rgba(244,241,234,.6); border-color: rgba(244,241,234,.3); }
+        #intro.dark .intro-skip:hover { color: #F4F1EA; border-color: #F4F1EA; }
+
+        /* 問題提起 (待ちの連鎖) — LPコピー確定版 §2 */
+        .problem-heading {
+            font-family: "Noto Serif JP", "Hiragino Mincho ProN", Georgia, serif;
+            font-size: clamp(1.9rem, 3.2vw + .6rem, 3rem);
+            line-height: 1.4;
         }
 
         @media (max-width: 640px) {
@@ -844,6 +935,10 @@
                 animation: none;
             }
 
+            #intro {
+                display: none !important;
+            }
+
             .hero-nav-reveal {
                 opacity: 1;
                 pointer-events: auto;
@@ -1192,11 +1287,12 @@
                 setTimeout(function () { var e = hero.querySelector('.au-cta');   if (e) { e.classList.add('in'); } }, 2650);
             }
 
-            /* 何があっても 6 秒後には全点灯 (フェイルセーフ) */
-            setTimeout(function () {
+            /* 全点灯フェイルセーフ (点火開始から 6 秒。起点は begin() — イントロ幕の
+               裏で先に発火して見せ場が消えるのを防ぐため parse 起点にしない) */
+            function forceLit() {
                 Array.prototype.forEach.call(hero.querySelectorAll('.au-main .au-ch'), function (el) { el.classList.add('lit'); });
                 Array.prototype.forEach.call(hero.querySelectorAll('.au-sub,.au-badge,.au-cta'), function (el) { el.classList.add('in'); });
-            }, 6000);
+            }
 
             /* ---- main loop ---- */
             var raf = 0, last = 0, fpsAcc = 0, fpsN = 0;
@@ -1285,16 +1381,29 @@
                 document.documentElement.dataset.auroraArmed = 'static';
             } else {
                 document.documentElement.dataset.auroraArmed = 'live';
-                /* dawn sweep: 開幕に画面を横切る一条の大波 */
-                surges.push({ t0: .35, dur: 2.2, dir: 1, amp: 1.1, w: .05 });
                 document.documentElement.classList.add('au-fx');
                 last = performance.now();
                 raf = requestAnimationFrame(tick);
 
                 var started = false;
-                var begin = function () { if (started) { return; } started = true; igniteSequence(); };
-                if (document.fonts && document.fonts.ready) { document.fonts.ready.then(begin); }
-                setTimeout(begin, 1100);
+                var begin = function () {
+                    if (started) { return; }
+                    started = true;
+                    /* dawn sweep: 開幕に画面を横切る一条の大波 */
+                    surges.push({ t0: tNow + .35, dur: 2.2, dir: 1, amp: 1.1, w: .05 });
+                    igniteSequence();
+                    setTimeout(forceLit, 6000);
+                };
+
+                if (document.documentElement.dataset.intro === 'pending') {
+                    /* イントロ幕あり: canvas は幕裏で ramp を完了させ、幕上げ +300ms で点火。
+                       幕側が死んでも 12 秒で強制開始 (幕自体の撤去は intro 側の保険が担う) */
+                    window.addEventListener('cv:intro-done', function () { setTimeout(begin, 300); }, { once: true });
+                    setTimeout(begin, 12000);
+                } else {
+                    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(begin); }
+                    setTimeout(begin, 1100);
+                }
             }
         })();
         </script>
@@ -1306,6 +1415,83 @@
             <span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span><span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span>
         </div>
     </div>
+
+    <!-- イントロ暗幕 (lp-draft-v4 冒頭より移植。原体験「待ちの連鎖」4行 → 暗転 → 幕上げでヒーロー点火)
+         制作メモ (brand.md §9 変形エコー記録): 4行目「誰も、怠けていないのに。」は決め台詞
+         『誰も怠けていないのに、患者が待っている』の変形。変形理由 = 開幕演出での分割提示。
+         「患者の待ち」の回収 = 3行目「患者が、最後に待つ。」+ 問題提起セクション本文
+         「判断の下流にいる患者まで、待ちは連鎖します」。 -->
+    <div id="intro" role="presentation">
+        <div class="intro-lines" aria-hidden="true">
+            <p class="ln">医師は、雑務に沈む。</p>
+            <p class="ln">事務方は、決定を待つ。</p>
+            <p class="ln">患者が、最後に待つ。</p>
+            <p class="ln"><em>誰も、怠けていないのに。</em></p>
+        </div>
+        <button type="button" class="intro-skip">スキップ</button>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+            var docEl = document.documentElement;
+            var intro = document.getElementById('intro');
+            if (!intro) { return; }
+            if (docEl.dataset.intro !== 'pending') {
+                if (intro.parentNode) { intro.parentNode.removeChild(intro); }
+                return;
+            }
+
+            var lines = intro.querySelectorAll('.ln');
+            var skipBtn = intro.querySelector('.intro-skip');
+            var timers = [];
+            var ended = false;
+
+            document.body.style.overflow = 'hidden';
+            if (window.gtag) { gtag('event', 'intro_shown'); }
+
+            function endIntro(how) {
+                if (ended) { return; }
+                ended = true;
+                timers.forEach(clearTimeout);
+                document.body.style.overflow = '';
+                try { sessionStorage.setItem('cv_intro_seen_v1', '1'); } catch (e) { }
+                intro.classList.add('dark');
+                intro.classList.add('done');
+                docEl.dataset.intro = 'done';
+                if (window.gtag) { gtag('event', how === 'skip' ? 'intro_skipped' : 'intro_completed'); }
+                try { window.dispatchEvent(new CustomEvent('cv:intro-done')); } catch (e) { }
+                setTimeout(function () { if (intro.parentNode) { intro.parentNode.removeChild(intro); } }, 1400);
+            }
+
+            /* 行の順出現 (400/1300/2200/3100ms) → 4000ms 暗転 → 4900ms 幕上げ */
+            Array.prototype.forEach.call(lines, function (ln, i) {
+                timers.push(setTimeout(function () {
+                    Array.prototype.forEach.call(lines, function (p, j) { if (j < i) { p.classList.add('dim'); } });
+                    ln.classList.add('show');
+                }, 400 + i * 900));
+            });
+            timers.push(setTimeout(function () { intro.classList.add('dark'); }, 4000));
+            timers.push(setTimeout(function () { endIntro('complete'); }, 4900));
+
+            skipBtn.addEventListener('click', function () { endIntro('skip'); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { endIntro('skip'); } });
+            try { skipBtn.focus({ preventScroll: true }); } catch (e) { }
+
+            /* 独立ハード保険: 何があっても 10 秒で幕撤去 + スクロール復元 */
+            setTimeout(function () { endIntro('failsafe'); }, 10000);
+        })();
+    </script>
+
+    <!-- 問題提起: 待ちの連鎖 (LPコピー確定版 §2 一字不変 / lp-draft-v4 冒頭より移植) -->
+    <section class="mobile-tight-section py-16 md:py-24 bg-white relative z-10" aria-label="問題提起 — 待ちの連鎖">
+        <div class="max-w-3xl mx-auto px-6 md:px-12 text-center">
+            <h2 class="problem-heading font-bold text-brand-black text-balance">誰も怠けていないのに、<br class="br-pc">導入が止まる。</h2>
+            <p class="mt-8 text-lg md:text-xl text-text-secondary leading-relaxed">道具はある。現場も欲しいと言っている。<br>それでも「やっていいか、使っていいか」を判断できる人がいないまま、決定が一点に集中し、現場全体が待ちます。</p>
+            <p class="mt-5 text-lg md:text-xl text-text-secondary leading-relaxed">待たされるのは稟議だけではありません。判断の下流にいる患者まで、待ちは連鎖します。</p>
+            <p class="mt-8 text-lg md:text-xl font-bold text-flame">止めているのは反対票ではなく、判断材料の不在です。</p>
+        </div>
+    </section>
 
     <!-- Hero Follow-up Section -->
     <section class="mobile-tight-section py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="ヒーロー補足情報">

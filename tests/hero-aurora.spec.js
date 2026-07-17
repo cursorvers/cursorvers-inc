@@ -13,6 +13,9 @@ test.describe("Hero aurora section", () => {
   test("keeps the hero copy, renders the aurora canvas, and wires the consult CTA", async ({ page }) => {
     await page.goto("/", { waitUntil: "commit" });
 
+    // イントロ暗幕の完了/スキップを待ってから点火系の検証に入る
+    await page.waitForFunction(() => ['done', 'skipped'].includes(document.documentElement.dataset.intro || ''));
+
     await page.waitForFunction(() => document.documentElement.dataset.auroraArmed === "live");
 
     const contract = await page.evaluate(() => {
@@ -78,6 +81,10 @@ test.describe("Hero aurora section", () => {
     await page.goto("/?static=1", { waitUntil: "commit" });
 
     await page.waitForFunction(() => document.documentElement.dataset.auroraArmed === "static");
+
+    // static モードではイントロ暗幕は arm されない
+    const introState = await page.evaluate(() => document.documentElement.dataset.intro);
+    expect(introState).toBe("skipped");
 
     const hasAuFxClass = await page.evaluate(() => {
       return document.documentElement.classList.contains("au-fx");
