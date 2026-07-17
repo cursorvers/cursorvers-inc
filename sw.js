@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.0.1'; // Updated: 2026-06-11 - Design System v2.0
+const CACHE_VERSION = '2.1.0'; // Updated: 2026-07-17 - Hero aurora (video removed)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
