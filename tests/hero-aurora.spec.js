@@ -10,7 +10,7 @@ test.describe("Hero aurora section", () => {
   // Block service workers so headless Chromium does not wedge on SW registration under a static server.
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, serviceWorkers: "block" });
 
-  test("keeps the hero copy, renders the aurora canvas, and wires the badge CTA", async ({ page }) => {
+  test("keeps the hero copy, renders the aurora canvas, and wires the consult CTA", async ({ page }) => {
     await page.goto("/", { waitUntil: "commit" });
 
     await page.waitForFunction(() => document.documentElement.dataset.auroraArmed === "live");
@@ -20,6 +20,7 @@ test.describe("Hero aurora section", () => {
       const h1 = q("#main h1");
       const canvas = q("#auroraFx");
       const badge = q("#main .au-badge");
+      const cta = q("#main .au-cta");
 
       return {
         videoCount: document.querySelectorAll("video, [data-hero-video]").length,
@@ -28,8 +29,11 @@ test.describe("Hero aurora section", () => {
         mainText: q("#main .au-main") ? q("#main .au-main").textContent.trim() : null,
         subText: q("#main .au-sub") ? q("#main .au-sub").textContent.trim() : null,
         brandText: q("#main .au-brand") ? q("#main .au-brand").textContent.trim() : null,
-        badgeHref: badge ? badge.getAttribute("href") : null,
+        badgeTag: badge ? badge.tagName : null,
         badgeText: badge ? badge.textContent.trim() : null,
+        ctaHref: cta ? cta.getAttribute("href") : null,
+        ctaText: cta ? cta.textContent.trim() : null,
+        bandExists: !!q(".au-band"),
         chCount: document.querySelectorAll("#main .au-main .au-ch").length,
         canvasWidth: canvas ? canvas.width : 0,
         canvasHeight: canvas ? canvas.height : 0,
@@ -43,8 +47,11 @@ test.describe("Hero aurora section", () => {
       mainText: "AIに、臨床の魂を",
       subText: "医療AIを、現場に届く言葉へ",
       brandText: "CURSORVERS",
-      badgeHref: "contact.html",
+      badgeTag: "P",
       badgeText: "医療AIの第三者レビュー",
+      ctaHref: "contact.html",
+      ctaText: "相談の予約",
+      bandExists: true,
       chCount: 9,
     });
 
@@ -58,6 +65,11 @@ test.describe("Hero aurora section", () => {
 
     await expect.poll(
       () => page.evaluate(() => !!document.querySelector("#main .au-badge") && document.querySelector("#main .au-badge").classList.contains("in")),
+      { timeout: 8000 }
+    ).toBe(true);
+
+    await expect.poll(
+      () => page.evaluate(() => !!document.querySelector("#main .au-cta") && document.querySelector("#main .au-cta").classList.contains("in")),
       { timeout: 8000 }
     ).toBe(true);
   });

@@ -233,10 +233,10 @@
             transform: none;
         }
 
-        /* badge = ヒーロー内の実 CTA (contact.html へ接続) */
+        /* badge = 事業ラベル (lp-draft-v4「入り」の流儀で非リンク) */
         .au-badge {
             display: inline-block;
-            margin-top: clamp(24px, 3.6vh, 38px);
+            margin-top: clamp(22px, 3.2vh, 34px);
             font-family: 'Noto Sans JP', sans-serif;
             font-weight: 500;
             font-size: clamp(12px, .95vw, 15px);
@@ -248,31 +248,13 @@
             border: 1px solid rgba(200,146,46,.55);
             border-radius: 999px;
             background: rgba(16,29,51,.35);
-            text-decoration: none;
             box-shadow: 0 0 22px rgba(200,146,46,.18), inset 0 0 14px rgba(200,146,46,.07);
-            transition: color .35s ease, border-color .35s ease, box-shadow .35s ease;
-        }
-
-        .au-badge:hover {
-            color: #F0CE8A;
-            border-color: rgba(200,146,46,.9);
-            box-shadow: 0 0 34px rgba(200,146,46,.32), inset 0 0 14px rgba(200,146,46,.12);
-        }
-
-        .au-badge:focus-visible {
-            outline: 2px solid #E3B865;
-            outline-offset: 3px;
         }
 
         .au-fx .au-badge {
             opacity: 0;
             transform: translateY(10px);
-            transition:
-                opacity 1.1s ease,
-                transform 1.1s cubic-bezier(.19,.7,.28,1),
-                color .35s ease,
-                border-color .35s ease,
-                box-shadow .35s ease;
+            transition: opacity 1.1s ease, transform 1.1s cubic-bezier(.19,.7,.28,1);
         }
 
         .au-fx .au-badge.in {
@@ -280,11 +262,100 @@
             transform: none;
         }
 
+        /* CTA = ヒーロー唯一のアクション「相談の予約」(lp-draft-v4「入り」より移植) */
+        .au-cta {
+            display: inline-block;
+            margin-top: clamp(18px, 2.8vh, 30px);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 700;
+            font-size: clamp(14px, 1.05vw, 17px);
+            line-height: 1;
+            letter-spacing: .18em;
+            text-indent: .18em;
+            color: #101D33;
+            background: #F4F1EA;
+            padding: 1.05em 2.6em;
+            border-radius: 999px;
+            text-decoration: none;
+            box-shadow: 0 0 30px rgba(127,163,204,.28);
+            transition: box-shadow .35s ease, transform .35s ease, background .35s ease;
+        }
+
+        .au-cta:hover {
+            background: #FBFAF5;
+            transform: translateY(-2px);
+            box-shadow: 0 0 44px rgba(200,146,46,.4);
+        }
+
+        .au-cta:focus-visible {
+            outline: 2px solid #E3B865;
+            outline-offset: 3px;
+        }
+
+        .au-fx .au-cta {
+            opacity: 0;
+            transform: translateY(12px);
+            transition:
+                opacity 1.1s ease,
+                transform 1.1s cubic-bezier(.19,.7,.28,1),
+                box-shadow .35s ease,
+                background .35s ease;
+        }
+
+        .au-fx .au-cta.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        .au-fx .au-cta.in:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 3動詞マーキーバンド (lp-draft-v4「入り」移植) — dark ヒーローと白セクションの継ぎ */
+        .au-band {
+            border-top: 1px solid #D8D4C8;
+            border-bottom: 1px solid #D8D4C8;
+            background: #ECE7DB;
+            overflow: hidden;
+            padding: 16px 0;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .au-band .au-track {
+            display: inline-block;
+            animation: auMarquee 60s linear infinite;
+        }
+
+        .au-band:hover .au-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes auMarquee {
+            to { transform: translateX(-50%); }
+        }
+
+        .au-band span {
+            font-size: 14px;
+            letter-spacing: .42em;
+            color: rgba(19,36,63,.62);
+            margin-right: 64px;
+            font-weight: 500;
+        }
+
+        .au-band span i {
+            font-style: normal;
+            color: #C8922E;
+            margin-right: 64px;
+        }
+
         @media (max-width: 640px) {
             .au-content { padding: 0 18px; }
             .au-eyebrow { gap: 10px; }
             .au-brand { letter-spacing: .24em; text-indent: .24em; }
             .au-eyesub { letter-spacing: .3em; text-indent: .3em; }
+            .au-band span { font-size: 12.5px; margin-right: 44px; }
+            .au-band span i { margin-right: 44px; }
         }
 
         .proof-metric {
@@ -760,12 +831,17 @@
             .aurora-hero *,
             .au-fx .au-main .au-ch,
             .au-fx .au-sub,
-            .au-fx .au-badge {
+            .au-fx .au-badge,
+            .au-fx .au-cta {
                 transition: none !important;
                 animation: none !important;
                 opacity: 1;
                 transform: none;
                 filter: none;
+            }
+
+            .au-band .au-track {
+                animation: none;
             }
 
             .hero-nav-reveal {
@@ -825,8 +901,9 @@
                 <span class="au-main" aria-hidden="true"><span class="au-tok"><span class="au-ch">A</span><span class="au-ch">I</span><span class="au-ch">に</span><span class="au-ch">、</span></span><span class="au-tok"><span class="au-ch">臨</span><span class="au-ch">床</span><span class="au-ch">の</span><span class="au-ch">魂</span><span class="au-ch">を</span></span></span>
                 <span class="au-sub" aria-hidden="true"><span class="au-tok">医療AIを、</span><span class="au-tok">現場に届く言葉へ</span></span>
             </h1>
-            <a class="au-badge" href="contact.html"
-                onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_badge_third_party_review' })">医療AIの第三者レビュー</a>
+            <p class="au-badge">医療AIの第三者レビュー</p>
+            <a class="au-cta" href="contact.html"
+                onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_consult' })">相談の予約</a>
         </div>
 
         <script>
@@ -1112,12 +1189,13 @@
                 });
                 setTimeout(function () { var e = hero.querySelector('.au-sub');   if (e) { e.classList.add('in'); } }, 2100);
                 setTimeout(function () { var e = hero.querySelector('.au-badge'); if (e) { e.classList.add('in'); } }, 2400);
+                setTimeout(function () { var e = hero.querySelector('.au-cta');   if (e) { e.classList.add('in'); } }, 2650);
             }
 
             /* 何があっても 6 秒後には全点灯 (フェイルセーフ) */
             setTimeout(function () {
                 Array.prototype.forEach.call(hero.querySelectorAll('.au-main .au-ch'), function (el) { el.classList.add('lit'); });
-                Array.prototype.forEach.call(hero.querySelectorAll('.au-sub,.au-badge'), function (el) { el.classList.add('in'); });
+                Array.prototype.forEach.call(hero.querySelectorAll('.au-sub,.au-badge,.au-cta'), function (el) { el.classList.add('in'); });
             }, 6000);
 
             /* ---- main loop ---- */
@@ -1221,6 +1299,13 @@
         })();
         </script>
     </section>
+
+    <!-- 3動詞マーキーバンド (lp-draft-v4「入り」より移植) -->
+    <div class="au-band" aria-hidden="true">
+        <div class="au-track">
+            <span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span><span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span>
+        </div>
+    </div>
 
     <!-- Hero Follow-up Section -->
     <section class="mobile-tight-section py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="ヒーロー補足情報">
