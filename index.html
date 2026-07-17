@@ -1039,7 +1039,8 @@
             var qs = new URLSearchParams(location.search);
             var STATIC = qs.get('static') === '1';           /* 検証用: 代表フレームを同期描画 */
             var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            var FROZEN = STATIC || RM;                       /* rAF を回さない */
+            var GENTLE = RM && !STATIC;                      /* 控えめ再生: 揺らぎのみ (雨/パルス/視差/点火なし) */
+            var FROZEN = STATIC;                             /* rAF を回さない (検証用代表フレームのみ) */
             var MOBILE = window.matchMedia('(max-width: 640px)').matches;
 
             var hero = document.getElementById('main');
@@ -1139,7 +1140,7 @@
             /* ---- 光の雨 (微粒子) ---- */
             var rain = [], rainGold = [];
             function initRain() {
-                var n = Math.round((MOBILE ? 70 : 220) * qRainMul);
+                var n = GENTLE ? 0 : Math.round((MOBILE ? 70 : 220) * qRainMul);
                 rain = []; rainGold = [];
                 for (var i = 0; i < n; i++) {
                     var p = { x: Math.random() * W, y: Math.random() * H,
@@ -1337,6 +1338,7 @@
                 raf = requestAnimationFrame(tick);
                 var dt = (now - last) / 1000; last = now;
                 if (dt > .05) { dt = .05; }
+                if (GENTLE) { dt *= .35; }                   /* 控えめ再生: 揺らぎを 1/3 速に */
                 tNow += dt;
 
                 px += (tpx - px) * .055;
@@ -1355,8 +1357,10 @@
                 var g = ramp * (.84 + .16 * Math.sin(tNow * .37 + 1.2));
                 renderFrame(tNow, g);
 
-                /* content の微パララックス */
-                content.style.transform = 'translate3d(' + ((px - .5) * 10) + 'px,' + ((py - .45) * 6) + 'px,0)';
+                /* content の微パララックス (視差効果を減らす端末では無効) */
+                if (!GENTLE) {
+                    content.style.transform = 'translate3d(' + ((px - .5) * 10) + 'px,' + ((py - .45) * 6) + 'px,0)';
+                }
 
                 /* 適応品質: 90 フレーム平均 > 19ms なら 1 段落とす */
                 fpsAcc += dt * 1000; fpsN++;
@@ -1381,10 +1385,12 @@
             }
 
             /* ---- events ---- */
-            window.addEventListener('pointermove', function (e) {
-                tpx = e.clientX / Math.max(1, W);
-                tpy = e.clientY / Math.max(1, H);
-            }, { passive: true });
+            if (!GENTLE) {
+                window.addEventListener('pointermove', function (e) {
+                    tpx = e.clientX / Math.max(1, W);
+                    tpy = e.clientY / Math.max(1, H);
+                }, { passive: true });
+            }
 
             var rzT = 0;
             window.addEventListener('resize', function () {
@@ -1403,9 +1409,23 @@
             resize();
 
             if (FROZEN) {
-                /* static / reduced-motion: 全点灯の DOM + 最盛オーロラの静止画 */
+                /* ?static=1: 全点灯の DOM + 最盛オーロラの静止画 */
                 renderStatic();
                 document.documentElement.dataset.auroraArmed = 'static';
+            } else if (GENTLE) {
+                /* reduced-motion: 文字は即・全点灯 (base CSS)、イントロ/点火/雨/視差なし。
+                   最盛の代表フレームから開始し、カーテンの揺らぎだけをゆっくり再生する
+                   (2026-07-17 本人裁定: 静止画でなく控えめに動かす) */
+                tNow = 21.35;
+                px = .5; py = .42;
+                surges = [
+                    { t0: tNow - 1.7, dur: 3.4, dir: 1,  amp: .55, w: .030 },
+                    { t0: tNow - 2.6, dur: 3.4, dir: -1, amp: .40, w: .022 }
+                ];
+                nextSurge = tNow + 4.0;
+                document.documentElement.dataset.auroraArmed = 'gentle';
+                last = performance.now();
+                raf = requestAnimationFrame(tick);
             } else {
                 document.documentElement.dataset.auroraArmed = 'live';
                 document.documentElement.classList.add('au-fx');
