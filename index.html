@@ -26,6 +26,40 @@
             document.documentElement.dataset.intro = state;
         })();
     </script>
+    <script>
+        /* 描画凍結ウォッチドッグ (iOS/WebKit 救済)
+           旧 sw.js (〜2.1.0) の activate が発行する same-URL navigation が WebKit で
+           provisional のまま残ると、その時点 (ロード後 1 秒前後) からレンダリング更新
+           (rAF / CSS transition 開始) が無期限停止する。開幕直後は正常に描画される
+           ため一発プローブでは検知できず、rAF 鼓動を常時監視し、可視状態で 3 秒
+           途絶したら window.stop() で保留ナビゲーションを破棄して描画を復帰させる。 */
+        (function () {
+            var last = performance.now();
+            function beat() { last = performance.now(); requestAnimationFrame(beat); }
+            requestAnimationFrame(beat);
+            function reset() { last = performance.now(); }
+            document.addEventListener('visibilitychange', reset);
+            window.addEventListener('pageshow', reset);
+            var confirming = false;
+            var iv = setInterval(function () {
+                if (document.visibilityState === 'hidden') { reset(); return; }
+                if (confirming || performance.now() - last <= 3000) { return; }
+                /* 2 段確認: 長時間 jank 明けや bfcache 復帰直後なら確認 rAF が
+                   すぐ来る (= 誤検知しない)。真の凍結では timer だけが動き
+                   rAF は来ないため確定できる */
+                confirming = true;
+                var alive = false;
+                requestAnimationFrame(function () { alive = true; });
+                setTimeout(function () {
+                    confirming = false;
+                    if (alive || document.visibilityState === 'hidden') { reset(); return; }
+                    clearInterval(iv);
+                    try { window.stop(); } catch (e) { }
+                    if (window.gtag) { gtag('event', 'render_freeze_healed', { label: 'raf_watchdog' }); }
+                }, 350);
+            }, 1000);
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -2488,7 +2522,10 @@
             // PWA Service Worker Registration
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js')
+                    /* ?v= は CDN エッジキャッシュ迂回用 (sw.js は edge で 4h キャッシュされるため、
+                       SW 更新を即配布するには登録 URL 側で cache key を変える。sw.js の
+                       CACHE_VERSION 更新時はここも同じ値に上げること) */
+                    navigator.serviceWorker.register('/sw.js?v=2.1.1', { updateViaCache: 'none' })
                         .then((registration) => {
                             console.log('[PWA] Service Worker registered:', registration.scope);
                             registration.update().catch(() => {});
