@@ -433,13 +433,6 @@
         #intro.dark .intro-skip { color: rgba(244,241,234,.6); border-color: rgba(244,241,234,.3); }
         #intro.dark .intro-skip:hover { color: #F4F1EA; border-color: #F4F1EA; }
 
-        /* 問題提起 (待ちの連鎖) — LPコピー確定版 §2 */
-        .problem-heading {
-            font-family: "Noto Serif JP", "Hiragino Mincho ProN", Georgia, serif;
-            font-size: clamp(1.9rem, 3.2vw + .6rem, 3rem);
-            line-height: 1.4;
-        }
-
         @media (max-width: 640px) {
             .au-content { padding: 0 18px; }
             .au-eyebrow { gap: 10px; }
@@ -1419,8 +1412,7 @@
     <!-- イントロ暗幕 (lp-draft-v4 冒頭より移植。原体験「待ちの連鎖」4行 → 暗転 → 幕上げでヒーロー点火)
          制作メモ (brand.md §9 変形エコー記録): 4行目「誰も、怠けていないのに。」は決め台詞
          『誰も怠けていないのに、患者が待っている』の変形。変形理由 = 開幕演出での分割提示。
-         「患者の待ち」の回収 = 3行目「患者が、最後に待つ。」+ 問題提起セクション本文
-         「判断の下流にいる患者まで、待ちは連鎖します」。 -->
+         「患者の待ち」の回収 = 3行目「患者が、最後に待つ。」 -->
     <div id="intro" role="presentation">
         <div class="intro-lines" aria-hidden="true">
             <p class="ln">医師は、雑務に沈む。</p>
@@ -1482,16 +1474,6 @@
             setTimeout(function () { endIntro('failsafe'); }, 10000);
         })();
     </script>
-
-    <!-- 問題提起: 待ちの連鎖 (LPコピー確定版 §2 一字不変 / lp-draft-v4 冒頭より移植) -->
-    <section class="mobile-tight-section py-16 md:py-24 bg-white relative z-10" aria-label="問題提起 — 待ちの連鎖">
-        <div class="max-w-3xl mx-auto px-6 md:px-12 text-center">
-            <h2 class="problem-heading font-bold text-brand-black text-balance">誰も怠けていないのに、<br class="br-pc">導入が止まる。</h2>
-            <p class="mt-8 text-lg md:text-xl text-text-secondary leading-relaxed">道具はある。現場も欲しいと言っている。<br>それでも「やっていいか、使っていいか」を判断できる人がいないまま、決定が一点に集中し、現場全体が待ちます。</p>
-            <p class="mt-5 text-lg md:text-xl text-text-secondary leading-relaxed">待たされるのは稟議だけではありません。判断の下流にいる患者まで、待ちは連鎖します。</p>
-            <p class="mt-8 text-lg md:text-xl font-bold text-flame">止めているのは反対票ではなく、判断材料の不在です。</p>
-        </div>
-    </section>
 
     <!-- Hero Follow-up Section -->
     <section class="mobile-tight-section py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="ヒーロー補足情報">
