@@ -66,6 +66,7 @@ function visit(node, callback) {
 }
 
 function lintHtmlSources() {
+  const heroVideoFiles = new Set();
   const htmlFiles = walkFiles(process.cwd(), (file) => file.toLowerCase().endsWith('.html'));
 
   for (const file of htmlFiles) {
@@ -92,9 +93,12 @@ function lintHtmlSources() {
       if (node.nodeName === 'video') {
         lintVideoSourceOrder(node, rel);
         lintHeroVideoAutoplayContract(node, rel);
+        const className = getAttr(node, 'class') || '';
+        if (/\bhero-video\b/.test(className) || hasAttr(node, 'data-hero-video')) heroVideoFiles.add(rel);
       }
     });
   }
+  return heroVideoFiles;
 }
 
 function lintHeroVideoAutoplayContract(videoNode, rel) {
@@ -261,35 +265,39 @@ function lintServiceWorkerBypass() {
   }
 }
 
-function lintHeroVideoAutoplayScript() {
-  const indexPath = path.join(process.cwd(), 'index.html');
-  if (!existsSync(indexPath)) return;
+function lintHeroVideoAutoplayScript(heroVideoFiles) {
+  if (!heroVideoFiles || heroVideoFiles.size === 0) return;
 
-  const source = readFileSync(indexPath, 'utf8');
-  const hasHeroTarget = /data-hero-video/.test(source);
-  const hasMutedFixup = /defaultMuted\s*=\s*true/.test(source) && /muted\s*=\s*true/.test(source);
-  const hasDirectSourceSelection = /matchMedia\s*\(\s*['"]\(max-width:\s*767px\)['"]\s*\)/.test(source)
-    && /setAttribute\s*\(\s*['"]src['"]/.test(source);
-  const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source) && /touchstart/.test(source);
-  const hasMobilePreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_mobile\.mp4"[^>]*fetchpriority="high"/.test(source);
-  const hasDesktopPreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_pc\.mp4"[^>]*fetchpriority="high"/.test(source);
-  const earlyArmIndex = source.indexOf("performance.mark('hero-video-armed')");
-  const followupIndex = source.indexOf('<!-- Hero Follow-up Section -->');
-  const domContentLoadedIndex = source.indexOf("document.addEventListener('DOMContentLoaded'");
-  const hasEarlyArm = earlyArmIndex > -1
-    && followupIndex > -1
-    && domContentLoadedIndex > -1
-    && earlyArmIndex < followupIndex
-    && earlyArmIndex < domContentLoadedIndex;
+  for (const rel of heroVideoFiles) {
+    const filePath = path.join(process.cwd(), rel);
+    if (!existsSync(filePath)) continue;
 
-  if (!hasHeroTarget || !hasMutedFixup || !hasDirectSourceSelection || !hasPlayRetry || !hasMobilePreload || !hasDesktopPreload || !hasEarlyArm) {
-    addFinding(
-      'R7',
-      'error',
-      'index.html',
-      1,
-      'Hero background video needs high-priority preload links and an iOS Safari autoplay arming script immediately after the hero video element: fix muted/defaultMuted, set video.src directly, call play(), mark hero-video-armed before DOMContentLoaded, and retry on pageshow/visibilitychange/touchstart.'
-    );
+    const source = readFileSync(filePath, 'utf8');
+    const hasHeroTarget = /data-hero-video/.test(source);
+    const hasMutedFixup = /defaultMuted\s*=\s*true/.test(source) && /muted\s*=\s*true/.test(source);
+    const hasDirectSourceSelection = /matchMedia\s*\(\s*['"]\(max-width:\s*767px\)['"]\s*\)/.test(source)
+      && /setAttribute\s*\(\s*['"]src['"]/.test(source);
+    const hasPlayRetry = /\.play\s*\(\s*\)/.test(source) && /pageshow/.test(source) && /visibilitychange/.test(source) && /touchstart/.test(source);
+    const hasMobilePreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_mobile\.mp4"[^>]*fetchpriority="high"/.test(source);
+    const hasDesktopPreload = /<link\s+rel="preload"\s+as="video"\s+href="hero_v\d+_pc\.mp4"[^>]*fetchpriority="high"/.test(source);
+    const earlyArmIndex = source.indexOf("performance.mark('hero-video-armed')");
+    const followupIndex = source.indexOf('<!-- Hero Follow-up Section -->');
+    const domContentLoadedIndex = source.indexOf("document.addEventListener('DOMContentLoaded'");
+    const hasEarlyArm = earlyArmIndex > -1
+      && followupIndex > -1
+      && domContentLoadedIndex > -1
+      && earlyArmIndex < followupIndex
+      && earlyArmIndex < domContentLoadedIndex;
+
+    if (!hasHeroTarget || !hasMutedFixup || !hasDirectSourceSelection || !hasPlayRetry || !hasMobilePreload || !hasDesktopPreload || !hasEarlyArm) {
+      addFinding(
+        'R7',
+        'error',
+        rel,
+        1,
+        'Hero background video needs high-priority preload links and an iOS Safari autoplay arming script immediately after the hero video element: fix muted/defaultMuted, set video.src directly, call play(), mark hero-video-armed before DOMContentLoaded, and retry on pageshow/visibilitychange/touchstart.'
+      );
+    }
   }
 }
 
@@ -430,10 +438,10 @@ function emitFindings(override) {
   if (errorCount > 0 && !override) process.exitCode = 1;
 }
 
-lintHtmlSources();
+const heroVideoFiles = lintHtmlSources();
 lintVideoModifyWithoutRename();
 lintServiceWorkerBypass();
-lintHeroVideoAutoplayScript();
+lintHeroVideoAutoplayScript(heroVideoFiles);
 lintHeroVideoAssets();
 lintCursorversCurlProbe();
 emitFindings(hasOverrideLabel());
