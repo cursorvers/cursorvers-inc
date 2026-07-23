@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.1.0'; // Updated: 2026-07-17 - Hero aurora (video removed)
+const CACHE_VERSION = '2.1.1'; // Updated: 2026-07-17 - Remove client.navigate on activate (iOS render freeze)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
@@ -54,14 +54,6 @@ self.addEventListener('activate', (event) => {
         })
     );
     await self.clients.claim();
-    const windowClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    for (const client of windowClients) {
-      try {
-        await client.navigate(client.url);
-      } catch (_e) {
-        // Ignore clients that cannot be navigated
-      }
-    }
   })());
 });
 
