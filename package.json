@@ -5,6 +5,7 @@
   "scripts": {
     "build:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --minify && node scripts/normalize-palette-css.js",
     "build:id": "node scripts/update-build-id.js",
+    "test:lint-policy": "node --test scripts/lint-media-asset-policy.test.mjs",
     "test:smoke": "npx playwright test",
     "watch:css": "tailwindcss -i ./src/tailwind.css -o ./dist/tailwind.min.css --watch"
   },
