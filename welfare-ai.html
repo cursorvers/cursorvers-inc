@@ -44,6 +44,10 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
+        .faq-item details summary { cursor: pointer; list-style: none; }
+        .faq-item details summary::-webkit-details-marker { display: none; }
+        .faq-item details[open] summary .faq-icon { transform: rotate(180deg); }
+        .faq-icon { transition: transform 0.3s ease; }
         @media (min-width: 768px) {
             p { font-size: 1.25rem; }
             li { font-size: 1.25rem; }
@@ -103,37 +107,171 @@
                         class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[260px] bg-white text-brand-black font-bold text-lg rounded-full hover:bg-flame hover:text-white transition">
                         無料壁打ちを予約（30分）
                     </a>
+                    <a href="#pricing"
+                        class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[260px] border-2 border-white/70 text-white font-bold text-lg rounded-full hover:bg-white hover:text-brand-black transition">
+                        サービスと料金を見る
+                    </a>
                 </div>
                 <p class="text-sm text-white/60">まずは「記録・書類のAI化」と「補助金の整理」からご相談いただけます。</p>
             </div>
         </section>
 
-        <!-- サービス -->
-        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+        <!-- 課題 -->
+        <section class="py-20 md:py-28 px-6">
             <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Services</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black mb-4">提供するサービス</h2>
-                    <p class="text-lg md:text-xl text-text-secondary">今お使いのツールの上で、記録と書類の時間を減らすことから始めます</p>
+                <div class="text-center mb-14">
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Problem</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">こんな状態ではありませんか</h2>
                 </div>
                 <div class="grid md:grid-cols-3 gap-6 md:gap-8">
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
-                        <span class="text-flame text-3xl font-bold font-en block mb-4">01</span>
-                        <h3 class="text-xl font-bold mb-3">記録・書類のAI化</h3>
-                        <p class="text-base text-text-secondary leading-relaxed">議事録・支援記録・日報の音声入力と標準化。Google Workspace / Gemini を基盤に、現場が毎日使える形に落とし込みます。</p>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">記録と書類が現場を圧迫している</h3>
+                        <p class="text-text-secondary leading-relaxed">支援記録、日報、議事録、行政への提出書類。利用者と向き合う時間が、記録・書類仕事に削られ続けている。</p>
                     </div>
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
-                        <span class="text-flame text-3xl font-bold font-en block mb-4">02</span>
-                        <h3 class="text-xl font-bold mb-3">職員研修・定着支援</h3>
-                        <p class="text-base text-text-secondary leading-relaxed">導入して終わりにせず、職員向けの研修と手順書整備、定着までの伴走を含めて設計します。要配慮情報の取り扱いルールも整えます。</p>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">ツールを入れても定着しない</h3>
+                        <p class="text-text-secondary leading-relaxed">補助金でICT機器やソフトは入れた。しかし職員のITスキル差が大きく、結局は紙と口頭に戻ってしまう。</p>
                     </div>
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
-                        <span class="text-flame text-3xl font-bold font-en block mb-4">03</span>
-                        <h3 class="text-xl font-bold mb-3">費用・補助金の設計</h3>
-                        <p class="text-base text-text-secondary leading-relaxed">Google for Nonprofits の無償枠の適用可否診断や、福祉系の補助金・助成の活用余地を整理し、理事会・単年度予算に載る形でご提案します。</p>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">要配慮情報の扱いに不安がある</h3>
+                        <p class="text-text-secondary leading-relaxed">利用者の支援記録は要配慮個人情報。個人のスマホやLINEでのやり取りが常態化し、監査や実地指導で説明できるか不安がある。</p>
                     </div>
                 </div>
-                <p class="text-center text-sm text-text-tertiary mt-10">※ 料金は業務内容・規模に応じた個別見積です。補助金は情報整理・要件との突合までを支援し、申請代行は行いません。<br>※ Gemini は入力を学習に利用しない設定とアクセス権管理を前提に構成し、支援記録などの要配慮個人情報は取り扱い範囲を契約で明確化します（診療情報を扱う医療機関向けは閉域構成の別方針です）。</p>
+            </div>
+        </section>
+
+        <!-- 選ばれる理由 -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Why Cursorvers</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">ガバナンスできるから、任せられる</h2>
+                    <p class="text-lg text-text-secondary mt-4 max-w-3xl mx-auto">医療機関のガバナンス・監査対応を本業としてきた医師が設計するから、<br class="br-pc">「入れて終わり」ではなく、実地指導・監査への説明資料が整う運用まで届きます。</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                    <div class="bg-white rounded-lg p-8 border border-gray-200">
+                        <span class="text-flame text-4xl font-bold font-en block mb-4">01</span>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">医師×ガバナンスの設計</h3>
+                        <p class="text-text-secondary leading-relaxed">業務を棚卸しし、要配慮個人情報の取り扱い範囲・責任分界・職員教育まで含めて設計。行政の実地指導・監査に説明できる記録の残し方を整えます。</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 border border-gray-200">
+                        <span class="text-flame text-4xl font-bold font-en block mb-4">02</span>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">今のGWSの上で構築</h3>
+                        <p class="text-text-secondary leading-relaxed">新しいシステムを買わせません。Google Workspace / Gemini を基盤に、議事録・支援記録・日報を音声とテンプレートで標準化します。Google for Nonprofits の無償枠が使える場合は、その適用から始めます。</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 border border-gray-200">
+                        <span class="text-flame text-4xl font-bold font-en block mb-4">03</span>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">立案し、作らせて、定着させる</h3>
+                        <p class="text-text-secondary leading-relaxed">当社はすべてを自社で作る開発ベンダーではありません。医師が立案・計画と責任分界を設計し、案件に合う提携エンジニア（FDE）を編成・監督して、現場が毎日使える形にして納品します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 対象 -->
+        <section class="py-16 md:py-20 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-6">こんな法人に向いています</h2>
+                <ul class="grid sm:grid-cols-3 gap-4 text-left">
+                    <li class="bg-white rounded-lg p-6 border border-gray-200 flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>特養・障害福祉・保育など複数事業所を運営し、法人全体の記録・書類を整えたい理事長・施設長</span></li>
+                    <li class="bg-white rounded-lg p-6 border border-gray-200 flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>理事会・単年度予算での意思決定に載る、成果物が明確な提案を必要としている法人</span></li>
+                    <li class="bg-white rounded-lg p-6 border border-gray-200 flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>ICT導入で定着に失敗した経験があり、研修と伴走までセットで求めている法人</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- サービスと料金 -->
+        <section id="pricing" class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Service &amp; Pricing</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">サービスと料金</h2>
+                    <p class="text-lg text-text-secondary mt-4">診断から始めて、必要な分だけ。すべて医師が設計に関与します。</p>
+                    <p class="text-sm text-text-tertiary mt-3">※ 適格請求書（インボイス）発行に対応しています。価格は税別表示です。</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-8">
+                    <div class="bg-white rounded-lg p-8 border-2 border-flame relative flex flex-col">
+                        <span class="absolute -top-4 left-8 bg-flame text-white text-sm font-bold px-4 py-1.5 rounded-full">おすすめの入口</span>
+                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">Step 1</p>
+                        <h3 class="text-2xl font-bold mb-2">GWS無料化診断＋業務棚卸し</h3>
+                        <div class="mb-4">
+                            <span class="text-3xl font-bold">15万円</span><span class="text-text-secondary">（税別）</span>
+                            <span class="text-sm text-text-tertiary block mt-1">税込16.5万円／スポット</span>
+                        </div>
+                        <ul class="space-y-3 text-base flex-grow">
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>Google for Nonprofits 無償枠の適用可否診断と申請の併走</span></li>
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>記録・書類業務の棚卸しとAI適用マップ</span></li>
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>補助金・助成の活用余地の整理</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-8 border border-gray-200 flex flex-col">
+                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">Monthly</p>
+                        <h3 class="text-2xl font-bold mb-2">定着伴走</h3>
+                        <div class="mb-4">
+                            <span class="text-3xl font-bold">月12万円〜</span><span class="text-text-secondary">（税別）</span>
+                            <span class="text-sm text-text-tertiary block mt-1">最低契約期間3ヶ月／正式料金は個別見積</span>
+                        </div>
+                        <ul class="space-y-3 text-base flex-grow">
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>Gemini による議事録・支援記録・日報の標準化を順に定着</span></li>
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>職員研修と手順書の整備（訪問頻度は個別設計）</span></li>
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>利用状況の計測設計と月次レビュー（成果数値を保証するものではありません）</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <div class="bg-white rounded-lg p-8 border border-gray-200 flex flex-col">
+                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">Annual</p>
+                        <h3 class="text-2xl font-bold mb-2">年度一括パック</h3>
+                        <div class="mb-4">
+                            <span class="text-3xl font-bold">個別見積</span>
+                        </div>
+                        <p class="text-text-secondary leading-relaxed flex-grow">定着伴走を単年度予算に合わせて一括契約する形です。<strong class="text-brand-black">成果物を明記した見積書（無償枠申請の完了・業務手順書・職員研修の回数・定着レビュー）</strong>でご提示するため、理事会の起案にそのまま載せられます。経営シミュレーション（収支・人員配置・新規事業）のオプションも個別にご提案します。</p>
+                    </div>
+                </div>
+
+                <div class="text-center mb-10">
+                    <p class="text-lg text-text-secondary mb-6">正式なお見積りは、無料壁打ち（30分）で状況を伺ったうえで個別にご提示します。</p>
+                    <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'welfareai_pricing_estimate'})"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold rounded-full hover:bg-flame transition">
+                        個別見積を相談する <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                    </a>
+                </div>
+
+                <p class="text-center text-base text-text-tertiary">※ 定着伴走の最低契約期間は3ヶ月です（一般条項は<a href="terms.html" class="underline hover:text-flame">利用規約</a>。個別契約書の定めが優先します）。<br>※ 補助金は情報整理・要件との突合までを支援し、申請代行は行いません。<br>※ Gemini は入力を学習に利用しない設定とアクセス権管理を前提に構成し、支援記録などの要配慮個人情報は取り扱い範囲を契約で明確化します（診療情報を扱う医療機関向けは閉域構成の別方針です）。</p>
+            </div>
+        </section>
+
+        <!-- 進め方 -->
+        <section class="py-20 md:py-28 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Process</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">進め方</h2>
+                </div>
+                <ol class="grid md:grid-cols-4 gap-6">
+                    <li class="bg-white rounded-lg p-6 border border-gray-200">
+                        <span class="text-flame text-3xl font-bold font-en block mb-3">1</span>
+                        <h3 class="text-lg font-bold mb-2">無料壁打ち（30分）</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">現状の困りごとを伺い、AIで解けるか・解くべきかを率直にお答えします。</p>
+                    </li>
+                    <li class="bg-white rounded-lg p-6 border border-gray-200">
+                        <span class="text-flame text-3xl font-bold font-en block mb-3">2</span>
+                        <h3 class="text-lg font-bold mb-2">診断・棚卸し</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">無償枠の適用可否と業務の棚卸しから、費用を抑えた導入計画を作ります。</p>
+                    </li>
+                    <li class="bg-white rounded-lg p-6 border border-gray-200">
+                        <span class="text-flame text-3xl font-bold font-en block mb-3">3</span>
+                        <h3 class="text-lg font-bold mb-2">理事会起案の支援</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">成果物を明記した見積で、単年度予算・理事会の意思決定に載る形に整えます。</p>
+                    </li>
+                    <li class="bg-white rounded-lg p-6 border border-gray-200">
+                        <span class="text-flame text-3xl font-bold font-en block mb-3">4</span>
+                        <h3 class="text-lg font-bold mb-2">導入・研修・定着</h3>
+                        <p class="text-sm text-text-secondary leading-relaxed">職員研修と手順書整備を含め、現場が毎日使える状態まで伴走します。</p>
+                    </li>
+                </ol>
             </div>
         </section>
 
@@ -147,6 +285,48 @@
                         class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold rounded-full hover:bg-flame transition">
                         制度の一覧を見る <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-20 md:py-28 px-6 bg-brand-gray">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-14">
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">FAQ</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">よくあるご質問</h2>
+                </div>
+                <div class="space-y-4 faq-item">
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <details>
+                            <summary class="flex items-center justify-between p-6 font-bold text-lg">Google for Nonprofits とは何ですか？<span class="faq-icon text-flame"><svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-chevron-down"></use></svg></span></summary>
+                            <p class="px-6 pb-6 text-text-secondary leading-relaxed">Google が非営利団体向けに提供するプログラムで、対象となる法人は Google Workspace を無償枠で利用できます。適用可否は法人の形態・活動内容によるため、診断で判定し、申請まで併走します。承認までの期間は目安で数週間〜かかります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <details>
+                            <summary class="flex items-center justify-between p-6 font-bold text-lg">利用者の支援記録を Gemini に入れて大丈夫ですか？<span class="faq-icon text-flame"><svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-chevron-down"></use></svg></span></summary>
+                            <p class="px-6 pb-6 text-text-secondary leading-relaxed">入力を学習に利用しない設定とアクセス権管理を前提に構成し、要配慮個人情報の取り扱い範囲は契約で明確化します。どの業務・どの情報までをAIの対象にするかを先に決めてから導入するのが当社の設計です。個人のスマホやLINEでのやり取りより、管理された基盤に載せる方が説明可能性は高まります。</p>
+                        </details>
+                    </div>
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <details>
+                            <summary class="flex items-center justify-between p-6 font-bold text-lg">職員がITに不慣れでも定着しますか？<span class="faq-icon text-flame"><svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-chevron-down"></use></svg></span></summary>
+                            <p class="px-6 pb-6 text-text-secondary leading-relaxed">ツールを渡して終わりにせず、職員研修・手順書・現場での伴走をセットで設計します。一度に全部ではなく、議事録など効果が見えやすい業務から順に定着させます。定着しなかった場合に何を変えるかまで、月次レビューで一緒に判断します。</p>
+                        </details>
+                    </div>
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <details>
+                            <summary class="flex items-center justify-between p-6 font-bold text-lg">単年度予算でしか契約できません。対応できますか？<span class="faq-icon text-flame"><svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-chevron-down"></use></svg></span></summary>
+                            <p class="px-6 pb-6 text-text-secondary leading-relaxed">年度一括パックをご用意しています。成果物（無償枠申請の完了・業務手順書・職員研修の回数・定着レビュー）を明記した見積書でご提示するため、理事会の起案・単年度予算の枠組みにそのまま載せられます。</p>
+                        </details>
+                    </div>
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <details>
+                            <summary class="flex items-center justify-between p-6 font-bold text-lg">人員削減のための導入ですか？<span class="faq-icon text-flame"><svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-chevron-down"></use></svg></span></summary>
+                            <p class="px-6 pb-6 text-text-secondary leading-relaxed">いいえ。目的は記録・書類の負担を減らし、職員が利用者と向き合う時間を取り戻すことです。導入設計の段階で現場の職員の声を聞き、「仕事を奪うもの」ではなく「書類仕事を肩代わりするもの」として定着させます。</p>
+                        </details>
+                    </div>
                 </div>
             </div>
         </section>
