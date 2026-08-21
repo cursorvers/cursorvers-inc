@@ -16,10 +16,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
     <title>医療機関のAI導入伴走「専属AIチーム」 | Cursorvers｜医師が設計する医療AI実装</title>
-    <meta name="description" content="話すだけで記録が残る。書類時間を、診療時間へ。臨床経験のある医師とエンジニアチームが、PHIを院内から出さない閉域構成で「使われるAI」を実装します。東京都の複数クリニック・往診/在宅医療・20床以下の医療機関向け。補助金活用も設計します。">
+    <meta name="description" content="話した内容が、記録の下書きになる。書類時間を、診療時間へ。臨床経験のある医師とエンジニアチームが、閉域構成で「使われるAI」を実装します。東京都の複数クリニック・往診/在宅医療・20床以下の医療機関向け。補助金の実負担試算まで対応します。">
     <link rel="canonical" href="https://cursorvers.com/medical-ai.html">
     <meta property="og:title" content="医療機関のAI導入伴走「専属AIチーム」 | Cursorvers">
-    <meta property="og:description" content="話すだけで記録が残る。書類時間を、診療時間へ。臨床経験のある医師が、AI導入を診断から実装・定着まで伴走します。PHIは院内で閉域。">
+    <meta property="og:description" content="話した内容が、記録の下書きになる。書類時間を、診療時間へ。臨床経験のある医師が、AI導入を診断から実装・定着まで伴走します。PHIは閉域構成で守ります。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cursorvers.com/medical-ai.html">
     <meta property="og:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
@@ -30,12 +30,12 @@
     <meta name="twitter:description" content="臨床経験のある医師が、AI導入を診断から実装・定着まで伴走。PHIは院内で閉域。補助金活用も設計します。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260821a">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260822a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260821a">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260822a">
     <!-- renewal:end -->
 
     <style>
@@ -73,11 +73,11 @@
                 </picture>
                 <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
             </a>
-            <nav class="hidden md:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+            <nav class="hidden lg:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
                 <a href="index.html" class="hover:text-flame transition">ホーム</a>
                 <a href="message.html" class="hover:text-flame transition">創業者</a>
                 <a href="medical-ai.html" class="text-flame font-semibold">医療機関向け</a>
-                <a href="welfare-ai.html" class="hover:text-flame transition">社会福祉法人向け</a>
+                <a href="welfare-ai.html" class="hover:text-flame transition">社会福祉法人向け<span class="text-[10px] font-normal opacity-70">（準備中）</span></a>
                 <a href="consulting.html" class="hover:text-flame transition">ベンダー向け</a>
                 <a href="subsidy.html" class="hover:text-flame transition">DX資金調達</a>
                 <a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer"
@@ -88,7 +88,7 @@
             </nav>
             <div class="flex items-center gap-6">
                 <a href="contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-charcoal px-6 py-3 rounded-full hover:bg-brand-charcoal hover:text-white transition duration-300 text-brand-charcoal uppercase tracking-wider font-en" data-mobile-contact>無料で相談する</a>
-                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                <button type="button" class="lg:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
                     <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-bars"></use></svg>
                 </button>
             </div>
@@ -102,11 +102,12 @@
             <div class="max-w-5xl mx-auto text-center relative z-10">
                 <p class="text-sm md:text-base font-bold tracking-[0.22em] uppercase text-flame mb-6 font-en">Medical AI Implementation</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
-                    話すだけで記録が残る。<br>書類時間を、診療時間へ。
+                    話した内容が、記録の下書きになる。<br>書類時間を、診療時間へ。
                 </h1>
-                <p class="text-lg md:text-2xl text-white/85 max-w-3xl mx-auto mb-10 leading-relaxed">
-                    臨床経験のある医師とエンジニアチームが、<br class="br-pc">PHIを院内から出さない閉域構成で「使われるAI」を実装します。
+                <p class="text-lg md:text-2xl text-white/85 max-w-3xl mx-auto mb-4 leading-relaxed">
+                    臨床経験のある医師とエンジニアチームが、<br class="br-pc">PHIを外に出さない閉域構成で「使われるAI」を実装します。
                 </p>
+                <p class="text-sm md:text-base text-white/60 max-w-3xl mx-auto mb-10">記録の確定は医師の確認が前提です。対象は音声・書類・周辺業務 — 電子カルテの入れ替えは求めません。</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
                     <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'medicalai_hero_contact'})"
                         class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[260px] bg-white text-brand-black font-bold text-lg rounded-full hover:bg-flame hover:text-white transition">
@@ -120,9 +121,9 @@
                 <ul class="flex flex-wrap justify-center gap-3 text-sm md:text-base" aria-label="特徴">
                     <li class="px-5 py-2 rounded-full border border-white/30 bg-white/5">医師が運営</li>
                     <li class="px-5 py-2 rounded-full border border-white/30 bg-white/5">PHIは院内で閉域</li>
-                    <li class="px-5 py-2 rounded-full border border-white/30 bg-white/5">補助金 最大2/3補助<span aria-hidden="true">※</span></li>
+                    <li class="px-5 py-2 rounded-full border border-white/30 bg-white/5">補助金の実負担試算まで対応<span aria-hidden="true">※</span></li>
                 </ul>
-                <p class="mt-4 text-xs text-white/50">※ 制度・公募回・要件により異なります。採択を保証するものではありません。</p>
+                <p class="mt-4 text-xs text-white/50">※ 申請代行は行いません。補助率・対象は制度により異なり、採択を保証するものではありません。</p>
             </div>
         </section>
 
@@ -156,7 +157,7 @@
                 <div class="text-center mb-14">
                     <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Why Cursorvers</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">ガバナンスできるから、任せられる</h2>
-                    <p class="text-lg text-text-secondary mt-4 max-w-3xl mx-auto">医療AIの第三者レビュー・監査を本業としてきた医師が実装を設計するから、<br class="br-pc">「入れて終わり」ではなく「個別指導・監査に耐える運用」まで届きます。</p>
+                    <p class="text-lg text-text-secondary mt-4 max-w-3xl mx-auto">医療AIの第三者レビュー・監査を本業としてきた医師が実装を設計するから、<br class="br-pc">「入れて終わり」ではなく、個別指導・監査への説明資料が整う運用まで届きます（適合の判断は所管当局・監査人によります）。</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-6 md:gap-8">
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
@@ -168,12 +169,12 @@
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
                         <span class="text-flame text-4xl font-bold font-en block mb-4">02</span>
                         <h3 class="text-xl md:text-2xl font-bold mb-4">PHIは院内で閉域</h3>
-                        <p class="text-text-secondary leading-relaxed">閉域クラウド(AWS Bedrock等)またはローカルLLMで構成し、患者情報を外部の学習・送信に出しません。今お使いの電子カルテはそのまま。カルテの入れ替えは求めません。</p>
+                        <p class="text-text-secondary leading-relaxed">閉域網で接続するクラウド（AWS Bedrock 等を、入力を学習に使わない設定・送信先を限定した契約構成で利用）またはローカルLLMで構成し、患者情報をモデルの学習や不特定の外部送信に出しません。今お使いの電子カルテはそのまま。カルテの入れ替えは求めません。</p>
                     </div>
                     <div class="bg-white rounded-lg p-8 border border-gray-200">
                         <span class="text-flame text-4xl font-bold font-en block mb-4">03</span>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4">レポートではなく、実装を納品</h3>
-                        <p class="text-text-secondary leading-relaxed">提案書だけ残るコンサルはしません。音声記録・書類自動化・院内フレームワークなど、毎月「動くもの」を提携エンジニアチームと納品します。</p>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4">立案し、作らせて、定着させる</h3>
+                        <p class="text-text-secondary leading-relaxed">当社はすべてを自社で作る開発ベンダーではありません。医師が立案・計画と責任分界を設計し、案件に合う提携エンジニア（FDE）を編成・監督して、毎月「動くもの」を納品します。</p>
                     </div>
                 </div>
             </div>
@@ -198,6 +199,8 @@
                     <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-4 font-en">Service &amp; Pricing</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">サービスと料金</h2>
                     <p class="text-lg text-text-secondary mt-4">診断から始めて、必要な分だけ。すべて医師が設計に関与します。</p>
+                    <p class="text-base text-text-secondary mt-2">単院・無床の方はまず診断から。複数拠点・グループ経営の方は月額伴走をご検討ください。</p>
+                    <p class="text-sm text-text-tertiary mt-3">※ 適格請求書（インボイス）発行に対応しています。価格は税別表示です。</p>
                 </div>
 
                 <!-- 診断 2 種 -->
@@ -215,9 +218,10 @@
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>ベンダー提案のセカンドオピニオン</span></li>
                         </ul>
                     </div>
-                    <div class="bg-white rounded-lg p-8 border border-gray-200 flex flex-col">
+                    <div class="bg-white rounded-lg p-8 border-2 border-flame relative flex flex-col">
+                        <span class="absolute -top-4 left-8 bg-flame text-white text-sm font-bold px-4 py-1.5 rounded-full">おすすめの入口</span>
                         <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">Step 1+</p>
-                        <h3 class="text-2xl font-bold mb-2">AI導入診断 フル</h3>
+                        <h3 class="text-2xl font-bold mb-2">AI導入診断 フル（現地訪問付き）</h3>
                         <div class="mb-4">
                             <span class="text-3xl font-bold">30万円</span><span class="text-text-secondary">（税別）</span>
                             <span class="text-sm text-text-tertiary block mt-1">税込33万円</span>
@@ -230,9 +234,8 @@
                     </div>
                 </div>
 
-                <!-- 専属AIチーム (推奨) -->
-                <div class="bg-white rounded-lg p-8 md:p-10 border-2 border-flame relative mb-8">
-                    <span class="absolute -top-4 left-8 bg-flame text-white text-sm font-bold px-4 py-1.5 rounded-full">おすすめ</span>
+                <!-- 専属AIチーム (診断後・複数拠点向け) -->
+                <div class="bg-white rounded-lg p-8 md:p-10 border border-gray-200 relative mb-8">
                     <div class="md:flex md:items-start md:justify-between md:gap-10">
                         <div class="md:flex-1">
                             <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">Monthly</p>
@@ -241,14 +244,14 @@
                                 <span class="text-3xl md:text-4xl font-bold">月60万円〜</span><span class="text-text-secondary">（税別）</span>
                                 <span class="text-sm text-text-tertiary block mt-1">最低契約期間3ヶ月／正式料金は個別見積</span>
                             </div>
-                            <p class="text-text-secondary leading-relaxed mb-4">貴院専属のAIチームを月額で持つサービスです。助言だけの顧問ではありません。毎月、動くものを納品します。</p>
-                            <p class="text-sm text-text-secondary leading-relaxed">診療体制・拠点数・準常駐テックリードの要否に応じて、構成とお見積りを個別に設計します。</p>
+                            <p class="text-text-secondary leading-relaxed mb-4">診断の結果を踏まえてご提案する、複数拠点・グループ経営向けの月額サービスです。助言だけの顧問ではありません。毎月、動くものを納品します。</p>
+                            <p class="text-sm text-text-secondary leading-relaxed">立案・計画と責任分界の設計は当社の医師が担い、実装は案件に合う提携エンジニア（FDE）を編成・監督します。テックリードの準常駐はオプションです。構成とお見積りは診療体制・拠点数に応じて個別に設計します。</p>
                         </div>
                         <ul class="space-y-3 text-base md:flex-1">
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>専任のAIテックリードが実装を主導</span></li>
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>経営者との月次レビュー会（30分）＋チャット相談は随時</span></li>
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>毎月のユースケース実装（小さな自動化を積み上げ）</span></li>
-                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>KPIレビュー（削減時間・利用率を毎月報告）</span></li>
+                            <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>KPI計測の設計と月次レビュー（成果数値を保証するものではありません）</span></li>
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>データ・セキュリティレビューと監査対応記録</span></li>
                             <li class="flex items-start gap-3"><svg class="text-flame mt-1" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>職員向け研修・定着支援</span></li>
                         </ul>
@@ -275,7 +278,7 @@
                     </a>
                 </div>
 
-                <p class="text-center text-base text-text-tertiary">※ 価格は税別表示を主とし、税込価格を併記しています。インボイス発行不可。専属AIチームの最低契約期間は3ヶ月です（一般条項は<a href="terms.html" class="underline hover:text-flame">利用規約</a>。個別契約書の定めが優先します）。<br>導入後の継続的なガバナンス・監査対応は<a href="services.html" class="underline hover:text-flame">医療機関向けガバナンス顧問（月5万円〜）</a>に接続できます。</p>
+                <p class="text-center text-base text-text-tertiary">※ 価格は税別表示を主とし、税込価格を併記しています。適格請求書（インボイス）発行に対応しています。専属AIチームの最低契約期間は3ヶ月です（一般条項は<a href="terms.html" class="underline hover:text-flame">利用規約</a>。個別契約書の定めが優先します）。<br>導入後の継続的なガバナンス・監査対応は<a href="services.html" class="underline hover:text-flame">医療機関向けガバナンス顧問（月5万円〜）</a>に接続できます。</p>
             </div>
         </section>
 
@@ -348,6 +351,7 @@
                     <li class="flex items-start gap-3"><svg class="text-flame mt-1.5" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>診断の結果、他社製品や現状維持で足りる場合は、その通りにお伝えします。</span></li>
                     <li class="flex items-start gap-3"><svg class="text-flame mt-1.5" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>当社が実装した案件について、当社自身が「第三者レビュー・監査」を提供することはありません。第三者が検証できる記録を残す実装を行い、必要に応じて外部監査人をご紹介します。</span></li>
                     <li class="flex items-start gap-3"><svg class="text-flame mt-1.5" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>導入前レビューでは、当社実装を代替案としてご提案する場合があることを事前に開示します。</span></li>
+                    <li class="flex items-start gap-3"><svg class="text-flame mt-1.5" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg><span>定量的な導入事例はまだ公開できるものがありません（2026年度中の公開を予定）。それまでは、診断で貴院自身の数字をご確認いただけます。</span></li>
                 </ul>
             </div>
         </section>
@@ -419,7 +423,7 @@
       <h4>サービス</h4>
       <ul>
         <li><a href="medical-ai.html">医療機関向けAI導入</a></li>
-        <li><a href="welfare-ai.html">社会福祉法人向けAI導入</a></li>
+        <li><a href="welfare-ai.html">社会福祉法人向けAI導入（準備中）</a></li>
         <li><a href="services.html">医療機関向けレビュー・顧問</a></li>
         <li><a href="consulting.html">ベンダー向け</a></li>
         <li><a href="subsidy.html">DX資金調達</a></li>
