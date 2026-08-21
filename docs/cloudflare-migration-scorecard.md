@@ -89,7 +89,7 @@ Pages プロジェクト・D1 (`6bc7a848-…`, APAC)・remote migrations・プ�
 2. ~~`wrangler d1 migrations apply cursorvers-leads --remote`~~ **完了 (2026-08-21)**
 3. Turnstile ウィジェット作成 → GitHub 変数 `TURNSTILE_SITE_KEY` + Cloudflare secret `TURNSTILE_SECRET_KEY`
 4. Resend: API key (`RESEND_API_KEY` secret) + cursorvers.com の DKIM/SPF 検証 + `NOTIFY_TO` 設定
-5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` (b5d2ea575b38ec2342d19f91e98c9347)。**token は Pages:Edit に加えて D1:Edit (account scope) が必須** — wrangler.toml が D1 binding を持つため deploy 時に D1 権限も要求される。Pages テンプレート単体の token だと初回 deploy が不透明なエラーで落ちる
 6. **Cloudflare WAF rate limiting rule を `/api/contact` に設定** (Free プランの 1 ルール枠。例: 同一 IP 10 req/10min 超で 429)。codex security 再レビュー (2026-08-21, verdict=CONDITIONAL) の本番前必須条件
 7. pages.dev で E2E 確認 (Turnstile 実キーで action=contact_submit を含む実トークン検証) → DNS 切替 (AuthLevel 1) → GAS 無効化
 
