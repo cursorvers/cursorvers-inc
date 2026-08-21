@@ -70,10 +70,23 @@ curl -sI https://cursorvers.com/ | grep -iE 'strict-transport|content-security|x
 npx lighthouse https://cursorvers.com/ --only-categories=performance,accessibility,best-practices,seo --output=json --quiet
 ```
 
+## pages.dev プレビュー実測 (2026-08-21, https://preview-e2e.cursorvers-inc.pages.dev)
+
+Pages プロジェクト・D1 (`6bc7a848-…`, APAC)・remote migrations・プレビューデプロイまで実施済み。
+
+| 項目 | baseline (GitHub Pages 本番) | preview 実測 | 備考 |
+|---|---|---|---|
+| セキュリティヘッダ | 0/6 | **6/6** | HSTS/CSP/XCTO/Referrer/Permissions/XFO 全て配信確認 |
+| TTFB 中央値 (×5) | 0.117s | **0.039s** | 二重 CDN 解消。本番ドメイン切替後に再計測 |
+| Lighthouse Perf (/, contact, services) | 55 / 57 / 56 | 56 / **75** / 52 | contact は GAS リンク廃止で +18 |
+| Lighthouse A11y | 93 / 95 / 95 | 96 / 98 / 95 | |
+| Lighthouse SEO | 100 | 61 | **プレビュー限定の測定アーティファクト**: pages.dev プレビューは `X-Robots-Tag: noindex` を自動付与 (is-crawlable=0)。本番ドメインでは付かないため S5 で再計測 |
+| /api/contact | — | secrets 未設定で 403 fail-closed、415 検証も edge で機能 | |
+
 ## 移行後の有効化手順 (user gates)
 
-1. `wrangler d1 create cursorvers-leads` → `wrangler.toml` の D1 ブロックを実 ID でコメント解除
-2. `wrangler d1 migrations apply cursorvers-leads --remote`
+1. ~~`wrangler d1 create cursorvers-leads`~~ **完了 (2026-08-21)**: database_id `6bc7a848-be02-4d93-b132-3760dd8fbe24` を wrangler.toml に反映済み
+2. ~~`wrangler d1 migrations apply cursorvers-leads --remote`~~ **完了 (2026-08-21)**
 3. Turnstile ウィジェット作成 → GitHub 変数 `TURNSTILE_SITE_KEY` + Cloudflare secret `TURNSTILE_SECRET_KEY`
 4. Resend: API key (`RESEND_API_KEY` secret) + cursorvers.com の DKIM/SPF 検証 + `NOTIFY_TO` 設定
 5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
