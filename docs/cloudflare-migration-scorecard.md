@@ -1,0 +1,80 @@
+# Cloudflare 移行スコアカード (実装前後の多角比較)
+
+計測ポリシー: 前後で同一手順・同一環境 (ローカル macOS、東京リージョン到達)。定量軸は実測、定性軸は根拠を明記して採点。各軸 10 点満点。
+
+## 実装前 baseline (2026-08-21 計測、GitHub Pages + 前段 Cloudflare CDN)
+
+### ① Lighthouse (headless Chrome, perf/a11y/bp/seo)
+
+| ページ | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| / | 55 | 93 | 96 | 100 |
+| /contact.html | 57 | 95 | 92 | 100 |
+| /services.html | 56 | 95 | 92 | 100 |
+
+### ② TTFB 実測 (curl time_starttransfer, 秒)
+
+| ページ | 計測値 | 中央値 |
+|---|---|---|
+| / (×5) | 0.398 / 0.132 / 0.111 / 0.117 / 0.111 | **0.117** |
+| /contact.html (×3) | 0.431 / 0.530 / 0.089 | **0.431** (cold MISS 込み) |
+
+### ③ セキュリティヘッダ (curl -sI 実測)
+
+HSTS / CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / X-Frame-Options: **6 種すべて不在 (0/6)**
+
+### ④〜⑦ 定性軸 (根拠付き)
+
+| 軸 | 前 | 根拠 |
+|---|---|---|
+| ④ コスト | 10 | $0 (GitHub Pages 無料 + Cloudflare Free) |
+| ⑤ 運用性/DX | 6 | デプロイ経路は GHA 1 本だが、配信 (GitHub) とフォーム (GAS) と DNS (Cloudflare) の 3 面管理。ヘッダ変更不可 |
+| ⑥ スパム耐性 | 2 | GAS フォームに bot 対策なし (CAPTCHA/レート制限なし) |
+| ⑦ データガバナンス | 4 | リードは Google (GAS/Sheets) 側、保存先・保持期間がコード管理外。privacy.html の開示はあり |
+
+### 実装前 7 軸スコア
+
+| 軸 | 点 (/10) |
+|---|---|
+| ① Lighthouse (4 カテゴリ平均 86) | 8.6 |
+| ② TTFB/LCP (中央値 0.117s、cold 0.43s) | 7 |
+| ③ セキュリティヘッダ (0/6) | 0 |
+| ④ コスト | 10 |
+| ⑤ 運用性/DX | 6 |
+| ⑥ スパム耐性 | 2 |
+| ⑦ データガバナンス | 4 |
+| **合計** | **37.6 / 70** |
+
+## 実装後 (S5 で同一手順にて再計測)
+
+> 記入待ち: DNS 切替後に ①②③ を同一コマンドで再計測し、④〜⑦ を新構成の根拠で再採点する。
+
+| 軸 | 点 (/10) | 根拠 |
+|---|---|---|
+| ① Lighthouse | TBD | |
+| ② TTFB/LCP | TBD | |
+| ③ セキュリティヘッダ | TBD | _headers で 6 種宣言済み (デプロイ後に実測確認) |
+| ④ コスト | TBD | 見込み $0 (Pages/D1/Turnstile/Resend 全て無料枠) |
+| ⑤ 運用性/DX | TBD | 配信+フォーム+ヘッダ+DNS を Cloudflare 1 面に集約、branch preview 付き |
+| ⑥ スパム耐性 | TBD | Turnstile (siteverify + hostname 検証) + honeypot + 入力上限 |
+| ⑦ データガバナンス | TBD | リードは自社管理 D1、スキーマ・保持がコード管理下、privacy.html 更新済み |
+
+## 再計測コマンド (前後同一)
+
+```sh
+# TTFB ×5
+for i in 1 2 3 4 5; do curl -so /dev/null -w '%{time_starttransfer}\n' https://cursorvers.com/; done
+# ヘッダ
+curl -sI https://cursorvers.com/ | grep -iE 'strict-transport|content-security|x-content-type|referrer-policy|permissions-policy|x-frame'
+# Lighthouse (scripts/run-lighthouse.sh と同条件)
+npx lighthouse https://cursorvers.com/ --only-categories=performance,accessibility,best-practices,seo --output=json --quiet
+```
+
+## 移行後の有効化手順 (user gates)
+
+1. `wrangler d1 create cursorvers-leads` → `wrangler.toml` の D1 ブロックを実 ID でコメント解除
+2. `wrangler d1 migrations apply cursorvers-leads --remote`
+3. Turnstile ウィジェット作成 → GitHub 変数 `TURNSTILE_SITE_KEY` + Cloudflare secret `TURNSTILE_SECRET_KEY`
+4. Resend: API key (`RESEND_API_KEY` secret) + cursorvers.com の DKIM/SPF 検証 + `NOTIFY_TO` 設定
+5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+6. pages.dev で E2E 確認 → DNS 切替 (AuthLevel 1) → GAS 無効化

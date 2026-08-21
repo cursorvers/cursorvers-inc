@@ -213,8 +213,7 @@
             <div class="max-w-5xl mx-auto">
                 <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
                     <!-- 医療機関 -->
-                    <a href="https://script.google.com/macros/s/AKfycbx-983qcPNlVWuAQF7kvQ5llwzvKqfzD_vv21keIQfxYjT7SWbUUre9Uq0_BBjQ3doI/exec?type=hospital"
-                        target="_blank" rel="noopener noreferrer"
+                    <a href="#inquiry-form" data-contact-type="hospital"
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'hospital'})">
                         <div class="w-20 h-20 bg-flame/5 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-flame transition">
@@ -248,8 +247,7 @@
                     </a>
 
                     <!-- AIベンダー -->
-                    <a href="https://script.google.com/macros/s/AKfycbx-983qcPNlVWuAQF7kvQ5llwzvKqfzD_vv21keIQfxYjT7SWbUUre9Uq0_BBjQ3doI/exec?type=vendor"
-                        target="_blank" rel="noopener noreferrer"
+                    <a href="#inquiry-form" data-contact-type="vendor"
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'vendor'})">
                         <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-flame/10 transition">
@@ -283,8 +281,7 @@
                     </a>
 
                     <!-- その他 -->
-                    <a href="https://script.google.com/macros/s/AKfycbx-983qcPNlVWuAQF7kvQ5llwzvKqfzD_vv21keIQfxYjT7SWbUUre9Uq0_BBjQ3doI/exec?type=other"
-                        target="_blank" rel="noopener noreferrer"
+                    <a href="#inquiry-form" data-contact-type="other"
                         class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
                         onclick="if(window.gtag)gtag('event','contact_click',{label:'other'})">
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-200 transition">
@@ -317,6 +314,52 @@
                         </span>
                     </a>
                 </div>
+            </div>
+        </section>
+
+        <section id="inquiry-form" class="py-12 md:py-20 px-6">
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl p-8">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">お問い合わせフォーム</h2>
+                <form id="contact-form" novalidate>
+                    <div class="mb-6">
+                        <label for="contact-type" class="block font-bold mb-2">お問い合わせ種別</label>
+                        <select id="contact-type" name="type" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none">
+                            <option value="hospital">医療機関の方</option>
+                            <option value="vendor">AIベンダーの方</option>
+                            <option value="other">その他のご相談</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label for="contact-org" class="block font-bold mb-2">施設・会社名 <span class="text-flame">*</span></label>
+                        <input type="text" id="contact-org" name="org" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none">
+                    </div>
+                    <div class="mb-6">
+                        <label for="contact-name" class="block font-bold mb-2">お名前 <span class="text-flame">*</span></label>
+                        <input type="text" id="contact-name" name="name" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none">
+                    </div>
+                    <div class="mb-6">
+                        <label for="contact-email" class="block font-bold mb-2">メールアドレス <span class="text-flame">*</span></label>
+                        <input type="email" id="contact-email" name="email" required class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none">
+                    </div>
+                    <div class="mb-6">
+                        <label for="contact-phone" class="block font-bold mb-2">電話番号</label>
+                        <input type="tel" id="contact-phone" name="phone" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none">
+                    </div>
+                    <div class="mb-6">
+                        <label for="contact-message" class="block font-bold mb-2">ご相談内容 <span class="text-flame">*</span></label>
+                        <textarea id="contact-message" name="message" required rows="6" class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:border-brand-black outline-none"></textarea>
+                        <p class="text-sm text-text-tertiary mt-2">※個人の健康情報（PHI）を含む内容はご記入しないでください。</p>
+                    </div>
+                    <div class="visually-hidden" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;">
+                        <label for="contact-website">ウェブサイト</label>
+                        <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <div class="mb-6">
+                        <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY_PLACEHOLDER"></div>
+                    </div>
+                    <button type="submit" id="contact-submit" class="w-full inline-flex items-center justify-center px-6 py-4 bg-flame text-white font-bold rounded-full hover:bg-brand-black transition">送信</button>
+                    <p id="form-status" aria-live="polite" class="mt-4 text-center text-sm"></p>
+                </form>
             </div>
         </section>
 
@@ -404,6 +447,68 @@
     <script src="assets/js/nav.js" defer></script>
     <script src="assets/js/reveal.js" defer></script>
     <script src="assets/js/cookie-consent.js" defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        var typeSelect = document.getElementById('contact-type');
+        var form = document.getElementById('contact-form');
+        var statusEl = document.getElementById('form-status');
+        var submitBtn = document.getElementById('contact-submit');
+    
+        document.querySelectorAll('[data-contact-type]').forEach(function (card) {
+            card.addEventListener('click', function () {
+                typeSelect.value = card.getAttribute('data-contact-type');
+            });
+        });
+    
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (form.querySelector('input[name="website"]').value) { return; }
+            if (!form.checkValidity()) {
+                statusEl.textContent = '必須項目をご確認ください。';
+                return;
+            }
+            var turnstileToken = (window.turnstile && window.turnstile.getResponse) ? window.turnstile.getResponse() : '';
+            if (!turnstileToken) {
+                statusEl.textContent = 'bot判定チェックを完了してください。';
+                return;
+            }
+            var payload = {
+                type: typeSelect.value,
+                org: form.elements.org.value.trim(),
+                name: form.elements.name.value.trim(),
+                email: form.elements.email.value.trim(),
+                phone: form.elements.phone.value.trim(),
+                message: form.elements.message.value.trim(),
+                turnstileToken: turnstileToken,
+                website: form.elements.website.value
+            };
+            submitBtn.disabled = true;
+            statusEl.textContent = '送信中…';
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function (res) {
+                if (res.ok) { return; }
+                throw new Error('unknown');
+            })
+            .then(function () {
+                statusEl.textContent = '送信しました。ありがとうございました。';
+                form.reset();
+                if (window.turnstile && window.turnstile.reset) { window.turnstile.reset(); }
+            })
+            .catch(function () {
+                statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+                if (window.turnstile && window.turnstile.reset) { window.turnstile.reset(); }
+            })
+            .then(function () {
+                submitBtn.disabled = false;
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>

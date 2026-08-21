@@ -1,0 +1,12 @@
+name = "cursorvers-inc"
+pages_build_output_dir = "_site"
+compatibility_date = "2026-08-01"
+
+# D1 binding は user gate 後に有効化する:
+#   1. wrangler d1 create cursorvers-leads
+#   2. 下の database_id を実 ID に置換してコメント解除
+#   3. wrangler d1 migrations apply cursorvers-leads --remote
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "cursorvers-leads"
+# database_id = "TBD-SET-AFTER-CREATE"
