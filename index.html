@@ -135,12 +135,12 @@
     <meta name="twitter:description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260611b">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260821a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260611b">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260821a">
     <!-- renewal:end -->
     <style>
         :root { --c-azure-soft: #7FA3CC; }
@@ -1058,6 +1058,7 @@
             <nav class="hidden md:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
                 <a href="index.html" class="text-flame font-semibold">ホーム</a>
                 <a href="message.html" class="hover:text-flame transition">創業者</a>
+                <a href="medical-ai.html" class="hover:text-flame transition">AI導入伴走</a>
                 <a href="services.html" class="hover:text-flame transition">医療機関向け</a>
                 <a href="consulting.html" class="hover:text-flame transition">ベンダー向け</a>
                 <a href="subsidy.html" class="hover:text-flame transition">DX資金調達</a>
@@ -1084,15 +1085,15 @@
         <div class="au-veil" aria-hidden="true"></div>
 
         <div class="au-content" id="auroraContent">
-            <p class="au-eyebrow"><span class="au-brand">CURSORVERS</span><span class="au-dot" aria-hidden="true"></span><span class="au-eyesub">MEDICAL AI REVIEW</span></p>
-            <h1 aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+            <p class="au-eyebrow"><span class="au-brand">CURSORVERS</span><span class="au-dot" aria-hidden="true"></span><span class="au-eyesub">MEDICAL &amp; WELFARE AI PARTNER</span></p>
+            <h1 aria-label="AIに、臨床の魂を 医療・福祉の現場に、使われるAIを実装する">
                 <span class="au-main" aria-hidden="true"><span class="au-tok"><span class="au-ch">A</span><span class="au-ch">I</span><span class="au-ch">に</span><span class="au-ch">、</span></span><span class="au-tok"><span class="au-ch">臨</span><span class="au-ch">床</span><span class="au-ch">の</span><span class="au-ch">魂</span><span class="au-ch">を</span></span></span>
-                <span class="au-sub" aria-hidden="true"><span class="au-tok">医療AIを、</span><span class="au-tok">現場に届く言葉へ</span></span>
+                <span class="au-sub" aria-hidden="true"><span class="au-tok">医療・福祉の現場に、</span><span class="au-tok">使われるAIを実装する</span></span>
             </h1>
-            <p class="au-badge">医療AIの第三者レビュー</p>
+            <p class="au-badge">AI導入伴走 × ガバナンス</p>
             <a class="au-cta" href="contact.html"
-                onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_consult' })">相談の予約</a>
-            <p class="au-note">臨床経験のある医師が、製品中立でレビューします。</p>
+                onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_consult' })">無料壁打ちを予約</a>
+            <p class="au-note">臨床経験のある医師が、導入から監査対応まで設計します。<br><a href="medical-ai.html" style="text-decoration:underline" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_medicalai' })">医療機関向けAI導入伴走を見る →</a></p>
         </div>
 
         <script>
@@ -1772,14 +1773,31 @@
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-9 md:mb-12">
                 <div>
                     <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">Service</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">2つの入口</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">3つの入口</h2>
                 </div>
                 <p class="text-sm md:text-base text-text-secondary leading-relaxed max-w-xl">
-                    医療機関には導入判断とアセスメント観点を。<br class="br-pc">医療AIベンダーには病院に届く説明責任の整理を返します。
+                    AI導入は実装まで伴走を。医療機関には導入判断とアセスメント観点を。<br class="br-pc">医療AIベンダーには病院に届く説明責任の整理を返します。
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                <!-- カード0: AI導入伴走 (featured) -->
+                <div class="mobile-tight-card md:col-span-2 bg-brand-black text-white rounded-lg p-7 md:p-8 border border-brand-black flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+                    <div class="flex-grow">
+                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関のAI導入 <span class="ml-2 inline-block bg-flame text-white text-xs font-bold px-2 py-0.5 rounded-full align-middle">NEW</span></p>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">話すだけで記録が残る。書類時間を、診療時間へ。</h3>
+                        <p class="text-white/80 text-base md:text-lg leading-relaxed">
+                            診断から実装・定着まで、医師とエンジニアチームが伴走。PHIは院内で閉域。補助金の活用設計も含めます。
+                        </p>
+                    </div>
+                    <div class="flex-none w-full md:w-auto">
+                        <a href="medical-ai.html"
+                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})"
+                            class="flex w-full md:w-auto h-12 items-center justify-center gap-2 font-bold text-sm md:text-base bg-white text-brand-black px-8 rounded-lg hover:bg-flame hover:text-white transition">
+                            AI導入伴走を見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                        </a>
+                    </div>
+                </div>
                 <!-- カードA: 医療機関向け -->
                 <div class="mobile-tight-card bg-white rounded-lg p-7 md:p-8 border border-gray-200 hover:border-flame/30 transition-colors flex flex-col">
                     <p class="text-sm font-bold text-flame uppercase mb-4 font-en tracking-wider">医療機関向け</p>
@@ -2582,6 +2600,7 @@
     <div class="site-footer__col">
       <h4>サービス</h4>
       <ul>
+        <li><a href="medical-ai.html">AI導入伴走</a></li>
         <li><a href="services.html">医療機関向け</a></li>
         <li><a href="consulting.html">ベンダー向け</a></li>
         <li><a href="subsidy.html">DX資金調達</a></li>
