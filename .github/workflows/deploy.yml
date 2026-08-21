@@ -67,7 +67,9 @@ jobs:
 
       - name: Inject Turnstile sitekey
         if: vars.TURNSTILE_SITE_KEY != ''
-        run: sed -i "s/TURNSTILE_SITE_KEY_PLACEHOLDER/${{ vars.TURNSTILE_SITE_KEY }}/g" _site/contact.html
+        run: python3 -c 'import os, pathlib; p = pathlib.Path("_site/contact.html"); p.write_text(p.read_text().replace("TURNSTILE_SITE_KEY_PLACEHOLDER", os.environ["SITE_KEY"]))'
+        env:
+          SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

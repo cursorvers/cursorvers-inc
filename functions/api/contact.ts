@@ -43,7 +43,11 @@ const ALLOWED_HOSTNAMES = ["cursorvers.com", "www.cursorvers.com"];
 
 function isAllowedHostname(hostname: unknown): boolean {
   if (typeof hostname !== "string") return false;
-  return ALLOWED_HOSTNAMES.includes(hostname) || hostname.endsWith(".pages.dev");
+  return (
+    ALLOWED_HOSTNAMES.includes(hostname) ||
+    hostname === "cursorvers-inc.pages.dev" ||
+    hostname.endsWith(".cursorvers-inc.pages.dev")
+  );
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
@@ -51,14 +55,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (contentLength > MAX_BODY_BYTES) {
     return json({ ok: false, error: "Payload too large" }, 413);
   }
-  const contentType = request.headers.get("Content-Type") || "";
-  if (!contentType.toLowerCase().includes("application/json")) {
+  const contentTypeHeader = request.headers.get("Content-Type") || "";
+  const mimeEssence = contentTypeHeader.split(";")[0].trim().toLowerCase();
+  if (mimeEssence !== "application/json") {
     return json({ ok: false, error: "Unsupported Media Type" }, 415);
+  }
+
+  const rawBody = await request.text();
+  if (new TextEncoder().encode(rawBody).length > MAX_BODY_BYTES) {
+    return json({ ok: false, error: "Payload too large" }, 413);
   }
 
   let body: ContactPayload;
   try {
-    body = (await request.json()) as ContactPayload;
+    body = JSON.parse(rawBody) as ContactPayload;
   } catch {
     return json({ ok: false, error: "Invalid JSON" }, 400);
   }
@@ -91,9 +101,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const turnstileJson = (await turnstileRes.json()) as {
       success?: boolean;
       hostname?: string;
+      action?: string;
     };
     turnstileOk =
-      turnstileJson.success === true && isAllowedHostname(turnstileJson.hostname);
+      turnstileJson.success === true &&
+      isAllowedHostname(turnstileJson.hostname) &&
+      turnstileJson.action === "contact_submit";
   } catch {
     turnstileOk = false;
   }

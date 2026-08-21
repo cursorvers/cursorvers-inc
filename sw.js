@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.1.1'; // Updated: 2026-07-17 - Remove client.navigate on activate (iOS render freeze)
+const CACHE_VERSION = '2.2.0'; // Updated: 2026-08-21 - Cloudflare migration: refresh cached tailwind.min.css for new contact form styles
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First

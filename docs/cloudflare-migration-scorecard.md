@@ -77,4 +77,9 @@ npx lighthouse https://cursorvers.com/ --only-categories=performance,accessibili
 3. Turnstile ウィジェット作成 → GitHub 変数 `TURNSTILE_SITE_KEY` + Cloudflare secret `TURNSTILE_SECRET_KEY`
 4. Resend: API key (`RESEND_API_KEY` secret) + cursorvers.com の DKIM/SPF 検証 + `NOTIFY_TO` 設定
 5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
-6. pages.dev で E2E 確認 → DNS 切替 (AuthLevel 1) → GAS 無効化
+6. **Cloudflare WAF rate limiting rule を `/api/contact` に設定** (Free プランの 1 ルール枠。例: 同一 IP 10 req/10min 超で 429)。codex security 再レビュー (2026-08-21, verdict=CONDITIONAL) の本番前必須条件
+7. pages.dev で E2E 確認 (Turnstile 実キーで action=contact_submit を含む実トークン検証) → DNS 切替 (AuthLevel 1) → GAS 無効化
+
+## ローカル E2E 実施済み (2026-08-21, `wrangler pages dev` + Turnstile test key + local D1)
+
+415 (Content-Type essence 不一致) / 413 (実体 32KB 超) / 400 (token 欠落・type 不正・email 不正) / honeypot silent 200 / hostname allowlist fail-closed 403 / 正常系 200 + D1 INSERT 実確認 + Resend 失敗時 mailWarn でリード保全 — 全パス。未検証で残るのは実 Turnstile キーでの pages.dev E2E と Resend 実送信のみ。
