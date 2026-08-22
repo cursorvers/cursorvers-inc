@@ -33,7 +33,11 @@ test.describe("Contact form", () => {
       window.addEventListener("fetch", () => {});
     });
     page.on("request", (request) => {
-      if (request.method() === "POST") fetchCalled = true;
+      // 本番は Cloudflare Insights の RUM beacon 等が POST を発行するため、
+      // フォームの送信先 /api/contact への POST だけを検知対象にする
+      if (request.method() === "POST" && new URL(request.url()).pathname === "/api/contact") {
+        fetchCalled = true;
+      }
     });
 
     const isValid = await page.evaluate(() => {
