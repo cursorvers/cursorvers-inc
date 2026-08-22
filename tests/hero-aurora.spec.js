@@ -46,14 +46,14 @@ test.describe("Hero aurora section", () => {
     expect(contract).toMatchObject({
       videoCount: 0,
       heroExists: true,
-      ariaLabel: "AIに、臨床の魂を 医療AIを、現場に届く言葉へ",
+      ariaLabel: "AIに、臨床の魂を 医療・福祉の現場に、使われるAIを実装する",
       mainText: "AIに、臨床の魂を",
-      subText: "医療AIを、現場に届く言葉へ",
+      subText: "医療・福祉の現場に、使われるAIを実装する",
       brandText: "CURSORVERS",
       badgeTag: "P",
-      badgeText: "医療AIの第三者レビュー",
+      badgeText: "AI導入伴走 × ガバナンス",
       ctaHref: "contact.html",
-      ctaText: "相談の予約",
+      ctaText: "無料壁打ちを予約",
       bandExists: true,
       chCount: 9,
     });

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101D33">
+<title>Cursorvers Hero — S5 Soul Morph</title>
+<script>if(/[?&]static=1(?:&|$)/.test(location.search))document.documentElement.classList.add('static');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============ Cursorvers Hero S5 — Soul Morph ============
+   palette (brand family only):
+   deep #101D33 / ink #13243F / azure #3E6FA8 / azureSoft #7FA3CC
+   azureDeep #36618F / gold #C8922E / ivory #F4F1EA / card #FBFAF5 */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#101D33}
+body{
+  font-family:"Noto Sans JP",sans-serif;
+  color:#F4F1EA;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  background:radial-gradient(115% 85% at 68% 44%, #13243F 0%, #101D33 62%);
+}
+#fx{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.scrim{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg, rgba(16,29,51,.86) 0%, rgba(16,29,51,.5) 34%, rgba(16,29,51,0) 60%);
+}
+
+/* ---------- copy (fail-safe: always readable via base CSS) ---------- */
+.copy{
+  position:relative;z-index:3;
+  width:min(47vw,660px);
+  margin-left:clamp(44px,7.2vw,116px);
+  will-change:transform;
+}
+.eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-family:Manrope,sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.42em;text-transform:uppercase;color:#C8922E;
+}
+.eyebrow::before{content:"";width:36px;height:1px;background:rgba(200,146,46,.85);flex:none}
+.title{margin-top:24px}
+.rv{display:block;overflow:hidden}
+.rv>i{display:inline-block;font-style:normal;padding:.07em 0;transform:translateY(120%);animation:rise 1.1s cubic-bezier(.16,1,.3,1) var(--d,0s) forwards}
+@keyframes rise{to{transform:none}}
+.main{
+  font-family:"Noto Serif JP",serif;font-weight:900;
+  font-size:clamp(2.4rem,4.9vw,4.4rem);
+  line-height:1.16;letter-spacing:.015em;color:#F4F1EA;
+  text-shadow:0 0 34px rgba(62,111,168,.4);
+}
+.sub{
+  display:block;margin-top:16px;
+  font-family:"Noto Sans JP",sans-serif;font-weight:500;
+  font-size:clamp(1.02rem,1.5vw,1.32rem);
+  line-height:1.8;letter-spacing:.08em;color:rgba(244,241,234,.85);
+}
+.tok{white-space:nowrap;display:inline-block}
+.soul{
+  color:#7FA3CC;
+  text-shadow:0 0 26px rgba(62,111,168,.75), 0 0 70px rgba(127,163,204,.4);
+}
+.meta{
+  margin-top:26px;display:flex;align-items:center;gap:10px;
+  font-size:13px;letter-spacing:.14em;color:rgba(127,163,204,.9);
+}
+.meta::before{content:"";width:6px;height:6px;border-radius:50%;background:#C8922E;box-shadow:0 0 10px rgba(200,146,46,.8);flex:none}
+.ent{opacity:0;transform:translateY(14px);animation:fadeUp .95s cubic-bezier(.16,1,.3,1) var(--d,0s) forwards}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+
+/* ---------- rotating CURSORVERS ring ---------- */
+.orbit{
+  position:absolute;left:clamp(20px,3vw,44px);bottom:clamp(20px,3vw,40px);
+  width:150px;height:150px;z-index:2;opacity:.6;pointer-events:none;
+}
+.orbit svg{width:100%;height:100%;overflow:visible;animation:spin 60s linear infinite;transform-origin:50% 50%}
+.orbit text{fill:rgba(244,241,234,.48);font-family:Manrope,sans-serif;font-weight:600;font-size:11px;letter-spacing:.34em}
+.orbit-dot{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:#C8922E;box-shadow:0 0 12px rgba(200,146,46,.9)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- identification tag ---------- */
+.tag{
+  position:absolute;right:clamp(18px,2.4vw,30px);bottom:clamp(16px,2.4vw,26px);z-index:4;
+  font-family:Manrope,sans-serif;font-weight:400;font-size:10px;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(244,241,234,.4);pointer-events:none;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero{align-items:flex-end}
+  .copy{width:auto;margin:0 22px calc(96px + 4svh)}
+  .main{font-size:clamp(2.05rem,9.2vw,2.6rem)}
+  .sub{font-size:clamp(.98rem,4vw,1.1rem)}
+  .scrim{background:linear-gradient(180deg, rgba(16,29,51,0) 26%, rgba(16,29,51,.42) 50%, rgba(16,29,51,.92) 74%)}
+  .orbit{width:92px;height:92px;opacity:.5;left:18px;bottom:18px}
+}
+
+/* ---------- static / reduced-motion: beautiful still state ---------- */
+@media (prefers-reduced-motion: reduce){
+  .ent,.rv>i{animation:none;opacity:1;transform:none}
+  .orbit svg{animation:none}
+}
+html.static .ent,html.static .rv>i{animation:none;opacity:1;transform:none}
+html.static .orbit svg{animation:none}
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <div class="orbit" aria-hidden="true">
+    <svg viewBox="0 0 160 160">
+      <defs><path id="orbit-path" d="M80 80 m-62 0 a62 62 0 1 1 124 0 a62 62 0 1 1 -124 0"/></defs>
+      <text><textPath href="#orbit-path" textLength="389" lengthAdjust="spacingAndGlyphs">CURSORVERS · MEDICAL AI REVIEW · </textPath></text>
+    </svg>
+    <span class="orbit-dot"></span>
+  </div>
+
+  <div class="copy" id="copy">
+    <p class="eyebrow ent" style="--d:.15s" aria-hidden="true">MEDICAL AI REVIEW</p>
+    <h1 class="title" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="rv main" aria-hidden="true"><i style="--d:.32s"><span class="tok">AIに、</span><span class="tok">臨床の<span class="soul" id="soul">魂</span>を</span></i></span>
+      <span class="rv sub" aria-hidden="true"><i style="--d:.58s"><span class="tok">医療AIを、</span><span class="tok">現場に届く言葉へ</span></i></span>
+    </h1>
+    <p class="meta ent" style="--d:.85s">医療AIの第三者レビュー</p>
+  </div>
+
+  <div class="tag" aria-hidden="true">S5 · Soul Morph</div>
+</section>
+
+<script>
+(function(){
+'use strict';
+/* ================= Soul Morph engine =================
+   A giant 魂 built from glyph-sampled particles.
+   12s cycle: formed(8s, breathing contour) -> ink-smoke collapse
+   rising bottom-up(2s) -> re-gathering(2s). Additive blending.
+   ?static=1 / prefers-reduced-motion: one rich formed frame, no rAF. */
+
+var hero=document.getElementById('hero');
+var canvas=document.getElementById('fx');
+var ctx=canvas.getContext('2d',{alpha:true});
+var soul=document.getElementById('soul');
+var copy=document.getElementById('copy');
+
+var STATIC=/[?&]static=1(?:&|$)/.test(location.search);
+var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var FROZEN=STATIC||RM;
+
+var AZ='#3E6FA8',AZS='#7FA3CC',AZD='#36618F',GOLD='#C8922E',IVORY='#F4F1EA';
+function rgba(hex,a){var n=parseInt(hex.slice(1),16);return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';}
+
+var W=0,H=0,DPR=1,narrow=false,cx=0,cy=0,glyph=0;
+var N=0,HX,HY,X,Y,VX,VY,SZ,SPR,SEED,EDGE,NYA,AL;
+var stars=[],motes=[],sprites=[];
+var t=0,last=0,raf=0,running=false,fontOK=false;
+var T0=10.15,CYC=12;                 /* start mid-regather => entrance assembly */
+var pmx=null,pmy=null,ox=0,oy=0,txo=0,tyo=0;
+var pulse=0,pulseX=0,pulseY=0;
+
+/* ---- pre-rendered glow sprites (additive bloom without shadowBlur) ---- */
+function makeSprite(hex){
+  var s=document.createElement('canvas');s.width=s.height=64;
+  var g=s.getContext('2d');
+  var r=g.createRadialGradient(32,32,0,32,32,32);
+  r.addColorStop(0,rgba(IVORY,0.95));
+  r.addColorStop(0.2,rgba(hex,0.9));
+  r.addColorStop(0.5,rgba(hex,0.3));
+  r.addColorStop(1,rgba(hex,0));
+  g.fillStyle=r;g.fillRect(0,0,64,64);
+  return s;
+}
+sprites=[makeSprite(AZ),makeSprite(AZS),makeSprite(AZD),makeSprite(GOLD)];
+
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=(Math.random()*(i+1))|0;var m=a[i];a[i]=a[j];a[j]=m;}return a;}
+
+function metrics(){
+  narrow=W<=900;
+  if(narrow){cx=W*0.5;cy=H*0.35;glyph=Math.min(W*0.88,H*0.46);}
+  else{cx=W*0.705;cy=H*0.5;glyph=Math.min(H*0.60,W*0.42);}
+}
+
+/* ---- ambient: faint stardust + rising motes across the whole frame ---- */
+function buildAmbient(){
+  var i,ns=narrow?55:120;
+  stars=[];
+  for(i=0;i<ns;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:0.6+Math.random()*1.2,p:Math.random()*6.283,s:0.3+Math.random()*0.9,c:Math.random()<0.72?IVORY:AZS});
+  var nm=narrow?12:32;
+  motes=[];
+  for(i=0;i<nm;i++)motes.push({x:Math.random()*W,y:Math.random()*H,v:7+Math.random()*16,d:Math.random()*6.283,sz:12+Math.random()*26,a:0.05+Math.random()*0.09,sp:Math.random()<0.1?3:(Math.random()<0.5?0:1)});
+}
+
+/* ---- offscreen glyph sampling ('魂' Noto Serif JP 900) ---- */
+function sampleGlyph(){
+  var SS=460;
+  var oc=document.createElement('canvas');oc.width=oc.height=SS;
+  var g=oc.getContext('2d',{willReadFrequently:true});
+  g.fillStyle='#fff'; /* mask only — never displayed */
+  g.textAlign='center';g.textBaseline='middle';
+  g.font='900 '+Math.floor(SS*0.84)+'px "Noto Serif JP","Hiragino Mincho ProN",serif';
+  g.fillText('魂',SS/2,SS/2+SS*0.02);
+  var d=g.getImageData(0,0,SS,SS).data;
+  function A(x,y){return d[(y*SS+x)*4+3];}
+  var st=3,pts=[],minY=SS,maxY=0,x,y,a,e;
+  for(y=st;y<SS-st;y+=st)for(x=st;x<SS-st;x+=st){
+    a=A(x,y);
+    if(a>110){
+      e=(A(x-st,y)<50||A(x+st,y)<50||A(x,y-st)<50||A(x,y+st)<50)?1:0;
+      pts.push([x,y,e]);
+      if(y<minY)minY=y;if(y>maxY)maxY=y;
+    }
+  }
+  return {pts:pts,minY:minY,maxY:maxY,SS:SS};
+}
+
+function buildParticles(){
+  var smp=sampleGlyph();
+  var target=narrow?900:3000;
+  var i,edges=[],fills=[];
+  for(i=0;i<smp.pts.length;i++)(smp.pts[i][2]?edges:fills).push(smp.pts[i]);
+  shuffle(edges);shuffle(fills);
+  var ne=Math.min(edges.length,Math.floor(target*0.42));
+  var chosen=edges.slice(0,ne).concat(fills.slice(0,Math.max(0,target-ne)));
+  shuffle(chosen);
+  N=chosen.length;
+  HX=new Float32Array(N);HY=new Float32Array(N);X=new Float32Array(N);Y=new Float32Array(N);
+  VX=new Float32Array(N);VY=new Float32Array(N);SZ=new Float32Array(N);SEED=new Float32Array(N);
+  NYA=new Float32Array(N);AL=new Float32Array(N);SPR=new Uint8Array(N);EDGE=new Uint8Array(N);
+  var scale=glyph/smp.SS,span=(smp.maxY-smp.minY)||1;
+  var szMul=narrow?0.8:1;
+  for(i=0;i<N;i++){
+    var p=chosen[i];
+    HX[i]=cx+(p[0]-smp.SS/2)*scale+(Math.random()-0.5)*scale*2.4;
+    HY[i]=cy+(p[1]-smp.SS/2)*scale+(Math.random()-0.5)*scale*2.4;
+    NYA[i]=(p[1]-smp.minY)/span;
+    EDGE[i]=p[2];
+    SEED[i]=Math.random()*6.283;
+    SZ[i]=((p[2]?5.2:4.0)+Math.random()*3.4)*szMul;
+    var r=Math.random();
+    SPR[i]=r<0.05?3:(r<0.48?0:(r<0.78?1:2)); /* 5% gold, rest azure family */
+    AL[i]=0.34+Math.random()*0.4;
+    if(FROZEN){X[i]=HX[i];Y[i]=HY[i];VX[i]=0;VY[i]=0;}
+    else{
+      X[i]=HX[i]+(Math.random()-0.5)*W*0.6;   /* entrance scatter */
+      Y[i]=HY[i]+Math.random()*H*0.5+40;
+      VX[i]=(Math.random()-0.5)*1.6;VY[i]=-Math.random()*1.4;
+    }
+  }
+  if(!FROZEN)T0=(((10.15-t)%CYC)+CYC)%CYC;   /* entrance assembly starts now */
+}
+
+function auraLevel(tc){
+  if(tc<8)return 1;
+  if(tc<10)return Math.max(0.12,1-((tc-8)/2)*0.9);
+  return 0.12+((tc-10)/2)*0.88;
+}
+
+/* ---- one frame: physics + draw in a single pass ---- */
+function render(dt){
+  var i,f=Math.min(dt*60,2.2);
+  var tc=(t+T0)%CYC;
+
+  ox+=(txo-ox)*Math.min(1,0.09*f);
+  oy+=(tyo-oy)*Math.min(1,0.09*f);
+  if(copy&&!FROZEN)copy.style.transform='translate3d('+(-ox*0.32).toFixed(2)+'px,'+(-oy*0.32).toFixed(2)+'px,0)';
+
+  ctx.clearRect(0,0,W,H);
+
+  /* stardust */
+  ctx.globalCompositeOperation='source-over';
+  for(i=0;i<stars.length;i++){
+    var s=stars[i];
+    ctx.globalAlpha=0.10+0.26*(0.5+0.5*Math.sin(t*s.s+s.p));
+    ctx.fillStyle=s.c;
+    ctx.fillRect(s.x,s.y,s.r,s.r);
+  }
+  ctx.globalAlpha=1;
+
+  ctx.globalCompositeOperation='lighter';
+
+  /* breathing aura behind the glyph */
+  var au=auraLevel(tc);
+  var br=1+0.05*Math.sin(t*0.55);
+  var acx=cx+ox*0.55,acy=cy+oy*0.4;
+  var R1=glyph*0.75*br;
+  var g1=ctx.createRadialGradient(acx,acy,0,acx,acy,R1);
+  g1.addColorStop(0,rgba(AZ,0.15*au));
+  g1.addColorStop(0.5,rgba(AZD,0.07*au));
+  g1.addColorStop(1,rgba(AZ,0));
+  ctx.fillStyle=g1;
+  ctx.fillRect(acx-R1,acy-R1,R1*2,R1*2);
+  var R2=glyph*0.34*br,gy=acy+glyph*0.1;
+  var g2=ctx.createRadialGradient(acx,gy,0,acx,gy,R2);
+  g2.addColorStop(0,rgba(GOLD,0.06*au));
+  g2.addColorStop(1,rgba(GOLD,0));
+  ctx.fillStyle=g2;
+  ctx.fillRect(acx-R2,gy-R2,R2*2,R2*2);
+
+  /* rising motes */
+  for(i=0;i<motes.length;i++){
+    var m=motes[i];
+    m.y-=m.v*dt;
+    m.x+=Math.sin(t*0.35+m.d)*0.35*f;
+    if(m.y<-40){m.y=H+40;m.x=Math.random()*W;}
+    ctx.globalAlpha=m.a*(0.6+0.4*Math.sin(t*0.7+m.d));
+    ctx.drawImage(sprites[m.sp],m.x-m.sz/2,m.y-m.sz/2,m.sz,m.sz);
+  }
+
+  /* the soul: glyph particles */
+  var R=narrow?90:130;
+  var pw=pulse>0.02;
+  for(i=0;i<N;i++){
+    var mode,damp;
+    var cS=8+(1-NYA[i])*0.9+(SEED[i]%0.3);   /* collapse: bottom first, smoke rises */
+    var rS=10+NYA[i]*0.7+(SEED[i]%0.25);     /* regather: top condenses first */
+    if(tc<8)mode=0;
+    else if(tc<10)mode=(tc>=cS)?1:0;
+    else mode=(tc>=rS)?2:1;
+
+    if(mode===0){ /* formed: breathe around home */
+      var bt=Math.sin(t*0.9+SEED[i])*(EDGE[i]?2.4:1.3);
+      VX[i]+=((HX[i]+Math.cos(SEED[i])*bt)-X[i])*0.03*f;
+      VY[i]+=((HY[i]+Math.sin(SEED[i]*1.7)*bt)-Y[i])*0.03*f;
+      damp=0.86;
+    }else if(mode===1){ /* ink-smoke collapse: buoyancy + curl field */
+      VY[i]-=0.085*f;
+      VX[i]+=Math.sin(Y[i]*0.012+t*1.6+SEED[i])*0.22*f;
+      VY[i]+=Math.cos(X[i]*0.010-t*1.3+SEED[i])*0.09*f;
+      VX[i]+=(X[i]-cx)*0.0007*f;
+      damp=0.965;
+    }else{ /* regather: spring home */
+      var k=Math.min(1,(tc-rS)/0.5)*0.09;
+      VX[i]+=(HX[i]-X[i])*k*f;
+      VY[i]+=(HY[i]-Y[i])*k*f;
+      damp=0.80;
+    }
+
+    /* pointer repulsion — always live */
+    if(pmx!==null){
+      var dx=X[i]-pmx,dy=Y[i]-pmy,d2=dx*dx+dy*dy;
+      if(d2<R*R&&d2>0.01){
+        var dd=Math.sqrt(d2),ss=1-dd/R;
+        VX[i]+=dx/dd*ss*ss*2.6*f;
+        VY[i]+=dy/dd*ss*ss*2.6*f;
+      }
+    }
+    /* click shockwave */
+    if(pw){
+      var qx=X[i]-pulseX,qy=Y[i]-pulseY,q2=qx*qx+qy*qy,PR=240;
+      if(q2<PR*PR&&q2>0.01){
+        var qd=Math.sqrt(q2),qs=(1-qd/PR)*pulse;
+        VX[i]+=qx/qd*qs*5.5*f;
+        VY[i]+=qy/qd*qs*5.5*f;
+      }
+    }
+
+    var dpF=Math.pow(damp,f);
+    VX[i]*=dpF;VY[i]*=dpF;
+    X[i]+=VX[i]*f;Y[i]+=VY[i]*f;
+
+    var a=AL[i],szv=SZ[i];
+    if(mode===0&&EDGE[i]){ /* contour light breathes along the stroke */
+      var pl=0.5+0.5*Math.sin(t*1.5+SEED[i]*3+(HX[i]+HY[i])*0.012);
+      a*=0.7+0.75*pl;szv*=1+0.5*pl;
+    }else if(mode===1){
+      var pp=Math.min(1,(tc-cS)/1.4);
+      a*=1-pp*0.55;szv*=1+pp*0.6;
+    }else if(mode===2){
+      a*=0.45+0.55*Math.min(1,(tc-rS)/0.8);
+    }
+    var depth=szv*0.10;                      /* size-keyed parallax */
+    var ds=szv*2.6;
+    ctx.globalAlpha=Math.min(1,a);
+    ctx.drawImage(sprites[SPR[i]],X[i]+ox*depth-ds/2,Y[i]+oy*depth-ds/2,ds,ds);
+  }
+  ctx.globalAlpha=1;
+  ctx.globalCompositeOperation='source-over';
+  if(pw)pulse*=Math.pow(0.9,f);else pulse=0;
+
+  /* DOM 魂 resonates with the particle soul */
+  if(soul&&!FROZEN){
+    soul.style.textShadow='0 0 '+(16+26*au).toFixed(1)+'px '+rgba(AZ,+(0.35+0.4*au).toFixed(3))+
+      ', 0 0 '+(70*au).toFixed(1)+'px '+rgba(AZS,+(0.3*au).toFixed(3));
+  }
+}
+
+function frame(now){
+  if(!running)return;
+  var dt=Math.min((now-last)/1000,0.05);
+  last=now;t+=dt;
+  render(dt);
+  raf=requestAnimationFrame(frame);
+}
+function start(){if(running||FROZEN)return;running=true;last=performance.now();raf=requestAnimationFrame(frame);}
+function stop(){running=false;if(raf)cancelAnimationFrame(raf);}
+
+function rebuild(){
+  var r=hero.getBoundingClientRect();
+  W=Math.max(1,Math.round(r.width));H=Math.max(1,Math.round(r.height));
+  DPR=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=W*DPR;canvas.height=H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  metrics();buildAmbient();
+  if(fontOK)buildParticles();
+  if(FROZEN)render(0);
+}
+
+/* font gate: sample the glyph only once Noto Serif JP 900 is usable */
+var fontDone=false;
+function onFont(){
+  if(fontDone)return;fontDone=true;fontOK=true;
+  buildParticles();
+  if(FROZEN)render(0);   /* static: representative formed frame, no rAF */
+}
+if(document.fonts&&document.fonts.load){
+  document.fonts.load('900 200px "Noto Serif JP"','魂').then(onFont,onFont);
+  setTimeout(onFont,2200);
+}else{setTimeout(onFont,400);}
+
+var rto=0;
+window.addEventListener('resize',function(){clearTimeout(rto);rto=setTimeout(rebuild,180);});
+document.addEventListener('visibilitychange',function(){
+  if(FROZEN)return;
+  if(document.hidden)stop();else start();
+});
+
+if(!FROZEN){
+  window.addEventListener('pointermove',function(e){
+    var r=canvas.getBoundingClientRect();
+    pmx=e.clientX-r.left;pmy=e.clientY-r.top;
+    txo=(pmx/W-0.5)*26;tyo=(pmy/H-0.5)*18;
+  },{passive:true});
+  window.addEventListener('pointerdown',function(e){
+    var r=canvas.getBoundingClientRect();
+    pulseX=e.clientX-r.left;pulseY=e.clientY-r.top;pulse=1;
+  },{passive:true});
+  document.addEventListener('pointerleave',function(){pmx=null;pmy=null;txo=0;tyo=0;});
+  window.addEventListener('blur',function(){pmx=null;pmy=null;txo=0;tyo=0;});
+}
+
+if(FROZEN)t=4.6;      /* mid-formed: contour pulse at its richest */
+rebuild();
+if(!FROZEN)start();
+})();
+</script>
+</body>
+</html>

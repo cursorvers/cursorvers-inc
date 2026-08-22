@@ -1,0 +1,475 @@
+<!doctype html>
+<!--
+  Cursorvers株式会社 LP ヒーローセクション刷新案 (リッチモーション版)
+  Pattern 04 v2 「呼吸 — Aurora Silk」
+  本番組込みは .hero-wrapper 置換で index.html に統合する想定
+
+  モーション設計:
+    [背景 / 常時継続]
+      - canvas 2D に絹のリボン 4 本: 正弦波 3 波の重ね合わせで上端/下端曲線を生成し、
+        帯領域を半透明の縦グラデ (azureSoft / azure / azureDeep / band, α 0.12-0.30) で塗る。
+        周期 9 / 12 / 14 / 18s で常時うねり続け、交差部は source-over の重なりで色が深まる。
+      - gold #C8922E の細い糸 1 本 (周期 11s) をリボン群の上に織り込む。
+      - ポインタ X 位置で各リボンの振幅がわずかに応答 (lerp 0.04 で滑らかに追従)。
+      - コンテンツ+背景全体が 7s 周期 scale 1.000→1.012 の呼吸。
+    [入場 / 一度きり]
+      - 主行: blur(26px) + letter-spacing 0.32em から 2.0s で「焦点が合う」収束。
+      - 副行・英字・注記は時間差のフェードライズ。
+    [フェイルセーフ]
+      - テキストの base CSS は常に完全可視の最終状態。隠し初期値は animation (fill-mode: both)
+        側のみで表現。CSS アニメ不発・JS 失敗・canvas 失敗のいずれでも文字は無傷で読める。
+      - canvas は純粋な背景レイヤー。中央上寄りのタイポ領域は ivory ヴェールで常時保護。
+    [reduced-motion]
+      - prefers-reduced-motion: reduce では呼吸/入場を停止し、canvas は静止 1 フレームのみ描画。
+  技術: 外部 JS ライブラリなし / dPR 上限 2 / document.hidden で rAF 停止 / resize 対応。
+-->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern 04 v2 呼吸 — Aurora Silk | Cursorvers Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#F4F1EA;
+  --card:#FBFAF5;
+  --band:#ECE7DB;
+  --ink:#13243F;
+  --deep:#101D33;
+  --azure:#3E6FA8;
+  --azure-deep:#36618F;
+  --azure-soft:#7FA3CC;
+  --gold:#C8922E;
+  --hairline:#D8D4C8;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--ivory)}
+body{
+  font-family:"Noto Sans JP",sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ============ hero shell ============ */
+.hero-wrapper{
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+  min-height:100svh;
+  /* トークン内色のみの縦グラデ: 上=card 寄り、下=band。リボンの受け皿になる */
+  background:linear-gradient(180deg,#F8F5EF 0%,var(--ivory) 34%,#F0EBE1 74%,var(--band) 100%);
+}
+
+/* 全体 7s 呼吸 (transform のみ) */
+.hero-breath{
+  position:absolute;
+  inset:0;
+  animation:heroBreath 7s ease-in-out infinite;
+  will-change:transform;
+}
+@keyframes heroBreath{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.012)}
+}
+
+/* 背景 canvas: 失敗しても文字には一切影響しない純背景レイヤー */
+.hero-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* タイポ領域保護ヴェール: どの瞬間も中央上寄りは ivory を保つ */
+.hero-veil{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse 100% 62% at 50% 34%,
+    rgba(251,250,245,.95) 0%,
+    rgba(247,244,237,.60) 45%,
+    rgba(244,241,234,0) 76%);
+}
+
+/* ============ content ============ */
+.hero-content{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:clamp(24px,5vw,64px);
+  padding-bottom:18vh;
+}
+
+/* 英字 eyebrow — base は完全可視。入場は animation 側のみ */
+.hero-eyebrow{
+  display:flex;
+  align-items:center;
+  gap:clamp(12px,2vw,22px);
+  font-family:Manrope,sans-serif;
+  font-size:clamp(10px,.85vw,12.5px);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  animation:riseIn 1.1s cubic-bezier(.22,1,.36,1) .15s both;
+}
+.hero-eyebrow .brand{font-weight:800;color:var(--ink)}
+.hero-eyebrow .domain{font-weight:600;color:var(--azure-deep)}
+.hero-eyebrow .sep{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--gold);opacity:.85;flex:none;
+}
+.hero-eyebrow .rule{
+  width:clamp(28px,6vw,72px);height:1px;flex:none;
+  background:linear-gradient(90deg,transparent,var(--hairline));
+}
+.hero-eyebrow .rule:last-child{
+  background:linear-gradient(90deg,var(--hairline),transparent);
+}
+
+/* 主行 — base は最終状態 (完全可視・letter-spacing -0.02em)。
+   blur/tracking の初期値は keyframes 0% 側にのみ存在する (フェイルセーフ) */
+.hero-title{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;
+  font-weight:900;
+  font-size:clamp(4rem,9vw,7.5rem);
+  line-height:1.16;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  margin-top:clamp(22px,3.5vh,42px);
+  animation:focusIn 2s cubic-bezier(.16,1,.3,1) .45s both;
+}
+.tk{display:inline-block;white-space:nowrap}
+@keyframes focusIn{
+  0%{opacity:0;filter:blur(26px);letter-spacing:.32em;transform:translateY(16px)}
+  55%{opacity:1}
+  100%{opacity:1;filter:blur(0);letter-spacing:-0.02em;transform:translateY(0)}
+}
+
+/* 副行 */
+.hero-sub{
+  font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;
+  font-weight:700;
+  font-size:clamp(1.5rem,4vw,3rem);
+  line-height:1.4;
+  letter-spacing:.06em;
+  color:var(--azure);
+  margin-top:clamp(14px,2.6vh,30px);
+  animation:subIn 1.6s cubic-bezier(.22,1,.36,1) 1.5s both;
+}
+@keyframes subIn{
+  from{opacity:0;filter:blur(8px);transform:translateY(18px)}
+  to{opacity:1;filter:blur(0);transform:translateY(0)}
+}
+
+/* 日本語注記 + gold rule */
+.hero-note{
+  margin-top:clamp(26px,4.5vh,48px);
+  font-weight:500;
+  font-size:clamp(11px,1vw,13px);
+  letter-spacing:.32em;
+  text-indent:.32em;
+  color:rgba(19,36,63,.62);
+  animation:riseIn 1.2s cubic-bezier(.22,1,.36,1) 2.1s both;
+}
+.hero-note::before{
+  content:"";
+  display:block;
+  width:58px;height:1px;
+  margin:0 auto 16px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* 識別タグ */
+.pattern-tag{
+  position:absolute;
+  right:18px;bottom:14px;z-index:5;
+  font-family:Manrope,sans-serif;
+  font-weight:600;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#6B7280;
+}
+
+/* ============ responsive ============ */
+@media (max-width:640px){
+  .hero-content{padding-bottom:13vh}
+  .hero-title{line-height:1.18}
+}
+@media (max-width:440px){
+  .hero-eyebrow .rule{display:none}
+}
+
+/* ============ reduced motion: 静的でも成立する最終状態 ============ */
+@media (prefers-reduced-motion: reduce){
+  .hero-breath{animation:none}
+  .hero-eyebrow,
+  .hero-title,
+  .hero-sub,
+  .hero-note{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hero-wrapper">
+  <div class="hero-breath">
+    <canvas class="hero-canvas" id="aurora-silk" aria-hidden="true"></canvas>
+    <div class="hero-veil" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow" aria-hidden="true"><span class="rule"></span><span class="brand">CURSORVERS</span><span class="sep"></span><span class="domain">MEDICAL AI REVIEW</span><span class="rule"></span></p>
+
+      <h1 class="hero-title" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ"><span class="tk">AIに、</span><wbr><span class="tk">臨床の</span><wbr><span class="tk">魂を</span></h1>
+
+      <p class="hero-sub" aria-hidden="true"><span class="tk">医療AIを、</span><wbr><span class="tk">現場に</span><wbr><span class="tk">届く言葉へ</span></p>
+
+      <p class="hero-note">医療AIの第三者レビュー</p>
+    </div>
+  </div>
+
+  <div class="pattern-tag">Pattern 04 &middot; Aurora Silk</div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  /* Aurora Silk — 絹のリボン背景。失敗しても本文には一切影響しない (フェイルセーフ)。 */
+  try {
+    var wrapper = document.querySelector('.hero-wrapper');
+    var canvas = document.getElementById('aurora-silk');
+    if (!wrapper || !canvas || !canvas.getContext) { return; }
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { return; }
+
+    var TAU = Math.PI * 2;
+    var STATIC_T = 6.8;           /* reduced-motion 用の静止フレーム時刻 */
+    var W = 0, H = 0;
+    var pointerTarget = 0.5;      /* ポインタ X (0-1) の目標値 */
+    var pointerX = 0.5;           /* lerp 済み現在値 */
+    var rafId = null;
+    var running = false;
+
+    var reduceMq = window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : { matches: false };
+
+    /* DESIGN.md v2 トークン */
+    var AZ_SOFT = [127, 163, 204];   /* #7FA3CC */
+    var AZ      = [62, 111, 168];    /* #3E6FA8 */
+    var AZ_DEEP = [54, 97, 143];     /* #36618F */
+    var BAND    = [236, 231, 219];   /* #ECE7DB */
+    var GOLD    = [200, 146, 46];    /* #C8922E */
+
+    /*
+      リボン定義:
+        y     : 中心の基準高さ (H 比)      amp  : うねり振幅 (H 比)
+        th    : 帯の基準厚み (H 比)        thV  : 厚みの揺らぎ (H 比)
+        T     : 主周期 (秒, 8-20s)         k    : 画面幅あたりの波数 x3
+        ph    : 位相 x3                    resp : ポインタ応答係数
+        tk/tT/tph : 厚み揺らぎの波数/周期/位相
+      描画順 = 下層から。band 色リボンが azure 群と交差して絹の光沢をつくる。
+    */
+    var ribbons = [
+      { y: .84, amp: .050, th: .30, thV: .075, T: 18,
+        k: [1.05, 1.90, 3.30], ph: [0.0, 1.7, 4.1],
+        top: AZ_SOFT, bot: AZ, aTop: .13, aBot: .21,
+        resp: 0.8, tk: 1.5, tT: 16, tph: 2.0 },
+      { y: .70, amp: .062, th: .20, thV: .060, T: 14,
+        k: [1.30, 2.20, 3.80], ph: [2.2, 0.6, 3.0],
+        top: AZ, bot: AZ_DEEP, aTop: .16, aBot: .25,
+        resp: 1.1, tk: 1.2, tT: 13, tph: 0.7 },
+      { y: .64, amp: .055, th: .13, thV: .050, T: 9,
+        k: [1.65, 2.70, 4.60], ph: [4.0, 2.9, 1.2],
+        top: BAND, bot: BAND, aTop: .30, aBot: .14,
+        resp: 1.3, tk: 1.8, tT: 11, tph: 3.6 },
+      { y: .56, amp: .045, th: .10, thV: .035, T: 12,
+        k: [1.50, 2.45, 4.20], ph: [1.1, 5.0, 2.5],
+        top: AZ_SOFT, bot: AZ, aTop: .19, aBot: .12,
+        resp: 1.6, tk: 1.4, tT: 15, tph: 5.1 }
+    ];
+
+    /* gold の糸 1 本 */
+    var goldThread = {
+      y: .61, amp: .058, T: 11,
+      k: [1.35, 2.50, 4.40], ph: [0.6, 3.4, 1.9], resp: 1.4
+    };
+
+    function rgba(c, a) {
+      return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';
+    }
+
+    /* 正弦波 3 波の重ね合わせによる中心線 */
+    function centerY(r, u, t, ampMul) {
+      var w0 = TAU / r.T;
+      return H * (r.y + r.amp * ampMul * (
+        Math.sin(u * r.k[0] * TAU + t * w0 + r.ph[0]) * 0.55 +
+        Math.sin(u * r.k[1] * TAU - t * w0 * 0.63 + r.ph[1]) * 0.30 +
+        Math.sin(u * r.k[2] * TAU + t * w0 * 1.31 + r.ph[2]) * 0.15
+      ));
+    }
+
+    /* 絹らしい厚みの揺らぎ (半厚) */
+    function halfThick(r, u, t) {
+      var wt = TAU / r.tT;
+      return H * (r.th + r.thV * Math.sin(u * r.tk * TAU + t * wt + r.tph)) * 0.5;
+    }
+
+    function sampleSteps() {
+      return Math.max(40, Math.min(120, Math.round(W / 14)));
+    }
+
+    function drawRibbon(r, t, ampMul) {
+      var n = sampleSteps();
+      var top = [], bot = [];
+      var i, u, x, c, h2;
+      for (i = 0; i <= n; i++) {
+        u = i / n;
+        x = u * W;
+        c = centerY(r, u, t, ampMul);
+        h2 = halfThick(r, u, t);
+        top.push([x, c - h2]);
+        bot.push([x, c + h2]);
+      }
+      /* 上下端がフェザーする縦グラデ */
+      var ext = r.amp + (r.th + r.thV) * 0.5;
+      var g = ctx.createLinearGradient(0, H * (r.y - ext), 0, H * (r.y + ext));
+      g.addColorStop(0, rgba(r.top, 0));
+      g.addColorStop(0.26, rgba(r.top, r.aTop));
+      g.addColorStop(0.64, rgba(r.bot, r.aBot));
+      g.addColorStop(1, rgba(r.bot, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(top[0][0], top[0][1]);
+      for (i = 1; i <= n; i++) { ctx.lineTo(top[i][0], top[i][1]); }
+      for (i = n; i >= 0; i--) { ctx.lineTo(bot[i][0], bot[i][1]); }
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawGoldThread(t, ampMul) {
+      var n = sampleSteps();
+      var i, u, x, y;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      for (i = 0; i <= n; i++) {
+        u = i / n;
+        x = u * W;
+        y = centerY(goldThread, u, t, ampMul);
+        if (i === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
+      }
+      /* 淡い光暈 → 細い芯の 2 度引き (同一パスを再利用) */
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = rgba(GOLD, 0.10);
+      ctx.stroke();
+      var g = ctx.createLinearGradient(0, 0, W, 0);
+      g.addColorStop(0, rgba(GOLD, 0));
+      g.addColorStop(0.15, rgba(GOLD, 0.55));
+      g.addColorStop(0.85, rgba(GOLD, 0.55));
+      g.addColorStop(1, rgba(GOLD, 0));
+      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = g;
+      ctx.stroke();
+    }
+
+    function drawFrame(t) {
+      ctx.clearRect(0, 0, W, H);
+      var px = pointerX - 0.5;
+      for (var i = 0; i < ribbons.length; i++) {
+        var r = ribbons[i];
+        drawRibbon(r, t, 1 + px * 0.35 * r.resp);
+      }
+      drawGoldThread(t, 1 + px * 0.35 * goldThread.resp);
+    }
+
+    function frame(now) {
+      rafId = window.requestAnimationFrame(frame);
+      pointerX += (pointerTarget - pointerX) * 0.04;   /* lerp で滑らかに */
+      drawFrame(now / 1000);
+    }
+
+    function start() {
+      if (running || reduceMq.matches) { return; }
+      running = true;
+      rafId = window.requestAnimationFrame(frame);
+    }
+
+    function stop() {
+      running = false;
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function resize() {
+      /* clientWidth/Height は transform (呼吸 scale) の影響を受けない */
+      var w = wrapper.clientWidth || window.innerWidth;
+      var h = wrapper.clientHeight || window.innerHeight;
+      if (!w || !h) { return; }
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);   /* 上限 2 */
+      W = w;
+      H = h;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (reduceMq.matches) { drawFrame(STATIC_T); }
+    }
+
+    window.addEventListener('resize', resize);
+
+    /* タブ非表示中は rAF を止める */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); } else { start(); }
+    });
+
+    /* ポインタ X → 振幅応答 */
+    var moveEvent = window.PointerEvent ? 'pointermove' : 'mousemove';
+    window.addEventListener(moveEvent, function (e) {
+      var vw = window.innerWidth || 1;
+      var x = e.clientX / vw;
+      pointerTarget = x < 0 ? 0 : (x > 1 ? 1 : x);
+    }, { passive: true });
+
+    /* reduced-motion 切替: 停止して静止フレーム / 再開 */
+    function onReduceChange() {
+      if (reduceMq.matches) {
+        stop();
+        drawFrame(STATIC_T);
+      } else {
+        start();
+      }
+    }
+    if (reduceMq.addEventListener) {
+      reduceMq.addEventListener('change', onReduceChange);
+    } else if (reduceMq.addListener) {
+      reduceMq.addListener(onReduceChange);
+    }
+
+    resize();
+    if (reduceMq.matches) {
+      drawFrame(STATIC_T);   /* 静的だが美しい 1 フレーム */
+    } else {
+      start();
+    }
+  } catch (err) {
+    /* 背景演出の失敗は握りつぶす — 文字は base CSS で常に可視 */
+  }
+})();
+</script>
+
+</body>
+</html>

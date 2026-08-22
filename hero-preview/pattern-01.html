@@ -1,0 +1,607 @@
+<!--
+  Cursorvers LP ヒーローセクション刷新案 v2 (リッチモーション版)
+  Pattern 01 「墨流し — Ink Flow」
+  本番組込みは .hero-wrapper 置換。
+  依存: Google Fonts のみ(外部JSライブラリなし / vanilla JS + canvas 2D)。
+
+  フェイルセーフ構造:
+    - テキスト要素の base CSS は常に「完全可視の最終状態」。
+    - 隠し初期状態は @media (prefers-reduced-motion: no-preference) 内の
+      animation (fill-mode: both) の from 側にのみ存在する。
+    - canvas は z-index 0 の背景レイヤー。JS が全滅しても文字は無傷。
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern 01 墨流し — Ink Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Pattern 01 v2 墨流し — Ink Flow
+   全画面 canvas の流体マーブリング(suminagashi)が常時ゆっくり
+   渦を巻き続ける。azureSoft / hairline / band の流線を低透明度で
+   重ね、中央のタイポ領域では減光して可読性を守る。
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ivory:      #F4F1EA;
+  --card:       #FBFAF5;
+  --band:       #ECE7DB;
+  --ink:        #13243F;
+  --deep:       #101D33;
+  --azure:      #3E6FA8;
+  --azure-deep: #36618F;
+  --azure-soft: #7FA3CC;
+  --gold:       #C8922E;
+  --hairline:   #D8D4C8;
+}
+
+html, body { height: 100%; }
+body { background: var(--ivory); }
+
+/* ---------- wrapper ---------- */
+.hero-wrapper {
+  position: relative;
+  min-height: 100vh;   /* fallback */
+  min-height: 100svh;
+  background: var(--ivory);
+  color: var(--ink);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ---------- layer 0: canvas (背景。失敗しても文字は無傷) ---------- */
+.ink-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ---------- layer 1: 可読性ベール(中央タイポ領域を静める) ---------- */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 62% 46% at 50% 46%,
+    rgba(244, 241, 234, 0.68) 0%,
+    rgba(244, 241, 234, 0.38) 46%,
+    rgba(244, 241, 234, 0.00) 74%
+  );
+}
+
+/* ---------- layer 2: 罫線 + gold の点 ---------- */
+.hero-frame {
+  position: absolute;
+  inset: clamp(14px, 2.4vw, 28px);
+  border: 1px solid var(--hairline);
+  z-index: 2;
+  pointer-events: none;
+}
+.gold-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  z-index: 2;
+  pointer-events: none;
+}
+.gold-dot--tl {
+  top:  clamp(14px, 2.4vw, 28px);
+  left: clamp(14px, 2.4vw, 28px);
+  transform: translate(-50%, -50%);
+}
+.gold-dot--br {
+  bottom: clamp(14px, 2.4vw, 28px);
+  right:  clamp(14px, 2.4vw, 28px);
+  transform: translate(50%, 50%);
+}
+
+/* ---------- layer 3: content ---------- */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: clamp(64px, 10vh, 96px) 24px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.accent-v {
+  width: 1px;
+  height: clamp(36px, 6vh, 52px);
+  background: var(--hairline);
+  margin: 0 auto clamp(14px, 2.4vh, 22px);
+  position: relative;
+  transform-origin: top center;
+}
+.accent-v::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  transform: translateX(-50%);
+}
+
+.hero-eyebrow {
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: clamp(11px, 1.15vw, 13px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--azure-deep);
+  margin-bottom: clamp(22px, 3.6vh, 38px);
+}
+
+/* H1: base = 完全可視の最終状態 */
+.hero-title { font-family: "Noto Serif JP", serif; }
+.hero-line {
+  display: block;
+  will-change: clip-path;
+}
+.hero-line--main {
+  font-weight: 900;
+  font-size: clamp(4rem, 9vw, 7.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.16;
+  color: var(--ink);
+}
+.hero-line--sub {
+  margin-top: clamp(18px, 3vh, 32px);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: var(--azure);
+}
+/* 意味単位トークン保護 */
+.tok {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero-caption-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.4vw, 24px);
+  margin-top: clamp(30px, 5.4vh, 52px);
+}
+.hero-caption-row::before,
+.hero-caption-row::after {
+  content: "";
+  width: clamp(36px, 8vw, 96px);
+  height: 1px;
+  background: var(--hairline);
+}
+.hero-caption {
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--deep);
+  white-space: nowrap;
+}
+.hero-en-sub {
+  margin-top: clamp(12px, 2vh, 18px);
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: clamp(10px, 1vw, 12px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--azure-deep);
+  opacity: 0.72;
+}
+
+/* ---------- layer 4: 識別タグ ---------- */
+.hero-tag {
+  position: absolute;
+  right: clamp(22px, 3.4vw, 40px);
+  bottom: clamp(22px, 3.2vw, 38px);
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6B7280;
+  z-index: 4;
+}
+
+/* ============================================================
+   入場アニメーション
+   隠し初期状態は必ずここ(no-preference)側にのみ置く。
+   アニメが一切走らなくても base CSS で文字は見える。
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .accent-v      { animation: drawV 0.9s cubic-bezier(0.5, 0, 0.2, 1) 0.05s both; }
+  .accent-v::after { animation: dotIn 0.6s ease 0.85s both,
+                               dotPulse 4.6s ease-in-out 1.8s infinite; }
+  .hero-eyebrow  { animation: riseIn 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both; }
+  .hero-line--main {
+    animation: brushIn 1.25s cubic-bezier(0.62, 0.05, 0.25, 1) 0.5s both;
+  }
+  .hero-line--sub {
+    animation: brushIn 1.05s cubic-bezier(0.62, 0.05, 0.25, 1) 1.2s both;
+  }
+  .hero-caption-row { animation: riseIn 0.9s ease 1.75s both; }
+  .hero-en-sub      { animation: riseIn 0.9s ease 1.9s both; }
+  .hero-frame       { animation: fadeIn 1.6s ease 0.3s both; }
+  .gold-dot         { animation: fadeIn 1.1s ease 1.1s both,
+                                 dotPulse 4.6s ease-in-out 2.4s infinite; }
+  .hero-tag         { animation: fadeIn 1s ease 2s both; }
+}
+
+/* 筆で掃いたような wipe + 墨にじみ(blur が 0 に収束) */
+@keyframes brushIn {
+  0% {
+    clip-path: inset(-10% 103% -14% -3%);
+    text-shadow: 0 0 26px rgba(19, 36, 63, 0.5),
+                 0 0 64px rgba(62, 111, 168, 0.35);
+  }
+  55% {
+    text-shadow: 0 0 11px rgba(19, 36, 63, 0.3),
+                 0 0 26px rgba(62, 111, 168, 0.16);
+  }
+  100% {
+    clip-path: inset(-10% -3% -14% -3%);
+    text-shadow: 0 0 0 rgba(19, 36, 63, 0),
+                 0 0 0 rgba(62, 111, 168, 0);
+  }
+}
+@keyframes riseIn {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes drawV {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+@keyframes dotIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* reduced-motion: 持続モーションなし。base = 静的で完成された状態 */
+
+/* ---------- responsive ---------- */
+@media (max-width: 480px) {
+  .hero-content { padding-left: 18px; padding-right: 18px; }
+  .hero-line--main { line-height: 1.22; }
+  .hero-caption { letter-spacing: 0.18em; text-indent: 0.18em; }
+  .hero-caption-row::before,
+  .hero-caption-row::after { width: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-wrapper" id="hero">
+  <canvas class="ink-canvas" id="inkCanvas" aria-hidden="true"></canvas>
+  <div class="hero-veil" aria-hidden="true"></div>
+
+  <div class="hero-frame" aria-hidden="true"></div>
+  <span class="gold-dot gold-dot--tl" aria-hidden="true"></span>
+  <span class="gold-dot gold-dot--br" aria-hidden="true"></span>
+
+  <div class="hero-content">
+    <div class="accent-v" aria-hidden="true"></div>
+    <p class="hero-eyebrow">CURSORVERS</p>
+
+    <h1 class="hero-title" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="hero-line hero-line--main"><span class="tok">AIに、</span><span class="tok">臨床の</span><span class="tok">魂を</span></span>
+      <span class="hero-line hero-line--sub"><span class="tok">医療AIを、</span><span class="tok">現場に</span><span class="tok">届く言葉へ</span></span>
+    </h1>
+
+    <div class="hero-caption-row">
+      <p class="hero-caption">医療AIの第三者レビュー</p>
+    </div>
+    <p class="hero-en-sub">MEDICAL AI REVIEW</p>
+  </div>
+
+  <p class="hero-tag">Pattern 01 — Ink Flow</p>
+</div>
+
+<script>
+/* ============================================================
+   墨流し — Ink Flow: canvas 2D フローフィールド
+   複数の回転中心(渦)がゆっくり漂い、その合成ベクトル場に
+   600-900 個の半透明トレイルパーティクルを流し続ける。
+   ポインタ移動で局所的に流れが乱れ、ゆっくり元へ戻る。
+   canvas は背景レイヤーのみ: ここが全滅しても文字は無傷。
+   ============================================================ */
+(function () {
+  'use strict';
+  try {
+    var wrap   = document.getElementById('hero');
+    var canvas = document.getElementById('inkCanvas');
+    if (!wrap || !canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+
+    var IVORY = '#F4F1EA';
+    var reduced = false;
+    try {
+      reduced = !!(window.matchMedia &&
+                   window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    } catch (e) { /* noop */ }
+
+    var W = 0, H = 0, DPR = 1;
+    var ell = { cx: 0, cy: 0, rx: 1, ry: 1 };   // 中央タイポ領域(減光楕円)
+
+    /* 回転中心(渦)。位置は時間でゆっくり漂う */
+    var vort = [
+      { ox: 0.24, oy: 0.32, r: 0.46, s:  0.95, sp: 0.055, ph: 0.0, ax: 0.055, ay: 0.040 },
+      { ox: 0.78, oy: 0.22, r: 0.38, s: -0.80, sp: 0.042, ph: 2.2, ax: 0.050, ay: 0.060 },
+      { ox: 0.28, oy: 0.80, r: 0.50, s: -0.65, sp: 0.036, ph: 4.1, ax: 0.060, ay: 0.045 },
+      { ox: 0.76, oy: 0.74, r: 0.42, s:  0.85, sp: 0.050, ph: 1.4, ax: 0.045, ay: 0.055 },
+      { ox: 0.52, oy: 0.50, r: 0.62, s:  0.30, sp: 0.028, ph: 3.2, ax: 0.030, ay: 0.030 }
+    ];
+
+    /* 低彩度パレット(トークン色のみ)。w = 出現比率 */
+    var PAL = [
+      { r: 127, g: 163, b: 204, a: 0.320, w: 0.32 }, /* azureSoft */
+      { r: 216, g: 212, b: 200, a: 0.420, w: 0.22 }, /* hairline  */
+      { r:  62, g: 111, b: 168, a: 0.240, w: 0.18 }, /* azure     */
+      { r: 236, g: 231, b: 219, a: 0.480, w: 0.10 }, /* band      */
+      { r:  54, g:  97, b: 143, a: 0.200, w: 0.12 }, /* azureDeep */
+      { r:  19, g:  36, b:  63, a: 0.140, w: 0.06 }  /* ink (墨)  */
+    ];
+
+    var parts = [];
+    var pt = { x: -99999, y: -99999, vx: 0, vy: 0, s: 0 }; /* ポインタ乱流 */
+
+    function pickColor() {
+      var r = Math.random(), acc = 0;
+      for (var i = 0; i < PAL.length; i++) {
+        acc += PAL[i].w;
+        if (r <= acc) return PAL[i];
+      }
+      return PAL[0];
+    }
+
+    function spawn(p) {
+      p.x = Math.random() * W;
+      p.y = Math.random() * H;
+      p.px = p.x; p.py = p.y;
+      if (p.hist) p.hist.length = 0; else p.hist = [];
+      p.age = 0;
+      p.life = 6 + Math.random() * 10; /* 秒 */
+      var c = pickColor();
+      p.cs = 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',';
+      p.ca = c.a * (0.6 + Math.random() * 0.8);
+      p.lw = 0.9 + Math.random() * Math.random() * 3.0;
+      p.j = Math.random() * 6.2832;
+    }
+
+    function initParts() {
+      var count = Math.max(600, Math.min(900, Math.round(W * H / 1700)));
+      parts.length = 0;
+      for (var i = 0; i < count; i++) {
+        var p = {};
+        spawn(p);
+        p.age = Math.random() * p.life; /* 初期分散 */
+        parts.push(p);
+      }
+    }
+
+    function resize() {
+      var rect = wrap.getBoundingClientRect();
+      W = Math.max(1, Math.round(rect.width));
+      H = Math.max(1, Math.round(rect.height));
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(W * DPR);
+      canvas.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.fillStyle = IVORY;
+      ctx.fillRect(0, 0, W, H);
+      ell.cx = W * 0.5;
+      ell.cy = H * 0.46;
+      ell.rx = Math.min(W * 0.44, 640);
+      ell.ry = Math.min(H * 0.34, 360);
+      if (!parts.length) initParts();
+      else {
+        for (var i = 0; i < parts.length; i++) {
+          if (parts[i].x > W || parts[i].y > H) spawn(parts[i]);
+        }
+      }
+    }
+
+    /* 合成ベクトル場: 渦 + 基底ドリフト + ポインタ乱流 (px/s) */
+    var fv = { x: 0, y: 0 };
+    function field(x, y, t) {
+      var vx = 18, vy = -7;
+      var md = Math.min(W, H);
+      for (var i = 0; i < vort.length; i++) {
+        var v = vort[i];
+        var cx = (v.ox + v.ax * Math.cos(t * v.sp + v.ph)) * W;
+        var cy = (v.oy + v.ay * Math.sin(t * v.sp * 1.2 + v.ph)) * H;
+        var dx = x - cx, dy = y - cy;
+        var r = v.r * md, r2 = r * r;
+        var d2 = dx * dx + dy * dy;
+        var d = Math.sqrt(d2) + 0.0001;
+        var s = v.s * (0.72 + 0.28 * Math.sin(t * 0.06 + v.ph * 1.7));
+        var mag = s * (r2 / (d2 + r2)) * 90;
+        vx += (-dy / d) * mag;
+        vy += ( dx / d) * mag;
+        /* 微弱なスパイラル成分で流線を有機的に */
+        var sw = mag * 0.12 * Math.sin(t * 0.05 + v.ph);
+        vx += (dx / d) * sw;
+        vy += (dy / d) * sw;
+      }
+      if (pt.s > 0.001) {
+        var dxp = x - pt.x, dyp = y - pt.y;
+        var g = Math.exp(-(dxp * dxp + dyp * dyp) / 22500) * pt.s; /* 150px 半径 */
+        vx += pt.vx * 0.22 * g + (-dyp) * 0.5 * g;
+        vy += pt.vy * 0.22 * g + ( dxp) * 0.5 * g;
+      }
+      fv.x = vx; fv.y = vy;
+      return fv;
+    }
+
+    var TRAIL = 64; /* 流線の履歴点数(約1秒分の軌跡) */
+    function step(dt, t) {
+      pt.s *= Math.exp(-dt * 0.5); /* 乱流はゆっくり戻る */
+
+      /* 毎フレーム完全再描画: 各粒子の履歴を長い流線ポリラインとして引く */
+      ctx.fillStyle = IVORY;
+      ctx.fillRect(0, 0, W, H);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.age += dt;
+        if (p.age >= p.life) { spawn(p); continue; }
+
+        var v = field(p.x, p.y, t);
+        var vx = v.x + Math.cos(p.j + t * 0.8) * 3;
+        var vy = v.y + Math.sin(p.j * 1.7 + t * 0.6) * 3;
+        var spd = Math.sqrt(vx * vx + vy * vy);
+        if (spd > 140) { vx *= 140 / spd; vy *= 140 / spd; }
+
+        p.x += vx * dt;
+        p.y += vy * dt;
+
+        if (p.x < -24 || p.x > W + 24 || p.y < -24 || p.y > H + 24) {
+          spawn(p);
+          continue;
+        }
+
+        p.hist.push(p.x, p.y);
+        if (p.hist.length > TRAIL * 2) p.hist.splice(0, p.hist.length - TRAIL * 2);
+        if (p.hist.length < 4) continue;
+
+        /* 出没エンベロープ(pop 防止) */
+        var u = p.age / p.life;
+        var env = u < 0.12 ? u / 0.12 : (u > 0.75 ? (1 - u) / 0.25 : 1);
+
+        /* 中央タイポ領域では透明度を落とす */
+        var ex = (p.x - ell.cx) / ell.rx;
+        var ey = (p.y - ell.cy) / ell.ry;
+        var q = ex * ex + ey * ey;
+        var cf = q >= 1 ? 1 : 0.22 + 0.78 * q * q;
+
+        var a = p.ca * env * cf;
+        if (a > 0.008) {
+          ctx.strokeStyle = p.cs + a.toFixed(3) + ')';
+          ctx.lineWidth = p.lw;
+          ctx.beginPath();
+          ctx.moveTo(p.hist[0], p.hist[1]);
+          for (var k = 2; k < p.hist.length; k += 2) ctx.lineTo(p.hist[k], p.hist[k + 1]);
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* ---------- 静的レンダリング(reduced-motion 用) ---------- */
+    function renderStatic() {
+      ctx.fillStyle = IVORY;
+      ctx.fillRect(0, 0, W, H);
+      var t = 0, dt = 1 / 60;
+      for (var i = 0; i < 200; i++) {
+        step(dt, t);
+        t += dt;
+      }
+    }
+
+    /* ---------- rAF 管理 ---------- */
+    var rafId = null, running = false, last = 0, epoch = 0;
+    function frame(now) {
+      rafId = requestAnimationFrame(frame);
+      var dt = Math.min(0.05, (now - last) / 1000) || 0.016;
+      last = now;
+      step(dt, (now - epoch) / 1000);
+    }
+    function start() {
+      if (running || reduced) return;
+      running = true;
+      last = performance.now();
+      if (!epoch) epoch = last;
+      rafId = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stop();
+      else start();
+    });
+
+    /* resize (debounce) */
+    var rzTimer = null;
+    window.addEventListener('resize', function () {
+      if (rzTimer) clearTimeout(rzTimer);
+      rzTimer = setTimeout(function () {
+        resize();
+        if (reduced) renderStatic();
+      }, 150);
+    });
+
+    /* ポインタで局所的に流れを乱す */
+    var lpx = 0, lpy = 0, lpt = 0;
+    function onMove(e) {
+      var rect = canvas.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var now = performance.now();
+      if (lpt) {
+        var dtm = Math.max(8, now - lpt);
+        var vx = (x - lpx) / dtm * 1000;
+        var vy = (y - lpy) / dtm * 1000;
+        var m = Math.sqrt(vx * vx + vy * vy);
+        if (m > 600) { vx *= 600 / m; vy *= 600 / m; }
+        pt.vx = pt.vx * 0.7 + vx * 0.3;
+        pt.vy = pt.vy * 0.7 + vy * 0.3;
+      }
+      pt.x = x; pt.y = y;
+      lpx = x; lpy = y; lpt = now;
+      pt.s = Math.min(1, pt.s + 0.18);
+    }
+
+    /* ---------- boot ---------- */
+    resize();
+    /* ?static=1: 検証用に3.3秒分を同期プリレンダ(reduced-motion と同経路) */
+    if (reduced || /[?&]static=1/.test(location.search)) {
+      renderStatic(); /* 静的だが美しいマーブリングで成立 */
+    } else {
+      wrap.addEventListener('pointermove', onMove, { passive: true });
+      start();
+    }
+  } catch (err) {
+    /* canvas 側の失敗は握りつぶす: 文字レイヤーは CSS のみで完全成立 */
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,12 +1,12 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.0'; // Updated: 2026-08-21 - Cloudflare migration: refresh cached tailwind.min.css for new contact form styles
+const CACHE_VERSION = '2.2.4'; // Updated: 2026-08-22 - hero overlay lighten, CSS v=20260822d
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
-  '/assets/css/renewal.css?v=20260611b',
+  '/assets/css/renewal.css?v=20260822d',
   '/dist/tailwind.min.css',
-  '/dist/tailwind.min.css?v=20260611b',
+  '/dist/tailwind.min.css?v=20260822d',
   '/assets/js/nav.js',
   '/assets/js/reveal.js',
   '/assets/js/cookie-consent.js',
