@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX3Y6G4XWJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TX3Y6G4XWJ');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図 | Cursorvers</title>
+    <meta name="description" content="松尾研AI経営講座を受講した内科医×エンジニアが整理した、病院AI導入の3つのフレームワーク。入力×出力の4象限、導入現在地チェック、System 1/2の仕分けから、Cursorversのガバナンス支援との接点を解説します。">
+    <link rel="canonical" href="https://cursorvers.com/news/2026-03-02-hospital-ai-implementation.html">
+    <meta property="og:title" content="「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図 | Cursorvers">
+    <meta property="og:description" content="松尾研AI経営講座を受講した内科医×エンジニアが整理した、病院AI導入の3つのフレームワーク。入力×出力の4象限、導入現在地チェック、System 1/2の仕分けから、Cursorversのガバナンス支援との接点を解説します。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cursorvers.com/news/2026-03-02-hospital-ai-implementation.html">
+    <meta property="og:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
+    <meta property="og:site_name" content="Cursorvers">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図 | Cursorvers">
+    <meta name="twitter:description" content="松尾研AI経営講座を受講した内科医×エンジニアが整理した、病院AI導入の3つのフレームワーク。入力×出力の4象限、導入現在地チェック、System 1/2の仕分けから、Cursorversのガバナンス支援との接点を解説します。">
+    <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
+
+    <!-- OGP -->
+    <meta property="article:published_time" content="2026-03-02">
+
+    <link rel="stylesheet" href="../dist/tailwind.min.css?v=20260611b">
+    <link rel="stylesheet" href="../assets/css/renewal.css?v=20260611b">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- System fonts: no external loading needed -->
+    <style>
+        body { font-family: "Noto Sans JP", system-ui, sans-serif; background: #FBFAF5; color: #13243F; }
+        .glass-nav { background: rgba(244,241,234,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
+        .skip-link:focus { left: 0; }
+
+        .article-body p {
+            font-size: 1.0625rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            color: #2A3A55;
+        }
+
+        @media (min-width: 768px) {
+            .article-body p {
+                font-size: 1.125rem;
+            }
+        }
+
+        .article-body h2 {
+            letter-spacing: -0.01em;
+        }
+
+        .article-body strong {
+            color: #13243F;
+            font-weight: 700;
+        }
+
+        /* Blockquote highlight */
+        .quote-highlight {
+            position: relative;
+            padding: 1.75rem 1.75rem 1.75rem 2.25rem;
+            background: linear-gradient(135deg, rgba(62,111,168,.08) 0%, #FBFAF5 100%);
+            border-left: 5px solid #13243F;
+            border-radius: 0 0.75rem 0.75rem 0;
+            font-size: 1.1875rem;
+            font-weight: 600;
+            line-height: 1.75;
+            color: #2A3A55;
+            margin: 2.5rem 0;
+        }
+        @media (min-width: 768px) {
+            .quote-highlight { font-size: 1.3125rem; }
+        }
+        .quote-highlight::before {
+            content: "\201C";
+            position: absolute;
+            top: 0.25rem;
+            left: 0.5rem;
+            font-size: 3rem;
+            color: #13243F;
+            opacity: 0.2;
+            line-height: 1;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <a href="#main" class="skip-link">本文へスキップ</a>
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300" data-mobile-menu-root data-mobile-menu-theme="light">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-3 group" data-mobile-brand>
+                <picture>
+                    <img src="../assets/brand/cvr_logo_dark.png" onerror="this.style.display='none'" alt="Cursorvers Logo" class="h-10 w-10 mix-blend-multiply">
+                </picture>
+                <span class="text-lg font-bold tracking-widest font-en text-brand-charcoal uppercase">Cursorvers</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-6 text-base font-medium text-gray-600 font-en" data-desktop-nav>
+                <a href="../index.html" class="hover:text-flame transition">ホーム</a>
+                <a href="../message.html" class="hover:text-flame transition">創業者</a>
+                <a href="../services.html" class="hover:text-flame transition">医療機関向け</a>
+                <a href="../consulting.html" class="hover:text-flame transition">ベンダー向け</a>
+                <a href="../subsidy.html" class="hover:text-flame transition">DX資金調達</a>
+                <a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-flame transition flex items-center gap-1">教育 <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+                <a href="https://note.com/nice_wren7963" target="_blank" rel="noopener noreferrer" class="hover:text-flame transition flex items-center gap-1">
+                    ジャーナル <svg class="text-[10px]" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                </a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <a href="../contact.html" class="hidden sm:inline-flex text-xs font-bold border border-brand-charcoal px-6 py-3 rounded-full hover:bg-brand-charcoal hover:text-white transition duration-300 text-brand-charcoal uppercase tracking-wider font-en" data-mobile-contact>
+                    無料で相談する
+                </a>
+                <button type="button" class="md:hidden text-black text-xl" data-mobile-menu-open aria-controls="mobile-menu" aria-expanded="false" aria-label="メニューを開く">
+                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-bars"></use></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="pt-24">
+        <!-- Article Header -->
+        <section class="bg-brand-gray py-16 md:py-20 px-6">
+            <div class="max-w-3xl mx-auto">
+                <!-- Breadcrumb -->
+                <nav aria-label="パンくずリスト" class="mb-6">
+                    <ol class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+                        <li><a href="../index.html" class="hover:text-flame transition">ホーム</a></li>
+                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li><a href="../news.html" class="hover:text-flame transition">お知らせ</a></li>
+                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li class="text-brand-black font-medium truncate max-w-[200px] sm:max-w-none" aria-current="page">病院AI導入の順番</li>
+                    </ol>
+                </nav>
+                <div class="flex items-center gap-3 mb-4">
+                    <time datetime="2026-03-02" class="text-sm text-gray-500 font-en">2026.03.02</time>
+                    <span class="inline-block bg-navy/10 text-navy text-xs font-bold px-3 py-1 rounded">コラム</span>
+                </div>
+                <h1 class="hero-h1 text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight">「病院AI導入には順番がある」<br class="hidden sm:inline br-pc">— 内科医×エンジニアが示す実装の地図</h1>
+
+                <!-- Attribution Banner -->
+                <div class="mt-6 md:mt-8 flex items-center gap-4 bg-white rounded-xl border border-gray-200 p-4 md:p-5">
+                    <div class="shrink-0 w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold text-gray-600">K</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-brand-black text-sm md:text-base">勝俣｜内科医 &times; 42Tokyo</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Cursorvers創業者と交流のある内科医×エンジニア</p>
+                        <a href="https://x.com/casegenlab" target="_blank" rel="noopener noreferrer" class="text-sm text-flame hover:underline font-en">@casegenlab</a>
+                    </div>
+                    <a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer"
+                        class="shrink-0 inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-flame transition bg-gray-50 px-3 py-2 rounded-lg">
+                        元記事を見る
+                        <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Body -->
+        <article class="py-12 md:py-16 px-6">
+            <div class="max-w-3xl mx-auto">
+
+                <!-- Executive Summary -->
+                <div class="border-l-4 border-flame bg-flame/5 p-6 md:p-8 rounded-r-lg mb-10">
+                    <p class="text-sm font-bold text-flame mb-2 font-en uppercase tracking-wider">Executive Summary</p>
+                    <p class="text-base md:text-lg text-brand-black leading-relaxed">
+                        松尾研AI経営講座をベースに、内科医×42Tokyoエンジニアの勝俣氏が病院AI導入の3つのフレームワークを整理。「入力×出力の4象限」「導入現在地チェック」「System 1/2の仕分け」— この3つの視点から、Cursorversのガバナンス支援がなぜ必要かを、現場の声から読み解きます。
+                    </p>
+                </div>
+
+                <!-- Body Text -->
+                <div class="article-body text-gray-700">
+
+                    <!-- Section 1: 4象限マトリクス -->
+                    <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 mt-12">AI実装の4象限 — 入力×出力マトリクス</h2>
+                    <p>
+                        勝俣氏は松尾研のAI経営講座で学んだフレームワークを、病院の文脈に翻訳しています。AIの実装パターンを「入力が何か」「出力が何か」で4象限に分けると、病院で使えるAIの全体像が見えてきます。
+                    </p>
+
+                    <!-- 4-Quadrant Matrix Diagram (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-quadrant.png"
+                            alt="AI実装には「順番」がある — 言語の4象限。縦軸が入力（自然言語/構造化データ）、横軸が出力（自然言語/構造化データ）。セオリーは①から順。いきなり④をやるな。"
+                            class="w-full rounded-xl border border-gray-200 shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-right">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-flame hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
+
+                    <p>
+                        この4象限で重要なのは、<strong>すべてを同時に導入する必要はない</strong>という点です。自院がどの象限から着手すべきかを見極めることが、AI導入の最初のステップになります。
+                    </p>
+
+                    <!-- AI導入現在地チェック -->
+                    <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 mt-12">あなたの病院はどこにいる？ — AI導入現在地チェック</h2>
+                    <p>
+                        勝俣氏は、病院のAI導入状況を5段階で整理しています。多くの病院は「導入したが使われていない」段階で止まっているのが実態です。
+                    </p>
+
+                    <!-- Checklist Diagram (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-checklist.png"
+                            alt="あなたの病院、クリニックの「AI導入の現在地」チェック。AIツールを導入しているか→使われているか→オペレーション問題か→データが経営に活かせているか、のフローチャート。"
+                            class="w-full max-w-lg mx-auto rounded-xl border border-gray-200 shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-center">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-flame hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
+
+                    <!-- Section 2 -->
+                    <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 mt-12">「環境はある。オペレーションが変わっていない」</h2>
+                    <p>
+                        勝俣氏が指摘する最も鋭い洞察がこれです。日本の病院におけるAI導入率は約13%。しかし問題の本質は「導入していない」ことではなく、<strong>「入れたのに使われていない」</strong>ことにあります。
+                    </p>
+
+                    <div class="quote-highlight">
+                        環境はある。オペレーションが変わっていない。— AIの導入は処方と同じで、「出して終わり」ではなく、患者（現場）が飲み続けられる形にしなければ意味がない。
+                    </div>
+
+                    <p>
+                        医師として日々「服薬アドヒアランス」と向き合う勝俣氏だからこその比喩です。どれだけ優れたAIツールでも、現場のワークフローに組み込まれなければ、棚の上の薬と同じ。<strong>処方するだけでなく、飲み続けてもらう仕組み</strong>が必要です。
+                    </p>
+
+                    <!-- Section 3 -->
+                    <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-5 mt-12">手放していいノウハウ、手放してはいけないノウハウ</h2>
+                    <p>
+                        もうひとつの重要なフレームワークが、認知科学の「System 1 / System 2」の枠組みを医療AIに適用した整理です。どの業務をAIに委ね、どの業務を医師が守るべきか — その仕分けの基準を提示しています。
+                    </p>
+
+                    <!-- 3つのフレームワーク (原本画像) -->
+                    <figure class="my-8">
+                        <img src="../images/hospital-ai-framework.png"
+                            alt="病院AI導入の3つのフレームワーク。1: 4象限で順番を決める。いきなり④をやるな、①から順に。2: オペレーションを再設計する。薬を出したのに飲ませていない医師になるな。3: 手放すノウハウと残すノウハウを仕分ける。パスの中はAI。パスの外は医師。"
+                            class="w-full max-w-lg mx-auto rounded-xl shadow-sm"
+                            loading="lazy" decoding="async">
+                        <figcaption class="mt-3 text-xs text-gray-400 text-center">出典: 勝俣｜内科医 &times; 42Tokyo（<a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer" class="text-flame hover:underline">@casegenlab</a>）</figcaption>
+                    </figure>
+
+                    <div class="quote-highlight">
+                        クリニカルパスの中はAI。パスの外は医師。— この線引きが、安全と効率を両立させる鍵になる。
+                    </div>
+
+                    <p>
+                        この仕分けは「AIに任せてはいけないもの」を明確にすることで、逆に「安心してAIに委ねられる領域」を広げる効果があります。線引きが曖昧なまま導入を進めると、現場の抵抗感は増すばかりです。
+                    </p>
+
+                </div>
+
+                    <!-- Cursorversの視点 — Full-bleed dark section -->
+                    <div class="mt-16 -mx-6 md:mx-0 px-6 md:px-10 py-12 md:py-14 bg-gradient-to-br from-slate-900 via-brand-black to-slate-800 md:rounded-2xl text-white relative overflow-hidden">
+                        <!-- Background decoration -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-flame/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3" aria-hidden="true"></div>
+
+                        <div class="relative">
+                            <p class="text-sm font-bold text-flame mb-3 font-en uppercase tracking-widest">What Cursorvers Delivers</p>
+                            <h2 class="text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">なぜ、顧問が必要なのか</h2>
+                            <p class="text-base md:text-lg text-gray-300 mb-10 max-w-xl leading-relaxed">
+                                勝俣氏が示した3つの課題は、そのままCursorversの顧問契約で解決できるものです。
+                            </p>
+
+                            <div class="space-y-5">
+                                <!-- Card 1 -->
+                                <div class="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 md:p-7 hover:bg-white/10 transition">
+                                    <div class="flex items-start gap-4">
+                                        <span class="shrink-0 w-10 h-10 rounded-xl bg-flame text-white flex items-center justify-center text-base font-bold mt-0.5">1</span>
+                                        <div class="flex-1">
+                                            <p class="text-lg md:text-xl font-bold text-white mb-1">象限の順番を間違えない</p>
+                                            <p class="text-xs font-bold text-flame/80 mb-3 font-en uppercase tracking-wider">= 導入順序の設計</p>
+                                            <p class="text-sm md:text-base text-gray-200 leading-relaxed">4象限のどこから着手するかは、技術の問題ではなく<strong class="text-white font-bold">経営判断</strong>です。Cursorversは医療機関の現状を評価し、<strong class="text-white font-bold">最適な導入順序</strong>を設計します。ベンダー任せにしない、院長の右腕としてのガバナンス。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 md:p-7 hover:bg-white/10 transition">
+                                    <div class="flex items-start gap-4">
+                                        <span class="shrink-0 w-10 h-10 rounded-xl bg-flame text-white flex items-center justify-center text-base font-bold mt-0.5">2</span>
+                                        <div class="flex-1">
+                                            <p class="text-lg md:text-xl font-bold text-white mb-1">オペレーションを変える</p>
+                                            <p class="text-xs font-bold text-flame/80 mb-3 font-en uppercase tracking-wider">= 継続的な伴走支援</p>
+                                            <p class="text-sm md:text-base text-gray-200 leading-relaxed">AIを「処方」して終わりにしない。現場に定着させるための<strong class="text-white font-bold">業務フロー再設計と定着支援</strong>。一度きりのコンサルティングではなく、<strong class="text-white font-bold">月次の伴走</strong>で「使い続けられる状態」を維持します。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="bg-white/5 backdrop-blur border border-white/10 rounded-xl p-6 md:p-7 hover:bg-white/10 transition">
+                                    <div class="flex items-start gap-4">
+                                        <span class="shrink-0 w-10 h-10 rounded-xl bg-flame text-white flex items-center justify-center text-base font-bold mt-0.5">3</span>
+                                        <div class="flex-1">
+                                            <p class="text-lg md:text-xl font-bold text-white mb-1">安全の線引きを組織で合意する</p>
+                                            <p class="text-xs font-bold text-flame/80 mb-3 font-en uppercase tracking-wider">= 安全性の担保</p>
+                                            <p class="text-sm md:text-base text-gray-200 leading-relaxed">AIに委ねる領域と医師が守る領域の<strong class="text-white font-bold">線引きはガバナンスそのもの</strong>。この線引きを組織として合意し、運用するための<strong class="text-white font-bold">体制整備</strong>をCursorversが支援します。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Closing statement -->
+                            <div class="mt-10 pt-8 border-t border-white/10">
+                                <p class="text-xl md:text-2xl font-bold text-white leading-relaxed mb-3">
+                                    AIの導入は始まりに過ぎません。
+                                </p>
+                                <p class="text-base md:text-lg text-gray-300 leading-relaxed">
+                                    導入後に「使い続けられる」仕組みを、一緒に作りましょう。<br class="br-pc">
+                                    Cursorversは<strong class="text-white font-bold">医療AIの顧問</strong>として、AI運用の安全と継続を届けます。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Attribution Box -->
+                <section class="mt-12 pt-8 border-t border-gray-200">
+                    <h2 class="text-lg font-bold text-brand-black mb-4">引用元</h2>
+                    <div class="bg-brand-gray rounded-xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="shrink-0 w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-lg font-bold text-gray-600">K</div>
+                            <div>
+                                <p class="font-bold text-brand-black text-base">勝俣｜内科医 &times; 42Tokyo</p>
+                                <p class="text-xs text-gray-500">Cursorvers創業者と交流のある内科医×エンジニア</p>
+                                <p class="text-sm text-gray-500 font-en">@casegenlab</p>
+                            </div>
+                        </div>
+                        <p class="text-base text-gray-600 leading-relaxed mb-3">
+                            松尾研のAI経営講座で気づいた、病院AI導入の順番 — 入力×出力の4象限、導入フェーズのチェックリスト、System 1/2の仕分けによる3つのフレームワーク。
+                        </p>
+                        <a href="https://x.com/casegenlab/status/2027714245744382036" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 text-flame hover:underline font-semibold text-sm">
+                            元記事を読む（X / @casegenlab）
+                            <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- CTA Section -->
+                <div class="mt-12 bg-flame/5 border border-flame/10 rounded-2xl p-8 md:p-10 text-center">
+                    <p class="text-2xl md:text-3xl font-bold text-brand-black mb-3">まずは無料でご相談ください</p>
+                    <p class="text-base text-gray-600 mb-8 max-w-lg mx-auto leading-relaxed">「どの象限から始めるべきか」「現場にどう定着させるか」— 貴院の状況に合わせた具体的なアドバイスをお伝えします。</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="../contact.html" class="inline-flex items-center justify-center px-10 py-4 sm:min-w-[240px] bg-flame text-white font-bold rounded-full hover:bg-flame transition text-base shadow-lg shadow-flame/20">
+                            無料で相談する
+                        </a>
+                        <a href="../news.html" class="inline-flex items-center justify-center px-8 py-4 sm:min-w-[240px] border-2 border-gray-300 text-gray-600 font-bold rounded-full hover:border-brand-black hover:text-brand-black transition text-base cta-balanced-back">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+                            お知らせ一覧
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <img src="../assets/brand/cvr_logo_light.png" alt="Cursorvers" onerror="this.onerror=null;this.src='../assets/brand/cvr_logo_light.png';">
+      <p>病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関。</p>
+    </div>
+    <div class="site-footer__col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="../services.html">医療機関向け</a></li>
+        <li><a href="../consulting.html">ベンダー向け</a></li>
+        <li><a href="../subsidy.html">DX資金調達</a></li>
+        <li><a href="../gov-lead.html">GOV-Lead</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="../message.html">創業者メッセージ</a></li>
+        <li><a href="../news.html">お知らせ</a></li>
+        <li><a href="https://cursorvers.jp/" target="_blank" rel="noopener noreferrer">Cursorvers.edu ↗</a></li>
+        <li><a href="https://cursorvers.jp/tools/auditscope/" target="_blank" rel="noopener noreferrer">AuditScope ↗</a></li>
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../privacy.html">プライバシーポリシー</a></li>
+        <li><a href="../terms.html">利用規約</a></li>
+        <li><a href="../tokushoho.html">特定商取引法に基づく表記</a></li>
+        <li><a href="../contact.html">お問い合わせ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__bottom">
+    <span>© <span id="footerYear">2026</span> Cursorvers Inc. All rights reserved.</span>
+    <span class="font-en" style="letter-spacing:.16em; text-transform:uppercase; color:#6B7280;">Medical AI Assurance &amp; Continuity</span>
+  </div>
+</footer>
+<script>document.getElementById('footerYear').textContent = new Date().getFullYear();</script>
+
+    <script src="../assets/js/nav.js" defer></script>
+    <script src="../assets/js/reveal.js" defer></script>
+    <script src="../assets/js/cookie-consent.js" defer></script></body>
+
+</html>

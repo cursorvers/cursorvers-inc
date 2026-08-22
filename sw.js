@@ -1,12 +1,12 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.4'; // Updated: 2026-08-22 - hero overlay lighten, CSS v=20260822d
+const CACHE_VERSION = '2.2.5'; // Updated: 2026-08-22 - cache purge after broken-deploy incident, CSS v=20260822e
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
-  '/assets/css/renewal.css?v=20260822d',
+  '/assets/css/renewal.css?v=20260822e',
   '/dist/tailwind.min.css',
-  '/dist/tailwind.min.css?v=20260822d',
+  '/dist/tailwind.min.css?v=20260822e',
   '/assets/js/nav.js',
   '/assets/js/reveal.js',
   '/assets/js/cookie-consent.js',
