@@ -30,12 +30,12 @@
     <meta name="twitter:description" content="臨床経験のある医師が、AI導入を診断から実装・定着まで伴走。PHIは院内で閉域。補助金活用も設計します。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260822a">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20260822b">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/renewal.css?v=20260822a">
+    <link rel="stylesheet" href="assets/css/renewal.css?v=20260822b">
     <!-- renewal:end -->
 
     <style>
@@ -99,6 +99,14 @@
 
         <!-- Hero -->
         <section class="relative py-20 md:py-28 px-6 overflow-hidden bg-brand-black text-white">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0 select-none pointer-events-none">
+                <picture>
+                    <source srcset="doctor_consultation.webp" type="image/webp">
+                    <img src="doctor_consultation.png" alt="" class="w-full h-full object-cover opacity-40" fetchpriority="high">
+                </picture>
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-black/70 via-brand-black/80 to-brand-black/95"></div>
+            </div>
             <div class="max-w-5xl mx-auto text-center relative z-10">
                 <p class="text-sm md:text-base font-bold tracking-[0.22em] uppercase text-flame mb-6 font-en">Medical AI Implementation</p>
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">

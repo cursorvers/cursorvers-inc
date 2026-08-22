@@ -1,12 +1,12 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.1'; // Updated: 2026-08-22 - welfare launch + nav lg breakpoint, CSS v=20260822a
+const CACHE_VERSION = '2.2.2'; // Updated: 2026-08-22 - hero bg images, CSS v=20260822b
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
-  '/assets/css/renewal.css?v=20260822a',
+  '/assets/css/renewal.css?v=20260822b',
   '/dist/tailwind.min.css',
-  '/dist/tailwind.min.css?v=20260822a',
+  '/dist/tailwind.min.css?v=20260822b',
   '/assets/js/nav.js',
   '/assets/js/reveal.js',
   '/assets/js/cookie-consent.js',
