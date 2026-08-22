@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursorvers — K3 活版 Letterpress Slam</title>
+<script>
+/* static / reduced-motion flag: must run before first paint */
+(function(){
+  try{
+    var s = new URLSearchParams(location.search).has('static');
+    var rm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(s || rm) document.documentElement.classList.add('static');
+  }catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f7f3ec;
+  --sumi:#211E1A;
+  --red:#b3372b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--cream);color:var(--sumi)}
+body{overflow-x:hidden;font-family:'Noto Serif JP',serif}
+
+/* ============ stage ============ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  overflow:hidden;
+  background:var(--cream);
+}
+.press{
+  position:relative;
+  min-height:100svh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.press.shock{animation:pressShock .14s cubic-bezier(.3,0,.3,1)}
+.press.shock2{animation:pressShock2 .18s cubic-bezier(.3,0,.3,1)}
+@keyframes pressShock{0%{transform:translateY(0)}40%{transform:translateY(1.2px)}100%{transform:translateY(0)}}
+@keyframes pressShock2{0%{transform:translateY(0)}40%{transform:translateY(2px)}100%{transform:translateY(0)}}
+
+/* ============ type-case grid (sumi 3%) ============ */
+.gridbg{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(to right, rgba(33,30,26,.03) 0 1px, transparent 1px 92px),
+    repeating-linear-gradient(to bottom, rgba(33,30,26,.03) 0 1px, transparent 1px 92px);
+}
+
+/* ============ chase frame ============ */
+.framebox{
+  position:absolute;z-index:2;pointer-events:none;
+  top:clamp(10px,1.4vw,16px);
+  left:clamp(10px,1.4vw,16px);
+  right:clamp(10px,1.4vw,16px);
+  bottom:44px;
+  border:1px solid rgba(33,30,26,.13);
+}
+
+/* ============ sustained machinery: bars ============ */
+.bar{
+  position:absolute;z-index:2;pointer-events:none;
+  left:-5vw;width:110vw;height:5px;
+  background:var(--sumi);
+  will-change:transform;
+}
+.bar-top{top:7vh}
+.bar-bot{bottom:calc(7vh + 34px)}
+
+/* ============ left measuring ruler ============ */
+.ruler{
+  position:absolute;z-index:2;pointer-events:none;
+  left:clamp(18px,3.2vw,44px);
+  top:24vh;height:52vh;width:16px;
+  transform-origin:top center;
+  border-left:1px solid rgba(33,30,26,.35);
+  background:
+    repeating-linear-gradient(to bottom, rgba(33,30,26,.38) 0 1px, transparent 1px 11px),
+    repeating-linear-gradient(to bottom, rgba(33,30,26,.5) 0 1px, transparent 1px 55px);
+  background-size:8px 100%,16px 100%;
+  background-repeat:no-repeat;
+  will-change:transform;
+}
+
+/* ============ right vertical word ============ */
+.vword{
+  position:absolute;z-index:2;pointer-events:none;
+  right:clamp(20px,3vw,42px);top:50%;
+  transform:translateY(-50%);
+  writing-mode:vertical-rl;
+  font-family:'Manrope',sans-serif;font-weight:600;
+  font-size:10px;letter-spacing:.5em;text-transform:uppercase;
+  color:rgba(33,30,26,.32);
+}
+
+/* ============ ink / mark canvas ============ */
+#fx{position:absolute;inset:0;z-index:3;pointer-events:none}
+
+/* ============ copy ============ */
+.content{
+  position:relative;z-index:4;
+  text-align:center;
+  padding:0 5vw;
+}
+.eyebrow{
+  font-family:'Manrope',sans-serif;font-weight:600;
+  font-size:clamp(9px,.8vw,11px);
+  letter-spacing:.42em;text-indent:.42em;
+  text-transform:uppercase;
+  color:rgba(33,30,26,.55);
+  margin-bottom:3vh;
+  animation:fadein .8s ease .15s backwards;
+}
+h1{
+  font-family:'Noto Serif JP',serif;font-weight:900;
+  color:var(--sumi);
+}
+.line{display:block}
+.line-main{
+  font-size:clamp(2.1rem,9.4vw,8.4rem);
+  line-height:1.06;
+  letter-spacing:.01em;
+}
+.line-sub{
+  font-size:clamp(1.15rem,3.4vw,2.5rem);
+  line-height:1.4;
+  letter-spacing:.06em;
+  margin-top:2.6vh;
+  color:rgba(33,30,26,.82);
+}
+/* tokens: base state = fully visible (fail-safe). The slam only exists
+   inside @keyframes + fill-mode:backwards, so with no CSS animation
+   support / static mode the text is simply there. */
+.tok{
+  display:inline-block;white-space:nowrap;
+  animation:slam .42s cubic-bezier(.85,0,.15,1) var(--d,0s) backwards;
+  transition:transform .14s cubic-bezier(.85,0,.15,1);
+}
+.tok:hover{transform:translateY(-2px)}
+@keyframes slam{
+  0%{opacity:0;transform:scale(1.55)}
+  45%{opacity:1}
+  100%{opacity:1;transform:scale(1)}
+}
+
+/* ============ the single red decision point ============ */
+.comma{position:relative}
+#dot{
+  position:absolute;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--red);
+  left:54%;top:9%;margin-left:-5px;
+  animation:dotdrop .68s cubic-bezier(.55,0,1,.45) 2.85s backwards;
+}
+@keyframes dotdrop{
+  0%{opacity:0;transform:translateY(-46vh);animation-timing-function:cubic-bezier(.55,0,1,.45)}
+  10%{opacity:1}
+  62%{transform:translateY(0);animation-timing-function:cubic-bezier(0,0,.3,1)}
+  74%{transform:translateY(-7px);animation-timing-function:cubic-bezier(.5,0,1,1)}
+  84%,100%{transform:translateY(0)}
+}
+
+/* ============ caption ============ */
+.caption{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(10px,1.4vw,20px);
+  margin-top:3.4vh;
+  font-family:'Noto Sans JP',sans-serif;font-weight:500;
+  font-size:clamp(10px,1vw,13px);
+  letter-spacing:.4em;text-indent:.4em;
+  color:rgba(33,30,26,.6);
+  animation:fadein .8s ease 2.4s backwards;
+}
+.caption .rule{
+  display:inline-block;
+  width:clamp(28px,6vw,72px);height:1px;
+  background:rgba(33,30,26,.3);
+}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+/* ============ crosshair (measuring instrument) ============ */
+.ch{
+  position:absolute;z-index:7;pointer-events:none;
+  background:rgba(33,30,26,.22);
+  opacity:0;transition:opacity .3s ease;
+  will-change:transform;
+}
+.ch-v{top:0;bottom:0;left:0;width:1px}
+.ch-h{left:0;right:0;top:0;height:1px}
+
+/* ============ bottom rotary marquee ============ */
+.marquee{
+  position:absolute;z-index:6;left:0;right:0;bottom:0;height:34px;
+  display:flex;align-items:center;overflow:hidden;
+  border-top:1px solid rgba(33,30,26,.14);
+  animation:fadein 1s ease .9s backwards;
+}
+.mq-track{
+  display:flex;width:max-content;
+  animation:mqmove 34s linear infinite;
+}
+.mq{display:flex;align-items:center;flex:none;white-space:nowrap}
+.mu{
+  font-family:'Manrope',sans-serif;font-weight:600;
+  font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(33,30,26,.45);
+  padding:0 1.8em;
+}
+.mu.mj{font-family:'Noto Sans JP',sans-serif;font-weight:500}
+.md{color:rgba(33,30,26,.25);font-family:'Manrope',sans-serif;font-size:10px}
+@keyframes mqmove{to{transform:translateX(-50%)}}
+
+/* ============ id tag ============ */
+.idtag{
+  position:absolute;z-index:6;
+  right:clamp(18px,2.4vw,34px);bottom:52px;
+  font-family:'Manrope',sans-serif;font-weight:600;
+  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(33,30,26,.4);
+  animation:fadein 1s ease 1.2s backwards;
+}
+
+/* ============ paper grain (<=4%) ============ */
+.grain{
+  position:absolute;inset:0;z-index:9;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:260px 260px;
+}
+
+/* ============ pause (document.hidden) ============ */
+.paused *{animation-play-state:paused!important}
+
+/* ============ static frame & reduced motion ============ */
+html.static *{animation:none!important;transition:none!important}
+html.static .mq-track{transform:translateX(-12%)}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .mq-track{transform:translateX(-12%)}
+}
+
+/* ============ mobile ============ */
+@media (max-width:640px){
+  .vword{display:none}
+  .ruler{top:30vh;height:34vh;left:12px}
+  .bar{height:4px}
+  .framebox{bottom:40px}
+  .marquee{height:30px}
+  .idtag{bottom:46px}
+  #dot{width:8px;height:8px;margin-left:-4px}
+}
+</style>
+</head>
+<body>
+<main class="hero" id="hero">
+  <div class="press" id="press">
+
+    <div class="gridbg" aria-hidden="true"></div>
+    <div class="framebox" aria-hidden="true"></div>
+
+    <div class="bar bar-top" id="barTop" aria-hidden="true"></div>
+    <div class="bar bar-bot" id="barBot" aria-hidden="true"></div>
+    <div class="ruler" id="ruler" aria-hidden="true"></div>
+    <div class="vword" aria-hidden="true">CURSORVERS</div>
+
+    <canvas id="fx" aria-hidden="true"></canvas>
+
+    <div class="content">
+      <p class="eyebrow">CURSORVERS &middot; MEDICAL AI REVIEW</p>
+      <h1 aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+        <span class="line line-main" aria-hidden="true"><span class="tok" style="--d:.35s">AIに<span class="comma">、<i id="dot"></i></span></span><span class="tok" style="--d:.70s">臨床の</span><span class="tok" style="--d:1.05s">魂を</span></span>
+        <span class="line line-sub" aria-hidden="true"><span class="tok" style="--d:1.40s">医療AIを、</span><span class="tok" style="--d:1.75s">現場に届く</span><span class="tok" style="--d:2.10s">言葉へ</span></span>
+      </h1>
+      <p class="caption"><span class="rule" aria-hidden="true"></span>医療AIの第三者レビュー<span class="rule" aria-hidden="true"></span></p>
+    </div>
+
+    <div class="ch ch-v" id="chv" aria-hidden="true"></div>
+    <div class="ch ch-h" id="chh" aria-hidden="true"></div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="mq-track">
+        <div class="mq">
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+        </div>
+        <div class="mq">
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+          <span class="mu">CURSORVERS</span><span class="md">&#8212;</span><span class="mu mj">医療AIの第三者レビュー</span><span class="md">&#8212;</span><span class="mu">MEDICAL AI REVIEW</span><span class="md">&#8212;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="idtag" aria-hidden="true">K3 &middot; LETTERPRESS SLAM</div>
+
+    <div class="grain" aria-hidden="true"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var doc = document;
+var isStatic = doc.documentElement.classList.contains('static');
+var hero   = doc.getElementById('hero');
+var press  = doc.getElementById('press');
+var canvas = doc.getElementById('fx');
+var ctx    = canvas.getContext ? canvas.getContext('2d') : null;
+var barTop = doc.getElementById('barTop');
+var barBot = doc.getElementById('barBot');
+var ruler  = doc.getElementById('ruler');
+var chv    = doc.getElementById('chv');
+var chh    = doc.getElementById('chh');
+var dot    = doc.getElementById('dot');
+var mob    = window.matchMedia('(max-width:640px)');
+var fine   = window.matchMedia('(pointer:fine)');
+
+var W = 0, H = 0, dpr = 1;
+
+function resize(){
+  var r = hero.getBoundingClientRect();
+  W = Math.round(r.width); H = Math.round(r.height);
+  if(ctx){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+}
+
+/* ---------- stepped machine profiles (constant speed / hard stop / restart) ---------- */
+function prof(pts, u){
+  for(var i = 1; i < pts.length; i++){
+    if(u <= pts[i][0]){
+      var a = pts[i-1], b = pts[i];
+      var k = (u - a[0]) / ((b[0] - a[0]) || 1);
+      return a[1] + (b[1] - a[1]) * k;
+    }
+  }
+  return pts[pts.length - 1][1];
+}
+function q(v, s){ return Math.round(v / s) * s; }
+
+var PB1 = [[0,0],[0.26,0.66],[0.36,0.66],[0.52,1],[0.60,1],[0.88,0.08],[1,0]];
+var PB2 = [[0,1],[0.20,0.30],[0.30,0.30],[0.50,0],[0.60,0],[0.80,0.85],[1,1]];
+var PR  = [[0,0.35],[0.28,1],[0.44,1],[0.68,0.55],[0.80,0.55],[1,0.35]];
+
+function setAmbient(now){
+  var band = H * 0.06;
+  var u1 = (now / 13000) % 1;
+  var u2 = ((now + 4000) / 16000) % 1;
+  var u3 = (now / 9000) % 1;
+  barTop.style.transform = 'translateY(' + (prof(PB1, u1) * band).toFixed(1) + 'px)';
+  barBot.style.transform = 'translateY(' + (-prof(PB2, u2) * band).toFixed(1) + 'px)';
+  /* quantized extension: the ruler grows in audible ticks */
+  ruler.style.transform  = 'scaleY(' + q(prof(PR, u3), 1/36).toFixed(3) + ')';
+}
+
+/* ---------- ink particles + registration marks ---------- */
+var parts = [], marks = [], markTimer = 0.8;
+
+function spawn(x, y, n, spread){
+  for(var i = 0; i < n; i++){
+    parts.push({
+      x: x + (Math.random() - 0.5) * spread,
+      y: y,
+      vx: (Math.random() - 0.5) * 300,
+      vy: -(90 + Math.random() * 300),
+      s: 1 + Math.random() * 2.4,
+      r: Math.random() * Math.PI,
+      vr: (Math.random() - 0.5) * 12,
+      t: 0,
+      life: 0.5 + Math.random() * 0.55
+    });
+  }
+}
+function tokenBurst(el){
+  var r = el.getBoundingClientRect(), h = hero.getBoundingClientRect();
+  var n = mob.matches ? 4 : (8 + Math.floor(Math.random() * 7));
+  spawn(r.left - h.left + r.width / 2, r.top - h.top + r.height * 0.85, n, r.width * 0.7);
+}
+function spawnMark(){
+  var g = 92;
+  var cx, cy, tries = 0;
+  do{
+    cx = g * (1 + Math.floor(Math.random() * Math.max(1, W / g - 2)));
+    cy = g * (1 + Math.floor(Math.random() * Math.max(1, H / g - 2)));
+    tries++;
+  }while(cy > H * 0.30 && cy < H * 0.72 && tries < 8);
+  if(cy > H * 0.30 && cy < H * 0.72) return; /* keep motion off the copy */
+  marks.push({ x: cx, y: cy, t: 0, life: 2.2 + Math.random() * 0.8 });
+}
+function drawMark(m){
+  var inD = 0.3, outD = 0.4, t = m.t, a;
+  if(t < inD) a = t / inD;
+  else if(t > m.life - outD) a = Math.max(0, (m.life - t) / outD);
+  else a = 1;
+  var k = Math.min(1, t / inD);
+  ctx.strokeStyle = 'rgba(33,30,26,' + (0.20 * a).toFixed(3) + ')';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(m.x, m.y, 7 * k, 0, Math.PI * 2); ctx.stroke();
+  var L = 15 * k;
+  ctx.beginPath();
+  ctx.moveTo(m.x - L, m.y); ctx.lineTo(m.x + L, m.y);
+  ctx.moveTo(m.x, m.y - L); ctx.lineTo(m.x, m.y + L);
+  ctx.stroke();
+}
+
+/* ---------- press shock (paper sinks 1-2px) ---------- */
+function shock(big){
+  press.classList.remove('shock', 'shock2');
+  void press.offsetWidth;
+  press.classList.add(big ? 'shock2' : 'shock');
+}
+
+/* ---------- main loop ---------- */
+var raf = 0, last = 0, running = false;
+function loop(now){
+  raf = requestAnimationFrame(loop);
+  var dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+  last = now;
+  setAmbient(now);
+  if(!ctx) return;
+  ctx.clearRect(0, 0, W, H);
+
+  markTimer -= dt;
+  var maxMarks = mob.matches ? 2 : 4;
+  if(markTimer <= 0 && marks.length < maxMarks){
+    spawnMark();
+    markTimer = 1.4 + Math.random() * 1.4;
+  }
+  for(var i = marks.length - 1; i >= 0; i--){
+    var m = marks[i];
+    m.t += dt;
+    if(m.t >= m.life){ marks.splice(i, 1); continue; }
+    drawMark(m);
+  }
+  for(i = parts.length - 1; i >= 0; i--){
+    var p = parts[i];
+    p.t += dt;
+    if(p.t >= p.life){ parts.splice(i, 1); continue; }
+    p.vy += 1500 * dt;
+    p.x += p.vx * dt;
+    p.y += p.vy * dt;
+    p.r += p.vr * dt;
+    var al = 1 - p.t / p.life;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.r);
+    ctx.fillStyle = 'rgba(33,30,26,' + (0.75 * al).toFixed(3) + ')';
+    ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.8);
+    ctx.restore();
+  }
+}
+function start(){
+  if(running || isStatic) return;
+  running = true;
+  last = performance.now();
+  raf = requestAnimationFrame(loop);
+}
+function stop(){
+  running = false;
+  cancelAnimationFrame(raf);
+}
+
+/* ---------- impacts wired to the CSS timeline ---------- */
+if(!isStatic){
+  var toks = doc.querySelectorAll('.tok');
+  for(var ti = 0; ti < toks.length; ti++){
+    (function(el){
+      el.addEventListener('animationend', function(e){
+        if(e.animationName !== 'slam') return;
+        tokenBurst(el);
+        shock(false);
+      });
+    })(toks[ti]);
+  }
+  if(dot){
+    dot.addEventListener('animationstart', function(e){
+      if(e.animationName !== 'dotdrop') return;
+      setTimeout(function(){
+        var r = dot.getBoundingClientRect(), h = hero.getBoundingClientRect();
+        spawn(r.left - h.left + r.width / 2, r.top - h.top + r.height / 2, mob.matches ? 4 : 10, 26);
+        shock(true);
+      }, 422); /* 62% of the 680ms drop = the stamp moment */
+    });
+  }
+}
+
+/* ---------- crosshair: quantized mechanical tracking ---------- */
+function setCH(x, y){
+  chv.style.transform = 'translateX(' + x + 'px)';
+  chh.style.transform = 'translateY(' + y + 'px)';
+}
+if(!isStatic && fine.matches){
+  hero.addEventListener('pointermove', function(e){
+    var h = hero.getBoundingClientRect();
+    setCH(q(e.clientX - h.left, 8), q(e.clientY - h.top, 8));
+    chv.style.opacity = '1';
+    chh.style.opacity = '1';
+  });
+  hero.addEventListener('pointerleave', function(){
+    chv.style.opacity = '0';
+    chh.style.opacity = '0';
+  });
+}
+
+/* ---------- static representative frame (?static=1 / reduced motion) ---------- */
+function drawStatic(){
+  if(!ctx) return;
+  ctx.clearRect(0, 0, W, H);
+  var fixed = [[0.16, 0.22], [0.84, 0.30], [0.26, 0.82], [0.72, 0.16]];
+  for(var i = 0; i < fixed.length; i++){
+    drawMark({ x: Math.round(fixed[i][0] * W), y: Math.round(fixed[i][1] * H), t: 0.35, life: 3 });
+  }
+  var main = doc.querySelector('.line-main');
+  if(main){
+    var r = main.getBoundingClientRect(), h = hero.getBoundingClientRect();
+    var n = mob.matches ? 12 : 36;
+    for(i = 0; i < n; i++){
+      var x = r.left - h.left + Math.random() * r.width;
+      var y = r.top - h.top + r.height * (0.78 + Math.random() * 0.45);
+      var s = 0.8 + Math.random() * 1.8;
+      ctx.fillStyle = 'rgba(33,30,26,' + (0.25 + Math.random() * 0.4).toFixed(2) + ')';
+      ctx.fillRect(x, y, s, s * 0.8);
+    }
+  }
+}
+function staticLayout(){
+  var band = H * 0.06;
+  barTop.style.transform = 'translateY(' + (band * 0.55).toFixed(1) + 'px)';
+  barBot.style.transform = 'translateY(' + (-band * 0.5).toFixed(1) + 'px)';
+  ruler.style.transform  = 'scaleY(0.78)';
+  setCH(q(W / 2, 8), q(H * 0.46, 8));
+  chv.style.opacity = '1';
+  chh.style.opacity = '1';
+  drawStatic();
+}
+
+/* ---------- lifecycle ---------- */
+doc.addEventListener('visibilitychange', function(){
+  if(doc.hidden){
+    stop();
+    doc.body.classList.add('paused');
+  }else{
+    doc.body.classList.remove('paused');
+    start();
+  }
+});
+window.addEventListener('resize', function(){
+  resize();
+  if(isStatic) staticLayout();
+});
+
+resize();
+if(isStatic){
+  staticLayout();
+  if(doc.fonts && doc.fonts.ready){
+    doc.fonts.ready.then(function(){ resize(); staticLayout(); });
+  }
+}else{
+  start();
+}
+})();
+</script>
+</body>
+</html>

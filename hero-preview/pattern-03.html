@@ -1,0 +1,804 @@
+<!--
+  本番組込みは .hero-wrapper 置換
+  Pattern 03 v2 「構造 — Blueprint Theater」 / Cursorvers株式会社 LP ヒーローセクション刷新案(リッチモーション版)
+
+  設計方針:
+  - 建築図面の劇場: 寸法線・クロスヘア・コーナーブラケット・角度計・ガイド線が canvas 2D 上で
+    約 16-26 秒周期のフェードイン/アウトを繰り返しながら位置を変え、タイポの周囲を「精査」し続ける
+  - azure 走査線 2-3 本が 9-16 秒かけてゆっくり降下し、通過した図面要素だけが一瞬明るくなる
+  - 左端 navy 縦帯内を "CURSORVERS — MEDICAL AI REVIEW" が 30s/loop で縦マーキー
+  - フェイルセーフ構造: テキストの base CSS は常に完全可視の最終状態。隠し初期状態は
+    animation (fill-mode: both) 側のみで表現。JS/canvas が全滅しても文字は無傷で表示される
+  - canvas は背景レイヤー専業 (z-index はテキストより下)。図面要素は文字の bounding 領域を避けて配置
+  - devicePixelRatio 上限 2 / document.hidden で rAF 停止 / resize 再構築 / prefers-reduced-motion で静止画
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursorvers — Pattern 03 v2 構造 Blueprint Theater</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ tokens / reset ============ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  :root{
+    --ivory:      #F4F1EA;
+    --card:       #FBFAF5;
+    --band-bg:    #ECE7DB;
+    --ink:        #13243F;
+    --deep:       #101D33;
+    --azure:      #3E6FA8;
+    --azure-deep: #36618F;
+    --azure-soft: #7FA3CC;
+    --gold:       #C8922E;
+    --hairline:   #D8D4C8;
+    --tag-c:      #6B7280;
+    --bandw:      clamp(44px, 6vw, 84px);
+  }
+
+  body{
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: "Noto Sans JP", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ============ hero shell ============ */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: var(--ivory);
+    /* 常設の製図グリッド (CSS のみ。canvas が死んでも図面の地は残る) */
+    background-image:
+      radial-gradient(1100px 720px at 40% 44%, rgba(251,250,245,.92), rgba(244,241,234,0) 62%),
+      linear-gradient(180deg, rgba(236,231,219,0) 76%, rgba(236,231,219,.65) 100%),
+      linear-gradient(rgba(216,212,200,.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(216,212,200,.5) 1px, transparent 1px),
+      linear-gradient(rgba(216,212,200,.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(216,212,200,.22) 1px, transparent 1px);
+    background-size: auto, auto, 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+
+  .bp-canvas{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: block;
+  }
+
+  /* ============ corner viewfinder (静的骨格 + 微パルス) ============ */
+  .corner{
+    position: absolute;
+    width: 24px; height: 24px;
+    z-index: 2;
+    opacity: .6;
+    border: 1px solid transparent;
+    animation: cornerPulse 11s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .corner.tl{ top: 18px;    left:  calc(var(--bandw) + 18px); border-top-color: rgba(62,111,168,.6); border-left-color:  rgba(62,111,168,.6); }
+  .corner.tr{ top: 18px;    right: 18px;                      border-top-color: rgba(62,111,168,.6); border-right-color: rgba(62,111,168,.6); }
+  .corner.bl{ bottom: 18px; left:  calc(var(--bandw) + 18px); border-bottom-color: rgba(62,111,168,.6); border-left-color:  rgba(62,111,168,.6); }
+  .corner.br{ bottom: 18px; right: 18px;                      border-bottom-color: rgba(62,111,168,.6); border-right-color: rgba(62,111,168,.6); }
+  .corner.tr, .corner.bl{ animation-delay: -5.5s; }
+  @keyframes cornerPulse{ 0%,100%{ opacity:.35; } 50%{ opacity:.8; } }
+
+  /* ============ navy 縦帯 + 縦マーキー ============ */
+  .side-band{
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: var(--bandw);
+    z-index: 4;
+    overflow: hidden;
+    background: linear-gradient(180deg, #101D33 0%, #13243F 52%, #0E1A2E 100%);
+  }
+  .side-band::before{ /* gold の小さな定点マーカー (控えめ) */
+    content: '';
+    position: absolute;
+    top: 26px; left: 50%;
+    width: 7px; height: 7px;
+    transform: translateX(-50%);
+    background: var(--gold);
+    opacity: .9;
+    z-index: 2;
+  }
+  .side-band::after{ /* 内縁の hairline */
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg,
+      rgba(200,146,46,0) 0%,
+      rgba(200,146,46,.5) 18%,
+      rgba(127,163,204,.45) 62%,
+      rgba(200,146,46,0) 100%);
+  }
+  .band-track{
+    position: absolute;
+    left: 50%; top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+    animation: bandScroll 30s linear infinite;
+    will-change: transform;
+  }
+  .band-track b{
+    display: block;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: Manrope, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(244,241,234,.62);
+    white-space: nowrap;
+    margin: 0 0 44px;
+  }
+  @keyframes bandScroll{ to{ transform: translateX(-50%) translateY(-50%); } }
+
+  /* ============ copy ============ */
+  .hero-copy{
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: clamp(72px, 10vh, 120px)
+             clamp(20px, 5vw, 84px)
+             clamp(96px, 14vh, 150px)
+             calc(var(--bandw) + clamp(26px, 7.5vw, 108px));
+  }
+  .copy-box{ display: inline-block; max-width: 100%; }
+
+  .eyebrow{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 clamp(22px, 3.4vh, 40px);
+    font-family: Manrope, sans-serif;
+    font-weight: 600;
+    font-size: clamp(10px, 0.9vw, 12px);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--azure-deep);
+  }
+  .eyebrow .rule{
+    display: block;
+    width: clamp(28px, 4vw, 62px);
+    height: 1px;
+    background: rgba(62,111,168,.55);
+    flex: none;
+  }
+
+  h1{
+    margin: 0;
+    font-family: "Noto Serif JP", serif;
+    font-weight: 900;
+    color: var(--ink);
+    font-size: clamp(4rem, 9vw, 7.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .h1-main{ display: block; }
+  .h1-sub{
+    display: block;
+    margin-top: clamp(20px, 3.4vh, 40px);
+    font-weight: 700;
+    color: var(--azure);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+  }
+
+  /*
+    フェイルセーフの核:
+    .rise の base 状態は transform:none = 完全可視の最終状態。
+    隠し初期状態 (translateY(118%)) は @keyframes の from + fill-mode:both のみが持つ。
+    アニメが一切走らない環境でも文字は最初から見える。
+  */
+  .tok{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: .14em .04em .18em;
+    margin: -.14em -.04em -.18em;
+    vertical-align: bottom;
+  }
+  .rise{
+    display: inline-block;
+    transform: none;
+    animation: riseUp 1.05s var(--d, 0s) cubic-bezier(.16, 1, .3, 1) both;
+    will-change: transform;
+  }
+  @keyframes riseUp{
+    from{ transform: translateY(118%); }
+    to{   transform: translateY(0); }
+  }
+
+  /* 「現場に」の azure 下線 — base は scaleX(1) 完全可視 */
+  .u{
+    position: relative;
+    display: inline-block;
+    padding-bottom: .1em;
+    margin-bottom: -.1em;
+  }
+  .u::after{
+    content: '';
+    position: absolute;
+    left: .02em; right: .02em; bottom: .02em;
+    height: .09em;
+    border-radius: 1px;
+    background: linear-gradient(90deg, var(--azure-deep), var(--azure-soft));
+    transform: none;
+    transform-origin: 0 50%;
+    animation: drawU .8s 1.75s cubic-bezier(.25, .8, .25, 1) both;
+  }
+  @keyframes drawU{
+    from{ transform: scaleX(0); }
+    to{   transform: scaleX(1); }
+  }
+
+  .ja-tag{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: clamp(26px, 4.5vh, 48px) 0 0;
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 500;
+    font-size: clamp(12px, 1vw, 14px);
+    letter-spacing: .34em;
+    color: rgba(19, 36, 63, .66);
+  }
+  .ja-tag::before{
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--gold);
+    opacity: .85;
+    flex: none;
+  }
+  .rise-soft{
+    opacity: 1;
+    transform: none;
+    animation: fadeUp .9s 1.5s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  @keyframes fadeUp{
+    from{ opacity: 0; transform: translateY(14px); }
+    to{   opacity: 1; transform: none; }
+  }
+
+  /* ============ 識別タグ ============ */
+  .pattern-tag{
+    position: absolute;
+    right: 18px; bottom: 14px;
+    z-index: 5;
+    margin: 0;
+    font-family: Manrope, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--tag-c);
+  }
+
+  /* ============ reduced motion: 持続モーション停止・静的で成立 ============ */
+  @media (prefers-reduced-motion: reduce){
+    .band-track,
+    .corner,
+    .rise,
+    .rise-soft,
+    .u::after{
+      animation: none !important;
+    }
+  }
+
+  /* ============ mobile ============ */
+  @media (max-width: 560px){
+    :root{ --bandw: 40px; }
+    .band-track b{ font-size: 9px; }
+    h1{ line-height: 1.14; }
+    .eyebrow{ gap: 10px; }
+    .ja-tag{ letter-spacing: .2em; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="hero-wrapper">
+  <section class="hero" id="bp-hero">
+    <canvas class="bp-canvas" id="bp-canvas" aria-hidden="true"></canvas>
+
+    <span class="corner tl" aria-hidden="true"></span>
+    <span class="corner tr" aria-hidden="true"></span>
+    <span class="corner bl" aria-hidden="true"></span>
+    <span class="corner br" aria-hidden="true"></span>
+
+    <aside class="side-band" aria-hidden="true">
+      <div class="band-track">
+        <b>CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW</b>
+        <b>CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW — CURSORVERS — MEDICAL AI REVIEW</b>
+      </div>
+    </aside>
+
+    <div class="hero-copy">
+      <div class="copy-box" id="bp-copy-box">
+        <p class="eyebrow"><span>CURSORVERS</span><span class="rule"></span><span>MEDICAL AI REVIEW</span></p>
+        <h1 aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+          <span class="h1-main"><span class="tok"><span class="rise" style="--d:.30s">AIに、</span></span><span class="tok"><span class="rise" style="--d:.46s">臨床の</span></span><span class="tok"><span class="rise" style="--d:.62s">魂を</span></span></span>
+          <span class="h1-sub"><span class="tok"><span class="rise" style="--d:1.00s">医療AIを、</span></span><span class="tok"><span class="rise" style="--d:1.14s"><span class="u">現場に</span></span></span><span class="tok"><span class="rise" style="--d:1.28s">届く言葉へ</span></span></span>
+        </h1>
+        <p class="ja-tag rise-soft">医療AIの第三者レビュー</p>
+      </div>
+    </div>
+
+    <p class="pattern-tag">03 — Blueprint Theater</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var hero   = document.getElementById('bp-hero');
+  var canvas = document.getElementById('bp-canvas');
+  if (!hero || !canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+  var AZURE      = '62, 111, 168';
+  var AZURE_DEEP = '54, 97, 143';
+  var AZURE_SOFT = '127, 163, 204';
+  var INK        = '19, 36, 63';
+  var GOLD       = '200, 146, 46';
+  var LBL_FONT   = '600 9px Manrope, "Segoe UI", monospace';
+
+  var W = 0, H = 0, bandW = 0;
+  var keep = { x: 0, y: 0, w: 0, h: 0 };  /* テキスト bounding + マージン = 図面要素の立入禁止領域 */
+  var actors = [];
+  var scans  = [];
+  var elapsed = 0, lastTs = null, rafId = null;
+
+  function C(rgb, a) { return 'rgba(' + rgb + ',' + Math.max(0, Math.min(1, a)) + ')'; }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function ease(v) { v = clamp01(v); return v * v * (3 - 2 * v); }
+  function fract(v) { return v - Math.floor(v); }
+
+  function seg2(x1, y1, x2, y2) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+  function hseg(a, b, y) { if (b - a > 2) seg2(a, y, b, y); }
+  function vseg(a, b, x) { if (b - a > 2) seg2(x, a, x, b); }
+
+  /* ---------- sizing / keep-out ---------- */
+  function sizeCanvas() {
+    var r = hero.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width));
+    H = Math.max(1, Math.round(r.height));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function measureKeepOut() {
+    var box  = document.getElementById('bp-copy-box');
+    var band = hero.querySelector('.side-band');
+    var hr = hero.getBoundingClientRect();
+    bandW = band ? band.getBoundingClientRect().width : 0;
+    if (!box) return;
+    var c = box.getBoundingClientRect();
+    var m = W < 640 ? 20 : 48;
+    keep.x = c.left - hr.left - m;
+    keep.y = c.top  - hr.top  - m;
+    keep.w = c.width  + m * 2;
+    keep.h = c.height + m * 2;
+  }
+
+  function intersectsKeep(x, y, w, h) {
+    return x < keep.x + keep.w && x + w > keep.x &&
+           y < keep.y + keep.h && y + h > keep.y;
+  }
+
+  function place(a) {
+    var tries = 60;
+    while (tries--) {
+      var x = rnd(bandW + 18, Math.max(bandW + 19, W - a.w - 18));
+      var y = rnd(18, Math.max(19, H - a.h - 18));
+      if (!intersectsKeep(x - 14, y - 14, a.w + 28, a.h + 28)) { a.x = x; a.y = y; return; }
+    }
+    /* fallback: keep-out の直下か上端の余白へ退避 */
+    a.x = rnd(bandW + 18, Math.max(bandW + 19, W - a.w - 18));
+    a.y = (keep.y + keep.h + 24 < H - a.h - 12) ? keep.y + keep.h + 24 : 18;
+  }
+
+  /* ---------- actors ---------- */
+  function initActor(a) {
+    switch (a.kind) {
+      case 'dimh':
+        a.w = rnd(110, 230); a.h = 26;
+        a.label = String(Math.floor(rnd(120, 2400)));
+        while (a.label.length < 4) a.label = '0' + a.label;
+        break;
+      case 'dimv':
+        a.w = 26; a.h = rnd(90, 190);
+        a.label = String(Math.floor(rnd(120, 1600)));
+        while (a.label.length < 4) a.label = '0' + a.label;
+        break;
+      case 'cross':
+        a.r = rnd(11, 19); a.w = a.h = a.r * 3.2;
+        break;
+      case 'bracket':
+        a.w = rnd(110, 240); a.h = rnd(70, 150);
+        break;
+      case 'square':
+        a.w = a.h = rnd(5, 9);
+        a.gold = Math.random() < 0.14;
+        break;
+      case 'arc':
+        a.r = rnd(44, 74); a.w = a.h = a.r + 14;
+        break;
+      case 'guide':
+        a.orient = Math.random() < 0.6 ? 'h' : 'v';
+        break;
+    }
+    a.driftX = rnd(-26, 26);
+    a.driftY = rnd(-18, 18);
+    if (a.kind === 'guide') {
+      a.pos = a.orient === 'h' ? rnd(H * 0.08, H * 0.92) : rnd(bandW + 30, W * 0.96);
+    } else {
+      place(a);
+    }
+  }
+
+  function makeActor(kind) {
+    var a = {
+      kind: kind,
+      period: rnd(16, 26),
+      phase: rnd(0, 60),
+      x: 0, y: 0, w: 0, h: 0
+    };
+    a.cycle = Math.floor(a.phase / a.period);
+    initActor(a);
+    return a;
+  }
+
+  function buildActors() {
+    actors = [];
+    var big = W >= 880;
+    var plan = big
+      ? ['dimh', 'dimh', 'dimh', 'dimv', 'dimv', 'cross', 'cross', 'bracket', 'bracket',
+         'square', 'square', 'square', 'arc', 'guide', 'guide']
+      : ['dimh', 'dimv', 'cross', 'bracket', 'square', 'square', 'guide'];
+    for (var i = 0; i < plan.length; i++) actors.push(makeActor(plan[i]));
+    scans = big
+      ? [{ period: 9.5,  off: 0.10, y: -999 },
+         { period: 13.0, off: 0.55, y: -999 },
+         { period: 16.5, off: 0.82, y: -999 }]
+      : [{ period: 10.0, off: 0.15, y: -999 },
+         { period: 14.0, off: 0.60, y: -999 }];
+  }
+
+  /* 走査線との距離に応じた「明るくなる」係数 (sigma ~60px のガウス) */
+  function scanBoost(cy) {
+    var b = 0;
+    for (var i = 0; i < scans.length; i++) {
+      var d = Math.abs(scans[i].y - cy);
+      b += Math.exp(-(d * d) / 7200);
+    }
+    return Math.min(1, b);
+  }
+
+  /* ---------- drawing primitives ---------- */
+  function tri(x, y, dir) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 7 * dir, y - 3);
+    ctx.lineTo(x + 7 * dir, y + 3);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  /* 寸法線 (両端矢印 + 端ティック + 内部目盛 + 数値風ラベル) */
+  function dimLine(x, y, w, label, al) {
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = C(AZURE, 0.55 * al);
+    seg2(x, y, x + w, y);
+    seg2(x, y - 6, x, y + 6);
+    seg2(x + w, y - 6, x + w, y + 6);
+    ctx.fillStyle = C(AZURE, 0.65 * al);
+    tri(x, y, 1);
+    tri(x + w, y, -1);
+    ctx.strokeStyle = C(AZURE, 0.35 * al);
+    for (var i = 1; i <= 3; i++) {
+      var tx = x + (w * i) / 4;
+      seg2(tx, y - 3, tx, y + 3);
+    }
+    ctx.font = LBL_FONT;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = C(AZURE_DEEP, 0.8 * al);
+    ctx.fillText(label, x + w / 2, y - 7);
+  }
+
+  function drawActor(a, p, env, boost) {
+    var al = Math.min(1, env * (0.75 + 0.65 * boost));
+    var dx = a.driftX * (p - 0.5);
+    var dy = a.driftY * (p - 0.5);
+
+    switch (a.kind) {
+
+      case 'dimh':
+        dimLine(a.x + dx, a.y + dy + 18, a.w, a.label, al);
+        break;
+
+      case 'dimv': {
+        var cvx = a.x + dx + 13, cvy = a.y + dy + a.h / 2;
+        ctx.save();
+        ctx.translate(cvx, cvy);
+        ctx.rotate(Math.PI / 2);
+        dimLine(-a.h / 2, 0, a.h, a.label, al);
+        ctx.restore();
+        break;
+      }
+
+      case 'cross': {
+        var ccx = a.x + dx + a.w / 2, ccy = a.y + dy + a.h / 2, r = a.r;
+        ctx.save();
+        ctx.translate(ccx, ccy);
+        ctx.rotate((p - 0.5) * 0.7);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = C(AZURE_SOFT, 0.8 * al);
+        ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.stroke();
+        ctx.strokeStyle = C(AZURE, 0.6 * al);
+        seg2( r * 0.45, 0,  r * 1.55, 0);
+        seg2(-r * 0.45, 0, -r * 1.55, 0);
+        seg2(0,  r * 0.45, 0,  r * 1.55);
+        seg2(0, -r * 0.45, 0, -r * 1.55);
+        ctx.fillStyle = C(AZURE, 0.85 * al);
+        ctx.beginPath(); ctx.arc(0, 0, 1.6, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+        break;
+      }
+
+      case 'bracket': {
+        var bcx = a.x + dx + a.w / 2, bcy = a.y + dy + a.h / 2;
+        var sc = 1 + 0.045 * Math.sin(p * Math.PI * 2);
+        var hw = a.w / 2, hh = a.h / 2, L = 13;
+        ctx.save();
+        ctx.translate(bcx, bcy);
+        ctx.scale(sc, sc);
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = C(AZURE, 0.7 * al);
+        ctx.beginPath(); ctx.moveTo(-hw + L, -hh); ctx.lineTo(-hw, -hh); ctx.lineTo(-hw, -hh + L); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo( hw - L, -hh); ctx.lineTo( hw, -hh); ctx.lineTo( hw, -hh + L); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(-hw + L,  hh); ctx.lineTo(-hw,  hh); ctx.lineTo(-hw,  hh - L); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo( hw - L,  hh); ctx.lineTo( hw,  hh); ctx.lineTo( hw,  hh - L); ctx.stroke();
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 7]);
+        ctx.strokeStyle = C(INK, 0.16 * al);
+        ctx.strokeRect(-hw, -hh, a.w, a.h);
+        ctx.setLineDash([]);
+        ctx.fillStyle = C(AZURE, 0.55 * al);
+        ctx.fillRect(-hw - 2.5, -hh - 2.5, 5, 5);
+        ctx.restore();
+        break;
+      }
+
+      case 'square': {
+        var s = a.w, sx = a.x + dx, sy = a.y + dy;
+        ctx.fillStyle = a.gold ? C(GOLD, 0.75 * al) : C(AZURE, 0.7 * al);
+        ctx.fillRect(sx, sy, s, s);
+        if (boost > 0.45) {
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = C(AZURE_SOFT, (boost - 0.45) * 0.9 * env);
+          ctx.strokeRect(sx - 4.5, sy - 4.5, s + 9, s + 9);
+        }
+        break;
+      }
+
+      case 'arc': {
+        var r2 = a.r, ox = a.x + dx + 4, oy = a.y + dy + a.h - 4;
+        var sweep = ease(1 - Math.abs(1 - 2 * p));
+        var ang = -Math.PI / 2 + sweep * (Math.PI / 2);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = C(AZURE, 0.55 * al);
+        ctx.beginPath(); ctx.arc(ox, oy, r2, -Math.PI / 2, 0); ctx.stroke();
+        ctx.strokeStyle = C(AZURE, 0.3 * al);
+        ctx.beginPath(); ctx.arc(ox, oy, r2 * 0.7, -Math.PI / 2, 0); ctx.stroke();
+        for (var d2 = 0; d2 <= 90; d2 += 5) {
+          var t2 = -Math.PI / 2 + (d2 * Math.PI) / 180;
+          var major = d2 % 15 === 0;
+          var r0 = r2 - (major ? 7 : 3.5);
+          ctx.strokeStyle = C(AZURE, (major ? 0.55 : 0.3) * al);
+          seg2(ox + Math.cos(t2) * r0, oy + Math.sin(t2) * r0,
+               ox + Math.cos(t2) * r2, oy + Math.sin(t2) * r2);
+        }
+        ctx.strokeStyle = C(AZURE_DEEP, 0.75 * al);
+        seg2(ox, oy, ox + Math.cos(ang) * r2 * 0.94, oy + Math.sin(ang) * r2 * 0.94);
+        ctx.fillStyle = C(AZURE_DEEP, 0.8 * al);
+        ctx.beginPath(); ctx.arc(ox, oy, 2, 0, Math.PI * 2); ctx.fill();
+        ctx.font = LBL_FONT;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = C(AZURE_DEEP, 0.75 * al);
+        ctx.fillText(Math.round(sweep * 90) + '°', ox + r2 * 0.5, oy - r2 - 6);
+        break;
+      }
+
+      case 'guide': {
+        ctx.lineWidth = 1;
+        if (a.orient === 'h') {
+          var gy = Math.round(a.pos + a.driftY * (p - 0.5) * 0.6) + 0.5;
+          ctx.strokeStyle = C(INK, 0.13 * al);
+          if (gy > keep.y && gy < keep.y + keep.h) {
+            hseg(bandW + 16, Math.min(W - 16, keep.x - 10), gy);
+            hseg(Math.max(bandW + 16, keep.x + keep.w + 10), W - 16, gy);
+          } else {
+            hseg(bandW + 16, W - 16, gy);
+          }
+          ctx.strokeStyle = C(AZURE, 0.4 * al);
+          seg2(bandW + 16, gy - 4, bandW + 16, gy + 4);
+          seg2(W - 16, gy - 4, W - 16, gy + 4);
+        } else {
+          var gx = Math.round(a.pos + a.driftX * (p - 0.5) * 0.6) + 0.5;
+          ctx.strokeStyle = C(INK, 0.13 * al);
+          if (gx > keep.x && gx < keep.x + keep.w) {
+            vseg(16, Math.min(H - 16, keep.y - 10), gx);
+            vseg(Math.max(16, keep.y + keep.h + 10), H - 16, gx);
+          } else {
+            vseg(16, H - 16, gx);
+          }
+          ctx.strokeStyle = C(AZURE, 0.4 * al);
+          seg2(gx - 4, 16, gx + 4, 16);
+          seg2(gx - 4, H - 16, gx + 4, H - 16);
+        }
+        break;
+      }
+    }
+  }
+
+  /* ---------- scan lines ---------- */
+  function drawScan(s, t, idx) {
+    var y = Math.round(s.y) + 0.5;
+    if (y < -20 || y > H + 20) return;
+    var inKeep = y > keep.y && y < keep.y + keep.h;
+    var x0 = bandW, x1 = W;
+
+    /* ほのかなグロー */
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = C(AZURE_SOFT, inKeep ? 0.03 : 0.05);
+    hseg(x0, x1, y);
+
+    /* 本体 (横方向グラデーション)。keep-out 帯では中央区間の透過を上げ文字を守る */
+    ctx.lineWidth = 1;
+    var grad = ctx.createLinearGradient(x0, 0, x1, 0);
+    grad.addColorStop(0,    C(AZURE, 0));
+    grad.addColorStop(0.08, C(AZURE, 0.22));
+    grad.addColorStop(0.5,  C(AZURE, 0.4));
+    grad.addColorStop(0.92, C(AZURE, 0.22));
+    grad.addColorStop(1,    C(AZURE, 0));
+    ctx.strokeStyle = grad;
+    if (inKeep) {
+      hseg(x0, Math.min(x1, keep.x), y);
+      ctx.globalAlpha = 0.3;
+      hseg(Math.max(x0, keep.x), Math.min(x1, keep.x + keep.w), y);
+      ctx.globalAlpha = 1;
+      hseg(Math.max(x0, keep.x + keep.w), x1, y);
+    } else {
+      hseg(x0, x1, y);
+    }
+
+    /* 走査ヘッド (パスごとに位置を変え、ゆっくり漂う小さなビューファインダー) */
+    var passIdx = Math.floor(t / s.period + s.off);
+    var pr = fract(Math.sin(passIdx * 12.9898 + idx * 78.233) * 43758.5453);
+    var hx = x0 + (x1 - x0) * (0.12 + 0.76 * pr) + Math.sin(t * 0.8 + idx * 2.1) * 24;
+    if (!(inKeep && hx > keep.x - 10 && hx < keep.x + keep.w + 10)) {
+      ctx.fillStyle = C(AZURE, 0.55);
+      ctx.fillRect(hx - 2, y - 2, 4, 4);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = C(AZURE, 0.3);
+      ctx.strokeRect(hx - 5.5, y - 5.5, 11, 11);
+    }
+  }
+
+  /* ---------- scene ---------- */
+  function drawScene(t) {
+    ctx.clearRect(0, 0, W, H);
+
+    for (var i = 0; i < scans.length; i++) {
+      var s = scans[i];
+      s.y = (((t / s.period) + s.off) % 1) * (H + 160) - 80;
+    }
+
+    for (var j = 0; j < actors.length; j++) {
+      var a = actors[j];
+      var cyc = Math.floor((t + a.phase) / a.period);
+      if (cyc !== a.cycle) { a.cycle = cyc; initActor(a); }  /* 周期満了 → 新しい持ち場へ */
+      var p = ((t + a.phase) % a.period) / a.period;
+      var env = Math.min(ease(p / 0.16), ease((1 - p) / 0.16), 1);
+      if (env < 0.02) continue;
+      var cyMid = (a.kind === 'guide')
+        ? (a.orient === 'h' ? a.pos : H / 2)
+        : a.y + a.h / 2;
+      drawActor(a, p, env, scanBoost(cyMid));
+    }
+
+    for (i = 0; i < scans.length; i++) drawScan(scans[i], t, i);
+  }
+
+  /* reduced-motion: 中間位相で 1 フレームだけ描く静止画 (走査線なし) */
+  function drawStaticFrame() {
+    ctx.clearRect(0, 0, W, H);
+    for (var j = 0; j < actors.length; j++) drawActor(actors[j], 0.34, 1, 0);
+  }
+
+  /* ---------- loop / lifecycle ---------- */
+  function frame(now) {
+    rafId = requestAnimationFrame(frame);
+    if (lastTs == null) lastTs = now;
+    var dt = Math.min(now - lastTs, 100);
+    lastTs = now;
+    elapsed += dt;
+    drawScene(elapsed / 1000);
+  }
+
+  function stop() {
+    if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; }
+    lastTs = null;
+  }
+
+  function start() {
+    stop();
+    sizeCanvas();
+    measureKeepOut();
+    buildActors();
+    if (mq.matches) { drawStaticFrame(); return; }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (mq.matches) return;
+    if (document.hidden) {
+      stop();
+    } else if (rafId == null) {
+      lastTs = null;
+      rafId = requestAnimationFrame(frame);
+    }
+  });
+
+  var rT;
+  window.addEventListener('resize', function () {
+    clearTimeout(rT);
+    rT = setTimeout(start, 160);
+  });
+
+  if (mq.addEventListener) mq.addEventListener('change', start);
+  else if (mq.addListener) mq.addListener(start);
+
+  /* Web フォント読込後は文字幅が変わるため keep-out を測り直す */
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(function () { measureKeepOut(); });
+  }
+  window.addEventListener('load', function () { measureKeepOut(); });
+
+  start();
+})();
+</script>
+</body>
+</html>

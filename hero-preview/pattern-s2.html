@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  Pattern S2 「深度飛行 — Depth Flight」
+  医療データの無限空間を前へ前へ飛び続けるスペクタクル・ヒーロー。
+  - 透視投影 3D スターフィールド (光条つき) + 床/天井グリッドの飛行
+  - azure 発光断面リングが奥から迫って通過 → 画面が微かに明るむ
+  - 地平線に gold の水平光線 (ゆっくり明滅)
+  - 主行は 140% + blur からのシネマティック着地 → 星の衝撃波
+  - pointermove でカメラが傾く (星野/グリッド/リング/文字が別比率)
+  - ?static=1 / prefers-reduced-motion: 代表フレームを同期レンダ
+  ============================================================ -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pattern S2 深度飛行 — Depth Flight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+/* 検証フック: ?static=1 / reduced-motion は最初のペイント前に静的モードへ */
+(function () {
+  try {
+    if (/[?&]static=1/.test(location.search) ||
+        matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('static');
+    }
+  } catch (e) { /* no-op: 失敗しても文字は base CSS で可視 */ }
+})();
+</script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --deep:       #101D33;
+  --ink:        #13243F;
+  --azure:      #3E6FA8;
+  --azure-deep: #36618F;
+  --azure-soft: #7FA3CC;
+  --gold:       #C8922E;
+  --ivory:      #F4F1EA;
+  --card:       #FBFAF5;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--deep);
+  color: var(--ivory);
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ---------- stage ---------- */
+.hero {
+  position: relative;
+  min-height: 100vh;   /* fallback */
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 58%, var(--ink) 0%, var(--deep) 62%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- layer 0: canvas (全滅しても文字は無傷) ---------- */
+.flight-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- layer 1: 可読性シェード (光が文字を潰さない) ---------- */
+.text-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 44% at 50% 45%,
+      rgba(16, 29, 51, 0.60) 0%,
+      rgba(16, 29, 51, 0.32) 46%,
+      rgba(16, 29, 51, 0.00) 74%),
+    linear-gradient(180deg,
+      rgba(16, 29, 51, 0.55) 0%,
+      rgba(16, 29, 51, 0.00) 16%,
+      rgba(16, 29, 51, 0.00) 84%,
+      rgba(16, 29, 51, 0.55) 100%);
+}
+
+/* ---------- layer 2: type ---------- */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  perspective: 900px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  padding: 24px;
+  text-align: center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tk { display: inline-block; white-space: nowrap; }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;   /* tracking の右余りを補正 */
+  color: var(--azure-soft);
+  margin-bottom: 30px;
+  animation: fadeDown 0.9s ease 1.75s both;
+}
+.eyebrow::before, .eyebrow::after {
+  content: "";
+  height: 1px;
+  width: clamp(28px, 6vw, 72px);
+  flex: none;
+}
+.eyebrow::before { background: linear-gradient(90deg, transparent, rgba(127,163,204,0.65)); }
+.eyebrow::after  { background: linear-gradient(270deg, transparent, rgba(127,163,204,0.65)); }
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line-main {
+  font-family: "Noto Serif JP", serif;
+  font-weight: 900;
+  font-size: clamp(2.05rem, 8.4vw, 5.4rem);
+  line-height: 1.22;
+  letter-spacing: 0.015em;
+  color: var(--ivory);
+  text-shadow:
+    0 0 26px rgba(62, 111, 168, 0.50),
+    0 0 68px rgba(62, 111, 168, 0.28),
+    0 2px 24px rgba(16, 29, 51, 0.90);
+  will-change: transform, filter, opacity;
+  animation: land 1.8s cubic-bezier(0.19, 1, 0.22, 1) 0.15s both;
+}
+
+.rule {
+  width: clamp(56px, 8vw, 96px);
+  height: 2px;
+  margin: 22px auto 20px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform-origin: center;
+  animation: growRule 0.8s ease 1.95s both;
+}
+
+.line-sub {
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1rem, 2.7vw, 1.4rem);
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+  color: rgba(244, 241, 234, 0.88);
+  text-shadow: 0 1px 18px rgba(16, 29, 51, 0.9);
+  animation: fadeUp 0.9s ease 2.05s both;
+}
+
+.badge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: 34px;
+  animation: fadeUp 0.9s ease 2.3s both;
+}
+.badge-ja {
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 400;
+  font-size: 11.5px;
+  letter-spacing: 0.28em;
+  color: rgba(127, 163, 204, 0.92);
+}
+.badge-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px rgba(200, 146, 46, 0.8);
+  flex: none;
+}
+.badge-en {
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(127, 163, 204, 0.72);
+}
+
+/* ---------- 識別タグ ---------- */
+.hero-tag {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  z-index: 4;
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 241, 234, 0.4);
+  animation: fadeIn 0.8s ease 2.6s both;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes land {
+  0%   { opacity: 0; transform: scale(1.4);  filter: blur(20px); }
+  55%  { opacity: 1; }
+  100% { opacity: 1; transform: scale(1);    filter: blur(0);    }
+}
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes fadeUp   { from { opacity: 0; transform: translateY(14px);  } to { opacity: 1; transform: none; } }
+@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes growRule { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+/* ---------- 静的モード (?static=1 / reduced-motion): 完成形で静止 ---------- */
+.static .eyebrow, .static .line-main, .static .line-sub,
+.static .badge, .static .hero-tag {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+.static .rule { animation: none !important; opacity: 1 !important; transform: scaleX(1) !important; }
+.static .hero-inner { transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow, .line-main, .line-sub, .badge, .hero-tag {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .rule { animation: none !important; opacity: 1 !important; transform: scaleX(1) !important; }
+  .hero-inner { transform: none !important; }
+}
+
+/* ---------- 390px 保護 ---------- */
+@media (max-width: 430px) {
+  .eyebrow { gap: 12px; letter-spacing: 0.42em; text-indent: 0.42em; }
+  .badge { margin-top: 26px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero" id="stage">
+  <canvas class="flight-canvas" id="flight" aria-hidden="true"></canvas>
+  <div class="text-shade" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-inner" id="heroInner">
+      <p class="eyebrow" aria-hidden="true">CURSORVERS</p>
+      <h1 class="hero-title" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+        <span class="line-main" id="lineMain" aria-hidden="true"><span class="tk">AIに、</span><span class="tk">臨床の魂を</span></span>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="line-sub" aria-hidden="true"><span class="tk">医療AIを、</span><span class="tk">現場に届く言葉へ</span></span>
+      </h1>
+      <p class="badge" aria-hidden="true">
+        <span class="badge-ja">医療AIの第三者レビュー</span>
+        <span class="badge-dot"></span>
+        <span class="badge-en">MEDICAL AI REVIEW</span>
+      </p>
+    </div>
+  </div>
+
+  <p class="hero-tag">Pattern S2 — Depth Flight</p>
+</section>
+
+<script>
+(() => {
+  'use strict';
+
+  const canvas = document.getElementById('flight');
+  if (!canvas || !canvas.getContext) return;          /* フェイルセーフ: 文字は無傷 */
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const stage = document.getElementById('stage');
+  const inner = document.getElementById('heroInner');
+  const lineMain = document.getElementById('lineMain');
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const staticMode = reduced || /[?&]static=1/.test(location.search);
+
+  /* ---------- 決定論 RNG (静的フレームの再現性) ---------- */
+  let seed = 0x51F7A3;
+  const rnd = () => {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+
+  /* ---------- 定数 ---------- */
+  const Z_NEAR = 48, Z_FAR = 1700;
+  const SPEED = 430;                       /* world units / s */
+
+  /* ---------- 状態 ---------- */
+  let W = 0, H = 0, DPR = 1, focal = 0, minDim = 0, mobile = false;
+  let stars = [], rings = [], shocks = [];
+  let flash = 0, ringTimer = 2.0;
+  let px = 0, py = 0, tx = 0, ty = 0;      /* pointer (smoothed / target) */
+  let tSec = 0, last = 0, raf = 0, running = false;
+
+  /* ---------- 発光スプライト (shadowBlur 非使用で bloom を買う) ---------- */
+  function makeSprite(r, g, b) {
+    const s = document.createElement('canvas');
+    s.width = s.height = 64;
+    const c = s.getContext('2d');
+    const gr = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0.00, 'rgba(' + r + ',' + g + ',' + b + ',1)');
+    gr.addColorStop(0.25, 'rgba(' + r + ',' + g + ',' + b + ',0.55)');
+    gr.addColorStop(0.60, 'rgba(' + r + ',' + g + ',' + b + ',0.14)');
+    gr.addColorStop(1.00, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+    c.fillStyle = gr; c.fillRect(0, 0, 64, 64);
+    return s;
+  }
+  const SPRITES = [
+    makeSprite(127, 163, 204),   /* azureSoft */
+    makeSprite(62, 111, 168),    /* azure */
+    makeSprite(244, 241, 234),   /* ivory */
+    makeSprite(200, 146, 46)     /* gold */
+  ];
+  const LINE_RGB = ['127,163,204', '62,111,168', '244,241,234', '200,146,46'];
+  const SP_GOLD = SPRITES[3];
+
+  /* ---------- 星 ---------- */
+  function spawnStar(st, anyDepth) {
+    st.x = (rnd() * 2 - 1) * W * 1.5;
+    st.y = (rnd() * 2 - 1) * H * 1.25;
+    st.z = anyDepth ? Z_NEAR + rnd() * (Z_FAR - Z_NEAR)
+                    : Z_FAR * (0.86 + rnd() * 0.14);
+    st.sp = 0.75 + rnd() * 0.6;
+    const r = rnd();
+    st.c = r < 0.10 ? 3 : (r < 0.55 ? 0 : (r < 0.78 ? 1 : 2));
+    st.b = 0.6 + rnd() * 0.4;
+    st.tw = rnd() * 6.283;
+    st.vx = 0; st.vy = 0;
+  }
+
+  /* ---------- 再構築 (resize / init) ---------- */
+  function rebuild() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = stage.clientWidth; H = stage.clientHeight;
+    canvas.width = Math.round(W * DPR);
+    canvas.height = Math.round(H * DPR);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    minDim = Math.min(W, H);
+    focal = minDim * 0.92;
+    mobile = W < 720;
+    const N = mobile ? 300 : 900;            /* モバイルは 1/3 */
+    stars = [];
+    for (let i = 0; i < N; i++) { const s = {}; spawnStar(s, true); stars.push(s); }
+    rings.length = 0; shocks.length = 0; flash = 0;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#101D33';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* ---------- 視差つき消失点 (layer ごとに比率が違う) ---------- */
+  function vp(k) {
+    return { x: W / 2 - px * k, y: H * 0.555 - py * k * 0.62 };
+  }
+
+  /* ---------- グリッド (床 + 天井のトンネル) ---------- */
+  function drawGrid() {
+    const v = vp(70);
+    const floorY = H * 0.46, ceilY = -H * 0.55;
+    const spacing = 150;
+    const scroll = (tSec * SPEED) % spacing;
+
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 26; i++) {
+      const z = Z_NEAR + i * spacing - scroll + spacing;
+      if (z < Z_NEAR) continue;
+      const a = (1 - z / 2600) * 0.30;
+      if (a <= 0) continue;
+      const syF = v.y + floorY * focal / z;
+      if (syF < H + 2) {
+        ctx.strokeStyle = 'rgba(62,111,168,' + a.toFixed(3) + ')';
+        ctx.beginPath(); ctx.moveTo(0, syF); ctx.lineTo(W, syF); ctx.stroke();
+      }
+      const syC = v.y + ceilY * focal / z;
+      if (syC > -2) {
+        ctx.strokeStyle = 'rgba(62,111,168,' + (a * 0.45).toFixed(3) + ')';
+        ctx.beginPath(); ctx.moveTo(0, syC); ctx.lineTo(W, syC); ctx.stroke();
+      }
+    }
+    const KX = mobile ? 5 : 9, xsp = 240;
+    for (let k = -KX; k <= KX; k++) {
+      const xw = k * xsp;
+      const x1 = v.x + xw * focal / Z_NEAR, x2 = v.x + xw * focal / Z_FAR;
+      const f1 = v.y + floorY * focal / Z_NEAR, f2 = v.y + floorY * focal / Z_FAR;
+      const c1 = v.y + ceilY * focal / Z_NEAR, c2 = v.y + ceilY * focal / Z_FAR;
+      ctx.strokeStyle = 'rgba(62,111,168,0.13)';
+      ctx.beginPath(); ctx.moveTo(x1, f1); ctx.lineTo(x2, f2); ctx.stroke();
+      ctx.strokeStyle = 'rgba(62,111,168,0.06)';
+      ctx.beginPath(); ctx.moveTo(x1, c1); ctx.lineTo(x2, c2); ctx.stroke();
+    }
+    /* 地平の靄 — 奥のクラッタを沈めて奥行きを出す */
+    ctx.globalCompositeOperation = 'source-over';
+    const hz = v.y, bh = H * 0.16;
+    const g = ctx.createLinearGradient(0, hz - bh, 0, hz + bh);
+    g.addColorStop(0, 'rgba(16,29,51,0)');
+    g.addColorStop(0.5, 'rgba(16,29,51,0.72)');
+    g.addColorStop(1, 'rgba(16,29,51,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, hz - bh, W, bh * 2);
+  }
+
+  /* ---------- gold の地平光線 (ゆっくり明滅) ---------- */
+  function drawGoldRay() {
+    const v = vp(70);
+    const pulse = 0.52 + 0.34 * Math.sin(tSec * 0.9);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = pulse;
+    ctx.drawImage(SP_GOLD, v.x - W * 0.46, v.y - 16, W * 0.92, 32);
+    ctx.drawImage(SP_GOLD, v.x - W * 0.23, v.y - 5, W * 0.46, 10);
+    const g = ctx.createLinearGradient(v.x - W * 0.45, 0, v.x + W * 0.45, 0);
+    g.addColorStop(0, 'rgba(200,146,46,0)');
+    g.addColorStop(0.5, 'rgba(244,241,234,' + (0.65 * pulse).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(200,146,46,0)');
+    ctx.strokeStyle = g;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(v.x - W * 0.45, v.y);
+    ctx.lineTo(v.x + W * 0.45, v.y);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  /* ---------- 断面リング (奥から迫って通過 → 微発光) ---------- */
+  function spawnRing() {
+    rings.push({
+      z: Z_FAR * 0.98,
+      r: minDim * 0.55,
+      ox: (rnd() * 2 - 1) * W * 0.06,
+      oy: (rnd() * 2 - 1) * H * 0.04,
+      sp: 1.45 + rnd() * 0.45,
+      rot: rnd() * Math.PI,
+      boost: 1
+    });
+  }
+
+  function circle(cx, cy, r) {
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+  }
+
+  function drawRings(dt) {
+    const v = vp(55);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = rings.length - 1; i >= 0; i--) {
+      const rg = rings[i];
+      rg.z -= SPEED * rg.sp * dt;
+      if (rg.z <= Z_NEAR + 4) {
+        flash = Math.min(0.75, flash + 0.42);      /* 通過の瞬間、画面が明るむ */
+        rings.splice(i, 1);
+        continue;
+      }
+      const s = focal / rg.z;
+      const R = rg.r * s;
+      const cx = v.x + rg.ox * s, cy = v.y + rg.oy * s;
+      const near = Math.max(0, 1 - rg.z / Z_FAR);
+      const fadeIn = Math.min(1, (rg.z - Z_NEAR) / 60);
+      const a = Math.min(1, (0.12 + 0.78 * near * near) * rg.boost) * fadeIn;
+
+      ctx.strokeStyle = 'rgba(62,111,168,' + (0.10 * a).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(10, R * 0.05);
+      circle(cx, cy, R);
+      ctx.strokeStyle = 'rgba(127,163,204,' + (0.30 * a).toFixed(3) + ')';
+      ctx.lineWidth = 4;
+      circle(cx, cy, R);
+      ctx.strokeStyle = 'rgba(244,241,234,' + (0.50 * a).toFixed(3) + ')';
+      ctx.lineWidth = 1.4;
+      circle(cx, cy, R);
+      ctx.strokeStyle = 'rgba(62,111,168,' + (0.16 * a).toFixed(3) + ')';
+      ctx.lineWidth = 1;
+      circle(cx, cy, R * 0.92);
+
+      /* 目盛 (断面計器の表情) — 1 path にまとめて描画コストを抑える */
+      const n = 28;
+      ctx.strokeStyle = 'rgba(127,163,204,' + (0.40 * a).toFixed(3) + ')';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      for (let k = 0; k < n; k++) {
+        const ang = rg.rot + k * Math.PI * 2 / n;
+        const co = Math.cos(ang), si = Math.sin(ang);
+        ctx.moveTo(cx + co * R * 0.962, cy + si * R * 0.962);
+        ctx.lineTo(cx + co * R, cy + si * R);
+      }
+      ctx.stroke();
+    }
+  }
+
+  /* ---------- スターフィールド (光条つき) ---------- */
+  function drawStars(dt) {
+    const v = vp(38);
+    ctx.globalCompositeOperation = 'lighter';
+    const decay = Math.pow(0.18, dt);
+    for (let i = 0; i < stars.length; i++) {
+      const st = stars[i];
+      const dz = SPEED * st.sp * dt;
+      st.z -= dz;
+      st.x += st.vx * dt; st.y += st.vy * dt;
+      st.vx *= decay; st.vy *= decay;
+      if (st.z < Z_NEAR || Math.abs(st.x) > W * 2.2 || Math.abs(st.y) > H * 2.2) {
+        spawnStar(st, false);
+        continue;
+      }
+      const tail = st.z + Math.max(dz * 2.4, SPEED * st.sp * 0.045);
+      const s1 = focal / st.z, s2 = focal / tail;
+      const x1 = v.x + st.x * s1, y1 = v.y + st.y * s1;
+      if (x1 < -40 || x1 > W + 40 || y1 < -40 || y1 > H + 40) continue;
+      const x2 = v.x + st.x * s2, y2 = v.y + st.y * s2;
+      const depth = 1 - st.z / Z_FAR;
+      const a = st.b * Math.min(1, depth * 1.5 + 0.06) *
+                (0.85 + 0.15 * Math.sin(tSec * 2.4 + st.tw));
+      ctx.strokeStyle = 'rgba(' + LINE_RGB[st.c] + ',' + (a * 0.75).toFixed(3) + ')';
+      ctx.lineWidth = Math.min(2.4, 1 + depth * 1.6);
+      ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x1, y1); ctx.stroke();
+      const sz = (2 + 10 * depth * depth) * (mobile ? 0.8 : 1);
+      if (sz > 2.2) {
+        ctx.globalAlpha = a;
+        ctx.drawImage(SPRITES[st.c], x1 - sz, y1 - sz, sz * 2, sz * 2);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ---------- タイポ着地の衝撃波 ---------- */
+  function fireShock() {
+    if (staticMode) return;
+    shocks.push({ t: 0 });
+    for (let i = 0; i < stars.length; i++) {
+      const st = stars[i];
+      let dx = st.x, dy = st.y;
+      let m = Math.hypot(dx, dy);
+      if (m < 1) { const ang = rnd() * Math.PI * 2; dx = Math.cos(ang); dy = Math.sin(ang); m = 1; }
+      const imp = (620 + rnd() * 480) * Math.min(1.6, 900 / st.z);
+      st.vx += dx / m * imp;
+      st.vy += dy / m * imp;
+    }
+    flash = Math.min(0.8, flash + 0.5);
+  }
+
+  function drawShocks(dt) {
+    if (!shocks.length) return;
+    const v = vp(38);
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = shocks.length - 1; i >= 0; i--) {
+      const s = shocks[i];
+      s.t += dt;
+      const u = s.t / 1.1;
+      if (u >= 1) { shocks.splice(i, 1); continue; }
+      const e = 1 - Math.pow(1 - u, 3);
+      const R = e * minDim * 1.05 + minDim * 0.08;
+      const a = 1 - u;
+      ctx.strokeStyle = 'rgba(127,163,204,' + (0.5 * a).toFixed(3) + ')';
+      ctx.lineWidth = 2 + 22 * a;
+      circle(v.x, v.y, R);
+      ctx.strokeStyle = 'rgba(200,146,46,' + (0.35 * a).toFixed(3) + ')';
+      ctx.lineWidth = 1.5;
+      circle(v.x, v.y, R * 0.88);
+    }
+  }
+
+  /* ---------- 通過フラッシュ ---------- */
+  function drawFlash(dt) {
+    if (flash > 0.003) {
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = 'rgba(127,163,204,' + (flash * 0.16).toFixed(3) + ')';
+      ctx.fillRect(0, 0, W, H);
+      if (dt > 0) flash *= Math.pow(0.055, dt);
+    } else {
+      flash = 0;
+    }
+  }
+
+  /* ---------- 1 フレーム ---------- */
+  function frame(dt) {
+    /* clear ではなく低透明 deep で塗る = 残像モーションブラー (タダで買える) */
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(16,29,51,0.34)';
+    ctx.fillRect(0, 0, W, H);
+    drawGrid();
+    drawGoldRay();
+    drawRings(dt);
+    drawStars(dt);
+    drawShocks(dt);
+    drawFlash(dt);
+  }
+
+  /* ---------- メインループ ---------- */
+  function loop(now) {
+    raf = requestAnimationFrame(loop);
+    let dt = (now - last) / 1000;
+    last = now;
+    if (dt <= 0) return;
+    if (dt > 0.05) dt = 0.05;
+    tSec += dt;
+
+    const k = Math.min(1, dt * 4.5);
+    px += (tx - px) * k;
+    py += (ty - py) * k;
+
+    ringTimer -= dt;
+    if (ringTimer <= 0 && rings.length < 3) {
+      spawnRing();
+      ringTimer = 2.8 + rnd() * 1.8;
+    }
+
+    frame(dt);
+
+    /* 文字はシーンと逆位相・小振幅の追従 (奥行きの説得力) */
+    inner.style.transform =
+      'translate3d(' + (px * 14).toFixed(2) + 'px,' + (py * 9).toFixed(2) + 'px,0)' +
+      ' rotateY(' + (px * 2.2).toFixed(2) + 'deg)' +
+      ' rotateX(' + (-py * 1.6).toFixed(2) + 'deg)';
+  }
+
+  /* ---------- 静的代表フレーム (?static=1 / reduced-motion) ----------
+     入場完了 + 持続層が最盛: 飛行の光条・接近リング・gold 光線の明期。 */
+  function renderStatic() {
+    tSec = 1.745;                              /* sin(t*0.9)=1 → gold 最盛 */
+    /* 助走: 光条と残像を蓄積 */
+    for (let i = 0; i < 34; i++) { tSec += 1 / 48; frame(1 / 48); }
+    /* 見せ場のリングを構図位置へ配置 */
+    rings.length = 0;
+    const zFor = (screenR) => (minDim * 0.55) * focal / screenR;
+    rings.push({ z: zFor(minDim * 0.62), r: minDim * 0.55, ox: W * 0.02, oy: -H * 0.01, sp: 0, rot: 0.35, boost: 1 });
+    rings.push({ z: Math.min(Z_FAR * 0.88, zFor(minDim * 0.19)), r: minDim * 0.55, ox: -W * 0.03, oy: H * 0.015, sp: 0, rot: 1.2, boost: 2.2 });
+    flash = 0.28;
+    frame(0);                                  /* dt=0: 動かさず描くだけ */
+  }
+
+  /* ---------- 起動 ---------- */
+  rebuild();
+
+  if (staticMode) {
+    renderStatic();                            /* rAF は一切回さない */
+  } else {
+    addEventListener('pointermove', (e) => {
+      tx = Math.max(-1, Math.min(1, (e.clientX / W - 0.5) * 2));
+      ty = Math.max(-1, Math.min(1, (e.clientY / H - 0.5) * 2));
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+        running = false;
+      } else if (!running) {
+        running = true;
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
+      }
+    });
+
+    /* 着地 → 衝撃波 (animationend 主 + timeout フォールバック) */
+    let shockDone = false;
+    const doShock = () => { if (shockDone) return; shockDone = true; fireShock(); };
+    if (lineMain) lineMain.addEventListener('animationend', doShock, { once: true });
+    setTimeout(doShock, 2300);
+
+    running = true;
+    last = performance.now();
+    raf = requestAnimationFrame(loop);
+  }
+
+  let rto = 0;
+  addEventListener('resize', () => {
+    clearTimeout(rto);
+    rto = setTimeout(() => {
+      rebuild();
+      if (staticMode) renderStatic();
+    }, 160);
+  });
+})();
+</script>
+</body>
+</html>

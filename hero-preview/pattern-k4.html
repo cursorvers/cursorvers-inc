@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursorvers Hero — K4 校正 Proofing Theater</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+<style>
+/* ============ K4 校正 — Proofing Theater ============
+   cream #f7f3ec / 墨 #211E1A / 赤 #b3372b (判断点1箇所のみ)
+   禁止: shadow / outline text / gradient / glow        */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#f7f3ec}
+body{
+  color:#211E1A;
+  font-family:"Noto Serif JP",serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.hero{
+  position:relative;
+  min-height:100svh;
+  overflow:hidden;
+  background:#f7f3ec;
+}
+
+/* ---- corner trim marks (印刷トンボ) ---- */
+.tb{position:absolute;width:16px;height:16px;z-index:1;pointer-events:none}
+.tb::before,.tb::after{content:"";position:absolute;background:rgba(33,30,26,.32)}
+.tb::before{width:16px;height:1px}
+.tb::after{width:1px;height:16px}
+.tb.tl{top:14px;left:14px}.tb.tl::before{top:0;left:0}.tb.tl::after{top:0;left:0}
+.tb.tr{top:14px;right:14px}.tb.tr::before{top:0;right:0}.tb.tr::after{top:0;right:0}
+.tb.bl{bottom:14px;left:14px}.tb.bl::before{bottom:0;left:0}.tb.bl::after{bottom:0;left:0}
+.tb.br{bottom:14px;right:14px}.tb.br::before{bottom:0;right:0}.tb.br::after{bottom:0;right:0}
+
+/* ---- header ---- */
+.hd{
+  position:absolute;top:0;left:0;right:0;z-index:6;
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:26px 34px;
+}
+.brand{
+  font:700 12px/1 Manrope,"Noto Sans JP",sans-serif;
+  letter-spacing:.34em;color:#211E1A;
+}
+.hd-r{
+  font:500 10px/1 Manrope,"Noto Sans JP",sans-serif;
+  letter-spacing:.3em;color:rgba(33,30,26,.55);
+}
+
+/* ---- left galley margin ruler ---- */
+.marginline{
+  position:absolute;left:4vw;top:12vh;bottom:12vh;z-index:1;
+  border-left:1px solid rgba(33,30,26,.12);pointer-events:none;
+}
+.marginline i{
+  position:absolute;left:9px;transform:translateY(-50%);
+  font:500 9px/1 Manrope,sans-serif;font-style:normal;
+  letter-spacing:.14em;color:rgba(33,30,26,.35);
+  font-variant-numeric:tabular-nums;
+}
+.marginline i::before{
+  content:"";position:absolute;left:-10px;top:50%;
+  width:7px;height:1px;background:rgba(33,30,26,.3);
+}
+
+/* ---- stage: the galley sheet type ---- */
+.stage{
+  position:relative;z-index:3;
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 7vw 6vh 8vw;
+}
+.kicker{
+  display:flex;align-items:center;gap:12px;
+  font-family:"Noto Sans JP",sans-serif;font-weight:700;
+  font-size:clamp(10px,.95vw,12.5px);
+  letter-spacing:.32em;color:rgba(33,30,26,.72);
+  margin-bottom:clamp(18px,3.4vh,38px);
+}
+.kicker .sq{display:inline-block;width:8px;height:8px;background:#211E1A;flex:none}
+h1{font-weight:900}
+.line{display:block}
+.line-main{
+  font-size:clamp(3.2rem,9.6vw,8.5rem);
+  line-height:1.06;letter-spacing:.01em;
+}
+.line-sub{
+  font-size:clamp(1.15rem,2.7vw,2.3rem);
+  line-height:1.3;letter-spacing:.05em;
+  margin-top:clamp(16px,3vh,36px);
+  color:rgba(33,30,26,.92);
+}
+.mask{
+  display:inline-block;overflow:hidden;vertical-align:top;
+  padding-bottom:.14em;margin-bottom:-.14em;
+}
+.tok{display:inline-block;white-space:nowrap}
+.ch{display:inline-block}
+.genba{display:inline-block}
+
+/* entrance: rise from line mask, hard mechanical ease (JS-gated: text visible without JS) */
+.js-anim .tok{transform:translateY(114%) scale(1.06);transform-origin:50% 100%}
+.js-anim .tok.in{transform:translateY(0) scale(1);transition:transform .82s cubic-bezier(.85,0,.15,1)}
+.js-anim .fade{opacity:0}
+.js-anim .fade.in{opacity:1;transition:opacity .6s ease}
+/* QA seek (?t=8): 途中値を排除した最終フレーム検証用 */
+.seek .tok,.seek .tok.in,.seek .fade,.seek .fade.in{transition:none!important}
+
+/* ---- canvas: proofing marks / specks / red decision ---- */
+#cv{position:absolute;inset:0;z-index:4;pointer-events:none}
+
+/* ---- scanning ruler bar (検分の定規) ---- */
+.scanruler{
+  position:absolute;top:0;bottom:0;left:0;width:120px;z-index:5;
+  background:rgba(33,30,26,.06);
+  border-left:1px solid rgba(33,30,26,.16);
+  border-right:1px solid rgba(33,30,26,.16);
+  transform:translateX(-140px);
+  pointer-events:none;
+}
+
+/* ---- measuring crosshair (pointer) ---- */
+.xv,.xhz{position:absolute;z-index:2;pointer-events:none;opacity:0;background:rgba(33,30,26,.1)}
+.xv{top:0;bottom:0;left:0;width:1px}
+.xhz{left:0;right:0;top:0;height:1px}
+.xv.on,.xhz.on{opacity:1}
+@media (pointer:coarse){.xv,.xhz{display:none}}
+
+/* ---- bottom-right readout + id tag ---- */
+.readout{
+  position:absolute;right:22px;bottom:40px;z-index:7;
+  font:500 11px/1 Manrope,sans-serif;
+  letter-spacing:.08em;color:rgba(33,30,26,.62);
+  font-variant-numeric:tabular-nums;
+}
+.idtag{
+  position:absolute;right:22px;bottom:17px;z-index:7;
+  font:700 10px/1 Manrope,sans-serif;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(33,30,26,.4);
+}
+
+/* ---- paper grain (feTurbulence, <=4%) ---- */
+.grain{
+  position:absolute;inset:0;z-index:8;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (max-width:700px){
+  .hd{padding:20px 20px}
+  .brand{font-size:11px}
+  .hd-r{display:none}
+  .marginline{display:none}
+  .stage{padding:0 6vw 8vh 9vw}
+  .scanruler{width:64px}
+  .readout{right:16px;bottom:36px;font-size:10px}
+  .idtag{right:16px;bottom:14px;font-size:9px;letter-spacing:.18em}
+}
+@media (prefers-reduced-motion:reduce){
+  .js-anim .tok{transform:none}
+  .js-anim .fade{opacity:1}
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="hero" id="hero">
+  <div class="tb tl" aria-hidden="true"></div>
+  <div class="tb tr" aria-hidden="true"></div>
+  <div class="tb bl" aria-hidden="true"></div>
+  <div class="tb br" aria-hidden="true"></div>
+
+  <header class="hd fade" id="hd">
+    <span class="brand">CURSORVERS</span>
+    <span class="hd-r">MEDICAL AI REVIEW</span>
+  </header>
+
+  <div class="marginline fade" id="ml" aria-hidden="true">
+    <i style="top:24%">01</i><i style="top:46%">02</i><i style="top:68%">03</i>
+  </div>
+
+  <div class="stage" id="stage">
+    <p class="kicker fade" id="kicker"><span class="sq" aria-hidden="true"></span>医療AIの第三者レビュー</p>
+    <h1 aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="line line-main" aria-hidden="true"><span class="mask"><span class="tok" id="tokM1">AIに、</span></span><span class="mask"><span class="tok" id="tokM2">臨床の魂を</span></span></span>
+      <span class="line line-sub" aria-hidden="true"><span class="mask"><span class="tok" id="tokS1">医療AIを、</span></span><span class="mask"><span class="tok" id="tokS2"><span class="genba" id="genba">現場に</span>届く言葉へ</span></span></span>
+    </h1>
+  </div>
+
+  <canvas id="cv" aria-hidden="true"></canvas>
+  <div class="scanruler" id="ruler" aria-hidden="true"></div>
+  <div class="xv" id="xv" aria-hidden="true"></div>
+  <div class="xhz" id="xhz" aria-hidden="true"></div>
+
+  <div class="readout fade" id="readout">L 05 · C 021 — X 0840 · Y 0448</div>
+  <div class="idtag fade" id="idtag">CURSORVERS — MEDICAL AI REVIEW · K4</div>
+
+  <div class="grain" aria-hidden="true"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var doc=document, html=doc.documentElement;
+var INK='#211E1A', RED='#b3372b';
+var qs=new URLSearchParams(location.search);
+var STATIC = qs.get('static')==='1';
+var SEEK = Math.max(0, parseFloat(qs.get('t')||'0')||0);   /* QA用シーク秒 */
+var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STILL = STATIC || RM;                    /* 静止描画モード */
+var MOBILE = matchMedia('(max-width: 700px)').matches;
+
+var hero=doc.getElementById('hero'), stage=doc.getElementById('stage');
+var cv=doc.getElementById('cv'), ctx=cv.getContext('2d');
+var ruler=doc.getElementById('ruler'), readout=doc.getElementById('readout');
+var xv=doc.getElementById('xv'), xhz=doc.getElementById('xhz');
+var tokM1=doc.getElementById('tokM1'), tokM2=doc.getElementById('tokM2');
+var tokS1=doc.getElementById('tokS1'), tokS2=doc.getElementById('tokS2');
+var genba=doc.getElementById('genba');
+
+var vw=0, vh=0, dpr=1;
+function sizeCanvas(){
+  vw=innerWidth; vh=innerHeight;
+  dpr=Math.min(window.devicePixelRatio||1, 2);        /* DPR <= 2 */
+  cv.width=Math.round(vw*dpr); cv.height=Math.round(vh*dpr);
+  cv.style.width=vw+'px'; cv.style.height=vh+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.lineCap='round'; ctx.lineJoin='round';
+}
+
+function rectOf(el){
+  var r=el.getBoundingClientRect();
+  return {x:r.left, y:r.top, w:r.width, h:r.height, r:r.right, b:r.bottom,
+          cx:r.left+r.width/2, cy:r.top+r.height/2};
+}
+function pad(n,w){ n=String(Math.max(0,Math.round(n))); while(n.length<w)n='0'+n; return n; }
+function eio(x){ return x<.5 ? 4*x*x*x : 1-Math.pow(-2*x+2,3)/2; }  /* easeInOutCubic */
+
+/* ============ 校正記号: segment geometry ============ */
+function P(){ return {p:Array.prototype.slice.call(arguments)}; }
+function ARC(cx,cy,r,a0,a1){ return {a:[cx,cy,r,a0,a1]}; }
+function segLen(s){
+  if(s.a) return Math.abs(s.a[4]-s.a[3])*s.a[2];
+  var t=0,p=s.p;
+  for(var i=1;i<p.length;i++) t+=Math.hypot(p[i][0]-p[i-1][0], p[i][1]-p[i-1][1]);
+  return t;
+}
+function mkMark(segs,lw,group){
+  var lens=segs.map(segLen), total=0;
+  for(var i=0;i<lens.length;i++) total+=lens[i];
+  return {segs:segs, lens:lens, total:total, lw:lw||1.6, g:group||''};
+}
+function drawSegPortion(s,u0,u1){
+  if(u1<=u0) return;
+  ctx.beginPath();
+  if(s.a){
+    var a=s.a; ctx.arc(a[0],a[1],a[2], a[3]+(a[4]-a[3])*u0, a[3]+(a[4]-a[3])*u1);
+  }else{
+    var p=s.p, cum=[0], t=0, i;
+    for(i=1;i<p.length;i++){ t+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]); cum.push(t); }
+    var s0=u0*t, s1=u1*t, started=false;
+    for(i=1;i<p.length;i++){
+      var A=p[i-1], B=p[i], l0=cum[i-1], l1=cum[i];
+      if(l1<=s0 || l0>=s1) continue;
+      var f0=Math.max(0,(s0-l0)/(l1-l0)), f1=Math.min(1,(s1-l0)/(l1-l0));
+      var X0=A[0]+(B[0]-A[0])*f0, Y0=A[1]+(B[1]-A[1])*f0;
+      var X1=A[0]+(B[0]-A[0])*f1, Y1=A[1]+(B[1]-A[1])*f1;
+      if(!started){ ctx.moveTo(X0,Y0); started=true; }
+      ctx.lineTo(X1,Y1);
+    }
+  }
+  ctx.stroke();
+}
+function drawMarkRange(m,f0,f1,color,alpha){
+  ctx.strokeStyle=color||INK; ctx.lineWidth=m.lw; ctx.globalAlpha=(alpha==null?0.85:alpha);
+  var acc=0;
+  for(var i=0;i<m.segs.length;i++){
+    var L=m.lens[i];
+    if(L>0){
+      var a=(f0*m.total-acc)/L, b=(f1*m.total-acc)/L;
+      if(b>0 && a<1) drawSegPortion(m.segs[i], Math.max(0,a), Math.min(1,b));
+    }
+    acc+=L;
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ============ anchors + mark pool ============ */
+var A=null, POOL=[];
+function measure(){
+  A={m1:rectOf(tokM1), m2:rectOf(tokM2), s1:rectOf(tokS1), s2:rectOf(tokS2), g:rectOf(genba)};
+  buildPool();
+}
+function buildPool(){
+  var m1=A.m1,m2=A.m2,s1=A.s1,s2=A.s2, arr=[], pd, L, cx, cy, x, x0, yt, yb, gx;
+  /* 1: 角括弧 — 主行第2トークンをコーナーで挟む */
+  pd=Math.max(8,Math.round(m2.h*0.12)); L=Math.min(26,m2.h*0.35);
+  arr.push(mkMark([
+    P([m2.x-pd+L,m2.y-pd],[m2.x-pd,m2.y-pd],[m2.x-pd,m2.y-pd+L]),
+    P([m2.r+pd-L,m2.b+pd],[m2.r+pd,m2.b+pd],[m2.r+pd,m2.b+pd-L])
+  ],1.7,'m2'));
+  /* 2: 下線 — 主行第1トークン */
+  arr.push(mkMark([P([m1.x+4,m1.b+9],[m1.r-4,m1.b+9])],2,'m1'));
+  /* 3: 丸囲み + 引出線 — 右余白 */
+  if(m2.r+96<vw){
+    cx=m2.r+64; cy=m2.cy;
+    arr.push(mkMark([ARC(cx,cy,14,-Math.PI/2,Math.PI*1.5),P([cx-14,cy],[m2.r+12,cy])],1.5,'m2r'));
+  }
+  /* 4: 行取り記号 — 左余白の縦ブラケット */
+  x=Math.max(12,Math.min(m1.x,s1.x)-30);
+  if(x>=12){
+    yt=Math.min(m1.y,A.m1.y)+4; yb=s2.b-2;
+    arr.push(mkMark([P([x+9,yt],[x,yt],[x,yb],[x+9,yb])],1.6,'lm'));
+  }
+  /* 5: 寄せ記号(つめ) — 主行トークン間、同一行のみ。隣接記号と競合するため両群を占有 */
+  if(Math.abs(m1.cy-m2.cy)<8){
+    gx=(m1.r+m2.x)/2; yt=Math.min(m1.y,m2.y); yb=Math.max(m1.b,m2.b);
+    arr.push(mkMark([ARC(gx,yt-7,11,Math.PI,2*Math.PI),ARC(gx,yb+7,11,0,Math.PI)],1.5,'m1 m2'));
+  }
+  /* 6: 寄せ記号(送り) — 副行右の押し込み矢線 */
+  if(s2.r+70<vw){
+    cy=s2.cy;
+    arr.push(mkMark([P([s2.r+62,cy],[s2.r+12,cy]),P([s2.r+12,cy-8],[s2.r+12,cy+8])],1.6,'s2r'));
+  }
+  /* 7: 見当トンボ — 天の中央、十字+丸 */
+  arr.push(mkMark([
+    P([vw/2-14,34],[vw/2+14,34]),P([vw/2,20],[vw/2,48]),
+    ARC(vw/2,34,8,-Math.PI/2,Math.PI*1.5)
+  ],1.2,'top'));
+  /* 8: 二重下線 — 主行末尾 */
+  x0=m2.r-m2.w*0.38;
+  arr.push(mkMark([P([x0,m2.b+8],[m2.r-2,m2.b+8]),P([x0,m2.b+13],[m2.r-2,m2.b+13])],1.6,'m2'));
+  /* 9: 角括弧(小) — 副行第1トークン */
+  pd=7; L=13;
+  arr.push(mkMark([
+    P([s1.x-pd+L,s1.y-pd],[s1.x-pd,s1.y-pd],[s1.x-pd,s1.y-pd+L]),
+    P([s1.r+pd-L,s1.b+pd],[s1.r+pd,s1.b+pd],[s1.r+pd,s1.b+pd-L])
+  ],1.4,'s1'));
+  POOL=arr;
+}
+
+/* ============ bottom tick ruler ============ */
+function drawTicks(){
+  if(vw<701) return;               /* モバイル: 省略 (要素数1/3・右下タグとの衝突回避) */
+  var y=vh-14, x, major, xEnd=vw-330;   /* 右下 readout/idtag の手前で止める */
+  ctx.lineWidth=1;
+  ctx.beginPath();
+  for(x=10;x<xEnd;x+=10){
+    major=(x%100===0);
+    ctx.moveTo(x+.5, y);
+    ctx.lineTo(x+.5, y-(major?9:4));
+  }
+  ctx.strokeStyle='rgba(33,30,26,.22)';
+  ctx.stroke();
+  ctx.fillStyle='rgba(33,30,26,.35)';
+  ctx.font='500 8px Manrope, sans-serif';
+  for(x=200;x<xEnd-40;x+=200) ctx.fillText(pad(x,4), x+4, y-14);
+}
+
+/* ============ ink specks (紙面ショックの墨粒) ============ */
+var SPECKS=[];
+function spawnSpecks(x0,x1,yb,n){
+  for(var i=0;i<n;i++){
+    SPECKS.push({
+      x:x0+Math.random()*(x1-x0), y:yb-2,
+      vx:(Math.random()-.5)*90, vy:-(60+Math.random()*230),
+      l:0, tl:.4+Math.random()*.3, s:1+Math.random()*1.4
+    });
+  }
+}
+function drawSpecks(dt){
+  ctx.fillStyle=INK;
+  for(var i=SPECKS.length-1;i>=0;i--){
+    var s=SPECKS[i];
+    s.l+=dt;
+    if(s.l>=s.tl){ SPECKS.splice(i,1); continue; }
+    s.vy+=1500*dt; s.x+=s.vx*dt; s.y+=s.vy*dt;
+    ctx.globalAlpha=(1-s.l/s.tl)*.8;
+    ctx.fillRect(s.x,s.y,s.s,s.s);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ============ STILL: 代表フレームを同期描画 (rAFなし) ============ */
+function staticPaint(){
+  ctx.clearRect(0,0,vw,vh);
+  drawTicks();
+  /* 校正記号 4-5 個を保持状態で (群トークン単位で衝突回避) */
+  var used={}, drawn=0, i, k, gt, clash;
+  for(i=0;i<POOL.length && drawn<5;i++){
+    var m=POOL[i];
+    gt=m.g.split(' '); clash=false;
+    for(k=0;k<gt.length;k++) if(used[gt[k]]) clash=true;
+    if(clash) continue;
+    for(k=0;k<gt.length;k++) used[gt[k]]=1;
+    drawn++;
+    drawMarkRange(m,0,1,INK,.85);
+  }
+  /* 赤の判断点: 「現場に」の直下に引かれた瞬間 */
+  var g=A.g;
+  ctx.strokeStyle=RED; ctx.lineWidth=3; ctx.globalAlpha=1;
+  ctx.beginPath(); ctx.moveTo(g.x-2,g.b+4); ctx.lineTo(g.r+2,g.b+4); ctx.stroke();
+  /* 落着した墨粒 */
+  ctx.fillStyle=INK;
+  for(i=0;i<(MOBILE?5:14);i++){
+    ctx.globalAlpha=.12+Math.random()*.14;
+    ctx.fillRect(A.m1.x+Math.random()*(A.m2.r-A.m1.x), A.m1.b+4+Math.random()*16, 1.4,1.4);
+  }
+  ctx.globalAlpha=1;
+  ruler.style.transform='translateX('+Math.round(vw*.58)+'px)';
+}
+
+/* ============ boot ============ */
+function fontsReady(){
+  /* 使用glyphを明示ロードしてから計測する (JP subset 分割対策)。guard で fail-open */
+  var guard=new Promise(function(r){ setTimeout(r,2600); });
+  var p;
+  if(doc.fonts && doc.fonts.load){
+    p=Promise.all([
+      doc.fonts.load('900 100px "Noto Serif JP"','AIに、臨床の魂を医療現場届く言葉へ'),
+      doc.fonts.load('700 12px Manrope','CURSORVERSMEDICALIW0123456789LXY'),
+      doc.fonts.load('500 12px Manrope','0123456789'),
+      doc.fonts.load('700 12px "Noto Sans JP"','医療AIの第三者レビュー')
+    ]).then(function(){ return doc.fonts.ready; });
+  }else{
+    p=new Promise(function(r){ setTimeout(r,1100); });
+  }
+  return Promise.race([p,guard]);
+}
+
+var rzT=null;
+if(STILL){
+  html.classList.add('static');
+  var stillPaint=function(){ MOBILE=matchMedia('(max-width: 700px)').matches; sizeCanvas(); measure(); staticPaint(); };
+  fontsReady().then(stillPaint);
+  /* フォント遅延読込で字形metricsが変わったら再計測・再描画 (計測ズレ防止) */
+  if(doc.fonts){
+    doc.fonts.ready.then(stillPaint);
+    doc.fonts.addEventListener('loadingdone',stillPaint);
+  }
+  addEventListener('resize',function(){
+    clearTimeout(rzT);
+    rzT=setTimeout(stillPaint,160);
+  });
+  return;
+}
+
+/* ---------- animated mode ---------- */
+html.classList.add('js-anim');
+
+var t=0, last=0, raf=0, running=false;
+var cueI=0, cues=[];
+var theater=false, T0=0;
+var ACTIVE=[], nextSpawn=0, lastIdx=-1;
+var CHARS=[];
+var joltUntil=0, joltAmp=0, jolted=false;
+var px=-999, py=-999, xhOn=false;
+var RW=MOBILE?64:120, INFL=MOBILE?60:90, AMP=MOBILE?1.2:2.4;
+var redT0=0;
+
+function splitChars(el){
+  var kids=Array.prototype.slice.call(el.childNodes);
+  kids.forEach(function(k){
+    if(k.nodeType===3){
+      var frag=doc.createDocumentFragment(), txt=k.textContent, i;
+      for(i=0;i<txt.length;i++){
+        var sp=doc.createElement('span'); sp.className='ch'; sp.textContent=txt.charAt(i);
+        frag.appendChild(sp);
+      }
+      el.replaceChild(frag,k);
+    }else if(k.nodeType===1){ splitChars(k); }
+  });
+}
+function collectChars(){
+  CHARS=[];
+  var els=stage.querySelectorAll('.ch');
+  for(var i=0;i<els.length;i++){
+    var r=els[i].getBoundingClientRect();
+    CHARS.push({el:els[i], cx:r.left+r.width/2, cy:r.top+r.height/2, o:0});
+  }
+}
+function remeasureChars(){
+  for(var i=0;i<CHARS.length;i++){ CHARS[i].el.style.transform=''; CHARS[i].o=0; }
+  for(var j=0;j<CHARS.length;j++){
+    var r=CHARS[j].el.getBoundingClientRect();
+    CHARS[j].cx=r.left+r.width/2; CHARS[j].cy=r.top+r.height/2;
+  }
+}
+
+function shock(rc,k){
+  spawnSpecks(rc.x, rc.r, rc.b, Math.round((MOBILE?8:24)*k));
+  joltUntil=t+.07; joltAmp=(k>=.9)?1.8:1.2;
+}
+function startTheater(){
+  splitChars(tokM1); splitChars(tokM2); splitChars(tokS1); splitChars(tokS2);
+  measure(); collectChars();
+  theater=true; T0=t; redT0=t+1.6; nextSpawn=t+.4;
+}
+
+function setupCues(){
+  cues=[
+    {t:.15, f:function(){ doc.getElementById('kicker').classList.add('in'); }},
+    {t:.30, f:function(){ tokM1.classList.add('in'); }},
+    {t:.46, f:function(){ tokM2.classList.add('in'); }},
+    {t:1.12,s:1,f:function(){ shock(rectOf(tokM1),.7); }},
+    {t:1.28,s:1,f:function(){ shock(rectOf(tokM2),1); }},
+    {t:1.30,f:function(){ tokS1.classList.add('in'); }},
+    {t:1.44,f:function(){ tokS2.classList.add('in'); }},
+    {t:2.12,s:1,f:function(){ shock(rectOf(tokS1),.45); }},
+    {t:2.26,s:1,f:function(){ shock(rectOf(tokS2),.5); }},
+    {t:2.35,f:function(){ doc.getElementById('hd').classList.add('in');
+                          doc.getElementById('ml').classList.add('in'); }},
+    {t:2.50,f:function(){ readout.classList.add('in');
+                          doc.getElementById('idtag').classList.add('in'); }},
+    {t:2.60,f:function(){ startTheater(); }}
+  ];
+}
+
+/* ---- proof-mark scheduler ---- */
+function groupClash(a,b){
+  var ga=a.split(' '), gb=b.split(' '), i;
+  for(i=0;i<ga.length;i++) if(gb.indexOf(ga[i])>-1) return true;
+  return false;
+}
+function spawnMark(){
+  if(!POOL.length) return;
+  var tries=0, idx, m, i, busy;
+  while(tries++<12){
+    idx=Math.floor(Math.random()*POOL.length);
+    if(idx===lastIdx) continue;
+    m=POOL[idx]; busy=false;
+    for(i=0;i<ACTIVE.length;i++){
+      if(ACTIVE[i].idx===idx || groupClash(ACTIVE[i].m.g,m.g)){ busy=true; break; }
+    }
+    if(!busy){
+      lastIdx=idx;
+      ACTIVE.push({idx:idx, m:m, t0:t,
+        dd:.9+Math.random()*.4, hd:2.2+Math.random()*1.6, ed:.55});
+      return;
+    }
+  }
+}
+function drawMarks(){
+  var MAXA=MOBILE?2:4;
+  if(t>nextSpawn && ACTIVE.length<MAXA){ spawnMark(); nextSpawn=t+.9+Math.random()*1.4; }
+  for(var i=ACTIVE.length-1;i>=0;i--){
+    var a=ACTIVE[i], p=t-a.t0;
+    if(p<a.dd){ drawMarkRange(a.m,0,eio(p/a.dd),INK,.85); }
+    else if(p<a.dd+a.hd){ drawMarkRange(a.m,0,1,INK,.85); }
+    else if(p<a.dd+a.hd+a.ed){ drawMarkRange(a.m,eio((p-a.dd-a.hd)/a.ed),1,INK,.85); }
+    else{ ACTIVE.splice(i,1); }
+  }
+}
+
+/* ---- red decision point: 12s cycle, 常に赤は1箇所以下 ---- */
+function drawRed(){
+  if(t<redT0 || !A) return;
+  var RP=12, p=(t-redT0)%RP, g=A.g, a=0, b=0, color=RED;
+  if(p<.75){ b=eio(p/.75); }
+  else if(p<4.6){ b=1; }
+  else if(p<10.6){ b=1; color=INK; }              /* 墨に変わって定着 */
+  else if(p<11.2){ a=eio((p-10.6)/.6); b=1; color=INK; }
+  else{ return; }
+  if(b<=a) return;
+  var y=g.b+4, xw=g.w+4, x0=g.x-2;
+  ctx.strokeStyle=color; ctx.lineWidth=3; ctx.globalAlpha=1;
+  ctx.beginPath(); ctx.moveTo(x0+a*xw,y); ctx.lineTo(x0+b*xw,y); ctx.stroke();
+}
+
+/* ---- scanning ruler + char micro-spread + pointer magnet ---- */
+function updateRulerAndChars(){
+  var frac=((t-T0)%10)/10;
+  var rx=-RW+frac*(vw+RW);
+  ruler.style.transform='translateX('+Math.round(rx)+'px)';
+  var rcx=rx+RW/2, i, c, o, d, dx, dy, adx, ady;
+  for(i=0;i<CHARS.length;i++){
+    c=CHARS[i]; o=0;
+    d=c.cx-rcx;
+    if(Math.abs(d)<INFL) o+=(d>=0?1:-1)*Math.pow(1-Math.abs(d)/INFL,2)*AMP;
+    dx=px-c.cx; dy=py-c.cy; adx=Math.abs(dx); ady=Math.abs(dy);
+    if(adx<90 && ady<70) o+=(dx>=0?1:-1)*(1-adx/90)*(1-ady/70)*1.4;
+    o=Math.round(o*2)/2;                          /* 0.5px 量子化: カチッ */
+    if(o!==c.o){ c.o=o; c.el.style.transform=o?('translateX('+o+'px)'):''; }
+  }
+}
+
+/* ---- main loop ---- */
+function frame(now){
+  raf=requestAnimationFrame(frame);
+  now/=1000;
+  var dt=Math.min(now-last,.05); last=now; t+=dt;
+  while(cueI<cues.length && t>=cues[cueI].t){ cues[cueI].f(); cueI++; }
+
+  ctx.clearRect(0,0,vw,vh);
+  drawTicks();
+  if(theater){
+    updateRulerAndChars();
+    drawMarks();
+    drawRed();
+  }
+  drawSpecks(dt);
+
+  if(t<joltUntil){
+    if(!jolted){ stage.style.transform='translateY('+joltAmp+'px)'; jolted=true; }
+  }else if(jolted){
+    stage.style.transform=''; jolted=false;
+  }
+}
+function applySeek(){
+  /* QA: 入場・持続層を SEEK 秒まで実タイムライン通りに即時再生 (途中値排除) */
+  html.classList.add('seek');
+  while(cueI<cues.length && cues[cueI].t<=SEEK){
+    t=cues[cueI].t;
+    if(!cues[cueI].s) cues[cueI].f();
+    cueI++;
+  }
+  t=Math.max(t,SEEK);
+  if(theater){
+    var i;
+    for(i=0;i<3;i++) spawnMark();
+    for(i=0;i<ACTIVE.length;i++) ACTIVE[i].t0 = t - ACTIVE[i].dd - .4 - i*.9;  /* 保持相へ前倒し */
+    nextSpawn=t+.6;
+  }
+}
+function start(){
+  if(running) return;
+  running=true; last=performance.now()/1000;
+  if(SEEK>0 && cueI===0) applySeek();
+  raf=requestAnimationFrame(frame);
+}
+function stop(){
+  if(!running) return;
+  running=false; cancelAnimationFrame(raf);
+}
+doc.addEventListener('visibilitychange',function(){
+  if(doc.hidden) stop(); else start();
+});
+
+/* ---- pointer: 段落座標リードアウト + クロスヘア ---- */
+addEventListener('pointermove',function(e){
+  if(e.pointerType==='touch') return;
+  px=e.clientX; py=e.clientY;
+  var qx=Math.round(px/8)*8, qy=Math.round(py/8)*8;
+  xv.style.transform='translateX('+qx+'px)';
+  xhz.style.transform='translateY('+qy+'px)';
+  if(!xhOn){ xhOn=true; xv.classList.add('on'); xhz.classList.add('on'); }
+  readout.textContent='L '+pad(1+Math.floor(qy/64),2)+' · C '+pad(1+Math.floor(qx/16),3)+
+    ' — X '+pad(qx,4)+' · Y '+pad(qy,4);
+});
+addEventListener('pointerleave',function(){
+  px=-999; py=-999;
+});
+
+addEventListener('resize',function(){
+  clearTimeout(rzT);
+  rzT=setTimeout(function(){
+    MOBILE=matchMedia('(max-width: 700px)').matches;
+    RW=MOBILE?64:120; INFL=MOBILE?60:90; AMP=MOBILE?1.2:2.4;
+    sizeCanvas();
+    if(theater){ measure(); remeasureChars(); ACTIVE.length=0; SPECKS.length=0; }
+  },160);
+});
+
+/* フォント遅延読込でmetricsが変わったら劇場アンカーを再計測 */
+if(doc.fonts){
+  doc.fonts.addEventListener('loadingdone',function(){
+    if(theater){ measure(); remeasureChars(); ACTIVE.length=0; }
+  });
+}
+
+sizeCanvas();
+fontsReady().then(function(){ setupCues(); start(); });
+})();
+</script>
+</body>
+</html>

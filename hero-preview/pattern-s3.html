@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursorvers Hero Preview — S3 Luminous Aurora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   S3 極光 — Luminous Aurora
+   deep-navy の闇に azure/gold のオーロラカーテンが揺れ、
+   光が一文字ずつ主行をともす。
+   ---------------------------------------------------------------
+   フェイルセーフ: base CSS は「全点灯」状態。JS/canvas が死んでも
+   ivory の文字はダーク地に常に可読。html.fx が付いた時のみ
+   未点灯状態から entrance が始まる。
+   ================================================================ */
+:root{
+  --deep:#101D33;
+  --ink:#13243F;
+  --azure:#3E6FA8;
+  --azure-soft:#7FA3CC;
+  --azure-deep:#36618F;
+  --gold:#C8922E;
+  --ivory:#F4F1EA;
+  --card:#FBFAF5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:var(--deep);}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(120% 95% at 50% 28%, var(--ink) 0%, var(--deep) 55%, #0B1526 100%);
+}
+.hero canvas{
+  position:absolute;
+  inset:0;
+  display:block;
+  z-index:0;
+}
+/* 文字帯の背後だけ輝度を落とす DOM ヴェール (canvas 非依存の可読性保証) */
+.veil{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:radial-gradient(56% 36% at 50% 56%,
+              rgba(16,29,51,.60) 0%,
+              rgba(16,29,51,.30) 52%,
+              rgba(16,29,51,0) 100%);
+}
+
+.content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 24px;
+  margin-top:4vh;
+  will-change:transform;
+}
+
+/* ---- eyebrow ------------------------------------------------- */
+.eyebrow{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  line-height:1;
+  text-transform:uppercase;
+  color:rgba(196,214,235,.98);
+  text-shadow:0 0 14px rgba(16,29,51,.95), 0 0 4px rgba(16,29,51,.9);
+  margin-bottom:clamp(20px,3.2vh,32px);
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:clamp(12px,1.3vw,20px);
+}
+.eyebrow .brand{
+  font-size:clamp(17px,1.8vw,27px);
+  letter-spacing:.32em;
+  text-indent:.32em;
+  color:rgba(224,236,250,1);
+}
+.eyebrow .sub{
+  font-size:clamp(10px,.9vw,13px);
+  letter-spacing:.44em;
+  text-indent:.44em;
+  color:rgba(162,188,216,.92);
+}
+.eyebrow .dot{
+  display:inline-block;
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(200,146,46,.85);
+  box-shadow:0 0 8px rgba(200,146,46,.7);
+  flex:none;
+  align-self:center;
+}
+
+/* ---- h1 -------------------------------------------------------- */
+h1{font-family:'Noto Serif JP',serif;font-weight:900;}
+.tok{display:inline-block;white-space:nowrap;}
+
+.main{
+  display:block;
+  font-size:clamp(3.2rem, 6.5vw + 1.2rem, 8rem);
+  line-height:1.16;
+  letter-spacing:.04em;
+  color:var(--ivory);
+}
+/* base = 点灯完了状態 (フェイルセーフ / static / reduced-motion) */
+.main .ch{
+  display:inline-block;
+  color:var(--ivory);
+  text-shadow:
+    0 0 14px rgba(127,163,204,.85),
+    0 0 44px rgba(62,111,168,.60),
+    0 0 96px rgba(62,111,168,.34);
+}
+/* JS 稼働時のみ: 未点灯 → 一文字ずつ点灯 */
+.fx .main .ch{
+  opacity:.06;
+  transform:translateY(16px) scale(.985);
+  filter:blur(8px);
+  text-shadow:none;
+  transition:
+    opacity .7s cubic-bezier(.19,.7,.28,1),
+    transform .7s cubic-bezier(.19,.7,.28,1),
+    filter .65s ease,
+    text-shadow 1.3s ease;
+}
+.fx .main .ch.lit{
+  opacity:1;
+  transform:none;
+  filter:blur(0);
+  text-shadow:
+    0 0 14px rgba(127,163,204,.85),
+    0 0 44px rgba(62,111,168,.60),
+    0 0 96px rgba(62,111,168,.34);
+}
+
+.sub{
+  display:block;
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:500;
+  font-size:clamp(1.35rem, 2.2vw + .55rem, 2.4rem);
+  line-height:1.7;
+  letter-spacing:.22em;
+  text-indent:.22em;
+  color:rgba(244,241,234,.88);
+  text-shadow:0 0 26px rgba(62,111,168,.45);
+  margin-top:clamp(16px,2.6vh,28px);
+}
+.fx .sub{
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity 1.2s ease,transform 1.2s cubic-bezier(.19,.7,.28,1);
+}
+.fx .sub.in{opacity:1;transform:none;}
+
+/* ---- badge ----------------------------------------------------- */
+.badge{
+  display:inline-block;
+  margin-top:clamp(24px,3.6vh,38px);
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:500;
+  font-size:clamp(12px,.95vw,15px);
+  line-height:1;
+  letter-spacing:.32em;
+  text-indent:.32em;
+  color:#E3B865;
+  padding:.95em 1.9em;
+  border:1px solid rgba(200,146,46,.55);
+  border-radius:999px;
+  background:rgba(16,29,51,.35);
+  box-shadow:0 0 22px rgba(200,146,46,.18), inset 0 0 14px rgba(200,146,46,.07);
+}
+.fx .badge{
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.19,.7,.28,1);
+}
+.fx .badge.in{opacity:1;transform:none;}
+
+/* ---- 識別タグ --------------------------------------------------- */
+.tag{
+  position:absolute;
+  right:18px;
+  bottom:14px;
+  z-index:3;
+  font-family:'Manrope',sans-serif;
+  font-weight:600;
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:rgba(244,241,234,0.4);
+}
+.fx .tag{opacity:0;transition:opacity 1.4s ease;}
+.fx .tag.in{opacity:1;}
+
+@media (max-width:640px){
+  .content{padding:0 18px;}
+  .eyebrow{gap:10px;}
+  .eyebrow .brand{letter-spacing:.24em;text-indent:.24em;}
+  .eyebrow .sub{letter-spacing:.3em;text-indent:.3em;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important;}
+}
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+
+  <div class="content" id="content">
+    <p class="eyebrow"><span class="brand">CURSORVERS</span><span class="dot" aria-hidden="true"></span><span class="sub">MEDICAL AI REVIEW</span></p>
+    <h1 aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="line main" aria-hidden="true"><span class="tok"><span class="ch">A</span><span class="ch">I</span><span class="ch">に</span><span class="ch">、</span></span><span class="tok"><span class="ch">臨</span><span class="ch">床</span><span class="ch">の</span><span class="ch">魂</span><span class="ch">を</span></span></span>
+      <span class="line sub" aria-hidden="true"><span class="tok">医療AIを、</span><span class="tok">現場に届く言葉へ</span></span>
+    </h1>
+    <p class="badge">医療AIの第三者レビュー</p>
+  </div>
+
+  <p class="tag">S3 · Luminous Aurora</p>
+</section>
+
+<script>
+(function(){
+'use strict';
+
+/* ============================ modes ============================ */
+var qs      = new URLSearchParams(location.search);
+var STATIC  = qs.get('static') === '1';
+var RM      = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var FROZEN  = STATIC || RM;                 /* rAF を回さない */
+var MOBILE  = window.matchMedia('(max-width: 640px)').matches;
+
+var hero    = document.getElementById('hero');
+var content = document.getElementById('content');
+var canvas  = document.getElementById('fx');
+var ctx     = canvas.getContext('2d', {alpha:false});
+if(!ctx){ return; } /* フェイルセーフ: base CSS の全点灯文字だけで成立 */
+
+/* ============================ palette ========================== */
+var DEEP=[16,29,51], INK=[19,36,63],
+    AZ=[62,111,168], AZS=[127,163,204], AZD=[54,97,143],
+    GOLD=[200,146,46], IVORY=[244,241,234];
+
+function rgba(c,a){ return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
+function lighten(c,f){
+  return [Math.round(c[0]+(255-c[0])*f),
+          Math.round(c[1]+(255-c[1])*f),
+          Math.round(c[2]+(255-c[2])*f)];
+}
+
+/* ================= curtain gradient strips (1回だけ生成) =========
+   縦 1 列分の発光プロファイル。上端は拡散、下端寄りに白熱コア。
+   'lighter' 合成でカーテン同士の交差が自然に白熱化する。      */
+function makeStrip(core){
+  var c=document.createElement('canvas'); c.width=2; c.height=220;
+  var g=c.getContext('2d');
+  var hot=lighten(core,.78), bright=lighten(core,.45);
+  var gr=g.createLinearGradient(0,0,0,220);
+  gr.addColorStop(0.00, rgba(core,0));
+  gr.addColorStop(0.34, rgba(core,.08));
+  gr.addColorStop(0.60, rgba(core,.30));
+  gr.addColorStop(0.80, rgba(bright,.72));
+  gr.addColorStop(0.895,rgba(hot,.95));
+  gr.addColorStop(0.955,rgba(bright,.42));
+  gr.addColorStop(1.00, rgba(core,0));
+  g.fillStyle=gr; g.fillRect(0,0,2,220);
+  return c;
+}
+
+/* 6 枚のカーテン (モバイルは 5 枚)。yC/len は画面比。
+   ff=fold周波数 fs=fold速度 dA,dB=うねり振幅 pull=pointer位相引力 */
+var CURTAINS=[
+  {c:AZ,  yC:.34,len:.58,ff:19,fs:.55, ph:0.0,dA:.115,dB:.050,pull:1.5,alpha:.85,envF:5.2,envS:.16, eph:1.1},
+  {c:AZS, yC:.26,len:.44,ff:26,fs:-.42,ph:2.1,dA:.090,dB:.040,pull:1.1,alpha:.60,envF:4.1,envS:-.12,eph:3.9},
+  {c:AZD, yC:.46,len:.62,ff:14,fs:.34, ph:4.2,dA:.130,dB:.055,pull:1.9,alpha:.80,envF:3.3,envS:.10, eph:0.4},
+  {c:GOLD,yC:.35,len:.34,ff:31,fs:.68, ph:1.3,dA:.070,dB:.030,pull:0.8,alpha:.42,envF:6.4,envS:-.20,eph:2.5,breathe:true},
+  {c:AZ,  yC:.55,len:.50,ff:22,fs:-.50,ph:5.3,dA:.100,dB:.045,pull:1.3,alpha:.55,envF:4.7,envS:.14, eph:5.0},
+  {c:AZS, yC:.18,len:.36,ff:17,fs:.47, ph:3.0,dA:.080,dB:.035,pull:1.0,alpha:.50,envF:5.8,envS:-.09,eph:1.9}
+];
+if(MOBILE){ CURTAINS.splice(5,1); }
+CURTAINS.forEach(function(cu){ cu.strip=makeStrip(cu.c); });
+
+/* ====================== sizing / quality ======================= */
+var W=0,H=0,dpr=1;
+var low=document.createElement('canvas'), lctx=null, LW=0,LH=0;
+var qLevel=0;                                /* 適応品質 0..2 */
+var baseColW = MOBILE?4:3;
+var colW = baseColW;
+var qRainMul = 1, qLowMul = 1;
+var bgGrad=null, vigGrad=null, botGrad=null;
+
+function rebuildLow(){
+  var s=(MOBILE?0.34:0.45)*qLowMul;
+  LW=Math.max(64,Math.round(W*s));
+  LH=Math.max(64,Math.round(H*s));
+  low.width=LW; low.height=LH;
+  lctx=low.getContext('2d');
+}
+
+function resize(){
+  W=hero.clientWidth; H=hero.clientHeight;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.ceil(W*dpr);
+  canvas.height=Math.ceil(H*dpr);
+  canvas.style.width=W+'px';
+  canvas.style.height=H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  colW=baseColW+qLevel;
+  rebuildLow();
+
+  bgGrad=ctx.createRadialGradient(W*.5,H*.28,0, W*.5,H*.28,Math.max(W,H)*.95);
+  bgGrad.addColorStop(0, 'rgb(21,39,68)');
+  bgGrad.addColorStop(.55,'rgb(16,29,51)');
+  bgGrad.addColorStop(1, 'rgb(10,19,35)');
+
+  vigGrad=ctx.createRadialGradient(W*.5,H*.55,H*.32, W*.5,H*.55,Math.max(W,H)*.78);
+  vigGrad.addColorStop(0, 'rgba(10,19,35,0)');
+  vigGrad.addColorStop(1, 'rgba(10,19,35,.55)');
+
+  botGrad=ctx.createLinearGradient(0,H*.72,0,H);
+  botGrad.addColorStop(0,'rgba(10,19,35,0)');
+  botGrad.addColorStop(1,'rgba(10,19,35,.5)');
+
+  initRain();
+  if(FROZEN){ renderStatic(); }
+}
+
+/* ======================= 光の雨 (微粒子) ======================== */
+var rain=[], rainGold=[];
+function initRain(){
+  var n=Math.round((MOBILE?70:220)*qRainMul);
+  rain=[]; rainGold=[];
+  for(var i=0;i<n;i++){
+    var p={x:Math.random()*W, y:Math.random()*H,
+           s:18+Math.random()*42, l:10+Math.random()*34,
+           a:.04+Math.random()*.13, ph:Math.random()*6.283};
+    if(i%8===0){ rainGold.push(p); } else { rain.push(p); }
+  }
+}
+function updateRain(dt){
+  var all=[rain,rainGold],k,i,p,arr;
+  for(k=0;k<2;k++){
+    arr=all[k];
+    for(i=0;i<arr.length;i++){
+      p=arr[i]; p.y+=p.s*dt;
+      if(p.y>H+p.l){ p.y=-p.l; p.x=Math.random()*W; }
+    }
+  }
+}
+function drawRain(t,g){
+  var i,p,tw;
+  ctx.fillStyle=rgba(AZS,1);
+  for(i=0;i<rain.length;i++){
+    p=rain[i]; tw=.55+.45*Math.sin(t*2.6+p.ph);
+    ctx.globalAlpha=p.a*tw*g;
+    ctx.fillRect(p.x,p.y,1,p.l);
+  }
+  ctx.fillStyle=rgba(lighten(GOLD,.25),1);
+  for(i=0;i<rainGold.length;i++){
+    p=rainGold[i]; tw=.55+.45*Math.sin(t*2.6+p.ph);
+    ctx.globalAlpha=p.a*tw*g*.9;
+    ctx.fillRect(p.x,p.y,1,p.l);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ============== surge / burst / pointer 輝度フィールド ========== */
+var surges=[], bursts=[], pulses=[];
+var nextSurge=4.5;
+var activeS=[], activeB=[];
+var px=.5, py=.42, tpx=.5, tpy=.42;         /* eased pointer */
+var LIFT = MOBILE?0:0.5;
+
+function prepField(t){
+  activeS.length=0; activeB.length=0;
+  var i,s,pr,xs,b,e;
+  for(i=surges.length-1;i>=0;i--){
+    s=surges[i]; pr=(t-s.t0)/s.dur;
+    if(pr>=1){ surges.splice(i,1); continue; }
+    if(pr<0){ continue; }
+    xs = s.dir>0 ? pr*1.3-.15 : 1.15-pr*1.3;
+    activeS.push({xs:xs, a:s.amp*Math.sin(Math.PI*pr), w:s.w});
+  }
+  for(i=bursts.length-1;i>=0;i--){
+    b=bursts[i]; e=(t-b.t0)/.85;
+    if(e>=1){ bursts.splice(i,1); continue; }
+    activeB.push({nx:b.nx, a:b.amp*(1-e)});
+  }
+}
+function fieldAt(nx){
+  var m=1,i,d,o;
+  for(i=0;i<activeS.length;i++){ o=activeS[i]; d=nx-o.xs; m+=o.a*Math.exp(-d*d/o.w); }
+  for(i=0;i<activeB.length;i++){ o=activeB[i]; d=nx-o.nx; m+=o.a*Math.exp(-d*d/.0011); }
+  d=nx-px; m+=LIFT*Math.exp(-d*d/.008);
+  return m;
+}
+
+/* ===================== オーロラ本体 (低解像度層) ================= */
+function drawAurora(t,g){
+  lctx.setTransform(1,0,0,1,0,0);
+  lctx.clearRect(0,0,LW,LH);
+  lctx.globalCompositeOperation='lighter';
+  var cw=colW, ci,cu,x,nx,dy,f,f2,env,B,bl,yTop,aBase,yCB,pxPhase;
+  for(ci=0;ci<CURTAINS.length;ci++){
+    cu=CURTAINS[ci];
+    yCB=(cu.yC+(py-.42)*.05)*LH;
+    pxPhase=(px-.5)*cu.pull*2.2;
+    aBase=cu.alpha*g;
+    if(cu.breathe){ aBase*=.55+.45*Math.sin(t*.11+cu.ph); }
+    if(aBase<.02){ continue; }
+    for(x=0;x<LW;x+=cw){
+      nx=x/LW;
+      dy=(cu.dA*Math.sin(nx*4.3+t*.21+cu.ph)
+         +cu.dB*Math.sin(nx*8.9-t*.33+cu.ph*1.7))*LH;
+      f=.5+.5*Math.sin(nx*cu.ff+t*cu.fs+cu.ph+pxPhase);
+      f=f*f*f;                                       /* fold 尖鋭化 */
+      f2=.5+.5*Math.sin(nx*cu.ff*2.63+t*cu.fs*1.7+cu.eph);
+      env=.5+.5*Math.sin(nx*cu.envF+t*cu.envS+cu.eph);
+      env=.3+.7*env;
+      B=f*(.55+.45*f2)*env*aBase*fieldAt(nx);
+      if(B<=.012){ continue; }
+      if(B>1){ B=1; }
+      bl=cu.len*LH*(.72+.28*Math.sin(nx*3.1+t*.24+cu.eph));
+      yTop=yCB+dy-bl*.85;
+      lctx.globalAlpha=B;
+      lctx.drawImage(cu.strip,x,yTop,cw+1,bl);
+    }
+  }
+  lctx.globalAlpha=1;
+}
+
+/* ================== 文字点灯パルス (canvas 側) ================== */
+function drawPulses(t){
+  var i,p,e,r,a,gr;
+  for(i=pulses.length-1;i>=0;i--){
+    p=pulses[i]; e=(t-p.t0)/.95;
+    if(e>=1){ pulses.splice(i,1); continue; }
+    if(e<0){ continue; }
+    r=26+e*170; a=(1-e)*(1-e)*.55;
+    gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,r);
+    gr.addColorStop(0, rgba(p.c,a));
+    gr.addColorStop(.5,rgba(p.c,a*.35));
+    gr.addColorStop(1, rgba(p.c,0));
+    ctx.fillStyle=gr;
+    ctx.fillRect(p.x-r,p.y-r,r*2,r*2);
+  }
+}
+
+/* ========================= 1フレーム描画 ======================== */
+function renderFrame(t,g){
+  prepField(t);
+  drawAurora(t,g);
+
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle=bgGrad; ctx.fillRect(0,0,W,H);
+
+  ctx.globalCompositeOperation='lighter';
+  ctx.imageSmoothingEnabled=true;
+  ctx.drawImage(low,0,0,W,H);
+
+  drawRain(t,g);
+  drawPulses(t);
+
+  ctx.globalCompositeOperation='source-over';
+  ctx.fillStyle=vigGrad; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=botGrad; ctx.fillRect(0,H*.7,W,H*.3);
+}
+
+/* ==================== 静止代表フレーム (?static=1) ===============
+   入場完了 + 持続層最盛: 2 本の surge を行程中間に固定し、
+   fold が最も豊かに折れる t を選んで 1 回だけ同期描画する。   */
+function renderStatic(){
+  var t=21.35;
+  px=.5; py=.42;
+  surges=[
+    {t0:t-1.7, dur:3.4, dir:1,  amp:.55, w:.030},
+    {t0:t-2.6, dur:3.4, dir:-1, amp:.40, w:.022}
+  ];
+  bursts=[]; pulses=[];
+  ctx.imageSmoothingQuality='high';
+  renderFrame(t,1.05);
+}
+
+/* ===================== 点灯シーケンス (DOM) ===================== */
+var tNow=0;
+function igniteSequence(){
+  var chs=Array.prototype.slice.call(document.querySelectorAll('.main .ch'));
+  var hr=hero.getBoundingClientRect();
+  chs.forEach(function(el,i){
+    setTimeout(function(){
+      el.classList.add('lit');
+      var r=el.getBoundingClientRect();
+      var x=r.left+r.width/2-hr.left;
+      var y=r.top+r.height/2-hr.top;
+      var col = (i===7) ? lighten(GOLD,.3)
+              : (i%2 ? lighten(AZS,.2) : lighten(AZ,.3));
+      pulses.push({x:x,y:y,t0:tNow,c:col});
+      bursts.push({nx:x/W,t0:tNow,amp:(i===7?1.3:.85)});
+    }, 650+i*115);
+  });
+  setTimeout(function(){ var e=document.querySelector('.sub');   if(e){e.classList.add('in');} }, 2100);
+  setTimeout(function(){ var e=document.querySelector('.badge'); if(e){e.classList.add('in');} }, 2500);
+  setTimeout(function(){ var e=document.querySelector('.tag');   if(e){e.classList.add('in');} }, 2800);
+}
+
+/* 何があっても 6 秒後には全点灯 (フェイルセーフ) */
+setTimeout(function(){
+  Array.prototype.forEach.call(document.querySelectorAll('.main .ch'),function(el){el.classList.add('lit');});
+  Array.prototype.forEach.call(document.querySelectorAll('.sub,.badge,.tag'),function(el){el.classList.add('in');});
+},6000);
+
+/* ========================= main loop =========================== */
+var raf=0, last=0, fpsAcc=0, fpsN=0;
+
+function degrade(){
+  if(qLevel>=2){ return; }
+  qLevel++;
+  colW=baseColW+qLevel;
+  qRainMul=(qLevel===1)?.6:.4;
+  if(qLevel===2){ qLowMul=.8; rebuildLow(); }
+  initRain();
+}
+
+function tick(now){
+  raf=requestAnimationFrame(tick);
+  var dt=(now-last)/1000; last=now;
+  if(dt>.05){ dt=.05; }
+  tNow+=dt;
+
+  px+=(tpx-px)*.055;
+  py+=(tpy-py)*.055;
+
+  if(tNow>nextSurge){
+    surges.push({t0:tNow,dur:3.4,dir:(Math.random()<.5?1:-1),
+                 amp:.4+Math.random()*.3,w:.02+Math.random()*.02});
+    nextSurge=tNow+5.5+Math.random()*3.5;
+  }
+
+  updateRain(dt);
+
+  var ramp=Math.min(1,tNow/2.8);
+  ramp=ramp*ramp*(3-2*ramp);
+  var g=ramp*(.84+.16*Math.sin(tNow*.37+1.2));
+  renderFrame(tNow,g);
+
+  /* content の微パララックス */
+  content.style.transform='translate3d('+((px-.5)*10)+'px,'+((py-.45)*6)+'px,0)';
+
+  /* 適応品質: 90 フレーム平均 > 19ms なら 1 段落とす */
+  fpsAcc+=dt*1000; fpsN++;
+  if(fpsN>=90){
+    if(fpsAcc/fpsN>19){ degrade(); }
+    fpsAcc=0; fpsN=0;
+  }
+}
+
+/* ========================== events ============================= */
+window.addEventListener('pointermove',function(e){
+  tpx=e.clientX/Math.max(1,W);
+  tpy=e.clientY/Math.max(1,H);
+},{passive:true});
+
+var rzT=0;
+window.addEventListener('resize',function(){
+  clearTimeout(rzT); rzT=setTimeout(resize,150);
+});
+
+document.addEventListener('visibilitychange',function(){
+  if(FROZEN){ return; }
+  if(document.hidden){
+    if(raf){ cancelAnimationFrame(raf); raf=0; }
+  }else if(!raf){
+    last=performance.now();
+    raf=requestAnimationFrame(tick);
+  }
+});
+
+/* ============================ boot ============================= */
+resize();
+
+if(FROZEN){
+  /* static / reduced-motion: 全点灯の DOM + 最盛オーロラの静止画 */
+  renderStatic();
+}else{
+  /* dawn sweep: 開幕に画面を横切る一条の大波 */
+  surges.push({t0:.35,dur:2.2,dir:1,amp:1.1,w:.05});
+  document.documentElement.classList.add('fx');
+  last=performance.now();
+  raf=requestAnimationFrame(tick);
+
+  var started=false;
+  var begin=function(){ if(started){return;} started=true; igniteSequence(); };
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(begin); }
+  setTimeout(begin,1100);
+}
+})();
+</script>
+</body>
+</html>

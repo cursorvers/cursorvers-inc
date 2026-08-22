@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursorvers Hero — S1 Particle Genesis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============ reset / base ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:#101D33;font-family:"Noto Sans JP",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* ============ hero stage ============ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(55% 46% at 72% 16%, rgba(54,97,143,.22), transparent 70%),
+    radial-gradient(46% 38% at 22% 82%, rgba(200,146,46,.07), transparent 72%),
+    linear-gradient(180deg,#0D1830 0%,#101D33 48%,#13243F 100%);
+}
+#fx{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+.vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(120% 95% at 50% 42%, rgba(7,13,24,0) 52%, rgba(7,13,24,.55) 100%);
+}
+.content{position:relative;z-index:3;text-align:center;padding:56px 24px;will-change:transform}
+.tk{display:inline-block;white-space:nowrap}
+
+/* ============ copy (base CSS = always readable, JS-free fail-safe) ============ */
+.eyebrow{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  font-family:Manrope,sans-serif;font-weight:600;
+  font-size:clamp(10px,.9vw,12px);letter-spacing:.44em;text-transform:uppercase;
+  color:#7FA3CC;opacity:.85;
+  margin-bottom:clamp(20px,3.4vh,36px);
+}
+.eyebrow .rule{
+  display:block;width:clamp(26px,4.5vw,60px);height:1px;
+  background:linear-gradient(90deg,rgba(127,163,204,0),rgba(127,163,204,.75));
+}
+.eyebrow .rule.r2{transform:scaleX(-1)}
+
+.title{font-weight:normal}
+.main{
+  display:block;
+  font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;font-weight:900;
+  font-size:clamp(37px,8.9vw,100px);line-height:1.16;
+  color:#F4F1EA;
+  text-shadow:
+    0 0 26px rgba(127,163,204,.40),
+    0 0 90px rgba(62,111,168,.32),
+    0 2px 18px rgba(16,29,51,.55);
+}
+.sub{
+  display:block;margin-top:clamp(16px,2.8vh,26px);
+  font-family:"Noto Sans JP",sans-serif;font-weight:500;
+  font-size:clamp(15px,2vw,24px);line-height:1.8;letter-spacing:.16em;
+  color:#F4F1EA;
+}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .sub .tk{
+    background:linear-gradient(180deg,#F4F1EA 28%,#7FA3CC 100%);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+  }
+}
+.badge{
+  display:inline-flex;align-items:center;gap:14px;
+  margin-top:clamp(28px,4.6vh,46px);padding:10px 22px;
+  border:1px solid rgba(127,163,204,.28);border-radius:999px;
+  background:rgba(19,36,63,.42);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.b-ja{font-size:12.5px;font-weight:500;letter-spacing:.14em;color:rgba(244,241,234,.88)}
+.b-sep{width:1px;height:12px;background:rgba(127,163,204,.45)}
+.b-en{font-family:Manrope,sans-serif;font-weight:600;font-size:10px;letter-spacing:.3em;color:#7FA3CC;text-transform:uppercase}
+@media (max-width:480px){
+  .badge{flex-direction:column;gap:8px;padding:12px 26px;border-radius:22px}
+  .b-sep{width:36px;height:1px}
+}
+
+.tag{
+  position:absolute;right:20px;bottom:16px;z-index:4;pointer-events:none;
+  font-family:Manrope,sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:rgba(244,241,234,.4);
+}
+
+/* ============ animated entrance states (only when html.fx is set by JS) ============ */
+html.fx .eyebrow{opacity:0;transform:translateY(10px);transition:opacity 1.3s ease,transform 1.3s ease}
+html.fx.s-eyebrow .eyebrow{opacity:.85;transform:none}
+html.fx .main{opacity:0;filter:blur(12px);transform:scale(1.015);transition:opacity .9s ease,filter 1.15s ease,transform 1.3s ease}
+html.fx.s-main .main{opacity:1;filter:blur(0);transform:none}
+html.fx .sub{opacity:0;transform:translateY(12px);letter-spacing:.3em;transition:opacity 1.3s ease,transform 1.3s ease,letter-spacing 1.7s ease}
+html.fx.s-sub .sub{opacity:1;transform:none;letter-spacing:.16em}
+html.fx .badge{opacity:0;transform:translateY(10px);transition:opacity 1.4s ease .1s,transform 1.4s ease .1s}
+html.fx.s-badge .badge{opacity:1;transform:none}
+
+/* reduced motion: never hide the copy, even if .fx somehow got set */
+@media (prefers-reduced-motion: reduce){
+  html.fx .eyebrow,html.fx .main,html.fx .sub,html.fx .badge{
+    opacity:1!important;transform:none!important;filter:none!important;transition:none!important;
+  }
+  html.fx .eyebrow{opacity:.85!important}
+  html.fx .sub{letter-spacing:.16em!important}
+}
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="content" id="content">
+    <p class="eyebrow" aria-hidden="true"><span class="rule"></span><span>CURSORVERS</span><span class="rule r2"></span></p>
+    <h1 class="title" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="main" id="mainLine" aria-hidden="true"><span class="tk">AIに、</span><span class="tk">臨床の魂を</span></span>
+      <span class="sub" aria-hidden="true"><span class="tk">医療AIを、</span><span class="tk">現場に届く言葉へ</span></span>
+    </h1>
+    <div class="badge" aria-hidden="true"><span class="b-ja">医療AIの第三者レビュー</span><span class="b-sep"></span><span class="b-en">MEDICAL AI REVIEW</span></div>
+  </div>
+  <div class="tag" aria-hidden="true">S1 &middot; Particle Genesis</div>
+</section>
+
+<script>
+(function(){
+'use strict';
+/* ===================================================================
+   S1 Particle Genesis
+   - thousands of additive-blended light particles converge from a
+     vortex to form the headline, then split into a breathing glyph
+     rim + drifting halo stardust. Gold light sweeps the type every 6s.
+   - base positions are ANALYTIC functions of time; pointer physics is
+     a separate spring displacement => static frame is exact & cheap.
+   =================================================================== */
+var TAU=Math.PI*2;
+var docEl=document.documentElement;
+
+var STATIC=false;
+try{ STATIC=new URLSearchParams(location.search).get('static')==='1'; }
+catch(e){ STATIC=/[?&]static=1(&|$)/.test(location.search); }
+var RM=false;
+try{ RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+var ANIM=!STATIC&&!RM;
+
+var hero=document.getElementById('hero');
+var canvas=document.getElementById('fx');
+var content=document.getElementById('content');
+var mainLine=document.getElementById('mainLine');
+var ctx=canvas.getContext('2d');
+
+function fail(){ /* fail-safe: kill fx, DOM copy stays readable via base CSS */
+  docEl.classList.remove('fx');
+  try{ canvas.style.display='none'; }catch(e){}
+  try{ content.style.transform=''; }catch(e){}
+}
+if(!ctx){ fail(); return; }
+if(ANIM) docEl.classList.add('fx'); /* hide copy until particle crossfade */
+
+/* ---------- brand light sprites (pre-rendered radial glows) ---------- */
+var COLS=[[62,111,168],[127,163,204],[244,241,234],[200,146,46],[54,97,143]];
+var AZURE=0,SOFT=1,IVORY=2,GOLD=3,ADEEP=4;
+var sprites=COLS.map(function(c){
+  var s=64,cv=document.createElement('canvas');cv.width=cv.height=s;
+  var g=cv.getContext('2d');
+  var gr=g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+  gr.addColorStop(0,'rgba(255,255,255,0.95)');
+  gr.addColorStop(0.16,'rgba('+c[0]+','+c[1]+','+c[2]+',0.85)');
+  gr.addColorStop(0.42,'rgba('+c[0]+','+c[1]+','+c[2]+',0.30)');
+  gr.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
+  g.fillStyle=gr;g.fillRect(0,0,s,s);
+  return cv;
+});
+
+/* ---------- state ---------- */
+var W=0,H=0,DPR=1,MOB=false,S=3;
+var parts=[],dust=[];
+var tb={x0:0,x1:0,y0:0,y1:0};
+var t=0,last=0,raf=0,running=false,frames=0;
+var pTx=0,pTy=0,px=0,py=0,pactT=0,pact=0;   /* pointer */
+var pnx=0,pny=0;                            /* camera parallax (-1..1 smoothed) */
+var rto=0;
+
+function R(a,b){ return a+Math.random()*(b-a); }
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=(Math.random()*(i+1))|0;var x=a[j];a[j]=a[i];a[i]=x;}return a;}
+function wr(v,M){var m=48,sp=M+m*2;v=(v+m)%sp;if(v<0)v+=sp;return v-m;}
+
+function sizeCanvas(){
+  W=Math.max(1,hero.clientWidth|0);
+  H=Math.max(1,hero.clientHeight|0);
+  DPR=Math.min(2,window.devicePixelRatio||1);       /* DPR cap 2 */
+  canvas.width=Math.round(W*DPR);
+  canvas.height=Math.round(H*DPR);
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  MOB=W<720;
+}
+
+/* ---------- sample headline glyphs into particle targets ---------- */
+function sampleTargets(){
+  var prevT=content.style.transform;content.style.transform='none';
+  var hr=hero.getBoundingClientRect();
+  var off=document.createElement('canvas');off.width=W;off.height=H;
+  var o=off.getContext('2d',{willReadFrequently:true});
+  var fs=parseFloat(getComputedStyle(mainLine).fontSize)||64;
+  o.font='900 '+fs+'px "Noto Serif JP","Hiragino Mincho ProN",serif';
+  o.fillStyle='#fff';o.textBaseline='alphabetic';
+  var m=o.measureText('魂の言');
+  var baselineOf;
+  if(m.fontBoundingBoxAscent!=null){
+    var fa=m.fontBoundingBoxAscent,fd=m.fontBoundingBoxDescent||0;
+    baselineOf=function(r){return r.top-hr.top+(r.height-(fa+fd))/2+fa;};
+  }else{
+    var ia=m.actualBoundingBoxAscent||fs*0.8,id=m.actualBoundingBoxDescent||fs*0.1;
+    baselineOf=function(r){return r.top-hr.top+r.height/2+(ia-id)/2;};
+  }
+  var toks=mainLine.querySelectorAll('.tk');
+  for(var i=0;i<toks.length;i++){
+    var r=toks[i].getBoundingClientRect();
+    o.fillText(toks[i].textContent,r.left-hr.left,baselineOf(r));
+  }
+  content.style.transform=prevT;
+
+  S=MOB?2:3;
+  var img=o.getImageData(0,0,W,H).data;
+  function A(x,y){if(x<0||y<0||x>=W||y>=H)return 0;return img[(y*W+x)*4+3];}
+  var pts=[],x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+  for(var y=0;y<H;y+=S){
+    for(var x=0;x<W;x+=S){
+      if(A(x,y)>140){
+        var edge=A(x-S,y)<140||A(x+S,y)<140||A(x,y-S)<140||A(x,y+S)<140;
+        pts.push({x:x,y:y,e:edge});
+        if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y;
+      }
+    }
+  }
+  if(pts.length===0){x0=W/2-1;x1=W/2+1;y0=H/2-1;y1=H/2+1;}
+  tb={x0:x0,x1:x1,y0:y0,y1:y1};
+  return pts;
+}
+
+/* ---------- build particle field (also rebuilt on resize) ---------- */
+function build(){
+  sizeCanvas();
+  var pts=sampleTargets();
+  var MAXT=MOB?950:3200, MINT=MOB?450:1400;
+  var edges=[],inns=[],i;
+  for(i=0;i<pts.length;i++){ (pts[i].e?edges:inns).push(pts[i]); }
+  var tE=Math.min(edges.length,Math.round(MAXT*0.55));
+  var tI=Math.min(inns.length,MAXT-tE);
+  shuffle(edges);shuffle(inns);
+  var chosen=edges.slice(0,tE).concat(inns.slice(0,tI));
+  var base=chosen.slice();
+  while(chosen.length<MINT&&base.length>0){
+    var q0=base[(Math.random()*base.length)|0];
+    chosen.push({x:q0.x+R(-1.5,1.5),y:q0.y+R(-1.5,1.5),e:q0.e});
+  }
+  parts=[];
+  var diag=Math.sqrt(W*W+H*H);
+  var tw_=Math.max(1,tb.x1-tb.x0);
+  for(i=0;i<chosen.length;i++){
+    var q=chosen[i];
+    var xn=(q.x-tb.x0)/tw_;
+    var r=Math.random();
+    var col=r<0.10?GOLD:r<0.30?IVORY:r<0.70?SOFT:AZURE;
+    var p={
+      tx:q.x+R(-0.45,0.45)*S, ty:q.y+R(-0.45,0.45)*S, e:q.e,
+      sa:Math.random()*TAU,                 /* vortex spawn angle */
+      sd:diag*R(0.16,0.66),                 /* vortex spawn distance */
+      spin:(Math.random()<0.5?-1:1)*R(1.6,3.5),
+      delay:xn*0.75+R(0,0.3),               /* L->R staggered formation */
+      dur:R(1.15,1.6),
+      bp:Math.random()*TAU,bs:R(0.7,2.2),ba:R(0.5,1.9),   /* breath */
+      tp:Math.random()*TAU,ts:R(1.1,3.7),                 /* twinkle */
+      col:col, sz:(q.e?0.95:0.8)+R(0,0.9),
+      dx:0,dy:0,vx:0,vy:0,
+      rAng:Math.random()*TAU,rRange:R(90,430),rz:Math.random(),
+      wob:Math.random()*TAU,rT:0
+    };
+    p.rT=p.delay+p.dur+0.3+R(0,1.5);        /* interior release into halo */
+    if(ANIM&&t>3){ p.delay=-20;p.dur=1;p.rT=Math.min(p.rT,t-R(0,7)); }
+    parts.push(p);
+  }
+  /* ambient stardust with z depth */
+  var ND=MOB?380:1100;
+  dust=[];
+  for(i=0;i<ND;i++){
+    var z=Math.random(),rr=Math.random();
+    dust.push({
+      x:Math.random()*W,y:Math.random()*H,
+      ang:Math.random()*TAU,spd:(3+13*z)*R(0.6,1.5),z:z,
+      tp:Math.random()*TAU,ts:R(0.5,2.9),
+      col:rr<0.06?GOLD:rr<0.16?IVORY:rr<0.62?SOFT:AZURE,
+      sz:0.5+1.8*z,dx:0,dy:0,vx:0,vy:0
+    });
+  }
+}
+
+/* ---------- pointer spring physics (displacement layer only) ---------- */
+function springStep(o,sx,sy,dt){
+  if(dt<=0)return;
+  if(pact>0.02){
+    var rx=sx-px,ry=sy-py;
+    var Rr=MOB?95:130;
+    var d2=rx*rx+ry*ry;
+    if(d2<Rr*Rr){
+      var dd=Math.sqrt(d2)||0.001;
+      var fq=(1-dd/Rr)*pact;
+      var acc=fq*fq*1600;
+      o.vx+=rx/dd*acc*dt;o.vy+=ry/dd*acc*dt;
+    }
+  }
+  o.vx+=(-o.dx*46-o.vx*6.5)*dt;
+  o.vy+=(-o.dy*46-o.vy*6.5)*dt;
+  o.dx+=o.vx*dt;o.dy+=o.vy*dt;
+}
+
+function dot(x,y,r,a,col){
+  if(a<=0.005)return;
+  var s=r*9;
+  ctx.globalAlpha=a>1?1:a;
+  ctx.drawImage(sprites[col],x-s*0.5,y-s*0.5,s,s);
+}
+
+/* ---------- ambient aurora (breathing nebula light) ---------- */
+var orbs=[
+  {cx:.24,cy:.30,r:.30,c:ADEEP,a:.15,ox:.06,oy:.05,ph:0.0,s:.10},
+  {cx:.76,cy:.22,r:.26,c:AZURE,a:.11,ox:.05,oy:.06,ph:2.1,s:.13},
+  {cx:.52,cy:.88,r:.34,c:GOLD, a:.055,ox:.07,oy:.04,ph:4.0,s:.08}
+];
+function aurora(tt){
+  var M=Math.max(W,H);
+  for(var i=0;i<orbs.length;i++){
+    var o=orbs[i];
+    var Rr=M*o.r*(1+0.08*Math.sin(tt*0.37+o.ph));
+    var x=(o.cx+Math.sin(tt*o.s+o.ph)*o.ox)*W+pnx*26;
+    var y=(o.cy+Math.cos(tt*o.s*0.8+o.ph)*o.oy)*H+pny*26;
+    var a=o.a*(0.8+0.2*Math.sin(tt*0.23+o.ph*1.7));
+    var c=COLS[o.c];
+    var g=ctx.createRadialGradient(x,y,0,x,y,Rr);
+    g.addColorStop(0,'rgba('+c[0]+','+c[1]+','+c[2]+','+a.toFixed(3)+')');
+    g.addColorStop(1,'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
+    ctx.globalAlpha=1;ctx.fillStyle=g;
+    ctx.fillRect(x-Rr,y-Rr,Rr*2,Rr*2);
+  }
+}
+
+/* ---------- light wave sweeping the headline every 6s ---------- */
+function waveInfo(tt){
+  if(tt<4)return{on:false,x:0,p:0};
+  var loc=(tt-4)%6;
+  if(loc>=1.9)return{on:false,x:0,p:0};
+  var wp=loc/1.9;wp=wp*wp*(3-2*wp);
+  return{on:true,p:wp,x:tb.x0-140+(tb.x1-tb.x0+280)*wp};
+}
+function band(wv){
+  var env=Math.sin(wv.p*Math.PI);
+  var g=ctx.createLinearGradient(wv.x-160,0,wv.x+160,0);
+  g.addColorStop(0,'rgba(127,163,204,0)');
+  g.addColorStop(0.5,'rgba(127,163,204,'+(0.10*env).toFixed(3)+')');
+  g.addColorStop(1,'rgba(127,163,204,0)');
+  ctx.globalAlpha=1;ctx.fillStyle=g;
+  ctx.fillRect(wv.x-160,tb.y0-90,320,(tb.y1-tb.y0)+180);
+}
+
+/* ---------- render one frame at absolute time tt ---------- */
+function render(tt,dt,stat){
+  ctx.clearRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  aurora(tt);
+  var wv=waveInfo(tt);
+  if(wv.on)band(wv);
+  var phys=!stat;
+  var i;
+
+  /* ambient stardust */
+  for(i=0;i<dust.length;i++){
+    var d=dust[i];
+    var bx=wr(d.x+Math.cos(d.ang)*d.spd*tt,W);
+    var by=wr(d.y+Math.sin(d.ang)*d.spd*tt+Math.sin(tt*0.22+d.tp)*10,H);
+    var f=3+14*d.z;
+    var twk=0.55+0.45*Math.sin(tt*d.ts+d.tp);
+    var a=(0.07+0.5*d.z)*twk;
+    var X=bx+d.dx+pnx*f,Y=by+d.dy+pny*f;
+    if(phys)springStep(d,X,Y,dt);
+    dot(bx+d.dx+pnx*f,by+d.dy+pny*f,d.sz,a,d.col);
+  }
+
+  /* headline particles */
+  for(i=0;i<parts.length;i++){
+    var p=parts[i];
+    var bx2,by2,a2,sz,lf=6,wb=0;
+    var ft=p.delay+p.dur;
+    if(tt<ft){
+      /* vortex flight: spiral convergence to glyph target */
+      var pr=(tt-p.delay)/p.dur;if(pr<0)pr=0;
+      var e=1-Math.pow(1-pr,3);
+      var rr=p.sd*(1-e);
+      var an=p.sa+p.spin*(1-e)+(pr===0?tt*0.12:0);
+      bx2=p.tx+Math.cos(an)*rr;by2=p.ty+Math.sin(an)*rr;
+      a2=0.10+0.85*e;
+      sz=p.sz*(1+1.9*(1-e));
+      lf=6+10*(1-e);
+    }else if(!p.e&&tt>p.rT){
+      /* interior released: drift outward into halo stardust */
+      var u=tt-p.rT,k=1-Math.exp(-u*0.3);
+      var ddd=p.rRange*k;
+      bx2=p.tx+Math.cos(p.rAng)*ddd+Math.sin(u*0.5+p.wob)*7*k;
+      by2=p.ty+Math.sin(p.rAng)*ddd+Math.cos(u*0.43+p.wob)*7*k-16*k*p.rz;
+      var qq=u/1.6;if(qq>1)qq=1;
+      var tw2=0.6+0.4*Math.sin(tt*p.ts+p.tp);
+      var aEnd=0.10+0.26*p.rz;
+      a2=(0.85+(aEnd-0.85)*qq)*((1-qq)+qq*tw2);
+      sz=p.sz*(1-0.3*qq);
+      lf=6+qq*((3+12*p.rz)-6);
+    }else{
+      /* formed: breathing glyph rim */
+      bx2=p.tx+Math.sin(tt*p.bs+p.bp)*p.ba;
+      by2=p.ty+Math.cos(tt*p.bs*0.9+p.bp*1.7)*p.ba;
+      var tw3=0.72+0.28*Math.sin(tt*p.ts+p.tp);
+      a2=(p.e?0.60:0.45)*tw3+0.06;
+      sz=p.sz;
+      if(wv.on){
+        var dw=bx2-wv.x;if(dw<0)dw=-dw;
+        if(dw<110){wb=1-dw/110;a2+=wb*0.8;sz*=1+wb*0.9;}
+      }
+    }
+    var ox=pnx*lf,oy=pny*lf;
+    if(phys)springStep(p,bx2+p.dx+ox,by2+p.dy+oy,dt);
+    var X2=bx2+p.dx+ox,Y2=by2+p.dy+oy;
+    dot(X2,Y2,sz,a2,p.col);
+    if(wb>0.3)dot(X2,Y2,sz*1.5,wb*0.30,GOLD); /* gold flash on the wave crest */
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ---------- entrance timeline (DOM crossfade over particle text) ---------- */
+var stages=[[0.35,'s-eyebrow'],[2.1,'s-main'],[3.3,'s-sub'],[4.15,'s-badge']];
+var si=0;
+function timeline(){
+  while(si<stages.length&&t>=stages[si][0]){docEl.classList.add(stages[si][1]);si++;}
+}
+
+/* ---------- pointer ---------- */
+function onMove(ev){
+  var r=hero.getBoundingClientRect();
+  pTx=ev.clientX-r.left;pTy=ev.clientY-r.top;pactT=1;
+}
+function impulse(){
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i];
+    var rx=p.tx+p.dx-px,ry=p.ty+p.dy-py;
+    var d2=rx*rx+ry*ry,Rr=240;
+    if(d2<Rr*Rr){
+      var dd=Math.sqrt(d2)||0.001;
+      var s=(1-dd/Rr)*540;
+      p.vx+=rx/dd*s;p.vy+=ry/dd*s;
+    }
+  }
+}
+function onDown(ev){onMove(ev);px=pTx;py=pTy;pact=Math.max(pact,0.6);impulse();}
+
+/* ---------- main loop ---------- */
+function frame(now){
+  raf=requestAnimationFrame(frame);
+  var dt=(now-last)/1000;last=now;
+  if(dt>0.05)dt=0.05;if(dt<=0)dt=0.001;
+  t+=dt;frames++;
+  try{
+    pact+=(pactT-pact)*Math.min(1,dt*4);
+    if(pact<0.02){px=pTx;py=pTy;}
+    else{px+=(pTx-px)*Math.min(1,dt*12);py+=(pTy-py)*Math.min(1,dt*12);}
+    var gx=pact>0.05?(pTx/W-0.5)*2:0,gy=pact>0.05?(pTy/H-0.5)*2:0;
+    if(gx>1)gx=1;if(gx<-1)gx=-1;if(gy>1)gy=1;if(gy<-1)gy=-1;
+    pnx+=(gx-pnx)*Math.min(1,dt*2.5);
+    pny+=(gy-pny)*Math.min(1,dt*2.5);
+    content.style.transform='translate3d('+(pnx*6).toFixed(2)+'px,'+(pny*6).toFixed(2)+'px,0)';
+    render(t,dt,false);
+    timeline();
+  }catch(e){stop();fail();}
+}
+function start(){if(running||!ANIM)return;running=true;last=performance.now();raf=requestAnimationFrame(frame);}
+function stop(){running=false;cancelAnimationFrame(raf);}
+
+/* ---------- static representative frame (?static=1 / reduced motion) ----------
+   T=10.9s: formation complete, DOM copy on, glyph rim breathing,
+   halo stardust fully dispersed, gold wave mid-sweep across the type. */
+function renderStaticFrame(){
+  var T=10.9;
+  try{ /* optional QA override: ?static=1&st=<seconds> renders any moment */
+    var ov=parseFloat(new URLSearchParams(location.search).get('st'));
+    if(isFinite(ov)&&ov>=0)T=ov;
+  }catch(e){}
+  pnx=0;pny=0;pact=0;
+  var i;
+  for(i=0;i<parts.length;i++){var p=parts[i];p.dx=p.dy=p.vx=p.vy=0;}
+  for(i=0;i<dust.length;i++){var d=dust[i];d.dx=d.dy=d.vx=d.vy=0;}
+  content.style.transform='';
+  render(T,0,true);
+}
+
+/* ---------- boot ---------- */
+function loadFonts(){
+  var to=new Promise(function(res){setTimeout(res,3500);});
+  try{
+    if(document.fonts&&document.fonts.load){
+      var l=[
+        document.fonts.load('900 80px "Noto Serif JP"','AIに、臨床の魂を'),
+        document.fonts.load('500 20px "Noto Sans JP"','医療AIを、現場に届く言葉へ'),
+        document.fonts.load('600 12px Manrope','CURSORVERS')
+      ];
+      return Promise.race([Promise.all(l),to]);
+    }
+  }catch(e){}
+  return to;
+}
+
+loadFonts().then(function(){
+  try{
+    build();
+    if(ANIM){
+      t=0;si=0;
+      window.addEventListener('pointermove',onMove,{passive:true});
+      window.addEventListener('pointerdown',onDown,{passive:true});
+      document.addEventListener('pointerout',function(e){if(!e.relatedTarget)pactT=0;});
+      window.addEventListener('blur',function(){pactT=0;});
+      document.addEventListener('visibilitychange',function(){
+        if(document.hidden)stop();else start();
+      });
+      if(!document.hidden)start();
+      /* rAF starvation watchdog (throttled/occluded windows): make the copy
+         readable but keep the canvas alive in case frames resume later */
+      setTimeout(function(){
+        if(frames===0){
+          docEl.classList.add('s-eyebrow','s-main','s-sub','s-badge');
+        }
+      },6000);
+    }else{
+      renderStaticFrame();
+    }
+    window.addEventListener('resize',function(){
+      clearTimeout(rto);
+      rto=setTimeout(function(){
+        try{build();if(!ANIM)renderStaticFrame();}catch(e){fail();}
+      },180);
+    });
+  }catch(e){fail();}
+},function(){fail();});
+})();
+</script>
+</body>
+</html>

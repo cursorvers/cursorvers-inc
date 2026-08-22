@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!--
+  Pattern 02 v2 「鼓動 — Vital Field」 / Cursorvers株式会社 LP ヒーローセクション刷新案(リッチモーション版)
+  本番組込みは .hero-wrapper 置換。
+
+  構成:
+  - canvas 2D に 6 層のバイタル波形(呼吸波形 x2 / 脈波 x2 / 心電図 x2)が右→左へ常時流れ続ける。
+    手前の層は azure でシャープ、奥の層は azureSoft + 二重ストロークの疑似ブラー + 低透明度でパララックス的奥行き。
+    各層は超低周波の縦ドリフトも持ち、有機的に呼吸する。
+  - 3.6 秒ごとに心拍スパイク(発光する掃引ポイント + 明るいトレイル)が主心電図ラインを走り抜け、
+    その瞬間 ivory→card の 200ms 級フラッシュで画面全体がごく微かに脈打つ。
+  - 文字の背後は CSS の ivory ラジアル・ヴェールで波形コントラストを落とし、可読性を常時確保。
+  - フェイルセーフ: テキストの base CSS は常に「完全可視の最終状態」。隠し初期状態は
+    animation-fill-mode: both 側にのみ存在し、アニメ/JS/canvas が一切走らなくても文字は無傷で見える。
+  - devicePixelRatio 上限 2 / document.hidden で rAF 停止 / resize 対応 / 外部JSライブラリ不使用。
+  - prefers-reduced-motion: reduce では全モーション停止、波形は静止 1 フレームを描画して残す。
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pattern 02 鼓動 — Vital Field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F4F1EA;
+    --card:#FBFAF5;
+    --band:#ECE7DB;
+    --ink:#13243F;
+    --deep:#101D33;
+    --azure:#3E6FA8;
+    --azure-deep:#36618F;
+    --azure-soft:#7FA3CC;
+    --gold:#C8922E;
+    --hairline:#D8D4C8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--ivory);}
+
+  .hero-wrapper{
+    position:relative;
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    overflow:hidden;
+    isolation:isolate;
+    color:var(--ink);
+    background:
+      radial-gradient(1100px 720px at 86% 10%, rgba(127,163,204,.14), transparent 62%),
+      radial-gradient(900px 640px at 6% 94%, rgba(236,231,219,.85), transparent 60%),
+      var(--ivory);
+    font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;
+  }
+
+  /* ---- 背景レイヤー: 微細グリッド(生体モニタの含意) ---- */
+  .vf-grid{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(to right, rgba(216,212,200,.38) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(216,212,200,.38) 1px, transparent 1px);
+    background-size:96px 96px;
+    opacity:.55;
+  }
+
+  /* ---- canvas: バイタル波形フィールド(失敗しても文字は無傷) ---- */
+  .vf-canvas{
+    position:absolute; inset:0; z-index:1;
+    width:100%; height:100%;
+    pointer-events:none;
+    animation:vfCanvasIn 1.6s ease .05s both;
+  }
+
+  /* ---- 心拍フラッシュ (ivory→card の全画面微発光) ---- */
+  .vf-flash{
+    position:absolute; inset:0; z-index:2;
+    background:var(--card);
+    opacity:0;
+    transition:opacity .42s ease-out;
+    pointer-events:none;
+  }
+  .vf-flash.on{
+    opacity:.45;
+    transition:opacity .09s ease-in;
+  }
+
+  /* ---- 可読性ヴェール: 文字の背後で波形の透明度を落とす ---- */
+  .vf-veil{
+    position:absolute; inset:0; z-index:3; pointer-events:none;
+    background:radial-gradient(ellipse 74% 60% at 38% 44%,
+      rgba(244,241,234,.90) 0%,
+      rgba(244,241,234,.55) 44%,
+      rgba(244,241,234,0) 74%);
+  }
+
+  /* ---- コンテンツ ---- */
+  .vf-content{
+    position:relative; z-index:4;
+    flex:1;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(5.5rem,14vh,9rem) clamp(1.4rem,7vw,7.5rem);
+  }
+
+  .vf-eyebrow{
+    display:flex; align-items:center; gap:16px;
+    font-family:"Manrope",sans-serif;
+    font-weight:600; font-size:.78rem;
+    letter-spacing:.18em;
+    color:var(--azure-deep);
+    animation:vfFadeUp .9s cubic-bezier(.22,.8,.24,1) .15s both;
+  }
+  .vf-eyebrow-rule{
+    display:inline-block; width:46px; height:1px;
+    background:linear-gradient(to right, var(--azure-soft), rgba(127,163,204,.15));
+  }
+
+  .vf-h1{font-weight:900;}
+  .vf-line{display:block; overflow:hidden; padding-bottom:.06em;}
+  .vf-mask{display:block; will-change:transform;}
+  .vf-mask1{animation:vfRise 1.05s cubic-bezier(.22,.8,.24,1) .42s both;}
+  .vf-mask2{animation:vfRise 1.0s cubic-bezier(.22,.8,.24,1) .72s both;}
+
+  .vf-line1{
+    font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;
+    font-weight:900;
+    font-size:clamp(4rem,9vw,7.5rem);
+    letter-spacing:-.02em;
+    line-height:1.1;
+    color:var(--ink);
+    margin-top:2.1rem;
+  }
+  .vf-line2{
+    font-family:"Noto Serif JP","Hiragino Mincho ProN",serif;
+    font-weight:700;
+    font-size:clamp(1.5rem,4vw,3rem);
+    letter-spacing:.01em;
+    line-height:1.35;
+    color:var(--azure);
+    margin-top:1.1rem;
+    transform-origin:left center;
+    /* 入場後も続く 3.2s 周期の微鼓動 */
+    animation:vfBreathe 3.2s ease-in-out 2.4s infinite;
+  }
+  .tok{display:inline-block; white-space:nowrap;}
+
+  .vf-caption{
+    display:flex; align-items:center; gap:14px;
+    margin-top:2.4rem;
+    font-family:"Noto Sans JP",sans-serif;
+    font-weight:500; font-size:clamp(.85rem,1.1vw,.98rem);
+    letter-spacing:.14em;
+    color:rgba(19,36,63,.6);
+    animation:vfFadeUp .9s cubic-bezier(.22,.8,.24,1) 1.25s both;
+  }
+  .vf-caption-tick{
+    display:inline-block; width:28px; height:2px;
+    background:linear-gradient(to right, var(--gold), rgba(200,146,46,.25));
+  }
+
+  /* ---- 左上: 生体情報風ラベル ---- */
+  .vf-monitor{
+    position:absolute; z-index:5;
+    top:clamp(1.3rem,3.4vw,2.4rem); left:clamp(1.4rem,3.4vw,2.6rem);
+    display:flex; align-items:center; gap:10px;
+    font-family:"Manrope",sans-serif;
+    font-weight:600; font-size:11px;
+    letter-spacing:.18em;
+    color:var(--azure-deep);
+    animation:vfFadeUp .9s ease 1.5s both;
+  }
+  .vf-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--azure);
+    box-shadow:0 0 8px rgba(62,111,168,.55);
+    animation:vfDotBlink 3.6s ease-out .6s infinite;
+  }
+
+  /* ---- 右下: 識別タグ ---- */
+  .vf-tag{
+    position:absolute; z-index:5;
+    right:clamp(1.2rem,3vw,2.2rem); bottom:clamp(1.1rem,2.6vw,1.9rem);
+    font-family:"Manrope",sans-serif;
+    font-size:10px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:#6B7280;
+    animation:vfFadeUp .9s ease 1.6s both;
+  }
+
+  /* ---- keyframes: 隠し初期状態は必ず from 側にのみ置く(フェイルセーフ) ---- */
+  @keyframes vfRise{
+    from{transform:translateY(112%);}
+    to{transform:translateY(0);}
+  }
+  @keyframes vfFadeUp{
+    from{opacity:0; transform:translateY(16px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes vfBreathe{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.014);}
+  }
+  @keyframes vfDotBlink{
+    0%,100%{opacity:.28; box-shadow:0 0 4px rgba(62,111,168,.25);}
+    5%{opacity:1; box-shadow:0 0 12px rgba(62,111,168,.8);}
+    22%{opacity:.55;}
+  }
+  @keyframes vfCanvasIn{
+    from{opacity:0;}
+    to{opacity:1;}
+  }
+
+  @media (max-width:560px){
+    .vf-content{padding-left:1.4rem; padding-right:1.2rem;}
+    .vf-line1{line-height:1.16;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation:none !important;
+      transition:none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-wrapper" id="vf-hero">
+  <div class="vf-grid" aria-hidden="true"></div>
+  <canvas class="vf-canvas" id="vf-canvas" aria-hidden="true"></canvas>
+  <div class="vf-flash" id="vf-flash" aria-hidden="true"></div>
+  <div class="vf-veil" aria-hidden="true"></div>
+
+  <div class="vf-content">
+    <p class="vf-eyebrow" aria-hidden="true"><span class="vf-eyebrow-rule"></span>MEDICAL&nbsp;AI&nbsp;REVIEW</p>
+    <h1 class="vf-h1" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+      <span class="vf-line vf-line1" aria-hidden="true"><span class="vf-mask vf-mask1"><span class="tok">AIに、</span><span class="tok">臨床の</span><span class="tok">魂を</span></span></span>
+      <span class="vf-line vf-line2" aria-hidden="true"><span class="vf-mask vf-mask2"><span class="tok">医療AIを、</span><span class="tok">現場に</span><span class="tok">届く言葉へ</span></span></span>
+    </h1>
+    <p class="vf-caption"><span class="vf-caption-tick" aria-hidden="true"></span>医療AIの第三者レビュー</p>
+  </div>
+
+  <div class="vf-monitor" aria-hidden="true"><span class="vf-dot"></span>CURSORVERS</div>
+  <div class="vf-tag" aria-hidden="true">Pattern 02 &middot; Vital Field</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var hero    = document.getElementById("vf-hero");
+  var canvas  = document.getElementById("vf-canvas");
+  var flashEl = document.getElementById("vf-flash");
+  if(!canvas || !canvas.getContext) return; // canvas 不成立でも文字は CSS 側で無傷
+  var ctx = canvas.getContext("2d");
+  if(!ctx) return;
+
+  var AZURE      = "#3E6FA8";
+  var AZURE_DEEP = "#36618F";
+  var AZURE_SOFT = "#7FA3CC";
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  var W = 0, H = 0, ampScale = 1;
+  var rafId = null;
+  var elapsed = 0, lastNow = null, lastBeat = -1, flashTimer = null;
+
+  var BEAT_PERIOD = 3600;  // 心拍間隔 (ms)
+  var SWEEP_DUR   = 850;   // スパイク掃引時間 (ms)
+  var FIRST_BEAT  = 600;   // 主行の立ち上がりに同期
+
+  /* ---- 波形関数 ---- */
+  function bump(p, c, w){ var d = (p - c) / w; return Math.exp(-d * d); }
+  function ecg(p){
+    return 0.14 * bump(p, .13,  .035)   // P 波
+         - 0.16 * bump(p, .235, .009)   // Q
+         + 1.00 * bump(p, .26,  .011)   // R スパイク
+         - 0.24 * bump(p, .285, .010)   // S
+         + 0.22 * bump(p, .47,  .055);  // T 波
+  }
+  function pleth(p){ // 脈波: 収縮期立ち上がり + 重複切痕
+    return bump(p, .16, .055) + 0.42 * bump(p, .40, .10) - 0.08;
+  }
+  function resp(p){ // 呼吸波形: 緩い非対称サイン
+    return 0.5 * Math.sin(6.28318 * p) + 0.12 * Math.sin(12.56637 * p + 1.2);
+  }
+
+  /* ---- 6 層 (奥→手前)。soft=二重ストロークで疑似ブラー ---- */
+  var layers = [
+    { y:.12, amp:16, wl: 760, sp: 30, fn:resp,  col:AZURE_SOFT, a:.10, lw:1.8, soft:true  },
+    { y:.24, amp:34, wl:1150, sp: 20, fn:resp,  col:AZURE_SOFT, a:.13, lw:2.4, soft:true  },
+    { y:.86, amp:22, wl: 430, sp: 46, fn:pleth, col:AZURE_SOFT, a:.18, lw:2.0, soft:true  },
+    { y:.62, amp:28, wl: 470, sp: 74, fn:pleth, col:AZURE_SOFT, a:.26, lw:1.8, soft:false },
+    { y:.93, amp:24, wl: 540, sp: 58, fn:ecg,   col:AZURE_DEEP, a:.22, lw:1.5, soft:false },
+    { y:.76, amp:56, wl: 660, sp:104, fn:ecg,   col:AZURE,      a:.62, lw:2.2, soft:false } // 主心電図
+  ];
+  var MAIN = layers[layers.length - 1];
+
+  function phase(v, wl){ var p = (v % wl + wl) % wl; return p / wl; }
+
+  function layerY(l, x, off, drift){
+    var yc = l.y * H + drift;
+    return yc - l.fn(phase(x + off, l.wl)) * l.amp * ampScale;
+  }
+
+  function traceLayer(l, t){
+    var off   = t * l.sp / 1000;
+    var drift = Math.sin(t / 9000 + l.y * 11) * 10 * ampScale; // 超低周波の縦ドリフト
+    ctx.beginPath();
+    for(var x = -12; x <= W + 12; x += 3){
+      var y = layerY(l, x, off, drift);
+      if(x === -12) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    if(l.soft){ // 奥の層: 太い低透明ストロークを重ねて滲みを作る
+      ctx.strokeStyle = l.col; ctx.globalAlpha = l.a * .5; ctx.lineWidth = l.lw * 3.4;
+      ctx.stroke();
+    }
+    ctx.strokeStyle = l.col; ctx.globalAlpha = l.a; ctx.lineWidth = l.lw;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  /* ---- 心拍スパイク掃引: 発光ポイント + 明るいトレイル ---- */
+  function drawSweep(u, t){
+    var off   = t * MAIN.sp / 1000;
+    var drift = Math.sin(t / 9000 + MAIN.y * 11) * 10 * ampScale;
+    var e  = u * u * (3 - 2 * u); // smoothstep
+    var sx = -80 + (W + 160) * e;
+    var sy = layerY(MAIN, sx, off, drift);
+    var fade = Math.sin(Math.PI * Math.min(1, u));
+
+    // トレイル: 掃引点の後方 180px を明るく再ストローク
+    var x0 = Math.max(-12, sx - 180);
+    if(sx > x0 + 6){
+      ctx.beginPath();
+      for(var x = x0; x <= sx; x += 3){
+        var y = layerY(MAIN, x, off, drift);
+        if(x === x0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = AZURE_DEEP; ctx.globalAlpha = .5 * fade; ctx.lineWidth = 2.8;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    // 発光グロー
+    var r = 80 * ampScale + 30;
+    var g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r);
+    g.addColorStop(0,   "rgba(62,111,168,"  + (.32 * fade) + ")");
+    g.addColorStop(0.4, "rgba(127,163,204," + (.16 * fade) + ")");
+    g.addColorStop(1,   "rgba(127,163,204,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(sx - r, sy - r, r * 2, r * 2);
+
+    // コア
+    ctx.beginPath();
+    ctx.arc(sx, sy, 3.2, 0, 6.28318);
+    ctx.fillStyle = "rgba(54,97,143," + (.9 * fade) + ")";
+    ctx.fill();
+  }
+
+  function flash(){
+    if(reduced.matches || !flashEl) return;
+    flashEl.classList.add("on");
+    if(flashTimer) clearTimeout(flashTimer);
+    flashTimer = setTimeout(function(){ flashEl.classList.remove("on"); }, 130);
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+    for(var i = 0; i < layers.length; i++) traceLayer(layers[i], t);
+    var bt = t - FIRST_BEAT;
+    if(bt >= 0){
+      var idx = Math.floor(bt / BEAT_PERIOD);
+      var ph  = bt - idx * BEAT_PERIOD;
+      if(idx !== lastBeat){ lastBeat = idx; flash(); }
+      if(ph < SWEEP_DUR) drawSweep(ph / SWEEP_DUR, t);
+    }
+  }
+
+  function loop(now){
+    if(lastNow !== null) elapsed += Math.min(now - lastNow, 100);
+    lastNow = now;
+    draw(elapsed);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function start(){
+    if(rafId !== null || reduced.matches) return;
+    lastNow = null;
+    rafId = requestAnimationFrame(loop);
+  }
+  function stop(){
+    if(rafId !== null){ cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  function drawStatic(){ // reduced-motion: 美しい静止 1 フレームを残す
+    var save = lastBeat; lastBeat = 9e9; // フラッシュ抑止
+    draw(42000);
+    lastBeat = save;
+  }
+
+  function resize(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ampScale = Math.max(.65, Math.min(1, H / 820));
+    if(reduced.matches) drawStatic();
+  }
+
+  window.addEventListener("resize", resize);
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden) stop(); else start();
+  });
+  var onReducedChange = function(){
+    if(reduced.matches){ stop(); drawStatic(); }
+    else start();
+  };
+  if(reduced.addEventListener) reduced.addEventListener("change", onReducedChange);
+  else if(reduced.addListener) reduced.addListener(onReducedChange);
+
+  resize();
+  if(reduced.matches) drawStatic();
+  else start();
+})();
+</script>
+
+</body>
+</html>

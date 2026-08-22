@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>CURSORVERS — HERO K2</title>
+<!--
+  K2「輪転 — Halftone Press」
+  動く新聞写真: 墨ダブルトーン+網点化した医師映像の上に、一面見出し級の巨大明朝活字を打ち込む。
+  brand.md: cream #f7f3ec / 墨 #211E1A / 赤 #b3372b は判断点(角印)ただ1箇所 / 明朝見出し / 影・縁文字・グラデ装飾なし。
+  ?static=1 … 代表フレーム同期描画 (rAFなし)。prefers-reduced-motion … 同じ静止状態。
+-->
+<script>
+(function(){try{
+  var s = new URLSearchParams(location.search).get('static') === '1';
+  var r = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add((s || r) ? 'is-static' : 'js');
+}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;800&family=Noto+Sans+JP:wght@500;700&family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f7f3ec;
+  --ink:#211E1A;
+  --red:#b3372b;
+  --white:#ffffff;
+  --margin:clamp(14px, 3vw, 44px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--cream)}
+body{
+  font-family:'Noto Sans JP','Hiragino Sans',sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+figure{margin:0}
+
+/* ============ 骨格 ============ */
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  background:var(--cream);
+}
+.sheet{flex:1;display:flex;flex-direction:column;min-height:0}
+
+/* ============ 題字帯 (masthead) ============ */
+.masthead{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+  padding:13px var(--margin) 11px;
+  border-bottom:3px double var(--ink);
+}
+.mh-title{
+  font-family:Manrope,sans-serif;font-weight:800;
+  font-size:clamp(13px,1.25vw,18px);
+  letter-spacing:.44em;text-indent:.44em;
+  text-align:center;color:var(--ink);
+}
+.mh-left,.mh-right{font-size:10px;color:rgba(33,30,26,.72)}
+.mh-left{justify-self:start;font-family:'Noto Sans JP',sans-serif;font-weight:500;letter-spacing:.2em}
+.mh-right{justify-self:end;font-family:Manrope,sans-serif;font-weight:700;letter-spacing:.32em;text-transform:uppercase}
+
+/* ============ 図版 (plate): 紙化された医師映像 ============ */
+.stage{position:relative;flex:1;min-height:0;margin:clamp(12px,2vh,22px) var(--margin) 4px}
+.plate{
+  position:absolute;inset:0;
+  overflow:hidden;
+  isolation:isolate;             /* blend を図版内に閉じ込める */
+  background:var(--ink);         /* video/poster 全滅時は墨の面で成立 */
+  border:1px solid var(--ink);
+}
+.plate video{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  z-index:1;
+  filter:grayscale(1) contrast(1.15) brightness(1.05);
+}
+.duo{position:absolute;inset:0;z-index:2;pointer-events:none}
+.duo-screen{background:var(--ink);mix-blend-mode:screen}   /* 黒を墨色へ持ち上げる */
+.duo-mult{background:var(--cream);mix-blend-mode:multiply} /* 白をクリームへ引き込む */
+
+/* 網点 (45°スクリーン)。位相がごくゆっくり流れる = 輪転の versioning 感 */
+.halftone{
+  position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.52;
+  background-image:
+    radial-gradient(circle, var(--cream) 0 1.1px, rgba(247,243,236,0) 1.65px),
+    radial-gradient(circle, var(--cream) 0 1.1px, rgba(247,243,236,0) 1.65px);
+  background-size:6px 6px, 6px 6px;
+  background-position:0 0, 3px 3px;
+}
+html.js .halftone{animation:dotDrift 8s linear infinite}
+@keyframes dotDrift{to{background-position:6px 6px, 9px 9px}}
+
+/* 走査する定規 (計測線 + 目盛) */
+.scanrule{
+  position:absolute;top:0;bottom:0;left:0;width:1px;
+  background:var(--cream);opacity:0;z-index:4;pointer-events:none;
+}
+.scanrule::after{
+  content:"";position:absolute;top:0;bottom:0;left:1px;width:7px;opacity:.7;
+  background-image:repeating-linear-gradient(to bottom, var(--cream) 0 1px, transparent 1px 22px);
+}
+html.js .scanrule{animation:scan 9.5s cubic-bezier(.85,0,.15,1) 2.6s infinite}
+@keyframes scan{
+  0%{transform:translateX(0);opacity:0}
+  5%{opacity:.34}
+  47%{transform:translateX(var(--scan-w,70vw));opacity:.34}
+  53%{transform:translateX(var(--scan-w,70vw));opacity:0}
+  100%{transform:translateX(var(--scan-w,70vw));opacity:0}
+}
+html.is-static .scanrule{opacity:.3;transform:translateX(calc(var(--scan-w,70vw)*.62))}
+
+/* 図版四隅のトンボ (見当合わせ) */
+.plate-marks{
+  position:absolute;inset:10px;z-index:4;pointer-events:none;opacity:.65;
+  background-image:
+    linear-gradient(var(--cream),var(--cream)),linear-gradient(var(--cream),var(--cream)),
+    linear-gradient(var(--cream),var(--cream)),linear-gradient(var(--cream),var(--cream)),
+    linear-gradient(var(--cream),var(--cream)),linear-gradient(var(--cream),var(--cream)),
+    linear-gradient(var(--cream),var(--cream)),linear-gradient(var(--cream),var(--cream));
+  background-repeat:no-repeat;
+  background-size:14px 1px,1px 14px, 14px 1px,1px 14px, 14px 1px,1px 14px, 14px 1px,1px 14px;
+  background-position:left top,left top, right top,right top, left bottom,left bottom, right bottom,right bottom;
+}
+
+/* 墨粒キャンバス (着地ショックで紙粉が跳ねる) */
+#fx{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none}
+
+/* 検分レンズ: カーソル周辺だけ網点の目が細かくなる (12px 量子化のステップ動作) */
+.lens{
+  position:absolute;z-index:6;width:150px;height:150px;
+  border-radius:50%;
+  border:1px solid rgba(247,243,236,.75);
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle, var(--cream) 0 .75px, rgba(247,243,236,0) 1.15px),
+    radial-gradient(circle, var(--cream) 0 .75px, rgba(247,243,236,0) 1.15px);
+  background-size:3px 3px, 3px 3px;
+  background-position:0 0, 1.5px 1.5px;
+}
+.lens::before,.lens::after{content:"";position:absolute;background:rgba(247,243,236,.5)}
+.lens::before{left:50%;top:8px;bottom:8px;width:1px}
+.lens::after{top:50%;left:8px;right:8px;height:1px}
+@media (pointer:coarse){.lens{display:none}}
+
+/* ============ 一面見出し (座布団帯 + 明朝 900) ============ */
+.headline-pos{
+  position:absolute;inset:0;z-index:7;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  padding:0 12px;
+}
+.headline{width:100%;text-align:center}
+.band{
+  display:block;width:max-content;max-width:100%;
+  margin:0 auto;
+  background:var(--cream);
+  padding:.14em .42em .18em;
+}
+.band + .band{margin-top:clamp(8px,1.4vh,16px)}
+.line{
+  display:inline-block;white-space:nowrap;
+  font-family:'Noto Serif JP','Hiragino Mincho ProN','Yu Mincho',serif;
+  font-weight:900;color:var(--ink);
+}
+.band-main .line{font-size:clamp(2.1rem, 8.4vw, 9rem);line-height:1.12;letter-spacing:.015em}
+.band-sub  .line{font-size:clamp(1rem, 3.6vw, 3rem);line-height:1.2;letter-spacing:.08em}
+
+/* 赤の判断点: 「魂」右肩の角印 (図形・唯一の赤) */
+.soul{position:relative;display:inline-block}
+.seal{
+  position:absolute;display:block;
+  width:.14em;height:.14em;
+  right:-.07em;top:-.02em;
+  background:var(--red);
+  transform:rotate(-3deg);
+}
+
+/* ---- 打ち込み (slam): scale 1.55 → 1.0、硬い ease、着地で帯が 2px 沈む ---- */
+html.js .band-main{animation:slamIn .8s .55s both}
+html.js .band-sub {animation:slamIn .8s .95s both}
+@keyframes slamIn{
+  0%  {opacity:0;transform:scale(1.55);animation-timing-function:cubic-bezier(.85,0,.15,1)}
+  12% {opacity:1;animation-timing-function:cubic-bezier(.85,0,.15,1)}
+  52% {transform:scale(1);animation-timing-function:cubic-bezier(.3,0,.4,1)}
+  68% {transform:scale(1) translateY(2.5px);animation-timing-function:cubic-bezier(.2,0,.3,1)}
+  100%{opacity:1;transform:scale(1)}
+}
+html.js .seal{animation:stampIn .26s cubic-bezier(.85,0,.15,1) 1.9s both}
+@keyframes stampIn{
+  0%  {opacity:0;transform:rotate(-3deg) scale(2.6)}
+  100%{opacity:1;transform:rotate(-3deg) scale(1)}
+}
+
+/* 紙面ショック (着地の瞬間、紙面全体が 2px 沈んで戻る) */
+.sheet.shock{animation:pressShock .16s cubic-bezier(.3,0,.2,1)}
+@keyframes pressShock{
+  0%{transform:translateY(0)}
+  45%{transform:translateY(2px)}
+  100%{transform:translateY(0)}
+}
+
+/* ============ 入場: 題字・図版・輪転バー・識別タグ ============ */
+html.js .masthead{animation:setDown .5s cubic-bezier(.2,.8,.2,1) .05s both}
+@keyframes setDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+html.js .plate{animation:printIn .95s cubic-bezier(.85,0,.15,1) .12s both}
+@keyframes printIn{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+html.js .rotary{animation:riseIn .5s cubic-bezier(.2,.8,.2,1) 1.15s both}
+@keyframes riseIn{from{transform:translateY(100%)}to{transform:none}}
+html.js .foot .tag{animation:fadeIn .6s ease 1.55s both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ============ 識別タグ / 輪転バー ============ */
+.foot{display:flex;justify-content:flex-end;align-items:center;padding:7px var(--margin) 9px}
+.tag{
+  font-family:Manrope,sans-serif;font-weight:600;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(33,30,26,.4);
+}
+.rotary{height:46px;background:var(--ink);overflow:hidden;display:flex;align-items:center}
+.track{display:flex;flex:none;align-items:center;white-space:nowrap;will-change:transform}
+.track span{
+  flex:none;color:var(--white);
+  font-family:Manrope,'Noto Sans JP',sans-serif;font-weight:600;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  padding-right:3.5em;
+}
+html.js .track{animation:marquee 30s linear infinite}
+@keyframes marquee{to{transform:translateX(-50%)}}
+html.is-static .track{transform:translateX(-18%)}
+
+/* ============ 紙の質感 (feTurbulence, 4%) ============ */
+.grain{
+  position:absolute;inset:0;z-index:9;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
+
+/* ============ レスポンシブ ============ */
+@media (max-width:768px){
+  :root{--margin:14px}
+  .rotary{height:38px}
+  .track span{font-size:10px}
+}
+@media (max-width:560px){
+  .mh-left{display:none}
+  .masthead{padding-top:11px;padding-bottom:9px}
+}
+
+/* reduced-motion: 全アニメ停止 (belt & suspenders) */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<div class="hero" id="hero">
+  <div class="sheet" id="sheet">
+
+    <header class="masthead">
+      <span class="mh-left">医療AIの第三者レビュー</span>
+      <span class="mh-title">CURSORVERS</span>
+      <span class="mh-right">Medical&nbsp;AI&nbsp;Review</span>
+    </header>
+
+    <div class="stage">
+      <figure class="plate" id="plate" aria-hidden="true">
+        <video id="heroVideo" muted autoplay loop playsinline preload="metadata"
+               poster="../hero_v6_poster.jpg" tabindex="-1"></video>
+        <div class="duo duo-screen"></div>
+        <div class="duo duo-mult"></div>
+        <div class="halftone"></div>
+        <div class="scanrule"></div>
+        <div class="plate-marks"></div>
+        <canvas id="fx"></canvas>
+        <div class="lens" id="lens" hidden></div>
+      </figure>
+
+      <div class="headline-pos" id="magnet">
+        <h1 class="headline" aria-label="AIに、臨床の魂を 医療AIを、現場に届く言葉へ">
+          <span class="band band-main" aria-hidden="true"><span class="line">AIに、臨床の<span class="soul">魂<i class="seal" id="seal"></i></span>を</span></span>
+          <span class="band band-sub" aria-hidden="true"><span class="line">医療AIを、現場に届く言葉へ</span></span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="foot"><span class="tag">Cursorvers — Medical AI Review</span></div>
+
+    <div class="rotary" aria-hidden="true">
+      <div class="track" id="track">
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+        <span>CURSORVERS · MEDICAL AI REVIEW · 医療AIの第三者レビュー ·</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var doc = document.documentElement;
+  var staticMode = doc.classList.contains('is-static');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!staticMode && !doc.classList.contains('js')) doc.classList.add('js');
+
+  var hero    = document.getElementById('hero');
+  var sheet   = document.getElementById('sheet');
+  var plate   = document.getElementById('plate');
+  var video   = document.getElementById('heroVideo');
+  var canvas  = document.getElementById('fx');
+  var lens    = document.getElementById('lens');
+  var magnet  = document.getElementById('magnet');
+  var sealEl  = document.getElementById('seal');
+  var bandMain = document.querySelector('.band-main');
+  var bandSub  = document.querySelector('.band-sub');
+
+  /* ---------- 映像ソースの出し分け (matchMedia) ---------- */
+  video.muted = true;
+  var srcMQ = window.matchMedia('(max-width: 768px)');
+  function applySrc(){
+    var want = srcMQ.matches ? '../hero_v6_mobile.mp4' : '../hero_v6_pc.mp4';
+    if (video.getAttribute('data-cur') === want) return;
+    video.setAttribute('data-cur', want);
+    video.src = want;
+    video.load();
+    if (reduced){
+      video.removeAttribute('autoplay');
+      try{ video.pause(); }catch(e){}
+    } else {
+      var p = video.play();
+      if (p && p.catch) p.catch(function(){});
+    }
+  }
+  if (srcMQ.addEventListener) srcMQ.addEventListener('change', applySrc);
+  else if (srcMQ.addListener) srcMQ.addListener(applySrc);
+  applySrc();
+
+  /* ---------- 墨粒キャンバス ---------- */
+  var ctx = canvas.getContext('2d');
+  var specks = [], W = 0, H = 0, raf = 0, running = false, dirty = true, nextTremor = 0;
+  var coarse = window.matchMedia('(pointer: coarse)').matches;
+  var mobMQ  = window.matchMedia('(max-width: 768px)');
+
+  function build(){
+    var d = Math.min(window.devicePixelRatio || 1, 2);   /* DPR <= 2 */
+    W = plate.clientWidth  || 1;
+    H = plate.clientHeight || 1;
+    canvas.width  = Math.max(1, Math.round(W * d));
+    canvas.height = Math.max(1, Math.round(H * d));
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+    plate.style.setProperty('--scan-w', (W - 9) + 'px');
+    var n = mobMQ.matches ? 30 : 90;                     /* モバイルは 1/3 */
+    specks = [];
+    for (var i = 0; i < n; i++){
+      var y = Math.random() * H;
+      specks.push({
+        x: Math.random() * W, y: y, ry: y,
+        r: 0.7 + Math.random() * 1.5,
+        a: 0.14 + Math.random() * 0.3,
+        vx: 0, vy: 0
+      });
+    }
+    dirty = true;
+  }
+  function render(){
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#f7f3ec';   /* 紙粉 = クリームの粒。墨の図版上で読める */
+    for (var i = 0; i < specks.length; i++){
+      var s = specks[i];
+      ctx.globalAlpha = s.a;
+      ctx.fillRect(s.x - s.r * 0.5, s.y - s.r * 0.5, s.r, s.r);
+    }
+    ctx.globalAlpha = 1;
+  }
+  function step(){
+    var moved = false;
+    for (var i = 0; i < specks.length; i++){
+      var s = specks[i];
+      if (s.vx === 0 && s.vy === 0) continue;
+      moved = true;
+      s.vy += 0.22;
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < 0) s.x += W; else if (s.x > W) s.x -= W;
+      if (s.y >= s.ry && s.vy > 0){
+        s.y = s.ry; s.vy *= -0.3; s.vx *= 0.5;
+        if (Math.abs(s.vy) < 0.2){ s.vy = 0; s.vx = 0; }
+      }
+    }
+    if (moved) dirty = true;
+  }
+  function shock(y0, power){
+    for (var i = 0; i < specks.length; i++){
+      var s = specks[i];
+      var d = Math.abs(s.ry - y0);
+      if (d < 170){
+        var k = (1 - d / 170) * power;
+        s.vy -= k * (1.6 + Math.random() * 2.6);
+        s.vx += (Math.random() - 0.5) * k * 2;
+      }
+    }
+    dirty = true;
+  }
+  function loop(t){
+    raf = requestAnimationFrame(loop);
+    if (t > nextTremor){                          /* 機械の微振動 (常時挙動) */
+      nextTremor = t + 2600 + Math.random() * 3200;
+      for (var i = 0; i < 4; i++){
+        var s = specks[(Math.random() * specks.length) | 0];
+        if (s){ s.vy -= 0.5 + Math.random() * 0.5; s.vx += (Math.random() - 0.5) * 0.4; }
+      }
+    }
+    step();
+    if (dirty){ render(); dirty = false; }
+  }
+  function start(){
+    if (!running && !staticMode && !document.hidden){
+      running = true;
+      raf = requestAnimationFrame(loop);
+    }
+  }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+
+  build();
+  render();     /* ?static=1 は この同期 1 フレームのみ (rAF なし) */
+  start();
+
+  /* ---------- 着地ショックの同期 (slamIn の 52% 地点) ---------- */
+  function relY(el){
+    var r = el.getBoundingClientRect(), p = plate.getBoundingClientRect();
+    return r.top - p.top + r.height * 0.92;
+  }
+  if (!staticMode){
+    sheet.addEventListener('animationend', function(e){
+      if (e.animationName === 'pressShock') sheet.classList.remove('shock');
+    });
+    var slam = function(el, power, big){
+      return function(){
+        shock(relY(el), power);
+        if (big){
+          sheet.classList.remove('shock');
+          void sheet.offsetWidth;
+          sheet.classList.add('shock');
+        }
+      };
+    };
+    setTimeout(slam(bandMain, 1.25, true),  970);   /* 主行 着地 */
+    setTimeout(slam(bandSub,  1.0,  true), 1370);   /* 副行 着地 */
+    setTimeout(slam(sealEl,   0.55, false), 2160);  /* 角印 刻印 */
+  }
+
+  /* ---------- 検分レンズ + 磁着 (量子化ステップ = カチッとした応答) ---------- */
+  var magnetOn = false;
+  if (!staticMode) setTimeout(function(){ magnetOn = true; }, 2400);
+  var LSTEP = 12, LR = 75;
+  function onMove(e){
+    if (staticMode) return;
+    if (!coarse){
+      var p = plate.getBoundingClientRect();
+      var x = e.clientX - p.left, y = e.clientY - p.top;
+      if (x >= 0 && y >= 0 && x <= p.width && y <= p.height){
+        var qx = Math.round(x / LSTEP) * LSTEP;
+        var qy = Math.round(y / LSTEP) * LSTEP;
+        lens.hidden = false;
+        lens.style.left = (qx - LR) + 'px';
+        lens.style.top  = (qy - LR) + 'px';
+        var bx = -(qx - LR), by = -(qy - LR);
+        lens.style.backgroundPosition =
+          bx + 'px ' + by + 'px, ' + (bx + 1.5) + 'px ' + (by + 1.5) + 'px';
+      } else {
+        lens.hidden = true;
+      }
+    }
+    if (magnetOn){
+      var mx = Math.max(-3, Math.min(3, Math.round(((e.clientX / window.innerWidth)  - 0.5) * 6)));
+      var my = Math.max(-2, Math.min(2, Math.round(((e.clientY / window.innerHeight) - 0.5) * 4)));
+      magnet.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+    }
+  }
+  hero.addEventListener('pointermove', onMove);
+  hero.addEventListener('pointerleave', function(){ lens.hidden = true; });
+
+  /* ---------- 可視性 / リサイズ ---------- */
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden){
+      stop();
+      try{ video.pause(); }catch(e){}
+    } else {
+      if (!reduced){
+        var p = video.play();
+        if (p && p.catch) p.catch(function(){});
+      }
+      if (!staticMode) start(); else render();
+    }
+  });
+  var rt = 0;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ build(); render(); }, 150);
+  });
+})();
+</script>
+</body>
+</html>

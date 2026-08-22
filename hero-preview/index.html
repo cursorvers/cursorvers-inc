@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- プレビュー専用ハブ。本番デプロイ対象外(untracked)。 -->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursorvers ヒーロー刷新 — 全案比較ハブ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700;900&family=Noto+Sans+JP:wght@400;500;700&family=Manrope:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --cream:#f7f3ec; --sumi:#211E1A; --red:#b3372b; --hairline:#D8D4C8; --slate:#6B7280; --navy:#13243F; --azure:#3E6FA8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--cream); color:var(--sumi); font-family:"Noto Sans JP",system-ui,sans-serif; padding:48px 24px 80px; }
+  .wrap { max-width:980px; margin:0 auto; }
+  .label { font-family:Manrope,sans-serif; font-weight:800; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--red); }
+  h1 { font-family:"Noto Serif JP",serif; font-weight:900; font-size:clamp(1.6rem,4vw,2.4rem); margin:10px 0 6px; }
+  .note { color:var(--slate); font-size:14px; line-height:1.9; }
+  h2 { font-family:"Noto Serif JP",serif; font-weight:700; font-size:1.25rem; margin:44px 0 4px; }
+  h2 .tag { font-family:Manrope,sans-serif; font-weight:800; font-size:10px; letter-spacing:.16em; vertical-align:middle; margin-left:10px; padding:3px 8px; border-radius:4px; }
+  .k h2 .tag { background:var(--red); color:#fff; }
+  .s h2 .tag { background:var(--navy); color:#fff; }
+  .p h2 .tag { background:var(--hairline); color:var(--sumi); }
+  .desc { color:var(--slate); font-size:13px; line-height:1.8; margin-bottom:14px; }
+  ul.cards { list-style:none; display:grid; gap:10px; }
+  .card { background:#fff; border:1px solid var(--hairline); border-radius:10px; padding:16px 20px; display:flex; align-items:baseline; gap:16px; text-decoration:none; color:inherit; transition:border-color .2s; }
+  .card:hover { border-color:var(--red); }
+  .num { font-family:Manrope,sans-serif; font-weight:800; font-size:12px; letter-spacing:.12em; white-space:nowrap; color:var(--red); min-width:36px; }
+  .s .num { color:var(--azure); }
+  .p .num { color:var(--slate); }
+  .name { font-family:"Noto Serif JP",serif; font-weight:700; font-size:1.05rem; }
+  .d { color:var(--slate); font-size:13px; line-height:1.7; margin-top:2px; }
+  .person { font-size:11px; color:var(--red); font-weight:700; margin-left:8px; }
+  .meta { margin-top:44px; border-top:1px solid var(--hairline); padding-top:16px; font-size:12.5px; color:var(--slate); line-height:2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="label">Hero Renewal — All Sets</p>
+  <h1>ヒーローセクション刷新 全案比較</h1>
+  <p class="note">文言は全案共通(「AIに、臨床の魂を」「医療AIを、現場に届く言葉へ」)。動きが本体のため必ずブラウザを前面にして閲覧。`?static=1` を付けると見せ場の静止フレームで確認可。</p>
+
+  <section class="s">
+    <h2>2026-08 サービス再設計 — 導入主軸コピー<span class="tag">最新 / 検討中</span></h2>
+    <p class="desc">採用中の S3 極光エンジンはそのまま、テキストレイヤーを「導入主軸・ガバナンス内蔵」ポジションへ総入替した検討版。左上のスイッチャーでコピー 3 案(A 実装宣言 / B 成果訴求 / C 推進室)を切替可。CTA 二段+証拠チップ付き。</p>
+    <ul class="cards">
+      <li><a class="card" href="pattern-s6.html"><span class="num">S6</span><span><span class="name">極光 × 導入コピー — Aurora Repositioned</span><span class="d">H1「AIに、臨床の魂を」は維持。サブ行・badge・note を差替え、「無料壁打ち」CTA と証拠 3 チップ(医師運営 / PHI閉域 / 補助金)を追加。`?v=b` 等で直接指定可。</span></span></a></li>
+    </ul>
+  </section>
+
+  <section class="k">
+    <h2>K 級 — 質実剛健キネティック<span class="tag">BRAND.MD 準拠</span></h2>
+    <p class="desc">Design_kawai 確定ブランド規約(cream editorial・墨・赤は判断点1箇所・明朝・大余白・光沢禁止)の中でスペクタクルを作る本命セット。活版印刷の機械美 — 打ち込む・刻む・走査する。</p>
+    <ul class="cards">
+      <li><a class="card" href="pattern-k1.html"><span class="num">K1</span><span><span class="name">図版窓 — Print Window<span class="person">👤 人物あり</span></span><span class="d">新聞一面組版。左に巨大活字、右に医師映像の墨ダブルトーン図版窓。走査定規と版ズレ応答。</span></span></a></li>
+      <li><a class="card" href="pattern-k2.html"><span class="num">K2</span><span><span class="name">輪転 — Halftone Press<span class="person">👤 人物あり</span></span><span class="d">動く新聞写真。全面ハーフトーン化した医師映像に一面見出し級の活字。「魂」に赤角印。</span></span></a></li>
+      <li><a class="card" href="pattern-k3.html"><span class="num">K3</span><span><span class="name">活版 — Letterpress Slam</span><span class="d">紙と活字だけ。6つの活字ブロックが順に打ち込まれ、墨粒が跳ね、赤点が読点に刻印される。</span></span></a></li>
+      <li><a class="card" href="pattern-k4.html"><span class="num">K4</span><span><span class="name">校正 — Proofing Theater</span><span class="d">巨大なゲラ刷りが目の前で校正され続ける。校正記号の生成消滅、赤下線→墨定着の反復。</span></span></a></li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <h2>S 級 — 光のスペクタクル<span class="tag">参考 / BRAND.MD とは衝突</span></h2>
+    <p class="desc">「awwwards 級の驚き」を deep navy の闇 + 光で作った対抗セット。迫力最大だが、確定 brand.md の「ダーク/派手モーション不採用」規約とは衝突する(採用するなら規約側の改訂判断が必要)。</p>
+    <ul class="cards">
+      <li><a class="card" href="pattern-s1.html"><span class="num">S1</span><span><span class="name">粒子創世 — Particle Genesis</span><span class="d">4300粒の光が渦を巻いて飛来し見出しを形成。斥力インタラクション+金の光波掃過。</span></span></a></li>
+      <li><a class="card" href="pattern-s2.html"><span class="num">S2</span><span><span class="name">深度飛行 — Depth Flight</span><span class="d">3D スターフィールドを前へ飛び続ける。断面リング通過、着地衝撃波、カメラチルト。</span></span></a></li>
+      <li><a class="card" href="pattern-s3.html"><span class="num">S3</span><span><span class="name">極光 — Luminous Aurora</span><span class="d">6枚の発光カーテンが揺れ続け、文字が1字ずつ点灯。カーソルに光が寄る。</span></span></a></li>
+      <li><a class="card" href="pattern-s4.html"><span class="num">S4</span><span><span class="name">電撃バイタル — Electric Vital</span><span class="d">巨大オシロスコープ。心拍ごとに衝撃波・スパーク・フラッシュ。クリックで除細動。</span></span></a></li>
+      <li><a class="card" href="pattern-s5.html"><span class="num">S5</span><span><span class="name">魂の再生 — Soul Morph</span><span class="d">3000粒でできた巨大「魂」が崩壊と再生を12秒周期で繰り返す。</span></span></a></li>
+    </ul>
+  </section>
+
+  <section class="p">
+    <h2>P 級 — 初代(抑制版)<span class="tag">アーカイブ</span></h2>
+    <p class="desc">Ivory/Navy/Azure 規約内の抑制されたモーション版。「地味」と裁定されたが記録として保持。</p>
+    <ul class="cards">
+      <li><a class="card" href="pattern-01.html"><span class="num">P01</span><span><span class="name">墨流し — Ink Flow</span></span></a></li>
+      <li><a class="card" href="pattern-02.html"><span class="num">P02</span><span><span class="name">鼓動 — Vital Field</span></span></a></li>
+      <li><a class="card" href="pattern-03.html"><span class="num">P03</span><span><span class="name">構造 — Blueprint Theater</span></span></a></li>
+      <li><a class="card" href="pattern-04.html"><span class="num">P04</span><span><span class="name">呼吸 — Aurora Silk</span></span></a></li>
+      <li><a class="card" href="pattern-05.html"><span class="num">P05</span><span><span class="name">縦横 — Kinetic Editorial</span></span></a></li>
+    </ul>
+  </section>
+
+  <p class="meta">組込み時: index.html の .hero-wrapper 置換 + 動画リトライ JS 除去(K1/K2 は動画を図版として再利用)。<br>コピー論点: LPコピー確定版(Design_kawai)のヒーロー見出しは「質問の型を、あなたに戻す。」— 現行文言との差し替えは 1 行で可能。brand.md は『AIに臨床の魂を』を上位スローガンとして存置(併用は不可)としており、どちらを LP ヒーローに置くかは本人裁定が必要。</p>
+</div>
+</body>
+</html>
