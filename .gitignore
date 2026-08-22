@@ -20,3 +20,7 @@ _workspace/
 
 # FUGUE orchestration state
 .project-os/
+
+# Cloudflare local artifacts
+_site/
+.wrangler/

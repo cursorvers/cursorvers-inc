@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -11,11 +11,9 @@ env:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
+  group: "cloudflare-pages"
   cancel-in-progress: false
 
 jobs:
@@ -57,34 +55,34 @@ jobs:
           cp -r images/ _site/ 2>/dev/null || true
           cp -r css/ _site/ 2>/dev/null || true
           cp *.jpeg *.jpg *.png *.webp *.ico _site/ 2>/dev/null || true
+          # SEO files (GitHub Pages はルート配信していたが Cloudflare は明示コピーが必要)
+          cp robots.txt sitemap.xml _site/ 2>/dev/null || true
           # PWA files
           cp manifest.json sw.js cursorvers-icon.svg .nojekyll _site/ 2>/dev/null || true
           cp -r icons/ _site/ 2>/dev/null || true
           cp -r brochures/ _site/ 2>/dev/null || true
           cp *.mp4 _site/ 2>/dev/null || true
+          # Cloudflare Pages の1ファイル25MiB制限対策: hero_library.mp4 を除外
+          rm -f _site/hero_library.mp4
+          # Cloudflare Pages 設定ファイル
+          cp _headers _redirects _site/ 2>/dev/null || true
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Inject Turnstile sitekey
+        if: vars.TURNSTILE_SITE_KEY != ''
+        run: python3 -c 'import os, pathlib; p = pathlib.Path("_site/contact.html"); p.write_text(p.read_text().replace("TURNSTILE_SITE_KEY_PLACEHOLDER", os.environ["SITE_KEY"]))'
+        env:
+          SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          path: '_site'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy _site --project-name=cursorvers-inc
 
   smoke-test:
     runs-on: ubuntu-latest
-    needs: [build, deploy]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v6
