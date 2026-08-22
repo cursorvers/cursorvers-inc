@@ -3,6 +3,9 @@ export interface Env {
   TURNSTILE_SECRET_KEY: string;
   RESEND_API_KEY: string;
   NOTIFY_TO: string;
+  // 送信元。未設定なら Resend 共有ドメイン (DKIM 不要) を使う。
+  // 独自ドメインを Resend で検証したら "Cursorvers LP <noreply@cursorvers.com>" 等を secret で設定。
+  RESEND_FROM?: string;
 }
 
 const MAX_ORG = 200;
@@ -183,7 +186,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Cursorvers LP <noreply@cursorvers.com>",
+        from: env.RESEND_FROM || "Cursorvers LP <onboarding@resend.dev>",
         to: [env.NOTIFY_TO],
         subject: `[Cursorvers LP] New inquiry (${type})`,
         text: mailBody,
