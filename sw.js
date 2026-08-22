@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.5'; // Updated: 2026-08-22 - cache purge after broken-deploy incident, CSS v=20260822e
+const CACHE_VERSION = '2.2.6'; // Updated: 2026-08-22 - fix: SW navigation handler broke on Pages 308 redirects (ERR_FAILED)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
@@ -64,12 +64,15 @@ self.addEventListener('fetch', (event) => {
   // Network First for HTML pages
   if (event.request.mode === 'navigate' || url.pathname.endsWith('.html')) {
     event.respondWith(
-      fetch(new Request(event.request.url, { cache: 'reload', credentials: event.request.credentials, headers: event.request.headers }))
+      // Pass the original request untouched so the browser natively handles 308 redirects
+      fetch(event.request)
         .then((response) => {
           // Clone and cache the fresh response
           const responseToCache = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+            if (response.status === 200 && !response.redirected) {
+              cache.put(event.request, responseToCache);
+            }
           });
           return response;
         })
