@@ -90,7 +90,10 @@ DNS 切替を実施し cursorvers.com が Cloudflare Pages を配信。切替後
 | ⑦ データガバナンス | 9 |
 | **合計** | **62.2 / 70** (baseline 37.6 → **+24.6**) |
 
-> 未完了で点に織り込んでいない項目: Resend メール通知の実配線 (⑦ に軽微加点余地)、WAF rate limiting rule (⑥ に加点余地)。
+> 2026-08-22 追記: 上記 2 項目は完了 (点は保守的に据え置き)。
+> - Resend 本配線: cursorvers.jp を Resend で Verified (Tokyo/ap-northeast-1、DKIM/SPF/MX/DMARC を Cloudflare DNS に登録)。通知は `noreply@cursorvers.jp` → `info@cursorvers.jp,flux@cursorvers.com` (複数宛先対応済み)。両宛先とも Delivered 実証
+> - WAF rate limiting: `/api/contact` POST に同一 IP 5 req/10s 超で 429 (rule `contact-form-rate-limit`)。連投実測で 415×5 → 429 発火を確認
+> - www.cursorvers.com も Cloudflare へ切替完了: Pages custom domain + CNAME `cursorvers-inc.pages.dev` + ゾーン Redirect Rule `www-to-apex-301` で従来どおり apex へ 301 (GitHub 依存解消)
 
 ### 前後比較 (7 軸)
 
@@ -136,9 +139,9 @@ Pages プロジェクト・D1 (`6bc7a848-…`, APAC)・remote migrations・プ�
 1. ~~`wrangler d1 create cursorvers-leads`~~ **完了 (2026-08-21)**: database_id `6bc7a848-be02-4d93-b132-3760dd8fbe24` を wrangler.toml に反映済み
 2. ~~`wrangler d1 migrations apply cursorvers-leads --remote`~~ **完了 (2026-08-21)**
 3. ~~Turnstile ウィジェット作成 → GitHub 変数 `TURNSTILE_SITE_KEY` + Cloudflare secret `TURNSTILE_SECRET_KEY`~~ **完了 (2026-08-22)**: widget `cursorvers-inc-contact` (sitekey `0x4AAAAAAEX9scBt9VoNRgl9`、hostnames = cursorvers.com + cursorvers-inc.pages.dev)。GH 変数・Pages secret 登録済み。本番 slot で実 sitekey 配信・widget 描画を確認
-4. ~~Resend API key~~ **配線完了 (2026-08-22)**: `RESEND_API_KEY` を sops SSoT → Keychain → Pages secret に登録 (平文レス経路)。テスト送信 HTTP 200 実証済み。**暫定 NOTIFY_TO = masa.stage1@gmail.com** — Resend 共有ドメインは本人アドレス宛のみ送信可のため。**info@cursorvers.jp へ切替えるには**: resend.com/domains で cursorvers.jp を Add (Cloudflare 連携ワンクリックで DNS 自動設定) → 検証後に `NOTIFY_TO` を info@cursorvers.jp・`RESEND_FROM` を `Cursorvers LP <noreply@cursorvers.jp>` に更新
+4. ~~Resend API key + ドメイン検証~~ **本配線完了 (2026-08-22)**: `RESEND_API_KEY` は sops SSoT → Keychain → Pages secret (平文レス経路)。cursorvers.jp を Resend で **Verified** (Tokyo リージョン、DKIM/SPF/MX/DMARC 4 レコードを Cloudflare DNS へ same-origin API で登録、検証 10 分で完了)。`RESEND_FROM = Cursorvers LP <noreply@cursorvers.jp>` / `NOTIFY_TO = info@cursorvers.jp,flux@cursorvers.com` (contact.ts はカンマ区切り複数宛先対応)。両宛先へ Delivered 実証。なお cursorvers.co.jp は null MX (受信不可ドメイン) のため宛先に使えない
 5. GitHub secrets: `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` (b5d2ea575b38ec2342d19f91e98c9347)。**token は Pages:Edit に加えて D1:Edit (account scope) が必須** — wrangler.toml が D1 binding を持つため deploy 時に D1 権限も要求される。Pages テンプレート単体の token だと初回 deploy が不透明なエラーで落ちる
-6. **Cloudflare WAF rate limiting rule を `/api/contact` に設定** (Free プランの 1 ルール枠。例: 同一 IP 10 req/10min 超で 429)。codex security 再レビュー (2026-08-21, verdict=CONDITIONAL) の本番前必須条件
+6. ~~Cloudflare WAF rate limiting rule~~ **完了 (2026-08-22)**: `/api/contact` POST に同一 IP 5 req/10s 超で 429 (Free プラン枠、rule id `46ce4f9ded1c4140989c1f41c26f6973`)。本番連投で 415×5 → 429×3 の発火を実測。codex security 再レビュー (2026-08-21, CONDITIONAL) の条件消化
 7. pages.dev で E2E 確認 (Turnstile 実キーで action=contact_submit を含む実トークン検証) → DNS 切替 (AuthLevel 1) → GAS 無効化
 
 ## ローカル E2E 実施済み (2026-08-21, `wrangler pages dev` + Turnstile test key + local D1)

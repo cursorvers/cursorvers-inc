@@ -1,1 +1,3 @@
 # reserved for future redirects
+# www→apex の 301 はゾーン Redirect Rule (www-to-apex-301) で実施。
+# Cloudflare Pages の _redirects は hostname 付き source 非対応のためここには書かない。

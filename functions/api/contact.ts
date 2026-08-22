@@ -187,7 +187,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       },
       body: JSON.stringify({
         from: env.RESEND_FROM || "Cursorvers LP <onboarding@resend.dev>",
-        to: [env.NOTIFY_TO],
+        to: env.NOTIFY_TO.split(",").map((s) => s.trim()).filter(Boolean),
         subject: `[Cursorvers LP] New inquiry (${type})`,
         text: mailBody,
       }),
