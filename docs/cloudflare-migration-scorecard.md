@@ -45,19 +45,67 @@ HSTS / CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / X-F
 | ⑦ データガバナンス | 4 |
 | **合計** | **37.6 / 70** |
 
-## 実装後 (S5 で同一手順にて再計測)
+## 実装後 (2026-08-22 DNS 切替後、本番 cursorvers.com で同一手順にて再計測)
 
-> 記入待ち: DNS 切替後に ①②③ を同一コマンドで再計測し、④〜⑦ を新構成の根拠で再採点する。
+DNS 切替を実施し cursorvers.com が Cloudflare Pages を配信。切替後の Lighthouse で検出した回帰
+(SEO robots.txt 欠落 / CSP が Cloudflare Insights beacon をブロック) を修正後の確定値。
+
+### ① Lighthouse (本番実測、回帰修正後)
+
+| ページ | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| / | 55 | 93 | 96 | 100 |
+| /contact.html | 63 | 95 | 96 | 100 |
+| /services.html | 56 | 95 | 96 | 100 |
+
+(BP/SEO は `_headers` `/*` と robots.txt の site-wide 適用で全ページ同値。contact は GAS リンク廃止で Perf 57→63)
+
+### ② TTFB 実測 (本番、curl time_starttransfer)
+
+| 対象 | baseline | after | 備考 |
+|---|---|---|---|
+| HTML `/` | 0.117s | ~0.42s | Pages は HTML に `cache-control: max-age=0, must-revalidate` を付与 (更新即時反映を優先し edge cache しない仕様)。LCP/Perf スコアは baseline と同等 |
+| 静的アセット (CSS/JS/画像) | — | ~0.05s | `max-age=14400` で edge cache HIT。体感速度を決める層は高速 |
+
+### ③〜⑦ (本番構成の根拠で再採点)
 
 | 軸 | 点 (/10) | 根拠 |
 |---|---|---|
-| ① Lighthouse | TBD | |
-| ② TTFB/LCP | TBD | |
-| ③ セキュリティヘッダ | TBD | _headers で 6 種宣言済み (デプロイ後に実測確認) |
-| ④ コスト | TBD | 見込み $0 (Pages/D1/Turnstile/Resend 全て無料枠) |
-| ⑤ 運用性/DX | TBD | 配信+フォーム+ヘッダ+DNS を Cloudflare 1 面に集約、branch preview 付き |
-| ⑥ スパム耐性 | TBD | Turnstile (siteverify + hostname 検証) + honeypot + 入力上限 |
-| ⑦ データガバナンス | TBD | リードは自社管理 D1、スキーマ・保持がコード管理下、privacy.html 更新済み |
+| ③ セキュリティヘッダ | 10 | **6/6 を本番実測** (baseline 0/6)。HSTS/CSP/XCTO/Referrer/Permissions/XFO |
+| ④ コスト | 10 | $0 維持 (Pages/D1/Turnstile 無料枠、Resend 配線後も無料枠内) |
+| ⑤ 運用性/DX | 9 | 配信+フォーム+ヘッダ+DNS+DB を Cloudflare 1 面に集約、branch preview、宣言的設定 |
+| ⑥ スパム耐性 | 9 | Turnstile (siteverify + hostname + action 検証) + honeypot + 入力上限。本番で fail-closed 403 実測 |
+| ⑦ データガバナンス | 9 | リードは自社管理 D1 (APAC)、スキーマ・保持がコード管理下、privacy.html 更新済み、Google 依存を GA のみに縮小 |
+
+### 実装後 7 軸スコア
+
+| 軸 | 点 (/10) |
+|---|---|
+| ① Lighthouse (4 カテゴリ平均 ~87) | 8.7 |
+| ② TTFB/LCP (HTML は仕様上 0.42s、アセット 0.05s、Perf 同等) | 6.5 |
+| ③ セキュリティヘッダ (6/6) | 10 |
+| ④ コスト | 10 |
+| ⑤ 運用性/DX | 9 |
+| ⑥ スパム耐性 | 9 |
+| ⑦ データガバナンス | 9 |
+| **合計** | **62.2 / 70** (baseline 37.6 → **+24.6**) |
+
+> 未完了で点に織り込んでいない項目: Resend メール通知の実配線 (⑦ に軽微加点余地)、WAF rate limiting rule (⑥ に加点余地)。
+
+### 前後比較 (7 軸)
+
+```
+              前 (GitHub+GAS)      後 (Cloudflare)
+① Lighthouse  ████████░░  8.6      ████████░░  8.7
+② TTFB/LCP    ███████░░░  7.0      ██████░░░░  6.5   ▼ HTML は更新即時反映優先で非cache (アセットは高速)
+③ секヘッダ    ░░░░░░░░░░  0        ██████████ 10    ★ 0/6 → 6/6
+④ コスト       ██████████ 10       ██████████ 10
+⑤ 運用性/DX    ██████░░░░  6        █████████░  9    ★ 4面管理 → Cloudflare 1面集約
+⑥ スパム耐性   ██░░░░░░░░  2        █████████░  9    ★ 無防備 → Turnstile+honeypot+入力上限
+⑦ データガバ    ████░░░░░░  4        █████████░  9    ★ Google管理 → 自社D1
+─────────────────────────────────────────────
+合計          37.6 / 70            62.2 / 70        +24.6
+```
 
 ## 再計測コマンド (前後同一)
 
