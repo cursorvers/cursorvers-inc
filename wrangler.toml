@@ -1,0 +1,9 @@
+name = "cursorvers-inc"
+pages_build_output_dir = "_site"
+compatibility_date = "2026-08-01"
+
+# D1: 2026-08-21 作成済み (APAC)。migrations は `wrangler d1 migrations apply cursorvers-leads --remote`
+[[d1_databases]]
+binding = "DB"
+database_name = "cursorvers-leads"
+database_id = "6bc7a848-be02-4d93-b132-3760dd8fbe24"
