@@ -1311,7 +1311,12 @@
             });
 
             resize();
-            window.addEventListener('resize', resize);
+            window.addEventListener('resize', function () {
+                resize();
+                /* static / reduced-motion は rAF ループが無く、canvas サイズ変更で
+                   描画が消えたままになるため、静的フレームを即再描画する */
+                if (STATIC || RM) { renderStatic(); }
+            });
 
             if (STATIC) {
                 renderStatic();
