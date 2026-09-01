@@ -143,7 +143,26 @@
                         <li>医療経営士</li>
                         <li>日本医療安全推進学会 理事</li>
                         <li>日本医師会認定産業医</li>
+                        <li>AICX協会認定 AIエージェント・ストラテジスト</li>
                     </ul>
+
+                    <!-- AICX 合格者ロゴ: 一般社団法人AICX協会「AIエージェント・ストラテジスト資格」合格者ロゴ。
+                         利用規定 第3条により、本人の氏名・プロフィールと一体の自己紹介欄でのみ掲載する
+                         (会社・サービス自体の認定表示は第4条で禁止のため、トップの信頼バー等には置かない)。
+                         第5条により配布データを無加工で使用する — 縦横比の変更・色変更・影/縁取り/角丸等の装飾、
+                         CSS filter の付与を禁止。背景が白でないため単色(白黒)版を使用。
+                         差し替え時は配布 ZIP の logo_mono_h.png をバイト同一でコピーすること。 -->
+                    <!-- items-start は必須: flex-col の既定 align-items:stretch だと img の width が
+                         親幅まで伸び、h-12 と組み合わさってロゴが横に歪む (規定第5条の縦横比変更に該当)。 -->
+                    <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col items-start sm:flex-row sm:items-center gap-4">
+                        <img src="images/logo-aicx-agent-strategist-mono.png"
+                             alt="AICX認定 AIエージェント・ストラテジスト 合格者ロゴ"
+                             width="1000" height="319"
+                             class="h-12 w-auto shrink-0" loading="lazy">
+                        <p class="text-xs text-gray-500 leading-relaxed">
+                            一般社団法人AICX協会「AIエージェント・ストラテジスト資格」合格者ロゴ。本ロゴは個人が同資格を取得した事実を示すものであり、Cursorvers株式会社および当社サービスに対する認定・公認・監修等を示すものではありません。
+                        </p>
+                    </div>
                 </div>
             </div>
 
