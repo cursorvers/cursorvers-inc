@@ -1437,18 +1437,20 @@
     </section>
 
 
-    <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し (お知らせ一覧は #news 後置のまま。
-         2026-07-18 折衷裁定。記載は全て #news 既載の事実、<style> は SW HTML=network-first
+    <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し (2026-07-18 折衷裁定では一覧は後置だったが、
+         2026-10-04 に「バーが小さく見られない」との user 指摘で #news をバー直下へ移動し、
+         バーの文字も拡大した。記載は全て #news 既載の事実、<style> は SW HTML=network-first
          即時反映の site 前例に従い inline) -->
     <aside class="trust-bar relative z-10" aria-label="第三者認定・提携">
         <style>
             .trust-bar { background: #FBFAF5; border-top: 1px solid rgba(0, 0, 0, .05); border-bottom: 1px solid rgba(0, 0, 0, .05); }
             .trust-bar ul { max-width: 72rem; margin: 0 auto; padding: 1.35rem 1.5rem;
                 display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-                gap: .7rem 2.4rem; list-style: none;
-                font-family: 'Noto Sans JP', sans-serif; font-weight: 500;
-                font-size: clamp(14px, 1.1vw, 15px);
-                letter-spacing: .07em; color: rgba(19, 36, 63, .82); }
+                gap: .8rem 2.4rem; list-style: none;
+                font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+                font-size: clamp(15px, 1.4vw, 18px);
+                letter-spacing: .06em; color: #13243F; }
+            .trust-bar li { text-align: center; word-break: keep-all; text-wrap: balance; }
             .trust-bar a { color: rgba(19, 36, 63, .82); text-decoration: underline;
                 text-underline-offset: 4px; text-decoration-color: rgba(19, 36, 63, .3); }
             .trust-bar a:hover { color: #13243F; }
@@ -1457,9 +1459,307 @@
             <li>Health ISAC Japan 協賛会員</li>
             <li>Google Cloud プレミアパートナー G-gen と提携</li>
             <li>DX/AI Runner Expo 2026 登壇</li>
+            <li>日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</li>
             <li><a href="#news">お知らせ →</a></li>
         </ul>
     </aside>
+
+    <!-- お知らせ Section (常設) -->
+    <section id="news" class="py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="お知らせ">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 md:mb-14">
+                <div>
+                    <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
+                </div>
+                <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-flame hover:underline transition shrink-0">
+                    すべてのお知らせ
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <!-- News Items (horizontal scroll rail, visual-first cards) -->
+            <div class="news-scroll-wrapper">
+            <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
+                <!-- 第3回日本医療安全推進学会学術総会 医療安全文化促進賞 優秀賞 受賞 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 日本医療安全推進学会">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本医療安全推進学会</span>
+                            </div>
+                            <span class="news-visual-caption">医療安全文化促進賞 優秀賞</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">受賞</span>
+                                <time datetime="2026-10-04" class="news-card-v2-date">2026.10.04</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                日本医療安全推進学会で「医療安全文化促進賞 優秀賞」を受賞
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                演題「医療AIにおける「責任の空白」を防ぐ：責任分界・契約最小条項・医療者リテラシー教育の統合」が受賞しました。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- 第54回日本救急医学会総会・学術集会 ランチョンセミナー21 登壇 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第54回日本救急医学会総会・学術集会">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本救急医学会</span>
+                            </div>
+                            <span class="news-visual-caption">2026.10.28 出島メッセ長崎</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
+                                <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
+                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">10/28 開催</span>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                日本救急医学会のランチョンセミナー21に登壇（10/28 長崎）
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                救急現場での判断支援にAIを使う場面を、ガバナンスの観点から取り上げます。会場は出島メッセ長崎で、整理券制です。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Health ISAC Japan Security Session 2026 #06 登壇 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
+                            </div>
+                            <span class="news-visual-caption">2026.11.6 オンライン開催</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
+                                <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
+                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">11/6 開催</span>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                Health ISAC Japan Security Session #06 に登壇（11/6 オンライン）
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                医療AX時代に欠かせないAIガバナンスの要点を、救命救急の臨床経験から解説します。参加資格は Health ISAC Japan 会員です。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- 第3回日本医療安全推進学会学術総会 シンポジウム登壇 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-08-07-jsmsp-3rd-symposium.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第3回日本医療安全推進学会学術総会">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本医療安全推進学会</span>
+                            </div>
+                            <span class="news-visual-caption">2026.9.12–13 東京大学 本郷キャンパス</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
+                                <time datetime="2026-08-07" class="news-card-v2-date">2026.08.07</time>
+                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">9/12–13 開催</span>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                第3回日本医療安全推進学会学術総会 シンポジウム「医療安全におけるサイバーセキュリティとAIの安全保障」に登壇
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                医療機関のサイバーセキュリティと医療AIの安全運用を、医療安全の枠組みで接続して議論します。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- DX/AI Runner Expo 2026 登壇 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-05-25-dxai-runner-expo-2026.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × DX/AI Runner Expo 2026">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--amber">DX/AI Runner Expo 2026</span>
+                            </div>
+                            <span class="news-visual-caption">2026.6.4 オンライン登壇</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
+                                <time datetime="2026-05-25" class="news-card-v2-date">2026.05.25</time>
+                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">6/4 開催</span>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                6/4（木）「DX/AI Runner Expo 2026」に登壇 — 医療業界に参入したいAI・DXベンダー企業向け
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                無料オンラインカンファレンスに登壇。医療業界への参入ノウハウと成果を出すポイントを解説します。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- 医療AI導入の順番 -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-03-02-hospital-ai-implementation.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers Column">
+                            <div class="news-visual-lockup news-visual-lockup--solo">
+                                <span class="news-visual-brand">Cursorvers</span>
+                            </div>
+                            <span class="news-visual-caption">内科医 × エンジニア 共同執筆</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-navy">コラム</span>
+                                <time datetime="2026-03-02" class="news-card-v2-date">2026.03.02</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                松尾研AI経営講座を受講した内科医が整理した、病院AI導入の3つのフレームワーク。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- Health ISAC Japan -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-18-health-isac-japan.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
+                            </div>
+                            <span class="news-visual-caption">医療サイバーセキュリティ協賛会員</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-flame">セキュリティ</span>
+                                <time datetime="2026-02-18" class="news-card-v2-date">2026.02.18</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                Health ISAC Japan の協賛会員として登録されました
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                医療サイバーセキュリティの情報共有組織に参加し、ガバナンス支援を強化します。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- G-gen Partnership -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-16-ggen-partnership.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card news-visual-lockup-card--emerald" aria-label="Cursorvers × G-gen">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/logo-ggen.png" alt="G-gen logo" class="news-visual-logo" loading="lazy">
+                            </div>
+                            <span class="news-visual-caption">Google Cloud Premier Partner 協業</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-emerald">パートナーシップ</span>
+                                <time datetime="2026-02-16" class="news-card-v2-date">2026.02.16</time>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                Google Cloud プレミアパートナー 株式会社G-gen とパートナーシップを締結
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                Googleプロダクトを活用した「安心・安全」な医療AI環境の構築を共同で推進します。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+
+                <!-- GuideScope -->
+                <article class="news-card-v2 group">
+                    <a href="news/2026-02-10-guidescope.html" class="news-card-v2-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × GuideScope">
+                            <div class="news-visual-lockup">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--flame">GuideScope</span>
+                            </div>
+                            <span class="news-visual-caption">自社プロダクト 提供開始</span>
+                        </div>
+                        <div class="news-card-v2-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-flame">プロダクト</span>
+                                <time datetime="2026-02-10" class="news-card-v2-date">2026.02.10</time>
+                                <span class="inline-block bg-flame/10 text-flame text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">LIVE</span>
+                            </div>
+                            <h3 class="news-card-v2-title">
+                                GuideScope — 医療一次資料の突合・検証ツール 提供開始（MVP）
+                            </h3>
+                            <p class="news-card-v2-lede">
+                                一次資料と実務文書を突合するビジョンのもと、まずはLLM向け検索プロンプト生成ツールとしてMVPを提供開始。Google Gemini・ChatGPT・Claude等で活用できます。
+                            </p>
+                            <span class="news-card-v2-cta">
+                                詳しく読む
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
+            <div class="news-scroll-hint" id="newsScrollHint" aria-hidden="true"></div>
+            </div>
+        </div>
+    </section>
 
     <!-- Name Meaning Section -->
     <!-- iOS Safari mobile fix: 単一カラム grid の implicit 列が、分割不能な H2 (word-break:keep-all で
@@ -2019,273 +2319,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- お知らせ Section (常設) -->
-    <section id="news" class="py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="お知らせ">
-        <div class="max-w-6xl mx-auto px-6 md:px-12">
-            <!-- Section Header -->
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 md:mb-14">
-                <div>
-                    <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
-                </div>
-                <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-flame hover:underline transition shrink-0">
-                    すべてのお知らせ
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-                </a>
-            </div>
-
-            <!-- News Items (horizontal scroll rail, visual-first cards) -->
-            <div class="news-scroll-wrapper">
-            <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
-                <!-- 第54回日本救急医学会総会・学術集会 ランチョンセミナー21 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第54回日本救急医学会総会・学術集会">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本救急医学会</span>
-                            </div>
-                            <span class="news-visual-caption">2026.10.28 出島メッセ長崎</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">10/28 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                第54回日本救急医学会総会・学術集会 ランチョンセミナー21「敗血症性DIC診療におけるAI活用とガバナンス：救急現場での判断支援を考える」に登壇
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                救急現場での判断支援にAIを使う場面を、ガバナンスの観点から取り上げます。会場は出島メッセ長崎で、整理券制です。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Health ISAC Japan Security Session 2026 #06 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
-                            </div>
-                            <span class="news-visual-caption">2026.11.6 オンライン開催</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">11/6 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                Health ISAC Japan Security Session 2026 #06 に登壇「守ることと、決めること：臨床医から見た医療AIガバナンスと医療現場の現在地」
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                医療AX時代に欠かせないAIガバナンスの要点を、救命救急の臨床経験から解説します。参加資格は Health ISAC Japan 会員です。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- 第3回日本医療安全推進学会学術総会 シンポジウム登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-08-07-jsmsp-3rd-symposium.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第3回日本医療安全推進学会学術総会">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本医療安全推進学会</span>
-                            </div>
-                            <span class="news-visual-caption">2026.9.12–13 東京大学 本郷キャンパス</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-08-07" class="news-card-v2-date">2026.08.07</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">9/12–13 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                第3回日本医療安全推進学会学術総会 シンポジウム「医療安全におけるサイバーセキュリティとAIの安全保障」に登壇
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                医療機関のサイバーセキュリティと医療AIの安全運用を、医療安全の枠組みで接続して議論します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- DX/AI Runner Expo 2026 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-05-25-dxai-runner-expo-2026.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × DX/AI Runner Expo 2026">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">DX/AI Runner Expo 2026</span>
-                            </div>
-                            <span class="news-visual-caption">2026.6.4 オンライン登壇</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-05-25" class="news-card-v2-date">2026.05.25</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">6/4 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                6/4（木）「DX/AI Runner Expo 2026」に登壇 — 医療業界に参入したいAI・DXベンダー企業向け
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                無料オンラインカンファレンスに登壇。医療業界への参入ノウハウと成果を出すポイントを解説します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- 医療AI導入の順番 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-03-02-hospital-ai-implementation.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers Column">
-                            <div class="news-visual-lockup news-visual-lockup--solo">
-                                <span class="news-visual-brand">Cursorvers</span>
-                            </div>
-                            <span class="news-visual-caption">内科医 × エンジニア 共同執筆</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-navy">コラム</span>
-                                <time datetime="2026-03-02" class="news-card-v2-date">2026.03.02</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                松尾研AI経営講座を受講した内科医が整理した、病院AI導入の3つのフレームワーク。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Health ISAC Japan -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-18-health-isac-japan.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
-                            </div>
-                            <span class="news-visual-caption">医療サイバーセキュリティ協賛会員</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-flame">セキュリティ</span>
-                                <time datetime="2026-02-18" class="news-card-v2-date">2026.02.18</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                Health ISAC Japan の協賛会員として登録されました
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                医療サイバーセキュリティの情報共有組織に参加し、ガバナンス支援を強化します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- G-gen Partnership -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-16-ggen-partnership.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card news-visual-lockup-card--emerald" aria-label="Cursorvers × G-gen">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <img src="images/logo-ggen.png" alt="G-gen logo" class="news-visual-logo" loading="lazy">
-                            </div>
-                            <span class="news-visual-caption">Google Cloud Premier Partner 協業</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-emerald">パートナーシップ</span>
-                                <time datetime="2026-02-16" class="news-card-v2-date">2026.02.16</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                Google Cloud プレミアパートナー 株式会社G-gen とパートナーシップを締結
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                Googleプロダクトを活用した「安心・安全」な医療AI環境の構築を共同で推進します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- GuideScope -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-10-guidescope.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × GuideScope">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--flame">GuideScope</span>
-                            </div>
-                            <span class="news-visual-caption">自社プロダクト 提供開始</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-flame">プロダクト</span>
-                                <time datetime="2026-02-10" class="news-card-v2-date">2026.02.10</time>
-                                <span class="inline-block bg-flame/10 text-flame text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">LIVE</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                GuideScope — 医療一次資料の突合・検証ツール 提供開始（MVP）
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                一次資料と実務文書を突合するビジョンのもと、まずはLLM向け検索プロンプト生成ツールとしてMVPを提供開始。Google Gemini・ChatGPT・Claude等で活用できます。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-            </div>
-            <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
-            <div class="news-scroll-hint" id="newsScrollHint" aria-hidden="true"></div>
             </div>
         </div>
     </section>
