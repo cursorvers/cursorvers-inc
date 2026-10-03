@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.6'; // Updated: 2026-08-22 - fix: SW navigation handler broke on Pages 308 redirects (ERR_FAILED)
+const CACHE_VERSION = '2.2.7'; // Updated: 2026-10-04 - cookie-consent.js link tap area enlarged; version bump delivers it to existing visitors (2.2.6: SW navigation handler broke on Pages 308 redirects)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First

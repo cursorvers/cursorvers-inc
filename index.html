@@ -1046,6 +1046,21 @@
             background:
                 radial-gradient(70% 55% at 82% 18%, rgba(62,111,168,0.06) 0%, rgba(62,111,168,0) 60%),
                 linear-gradient(180deg,#FBFAF5 0%,#F4F1EA 100%);}
+        /* ==== モバイル調整 (2026-10-04) ====
+           iOS Safari は 100vh がアドレスバー裏まで含むため、対応ブラウザでは 100svh を使う。
+           SW が静的 CSS を cache-first で返すため、即時反映が要る調整はここ (inline) に置く。 */
+        @supports (min-height: 100svh) { .v5-hero{min-height:100svh;} }
+        @media (max-width: 767px) {
+            .news-card-v2-tag { font-size: 12px; }
+            .news-card-v2-date { font-size: 13px; }
+            .news-card-v2-title { font-size: 16px; }
+            .news-card-v2-lede { font-size: 14px; }
+            .news-card-v2-cta { font-size: 14px; padding: 8px 0; }
+            .news-visual-caption, .news-visual-lockup-card .news-visual-caption { font-size: 12px; }
+            #news a[href="news.html"] { display: inline-flex; align-items: center; min-height: 44px; }
+            /* 演出中の「スキップ」: 下端 (Cookie バナーの裏) から、見えて押せる位置へ */
+            html.v5js .v5-stage .v5-skip { top: 36px; bottom: auto; right: 0; min-height: 44px; padding: 12px 14px; font-size: 14px; color: rgba(19, 36, 63, .72); }
+        }
         #heroFx{position:absolute;inset:0;width:100%;height:100%;}
         .v5-stage{position:relative;z-index:2;width:100%;max-width:980px;min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#13243F;}
         .v5-eyebrow{position:absolute;top:0;left:50%;transform:translateX(-50%);font-family:'Manrope','Noto Sans JP',sans-serif;font-size:13px;letter-spacing:.24em;font-weight:700;color:#36618F;white-space:nowrap;}
@@ -1305,6 +1320,18 @@
             }
 
             document.getElementById('v5Skip').addEventListener('click', finish);
+            // スマートフォンでスクロールした場合はイントロのスキップとして扱う
+            if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
+                var onFirstScroll = function () {
+                    if (window.scrollY >= 24) {
+                        window.removeEventListener('scroll', onFirstScroll);
+                        if (!stage.classList.contains('done')) {
+                            finish();
+                        }
+                    }
+                };
+                window.addEventListener('scroll', onFirstScroll, { passive: true });
+            }
             document.getElementById('v5Replay').addEventListener('click', function () {
                 if (window.gtag) { gtag('event', 'hero_replay'); }
                 play();
@@ -1451,16 +1478,12 @@
                 font-size: clamp(15px, 1.4vw, 18px);
                 letter-spacing: .06em; color: #13243F; }
             .trust-bar li { text-align: center; word-break: keep-all; text-wrap: balance; }
-            .trust-bar a { color: rgba(19, 36, 63, .82); text-decoration: underline;
-                text-underline-offset: 4px; text-decoration-color: rgba(19, 36, 63, .3); }
-            .trust-bar a:hover { color: #13243F; }
         </style>
         <ul>
             <li>Health ISAC Japan 協賛会員</li>
             <li>Google Cloud プレミアパートナー G-gen と提携</li>
             <li>DX/AI Runner Expo 2026 登壇</li>
             <li>日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</li>
-            <li><a href="#news">お知らせ →</a></li>
         </ul>
     </aside>
 
@@ -1502,7 +1525,7 @@
                                 日本医療安全推進学会で「医療安全文化促進賞 優秀賞」を受賞
                             </h3>
                             <p class="news-card-v2-lede">
-                                演題「医療AIにおける「責任の空白」を防ぐ：責任分界・契約最小条項・医療者リテラシー教育の統合」が受賞しました。
+                                一般演題「医療AIにおける「責任の空白」を防ぐ」が受賞しました。
                             </p>
                             <span class="news-card-v2-cta">
                                 詳しく読む

@@ -15,7 +15,7 @@
   var link = document.createElement('a');
   link.href = location.pathname.indexOf('/news/') !== -1 ? '../privacy.html' : 'privacy.html';
   link.textContent = '詳細';
-  link.style.cssText = 'color:#36618F;text-decoration:underline';
+  link.style.cssText = 'color:#36618F;text-decoration:underline;display:inline-block;padding:12px 8px;margin:-12px -8px';
 
   var suffix = document.createTextNode('');
 

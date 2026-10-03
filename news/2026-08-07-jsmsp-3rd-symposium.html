@@ -46,6 +46,11 @@
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
 
+        @media (max-width: 767px) {
+            nav[aria-label="パンくずリスト"] a { display: inline-block; padding: 12px 6px; margin: -12px -6px; }
+            article .border-l-4 a { display: inline-flex; align-items: center; min-height: 44px; }
+        }
+
         .article-body p {
             font-size: 1rem;
             line-height: 1.9;
