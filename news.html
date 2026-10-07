@@ -46,6 +46,8 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #13243F; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #13243F; color: #FBFAF5; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
+        /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
     </style>
 </head>
 
@@ -113,7 +115,7 @@
                                 <time datetime="2026-10-07" class="text-sm text-gray-500 font-en whitespace-nowrap">2026.10.07</time>
                                 <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">採択</span>
                             </div>
-                            <p class="text-base md:text-lg font-medium text-brand-black group-hover:text-flame transition-colors flex-1">Anthropic のスタートアップ支援プログラム「Claude Startups」に採択されました</p>
+                            <p class="text-base md:text-lg font-medium text-brand-black group-hover:text-flame transition-colors flex-1 jp-keep">Anthropic&nbsp;の<wbr>スタートアップ<wbr>支援プログラム<wbr>「Claude Startups」に<wbr>採択されました</p>
                             <svg class="hidden sm:block shrink-0 text-gray-300 group-hover:text-flame transition-colors" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
                         </a>
                     </li>

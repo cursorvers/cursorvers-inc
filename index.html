@@ -1107,6 +1107,8 @@
         @media (prefers-reduced-motion: reduce){
             .v5-line,.v5-final,.v5-stage.done .v5-final{transition:none !important;}
         }
+        /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
     </style>
 </head>
 
@@ -1514,18 +1516,18 @@
                                 <span class="news-visual-x" aria-hidden="true">×</span>
                                 <span class="news-visual-wordmark news-visual-wordmark--amber">Claude Startups</span>
                             </div>
-                            <span class="news-visual-caption">Anthropic スタートアップ支援プログラム</span>
+                            <span class="news-visual-caption jp-keep">Anthropic&nbsp;スタートアップ<wbr>支援プログラム</span>
                         </div>
                         <div class="news-card-v2-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">採択</span>
                                 <time datetime="2026-10-07" class="news-card-v2-date">2026.10.07</time>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                Anthropic の「Claude Startups」に採択
+                            <h3 class="news-card-v2-title jp-keep">
+                                Anthropic&nbsp;の<wbr>「Claude&nbsp;Startups」に<wbr>採択
                             </h3>
-                            <p class="news-card-v2-lede">
-                                Anthropic が運営するスタートアップ支援プログラムに採択されました。
+                            <p class="news-card-v2-lede jp-keep">
+                                Anthropic&nbsp;が<wbr>運営する<wbr>スタートアップ<wbr>支援プログラムに<wbr>採択されました。
                             </p>
                             <span class="news-card-v2-cta">
                                 詳しく読む
