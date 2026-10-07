@@ -80,6 +80,9 @@
         }
         /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
         .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+        /* 見出しは「「Claude Startup Program」に」と「採択されました」の 2 行に保つ (2026-10-07 user 指示)。
+           1 行目は約 14.3em あるので、本文の幅 (画面幅 - 48px、上限 768px) に収まる大きさまで下げる */
+        h1.hero-h1.h1-program { font-size: clamp(20px, calc((100vw - 48px) / 14.6), 52px); }
     </style>
 </head>
 
@@ -136,7 +139,7 @@
                     <time datetime="2026-10-07" class="text-sm text-gray-500 font-en">2026.10.07</time>
                     <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">採択</span>
                 </div>
-                <h1 class="hero-h1 text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"><span class="inline-block">「Claude Startup Program」に</span><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg text-gray-600 font-medium jp-keep">—&nbsp;Anthropic&nbsp;の<wbr>スタートアップ<wbr>支援プログラム</span></h1>
+                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"><span class="inline-block whitespace-nowrap">「Claude Startup Program」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg text-gray-600 font-medium jp-keep">—&nbsp;Anthropic&nbsp;の<wbr>スタートアップ<wbr>支援プログラム</span></h1>
             </div>
         </section>
 
