@@ -1469,7 +1469,7 @@
     <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し。2026-10-04 に #news をバー直下へ移動したが、
          2026-10-07 に「お知らせと近い。残すならお知らせはもっと下」との user 指摘で、#news を
          導入事例の後 (CTA の直前) へ戻し、バーは要約・#news は詳細と役割を分けた。同日、Expo と協賛会員を外し
-         救急医学会・Health ISAC Japan の登壇と Claude Startups 採択を追加。記載は全て #news 既載の事実、<style> は
+         救急医学会・Health ISAC Japan の登壇と Claude Startup Program 採択を追加。記載は全て #news 既載の事実、<style> は
          SW HTML=network-first 即時反映の site 前例に従い inline) -->
     <aside class="trust-bar relative z-10" aria-label="実績・認定">
         <style>
@@ -1481,13 +1481,21 @@
                 font-size: clamp(15px, 1.4vw, 18px);
                 letter-spacing: .06em; color: #13243F; }
             .trust-bar li { text-align: center; word-break: keep-all; text-wrap: balance; }
+            .trust-bar a { color: inherit; text-decoration: underline; text-decoration-color: rgba(19, 36, 63, .28);
+                text-decoration-thickness: 1px; text-underline-offset: .32em; transition: color .2s, text-decoration-color .2s; }
+            .trust-bar a:hover, .trust-bar a:focus-visible { color: #3E6FA8; text-decoration-color: currentColor; }
+            /* バーの「お知らせ一覧へ」で飛んだとき、固定ヘッダー (PC 97px・スマホ 77px) の裏に隠さない */
+            #news { scroll-margin-top: 104px; }
+            @media (max-width: 767px) { #news { scroll-margin-top: 84px; } }
+            .trust-bar .trust-bar-all a { font-size: .85em; font-weight: 600; color: #3E6FA8; text-decoration-color: rgba(62, 111, 168, .4); }
         </style>
         <ul>
-            <li>日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</li>
-            <li>第54回日本救急医学会総会・学術集会 ランチョンセミナー登壇（10/28）</li>
-            <li>Health ISAC Japan Security Session #06 登壇（11/6）</li>
-            <li>Google Cloud プレミアパートナー G-gen と提携</li>
-            <li>Anthropic<wbr>「Claude&nbsp;Startups」採択</li>
+            <li><a href="news/2026-10-04-jsmsp-3rd-excellence-award.html">日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</a></li>
+            <li><a href="news/2026-10-03-jaam54-luncheon-seminar.html">第54回日本救急医学会総会・学術集会 ランチョンセミナー登壇（10/28）</a></li>
+            <li><a href="news/2026-10-03-hij-security-session-2606.html">Health ISAC Japan Security Session #06 登壇（11/6）</a></li>
+            <li><a href="news/2026-02-16-ggen-partnership.html">Google Cloud プレミアパートナー G-gen と提携</a></li>
+            <li><a href="news/2026-10-07-claude-startups.html">Anthropic<wbr>「Claude&nbsp;Startup&nbsp;Program」に採択</a></li>
+            <li class="trust-bar-all"><a href="#news">お知らせ一覧へ&nbsp;↓</a></li>
         </ul>
     </aside>
 
@@ -2026,14 +2034,14 @@
             <!-- News Items (horizontal scroll rail, visual-first cards) -->
             <div class="news-scroll-wrapper">
             <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
-                <!-- Anthropic「Claude Startups」採択 -->
+                <!-- Anthropic「Claude Startup Program」採択 -->
                 <article class="news-card-v2 group">
                     <a href="news/2026-10-07-claude-startups.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Claude Startups">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Claude Startup Program">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
                                 <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">Claude Startups</span>
+                                <span class="news-visual-wordmark news-visual-wordmark--amber">Claude Startup Program</span>
                             </div>
                             <span class="news-visual-caption jp-keep">Anthropic&nbsp;スタートアップ<wbr>支援プログラム</span>
                         </div>
@@ -2043,7 +2051,7 @@
                                 <time datetime="2026-10-07" class="news-card-v2-date">2026.10.07</time>
                             </div>
                             <h3 class="news-card-v2-title jp-keep">
-                                Anthropic&nbsp;の<wbr>「Claude&nbsp;Startups」に<wbr>採択
+                                Anthropic&nbsp;の<wbr>「Claude&nbsp;Startup <span class="whitespace-nowrap">Program」に</span><wbr>採択
                             </h3>
                             <p class="news-card-v2-lede jp-keep">
                                 Anthropic&nbsp;が<wbr>運営する<wbr>スタートアップ<wbr>支援プログラムに<wbr>採択されました。
