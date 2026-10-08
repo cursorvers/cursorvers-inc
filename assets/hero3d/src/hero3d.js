@@ -544,7 +544,7 @@ function boot() {
 
   function updatePauseButton() {
     pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-    pauseBtn.textContent = paused ? '動きを再開する' : '動きを止める';
+    pauseBtn.textContent = paused ? 'Play' : 'Pause';
     pauseBtn.dataset.state = paused ? 'paused' : 'playing';
   }
 
