@@ -15,6 +15,13 @@ const LANDING_SECONDS = 4;
 const FLIGHT_SECONDS = 60;
 const QUALITY_SCALE = [1, 0.9, 0.8, 0.7, 0.6];
 const SAMPLES_PER_SEGMENT = 256;
+
+// カメラの歩調。近景ほど遅く、遠景ほど速く動く。視線の回転にも上限を置く。
+const PACE_DISTANCE_GAIN = 1.5;   // 1 秒あたりの移動量 = GAIN × (注視点までの距離)^EXPONENT
+const PACE_DISTANCE_EXPONENT = 0.6;
+const PACE_TURN_DEG_PER_S = 16;   // 視線の回転の目安 (度/秒)。全体を 60 秒に合わせるため実効値は伸び縮みする
+const PACE_SOFTMAX_POWER = 3;     // 移動と回転の所要時間を滑らかに合成する指数
+
 const HEADER_HEIGHT = 80;
 const FRAME_MARGIN = 12;
 
@@ -131,7 +138,7 @@ function makeFlight(frames) {
     if (frame.still) stillIndices.push(index);
   });
 
-  // 減速を除く区間の速度は一定。減速への配分は一周の最大 30%。
+  // 減速への配分は一周の最大 30%。残りを歩調 (近景は遅く、遠景は速く) で配る。
   const requestedHold = frames.reduce((sum, frame) => sum + frame.hold, 0);
   const holdScale = requestedHold > 18 ? 18 / requestedHold : 1;
   const cruiseSeconds = FLIGHT_SECONDS - requestedHold * holdScale;
@@ -151,35 +158,78 @@ function makeFlight(frames) {
     };
   });
 
-  function secondsPerArc(distance) {
-    let density = cruiseSeconds;
+  // 各標本での位置・注視点までの距離・視線方向を取る。
+  const posSamples = [];
+  const distSamples = [];
+  const dirSamples = [];
+  const tmpPos = new Vector3();
+  const tmpLook = new Vector3();
+
+  for (let index = 0; index <= divisions; index++) {
+    const u = index / divisions;
+    positionCurve.getPoint(u, tmpPos);
+    lookCurve.getPoint(u, tmpLook);
+
+    posSamples.push(tmpPos.clone());
+    const offset = tmpLook.clone().sub(tmpPos);
+    distSamples.push(offset.length());
+    dirSamples.push(offset.normalize());
+  }
+
+  // 区間ごとの移動・回転の所要時間を softmax で合成する。
+  const cruise = new Float64Array(divisions + 1);
+  const holdDt = new Float64Array(divisions + 1);
+  const power = PACE_SOFTMAX_POWER;
+  const degPerRadian = 180 / Math.PI;
+
+  for (let index = 1; index <= divisions; index++) {
+    const len = posSamples[index].distanceTo(posSamples[index - 1]);
+    const d = (distSamples[index] + distSamples[index - 1]) / 2;
+    const dot = MathUtils.clamp(
+      dirSamples[index].dot(dirSamples[index - 1]),
+      -1,
+      1
+    );
+    const ang = Math.acos(dot) * degPerRadian;
+
+    const a = len / (PACE_DISTANCE_GAIN * Math.pow(d, PACE_DISTANCE_EXPONENT));
+    const b = ang / PACE_TURN_DEG_PER_S;
+    cruise[index] = Math.pow(a ** power + b ** power, 1 / power);
+
+    // 減速は区間の中点の弧長位置で評価し、区間幅を掛けて秒に直す。
+    const m = (arc[index] + arc[index - 1]) / 2;
+    const width = arc[index] - arc[index - 1];
 
     for (const hold of holds) {
       if (hold.seconds <= 0) continue;
 
-      let delta = Math.abs(distance - hold.center);
+      let delta = Math.abs(m - hold.center);
       delta = Math.min(delta, 1 - delta);
 
       if (delta < hold.radius) {
         // 周期的な raised cosine。区間の両端で速度変化を滑らかにする。
-        density += hold.seconds *
+        holdDt[index] += width * hold.seconds *
           (1 + Math.cos(Math.PI * delta / hold.radius)) /
           (2 * hold.radius);
       }
     }
-
-    return density;
   }
 
-  // 弧長に対する所要時間を積分し、時刻から曲線パラメータを逆引きする。
+  let cruiseSum = 0;
+  for (let index = 1; index <= divisions; index++) {
+    cruiseSum += cruise[index];
+  }
+
+  if (!Number.isFinite(cruiseSum) || cruiseSum <= 0) {
+    throw new Error('The camera path must have a nonzero pace.');
+  }
+
+  const paceScale = cruiseSeconds / cruiseSum;
   const times = new Float64Array(divisions + 1);
-  let previousDensity = secondsPerArc(0);
 
   for (let index = 1; index <= divisions; index++) {
-    const density = secondsPerArc(arc[index]);
     times[index] = times[index - 1] +
-      (arc[index] - arc[index - 1]) * (previousDensity + density) * 0.5;
-    previousDensity = density;
+      cruise[index] * paceScale + holdDt[index];
   }
 
   const timeScale = FLIGHT_SECONDS / times[divisions];
