@@ -573,9 +573,11 @@ function boot() {
   let textTop = Infinity;
 
   function resize() {
-    width = Math.max(1, innerWidth);
-    height = Math.max(1, innerHeight);
-    compact = width < 768 || coarseMq.matches;
+    // 描画は canvas の実際の大きさで行う (スマホでは canvas は模型の帯の高さしかない)
+    const box = canvas.getBoundingClientRect();
+    width = Math.max(1, Math.round(box.width) || innerWidth);
+    height = Math.max(1, Math.round(box.height) || innerHeight);
+    compact = innerWidth < 768 || coarseMq.matches;
 
     applyPixelRatio();
 
@@ -598,8 +600,11 @@ function boot() {
 
     if (compact) {
       const top = HEADER_HEIGHT + FRAME_MARGIN;
-      // 文字の上端 (kicker) より 24px 上で枠を止める。スマホでは 0.45 が先に効く
-      const bottom = Math.max(top + 1, Math.min(height * 0.45, textTop - 24) - FRAME_MARGIN);
+      // 幅 768 未満: 見出しは模型の帯の中央に重ねる設計なので、帯全体を枠にする。
+      // 768 以上のタッチ端末: 文字の上端 (kicker) より 24px 上で枠を止める (従来どおり)
+      const bottom = innerWidth < 768
+        ? Math.max(top + 1, height - FRAME_MARGIN)
+        : Math.max(top + 1, Math.min(height * 0.45, textTop - 24) - FRAME_MARGIN);
       const frameHeight = bottom - top;
 
       /*

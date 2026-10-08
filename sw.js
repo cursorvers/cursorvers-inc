@@ -1,5 +1,5 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.8'; // Updated: 2026-10-08 - 配色を白黒基調へ (renewal.css?v=20261008m)。版を上げて既存の訪問者に届ける
+const CACHE_VERSION = '2.2.9'; // Updated: 2026-10-08 - ヒーローの 3D (hero3d.min.js) とスマホ版の配置を更新。2.2.8: 配色を白黒基調へ (renewal.css?v=20261008m)
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First

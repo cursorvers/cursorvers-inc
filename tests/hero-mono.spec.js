@@ -46,7 +46,7 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
     expect(contract).toMatchObject({
       heroExists: true,
       videoCount: 0,
-      h1Text: "AIに、臨床の魂を。",
+      h1Text: "AIに、臨床の魂を",
       subText: "医療機関・社会福祉法人のAI導入を、臨床経験のある医師が設計し、職員に定着するまで伴走します。",
       primaryHref: "contact.html",
       linkHref: "#paths",
