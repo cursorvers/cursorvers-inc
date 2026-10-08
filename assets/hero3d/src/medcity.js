@@ -392,12 +392,12 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   }
 
   // ---- helipad on west arm (top y = 88) ----
-  const HELI = { x: -25.5, y: 88 };
+  const HELI = { x: -25.5, y: 88, r: 9.5 }; // 屋上 (z ±11) の縁から 1.5 内側に収める
   {
-    ring(T.hero, HELI.x, HELI.y + 0.2, 0, 13, 64, 'y');
+    ring(T.hero, HELI.x, HELI.y + 0.2, 0, HELI.r, 64, 'y');
     // deck cross (two flat bands)
-    box(HELI.x - 8, HELI.y, -1.5, HELI.x + 8, HELI.y + 0.2, 1.5, 'hero', { skip: { py: true, ny: true } });
-    box(HELI.x - 1.5, HELI.y, -8, HELI.x + 1.5, HELI.y + 0.2, 8, 'hero', { skip: { py: true, ny: true } });
+    box(HELI.x - 6.5, HELI.y, -1.5, HELI.x + 6.5, HELI.y + 0.2, 1.5, 'hero', { skip: { py: true, ny: true } });
+    box(HELI.x - 1.5, HELI.y, -6.5, HELI.x + 1.5, HELI.y + 0.2, 6.5, 'hero', { skip: { py: true, ny: true } });
   }
 
   // ---- rooftop equipment ----
@@ -1006,7 +1006,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   const lightPos = [];
   for (let s = 0; s < 12; s++) {
     const t = (s / 12) * Math.PI * 2;
-    lightPos.push(HELI.x + Math.cos(t) * 13, HELI.y + 0.4, Math.sin(t) * 13);
+    lightPos.push(HELI.x + Math.cos(t) * HELI.r, HELI.y + 0.4, Math.sin(t) * HELI.r);
   }
   const lightGeo = new THREE.BufferGeometry();
   lightGeo.setAttribute('position', new THREE.BufferAttribute(Float32Array.from(lightPos), 3));
