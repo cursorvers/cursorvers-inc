@@ -162,32 +162,65 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   for (const a of arms) {
     if (a.name === 'south') {
       // ---- C0: stepped notch on the south face, east part x=-2..11 ----
-      // notch depth by floor: y4 -> z38, y8 -> z36, y12 -> z34, y16 -> z32
-      // west part (x=-11..-2): plain shell
-      box(a.x0, 0, a.z0, -2, a.h, a.z1, 'hero', { face: true, room: 'C0' });
-      // east part (x=-2..11): below notch (0..4) and above notch (20..48) plain
-      box(-2, 0, a.z0, a.x1, 4, a.z1, 'hero', { face: true, room: 'C0' });
-      box(-2, 20, a.z0, a.x1, a.h, a.z1, 'hero', { face: true, room: 'C0' });
-      // stepped bands: y=4..8 (z=36..40), y=8..12 (z=34..40), y=12..16 (z=32..40), y=16..20 (z=32..40)
-      // floor 4 band: cut z=38..40
-      box(-2, 4, a.z0, a.x1, 8, 38, 'hero', { face: true, room: 'C0' });
-      // floor 8 band: cut z=36..40
-      box(-2, 8, a.z0, a.x1, 12, 36, 'hero', { face: true, room: 'C0' });
-      // floor 12 band: cut z=34..40
-      box(-2, 12, a.z0, a.x1, 16, 34, 'hero', { face: true, room: 'C0' });
-      // floor 16 band: cut z=32..40
-      box(-2, 16, a.z0, a.x1, 20, 32, 'hero', { face: true, room: 'C0' });
-      // cut edges: floor slab top surfaces at each notch step (hero)
-      // slab top at y=4, z edge x=-2..38
-      box(-2, 3.7, a.z0, a.x1, 4, 38, 'hero', { face: true, room: 'C0' });
-      // slab top at y=8, z edge 36
-      box(-2, 7.7, a.z0, a.x1, 8, 36, 'hero', { face: true, room: 'C0' });
-      // slab top at y=12, z edge 34
-      box(-2, 11.7, a.z0, a.x1, 12, 34, 'hero', { face: true, room: 'C0' });
-      // slab top at y=16, z edge 32
-      box(-2, 15.7, a.z0, a.x1, 16, 32, 'hero', { face: true, room: 'C0' });
-      // vertical cut edges (hero lines)
-      // notch corner verticals at z=38,36,34,32
+      // west part (x=-11..-2): plain closed shell (no interior)
+      box(a.x0, 0, a.z0, -2, a.h, a.z1, 'hero', { face: true });
+      // east part (x=-2..11): hollow shell
+      // upper box y=20..48: closed (no interior)
+      box(-2, 20, a.z0, a.x1, a.h, a.z1, 'hero', { face: true });
+      // ---- floor slabs, top at y=0/4/8/12/16/20, thickness 0.3, room C0 ----
+      // south end follows the notch: y=4 -> z<=40, y=8 -> z<=38, y=12 -> z<=36, y=16 -> z<=34, y=20 -> z<=32
+      box(-2, -0.3, a.z0, a.x1, 0, a.z1, 'hero', { face: true, room: 'C0' });
+      box(-2, 3.7, a.z0, a.x1, 4, 40, 'hero', { face: true, room: 'C0' });
+      box(-2, 7.7, a.z0, a.x1, 8, 38, 'hero', { face: true, room: 'C0' });
+      box(-2, 11.7, a.z0, a.x1, 12, 36, 'hero', { face: true, room: 'C0' });
+      box(-2, 15.7, a.z0, a.x1, 16, 34, 'hero', { face: true, room: 'C0' });
+      box(-2, 19.7, a.z0, a.x1, 20, 32, 'hero', { face: true, room: 'C0' });
+      // ---- thin walls (thickness 0.6), shell: no room ----
+      // south wall z=40, ground band y=0..4 (above y=20 the closed upper box takes over)
+      box(-2, 0, 39.4, a.x1, 4, 40, 'hero', { face: true });
+      // stepped back walls (new south face of each notch band)
+      // band y=4..8: face at z=38
+      box(-2, 4, 37.4, a.x1, 8, 38, 'hero', { face: true });
+      // band y=8..12: face at z=36
+      box(-2, 8, 35.4, 3.4, 12, 36, 'hero', { face: true });
+      box(4.6, 8, 35.4, a.x1, 12, 36, 'hero', { face: true });
+      box(3.4, 8, 35.4, 4.6, 9.4, 36, 'hero', { face: true });
+      box(3.4, 11.8, 35.4, 4.6, 12, 36, 'hero', { face: true });
+      seg(T.equip, 3.4, 9.4, 36, 4.6, 9.4, 36);
+      seg(T.equip, 3.4, 11.8, 36, 4.6, 11.8, 36);
+      seg(T.equip, 3.4, 9.4, 36, 3.4, 11.8, 36);
+      seg(T.equip, 4.6, 9.4, 36, 4.6, 11.8, 36);
+      // band y=12..16: face at z=34
+      box(-2, 12, 33.4, a.x1, 16, 34, 'hero', { face: true });
+      // band y=16..20: face at z=32
+      box(-2, 16, 31.4, a.x1, 20, 32, 'hero', { face: true });
+      // west inner wall x=-2 (between hollow part and closed west shell)
+      box(-2, 0, a.z0, -1.4, 20, a.z1, 'hero', { face: true });
+      // north wall omitted (adjoins the central core)
+      // east wall x=11, thin box, split around real openings
+      // ground band y=0..4: entrance opening z=24..28, y=0..4
+      box(10.4, 0, a.z0, a.x1, 4, 24, 'hero', { face: true });
+      box(10.4, 0, 28, a.x1, 4, 40, 'hero', { face: true });
+      // band y=4..9.4 (east face open z=32..40 above y=4)
+      box(10.4, 4, a.z0, a.x1, 9.4, 32, 'hero', { face: true });
+      // band y=9.4..10.6: penetration opening z=29.4..30.6
+      box(10.4, 9.4, a.z0, a.x1, 10.6, 29.4, 'hero', { face: true });
+      box(10.4, 9.4, 30.6, a.x1, 10.6, 32, 'hero', { face: true });
+      // band y=10.6..20
+      box(10.4, 10.6, a.z0, a.x1, 20, 32, 'hero', { face: true });
+      // opening frames
+      // floor-0 entrance: east wall x=11, z=24..28, y=0..4
+      seg(T.hero, HW, 0, 24, HW, 0, 28);
+      seg(T.hero, HW, 4, 24, HW, 4, 28);
+      seg(T.hero, HW, 0, 24, HW, 4, 24);
+      seg(T.hero, HW, 0, 28, HW, 4, 28);
+      // east wall penetration x=11, z=29.4..30.6, y=9.4..10.6
+      seg(T.equip, HW, 9.4, 29.4, HW, 9.4, 30.6);
+      seg(T.equip, HW, 10.6, 29.4, HW, 10.6, 30.6);
+      seg(T.equip, HW, 9.4, 29.4, HW, 10.6, 29.4);
+      seg(T.equip, HW, 9.4, 30.6, HW, 10.6, 30.6);
+      // cut edges: notch step edges (hero lines)
+      // vertical cut edges at z=38,36,34,32
       for (const [yy, zz] of [[4, 38], [8, 36], [12, 34], [16, 32]]) {
         seg(T.hero, a.x1, yy, zz, a.x1, yy + 4, zz); // east face vertical edge
         seg(T.hero, -2, yy, zz, -2, yy + 4, zz);     // step inner corner
@@ -235,10 +268,15 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   // ---- C0 cutaway interior: beds, rails, IV, nurse station ----
   {
     const floors = [4, 8, 12, 16];
-    const bedXs = mobile ? [-6, 0, 6] : [-8, -4, 0, 4, 8];
+    const innerByFloor = { 4: 37.4, 8: 35.4, 12: 33.4, 16: 31.4 };
+    const bedXs = mobile ? [0.8, 4.6, 8.4] : [0.4, 3.2, 6.0, 8.8];
     for (const fy of floors) {
+      const inner = innerByFloor[fy];
+      const bz = inner - 1.4; // bed center z, head toward +z (south outer wall)
+      const iz = bz - 2.2; // IV stand z
+      const rail0 = bz - 2.5, rail1 = bz + 1.2;
+      const cz1 = Math.min(29, bz - 3), cz0 = cz1 - 3;
       for (const bx of bedXs) {
-        const bz = 34; // bed center z, head toward +z (south outer wall)
         // bed: 1.1 wide (x) x 0.5 high x 2.6 long (z), bottom at fy+0.4
         box(bx - 0.55, fy + 0.4, bz - 1.3, bx + 0.55, fy + 0.9, bz + 1.3, 'equip', { room: 'C0' });
         // legs (4 short lines)
@@ -249,36 +287,26 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { room: 'C0' });
         // head board: 0.15 x 0.6 x 1.15 at head end
         box(bx - 0.075, fy + 0.4, bz + 1.3, bx + 0.075, fy + 1.0, bz + 1.15, 'equip', { room: 'C0' });
-        // IV stand: pole height 2.1 + top cross 2 lines + 2 legs, corridor side z=31.8
-        const ix = bx - 0.9, iz = 31.8;
+        // IV stand: pole height 2.1 + top cross 2 lines + 2 legs
+        const ix = bx - 0.9;
         seg(T.equip, ix, fy, iz, ix, fy + 2.1, iz);
         seg(T.equip, ix, fy + 2.1, iz, ix - 0.3, fy + 2.1, iz);
         seg(T.equip, ix, fy + 2.1, iz, ix + 0.3, fy + 2.1, iz);
         seg(T.equip, ix, fy, iz - 0.3, ix, fy, iz + 0.3);
       }
       // curtain rails at fy+2.6, two lines per floor
-      seg(T.equip, -10, fy + 2.6, 31.5, 10.5, fy + 2.6, 31.5);
-      seg(T.equip, -10, fy + 2.6, 36.5, 10.5, fy + 2.6, 36.5);
-      // nurse / record counter 10 x 1.1 x 3 at z=26..29, x=-6..4
-      box(-6, fy, 26, 4, fy + 1.1, 29, 'equip', { face: true, room: 'C0' });
-      seg(T.equip, -6, fy + 1.4, 26, 4, fy + 1.4, 26);
-      seg(T.equip, -6, fy + 1.4, 29, 4, fy + 1.4, 29);
+      seg(T.equip, -1.0, fy + 2.6, rail0, 10.0, fy + 2.6, rail0);
+      seg(T.equip, -1.0, fy + 2.6, rail1, 10.0, fy + 2.6, rail1);
+      // nurse / record counter 10 x 1.1 x 3 at x=-1..9
+      box(-1.0, fy, cz0, 9.0, fy + 1.1, cz1, 'equip', { face: true, room: 'C0' });
+      seg(T.equip, -1.0, fy + 1.4, cz0, 9.0, fy + 1.4, cz0);
+      seg(T.equip, -1.0, fy + 1.4, cz1, 9.0, fy + 1.4, cz1);
       // record terminal on floor-8 counter east end, near (0, 9.4, 27)
       if (fy === 8) {
         box(-0.6, 9.0, 26.6, 0.6, 9.8, 27.8, 'equip', { room: 'C0' });
         box(-0.6, 9.4, 27.72, 0.6, 10.2, 27.84, 'equip', { room: 'C0' });
       }
     }
-    // east wall penetration x=11, z=29.4..30.6, y=9.4..10.6 (frame lines)
-    seg(T.equip, HW, 9.4, 29.4, HW, 9.4, 30.6);
-    seg(T.equip, HW, 10.6, 29.4, HW, 10.6, 30.6);
-    seg(T.equip, HW, 9.4, 29.4, HW, 10.6, 29.4);
-    seg(T.equip, HW, 9.4, 30.6, HW, 10.6, 30.6);
-    // floor-0 entrance: east wall x=11, z=24..28, y=0..4 (frame lines)
-    seg(T.hero, HW, 0, 24, HW, 0, 28);
-    seg(T.hero, HW, 4, 24, HW, 4, 28);
-    seg(T.hero, HW, 0, 24, HW, 4, 24);
-    seg(T.hero, HW, 0, 28, HW, 4, 28);
   }
 
   // ---- helipad on west arm (top y = 88) ----
@@ -315,28 +343,32 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // floor
     box(50, 0, -11, 94, 0.2, 11, 'hero', { face: true, room: 'C1' });
     // north wall
-    box(50, 0, -11, 94, 12, -10.4, 'hero', { face: true, room: 'C1' });
-    // west wall (x=50) with entrance z=-2..2, y=0..4
-    box(50, 0, -11, 50.6, 12, -2, 'hero', { face: true, room: 'C1' });
-    box(50, 0, 2, 50.6, 12, 11, 'hero', { face: true, room: 'C1' });
-    box(50, 4, -2, 50.6, 12, 2, 'hero', { face: true, room: 'C1' });
+    box(50, 0, -11, 94, 12, -10.4, 'hero', { face: true });
+    // west wall (x=50) with entrance z=-2..2, y=0..4 (real hole: split by opening)
+    box(50, 0, -11, 50.6, 12, -2, 'hero', { face: true });
+    box(50, 0, 2, 50.6, 12, 11, 'hero', { face: true });
+    box(50, 4, -2, 50.6, 12, 2, 'hero', { face: true });
     // south wall (z=11): L notch x=82..93.4, y=1.2..10
-    box(50, 0, 10.4, 82, 12, 11, 'hero', { face: true, room: 'C1' });
-    box(82, 0, 10.4, 93.4, 1.2, 11, 'hero', { face: true, room: 'C1' }); // 腰壁
-    box(82, 10, 10.4, 93.4, 12, 11, 'hero', { face: true, room: 'C1' }); // 上の梁
+    box(50, 0, 10.4, 82, 12, 11, 'hero', { face: true });
+    box(82, 0, 10.4, 93.4, 1.2, 11, 'hero', { face: true }); // 腰壁
+    box(82, 10, 10.4, 93.4, 12, 11, 'hero', { face: true }); // 上の梁
     // east wall (x=94): L notch z=1..10.4, y=1.2..10
-    box(93.4, 0, -11, 94, 12, 1, 'hero', { face: true, room: 'C1' });
-    box(93.4, 0, 1, 94, 1.2, 10.4, 'hero', { face: true, room: 'C1' });
-    box(93.4, 10, 1, 94, 12, 10.4, 'hero', { face: true, room: 'C1' });
+    box(93.4, 0, 1, 94, 1.2, 10.4, 'hero', { face: true });
+    box(93.4, 10, 1, 94, 12, 10.4, 'hero', { face: true });
     // corner column 0.6 square (x=93.4..94, z=10.4..11)
-    box(93.4, 0, 10.4, 94, 12, 11, 'hero', { face: true, room: 'C1' });
+    box(93.4, 0, 10.4, 94, 12, 11, 'hero', { face: true });
     // east wall penetration frame (z=-5.6..-4.4, y=2.2..3.4) — 線で枠だけ
     seg(T.equip, 94, 2.2, -5.6, 94, 2.2, -4.4);
     seg(T.equip, 94, 3.4, -5.6, 94, 3.4, -4.4);
     seg(T.equip, 94, 2.2, -5.6, 94, 3.4, -5.6);
     seg(T.equip, 94, 2.2, -4.4, 94, 3.4, -4.4);
+    // east wall split into a real penetration hole (z=-5.6..-4.4, y=2.2..3.4)
+    box(93.4, 0, -11, 94, 12, -5.6, 'hero', { face: true });
+    box(93.4, 0, -5.6, 94, 2.2, -4.4, 'hero', { face: true });
+    box(93.4, 3.4, -5.6, 94, 12, -4.4, 'hero', { face: true });
+    box(93.4, 0, -4.4, 94, 12, 1, 'hero', { face: true });
     // lift shaft x=50..54, z=5..9, y=0..16 (joins east skybridge y=12..16)
-    box(50, 0, 5, 54, 16, 9, 'hero', { face: true, room: 'C1' });
+    box(50, 0, 5, 54, 16, 9, 'hero', { face: true });
 
     // --- CT: short donut, axis z, center (60, 5.5, 0), z=-1.1..1.1 ---
     const ctRout = 4, ctRin = 1.5;
@@ -412,17 +444,17 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // floor
     box(50, 0, 22, 78, 0.1, 46, 'hero', { face: true, room: 'C2' });
     // roof: south side only (z=38.8..46); north edge reads as foreground frame
-    box(50, 8.8, 38.8, 78, 9, 46, 'hero', { face: true, room: 'C2' });
+    box(50, 8.8, 38.8, 78, 9, 46, 'hero', { face: true });
     // north wall (z=22) full height
-    box(50, 0, 22, 78, 9, 22.6, 'hero', { face: true, room: 'C2' });
+    box(50, 0, 22, 78, 9, 22.6, 'hero', { face: true });
     // east wall (x=78) full height
-    box(77.4, 0, 22, 78, 9, 46, 'hero', { face: true, room: 'C2' });
-    // west wall (x=50) full height with entrance z=32..36, y=0..4
-    box(50, 0, 22, 50.6, 9, 32, 'hero', { face: true, room: 'C2' });
-    box(50, 0, 36, 50.6, 9, 46, 'hero', { face: true, room: 'C2' });
-    box(50, 4, 32, 50.6, 9, 36, 'hero', { face: true, room: 'C2' });
+    box(77.4, 0, 22, 78, 9, 46, 'hero', { face: true });
+    // west wall (x=50) full height with entrance z=32..36, y=0..4 (real hole: split by opening)
+    box(50, 0, 22, 50.6, 9, 32, 'hero', { face: true });
+    box(50, 0, 36, 50.6, 9, 46, 'hero', { face: true });
+    box(50, 4, 32, 50.6, 9, 36, 'hero', { face: true });
     // south wall (z=46): spandrel to y=1.2
-    box(50, 0, 45.4, 78, 1.2, 46, 'hero', { face: true, room: 'C2' });
+    box(50, 0, 45.4, 78, 1.2, 46, 'hero', { face: true });
 
     // --- surgical table (long in z, head at +z) ---
     box(63.1, 1.0, 31.6, 64.9, 1.5, 36.4, 'equip', { face: true, room: 'C2' });
@@ -565,17 +597,17 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // shell x=-88..-72, z=-70..-54, y=0..8, roofless
     // floor
     box(-88, 0, -70, -72, 0.15, -54, 'mid', { face: true, room: 'C3' });
-    // north wall (z=-70): y=0..1 spandrel only
-    box(-88, 0, -70, -72, 1, -69.4, 'mid', { face: true, room: 'C3' });
-    // west wall (x=-88): y=0..1 spandrel only
-    box(-88, 0, -70, -87.4, 1, -54, 'mid', { face: true, room: 'C3' });
-    // south wall (z=-54): full height with penetration x=-80.6..-79.4, y=2.4..4.8
-    box(-88, 0, -54.6, -80.6, 8, -54, 'mid', { face: true, room: 'C3' });
-    box(-79.4, 0, -54.6, -72, 8, -54, 'mid', { face: true, room: 'C3' });
-    box(-80.6, 0, -54.6, -79.4, 2.4, -54, 'mid', { face: true, room: 'C3' });
-    box(-80.6, 4.8, -54.6, -79.4, 8, -54, 'mid', { face: true, room: 'C3' });
+    // north wall (z=-70): y=0..1 spandrel only (y=1..8 open, roofless)
+    box(-88, 0, -70, -72, 1, -69.4, 'mid', { face: true });
+    // west wall (x=-88): y=0..1 spandrel only (y=1..8 open, roofless)
+    box(-88, 0, -70, -87.4, 1, -54, 'mid', { face: true });
+    // south wall (z=-54): full height with real penetration x=-80.6..-79.4, y=2.4..4.8
+    box(-88, 0, -54.6, -80.6, 8, -54, 'mid', { face: true });
+    box(-79.4, 0, -54.6, -72, 8, -54, 'mid', { face: true });
+    box(-80.6, 0, -54.6, -79.4, 2.4, -54, 'mid', { face: true });
+    box(-80.6, 4.8, -54.6, -79.4, 8, -54, 'mid', { face: true });
     // east wall (x=-72): full height
-    box(-72.6, 0, -70, -72, 8, -54, 'mid', { face: true, room: 'C3' });
+    box(-72.6, 0, -70, -72, 8, -54, 'mid', { face: true });
     // south penetration frame lines
     seg(T.equip, -80.6, 2.4, -54, -79.4, 2.4, -54);
     seg(T.equip, -80.6, 4.8, -54, -79.4, 4.8, -54);
@@ -622,21 +654,22 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // floor
     box(76, 0, 66, 106, 0.15, 96, 'mid', { face: true, room: 'C4' });
     // north wall (z=66) full height
-    box(76, 0, 66, 106, 10, 66.6, 'mid', { face: true, room: 'C4' });
+    box(76, 0, 66, 106, 10, 66.6, 'mid', { face: true });
     // east wall (x=106) full height
-    box(105.4, 0, 66, 106, 10, 96, 'mid', { face: true, room: 'C4' });
-    // west wall (x=76): south part z=82..96 opened y=1.2..10; entrance z=80..84, y=0..4
-    box(76, 0, 66, 76.6, 10, 80, 'mid', { face: true, room: 'C4' });   // north of entrance
-    box(76, 0, 84, 76.6, 10, 96, 'mid', { face: true, room: 'C4' });   // south of entrance (below notch: only y<1.2 remains solid above is open)
-    box(76, 0, 66, 76.6, 1.2, 96, 'mid', { face: true, room: 'C4' });  // spandrel to y=1.2 full length
+    box(105.4, 0, 66, 106, 10, 96, 'mid', { face: true });
+    // west wall (x=76): real entrance z=80..84, y=0..4; notch z=82..96 opened y=1.2..10
+    box(76, 0, 66, 76.6, 1.2, 96, 'mid', { face: true });   // spandrel to y=1.2 full length
+    box(76, 1.2, 66, 76.6, 10, 80, 'mid', { face: true });  // north of entrance, full height above spandrel
+    box(76, 4, 80, 76.6, 10, 84, 'mid', { face: true });    // above entrance z=80..84
+    // (z=84..96 above y=1.2: open notch — no face)
     // south wall (z=96): x=76..92 opened y=1.2..10
-    box(76, 0, 95.4, 92, 1.2, 96, 'mid', { face: true, room: 'C4' });
-    box(92, 0, 95.4, 106, 10, 96, 'mid', { face: true, room: 'C4' });
+    box(76, 0, 95.4, 92, 1.2, 96, 'mid', { face: true });
+    box(92, 0, 95.4, 106, 10, 96, 'mid', { face: true });
     // roof: exclude x=76..94, z=80..96
-    box(76, 10, 66, 106, 10.2, 80, 'mid', { face: true, room: 'C4' }); // north strip (z=66..80)
-    box(94, 10, 80, 106, 10.2, 96, 'mid', { face: true, room: 'C4' }); // east strip (x=94..106)
+    box(76, 10, 66, 106, 10.2, 80, 'mid', { face: true }); // north strip (z=66..80)
+    box(94, 10, 80, 106, 10.2, 96, 'mid', { face: true }); // east strip (x=94..106)
     // rooftop top-light box x=96..102, z=70..76, y=10..12
-    box(96, 10, 70, 102, 12, 76, 'mid', { face: true, room: 'C4' });
+    box(96, 10, 70, 102, 12, 76, 'mid', { face: true });
     // west entrance frame (z=80..84, y=0..4)
     seg(T.mid, 76, 0, 80, 76, 0, 84);
     seg(T.mid, 76, 4, 80, 76, 4, 84);
@@ -763,7 +796,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   // 起点・門・記録 (spec §4)
   const P = {
-    E: [6, 2.8, 82], I: [86, 2.8, -5], O: [68, 2.8, 38], W: [0, 9.4, 27],
+    E: [6, 2.8, 82], I: [86, 2.8, -5], O: [68, 2.8, 38], W: [0, 9.7, 27],
     J: [14, 10, 30], G: [8, 10, 30], H: [4, 10, 30], S: [-80, 3, -60], D: [88, 2.8, 86],
   };
 
@@ -771,19 +804,19 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   const fwdE = [P.E, [30, 2.8, 82], [30, 2.8, 52], [46, 2.8, 52], [46, 2.8, 30], [14, 2.8, 30], P.J, P.G];
   const fwdI = [P.I, [96, 2.8, -5], [96, 2.8, 18], [46, 2.8, 18], [46, 2.8, 30], [14, 2.8, 30], P.J, P.G];
   const fwdO = [P.O, [68, 2.8, 48], [46, 2.8, 48], [46, 2.8, 30], [14, 2.8, 30], P.J, P.G];
-  const fwdW = [P.W, [0, 10, 27], [10, 10, 27], [10, 10, 30], P.G];
+  const fwdW = [P.W, [0, 10, 27], [9.6, 10, 27], [9.6, 10, 30], P.G];
 
   // 共通 (門 → 記録)
   const common = [P.G, P.H, [4, 10, 41], [-14, 10, 41], [-14, 10, 14], [-44, 10, 14], [-44, 10, -46], [-80, 10, -46], [-80, 10, -50], [-80, 3, -50], [-80, 3, -54], P.S];
 
   // 戻り (記録 → 門の外 J' まで、共通の y+1.2 を逆向き)
-  const retCommon = [P.S, [-80, 3, -54], [-80, 4.2, -50], [-80, 11.2, -50], [-80, 11.2, -46], [-44, 11.2, -46], [-44, 11.2, 14], [-14, 11.2, 14], [-14, 11.2, 41], [4, 11.2, 41], [4, 11.2, 33], [14, 11.2, 33], [14, 11.2, 30]];
+  const retCommon = [P.S, [-80, 3, -54], [-80, 4.2, -50], [-80, 11, -50], [-80, 11, -46], [-44, 11, -46], [-44, 11, 14], [-14, 11, 14], [-14, 11, 41], [4, 11, 41], [4, 11, 33], [14, 11, 33], [14, 11, 30]];
 
   // 各現場への戻り
-  const backE = [[14, 11.2, 30], [46, 11.2, 30], [46, 11.2, 52], [30, 11.2, 52], [30, 11.2, 82], [6, 11.2, 82], P.E];
-  const backO = [[14, 11.2, 30], [46, 11.2, 30], [46, 11.2, 48], [68, 11.2, 48], [68, 2.8, 38]];
-  const backW = [[14, 11.2, 30], [14, 11.2, 33], [10, 11.2, 33], [10, 11.2, 27], [0, 11.2, 27], P.W];
-  const backD = [[14, 11.2, 30], [46, 11.2, 30], [46, 11.2, 52], [30, 11.2, 82], [30, 4, 82], [74, 4, 82], [74, 4, 86], [88, 4, 86], P.D];
+  const backE = [[14, 11, 30], [46, 11, 30], [46, 11, 52], [30, 11, 52], [30, 11, 82], [6, 11, 82], P.E];
+  const backO = [[14, 11, 30], [46, 11, 30], [64, 11, 30], [64, 11, 34], [68, 2.8, 38]];
+  const backW = [[14, 11, 30], [14, 11, 33], [9.6, 11, 33], [9.6, 11, 27], [0, 11, 27], P.W];
+  const backD = [[14, 11, 30], [46, 11, 30], [46, 11, 52], [30, 11, 82], [30, 4, 82], [74, 4, 82], [74, 4, 86], [88, 4, 86], P.D];
 
   // 意味上の 4 本の巡回 (往路 + 共通 + 戻り)。gateDist = 門 G までの累積長
   function makeLoop(fwd, back) {
@@ -813,11 +846,11 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   aseg(8, 8, 28.4, 8, 8.4, 28.4);
   aseg(8, 8, 31.6, 8, 8.4, 31.6);
 
-  // 支持: 共通と戻りの y=10 / y=11.2 の水平区間 (x<-11 または z>40) にケーブルトレー (幅 0.8 の平行 2 線, mid) と 16 以下間隔の架台
+  // 支持: 共通と戻りの y=10 / y=11 の水平区間 (x<-11 または z>40) にケーブルトレー (幅 0.8 の平行 2 線, mid) と 16 以下間隔の架台
   function supports(pts) {
     for (let i = 1; i < pts.length; i++) {
       const a = pts[i - 1], b = pts[i];
-      if (a[1] !== b[1] || (a[1] !== 10 && a[1] !== 11.2)) continue;
+      if (a[1] !== b[1] || (a[1] !== 10 && a[1] !== 11)) continue;
       const mx = (a[0] + b[0]) / 2, mz = (a[2] + b[2]) / 2;
       if (!(mx < -11 || mz > 40)) continue;
       const y = a[1];
