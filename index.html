@@ -1194,7 +1194,9 @@
 @media (max-width: 767px) {
   .hero-mono {
     /* 模型の帯の高さ。見て調整する */
-    --hero-stage: clamp(300px, 46svh, 440px);
+    --hero-stage: clamp(260px, 38svh, 360px);
+    --hero-mid: calc(80px + (var(--hero-stage) - 80px) / 2);
+    --hero-shift: 14px;
     min-height: 0;
     display: block;
   }
@@ -1223,7 +1225,7 @@
     right: 0;
     height: var(--hero-stage);
     background:
-      radial-gradient(ellipse 62% 30% at 50% calc(40px + 50%), rgba(255,255,255,.92) 0%, rgba(255,255,255,.78) 45%, rgba(255,255,255,0) 100%),
+      radial-gradient(ellipse 70% 38% at 50% calc(40px + 50%), rgba(255,255,255,.92) 0%, rgba(255,255,255,.78) 45%, rgba(255,255,255,0) 100%),
       linear-gradient(180deg, rgba(255,255,255,0) 78%, #ffffff 100%);
   }
 
@@ -1235,7 +1237,7 @@
     position: absolute;
     left: 20px;
     right: 20px;
-    top: calc(80px + (var(--hero-stage) - 80px) / 2);
+    top: calc(var(--hero-mid) + var(--hero-shift));
     transform: translateY(-50%);
     margin: 0;
     text-align: center;
@@ -1244,18 +1246,27 @@
   }
 
   .hero-mono__kicker {
-    margin-top: 24px;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: calc(var(--hero-mid) + var(--hero-shift) - 10px);
+    /* 登場アニメーション (hero-in) の transform に上書きされないよう translate で指定する */
+    translate: 0 calc(-100% - (clamp(34px, 9.6vw, 44px) * 1.18) / 2);
+    z-index: 2;
+    margin: 0;
+    justify-content: center;
+    text-align: center;
     font-size: 11px;
     letter-spacing: .14em;
-    margin-bottom: 18px;
     flex-wrap: wrap;
-    row-gap: 8px;
+    row-gap: 6px;
     white-space: normal;
   }
 
   .hero-mono__sub {
     font-size: 15px;
     margin-bottom: 28px;
+    margin-top: 20px;
   }
 
   .hero-mono__primary {
