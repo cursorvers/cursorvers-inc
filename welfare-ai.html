@@ -39,6 +39,7 @@
     <!-- renewal:end -->
 
     <style>
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
         body { font-family: "Noto Sans JP", system-ui, sans-serif; font-feature-settings: "palt"; background: #FFFFFF; color: #111111; }
         .glass-nav { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
         a:focus-visible, button:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
@@ -321,7 +322,7 @@
             <div class="max-w-4xl mx-auto">
                 <div class="bg-white rounded-lg p-8 md:p-10 border border-gray-200 text-center">
                     <h2 class="text-2xl md:text-3xl font-bold text-brand-black mb-4">福祉・介護で使える補助金</h2>
-                    <p class="text-base md:text-lg text-text-secondary leading-relaxed mb-6">介護テクノロジー導入・定着支援事業、東京都のデジタル機器導入促進支援、保育ICTなど、福祉分野のデジタル化を支える制度を整理しています。</p>
+                    <p class="text-base md:text-lg text-text-secondary leading-relaxed mb-6 jp-keep">介護テクノロジー<wbr>導入・定着支援事業、<wbr>東京都の<wbr>デジタル機器<wbr>導入促進支援、<wbr>保育ICTなど、<wbr>福祉分野の<wbr>デジタル化を<wbr>支える<wbr>制度を<wbr>整理しています。</p>
                     <a href="subsidy.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'welfareai_subsidy'})"
                         class="inline-flex items-center justify-center px-8 py-4 bg-brand-black text-white font-bold rounded-full hover:bg-flame transition">
                         制度の一覧を見る <svg class="ml-3" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
