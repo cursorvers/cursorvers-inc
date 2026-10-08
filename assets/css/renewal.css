@@ -5,21 +5,21 @@
 
 :root {
   /* Primitive tokens */
-  --c-ink: #13243F;
-  --c-bg: #F4F1EA;
-  --c-card: #FBFAF5;
-  --c-band: #ECE7DB;
+  --c-ink: #111111;
+  --c-bg: #FFFFFF;
+  --c-card: #FFFFFF;
+  --c-band: #F4F4F5;
   --c-azure: #3E6FA8;
   --c-azure-rgb: 62, 111, 168;
   --c-azure-deep: #36618F;
   --c-azure-soft: #7FA3CC;
-  --c-gold: #C8922E;
+  --c-gold: #111111;
   --c-crimson: #9B2D30;
-  --c-deep: #101D33;
-  --c-slate: #6B7280;
-  --c-grey: #6B6557;
-  --c-hairline: #D8D4C8;
-  --c-hairline-dark: #2A3A55;
+  --c-deep: #111111;
+  --c-slate: #6B6F76;
+  --c-grey: #55595F;
+  --c-hairline: #E4E4E7;
+  --c-hairline-dark: #333333;
 
   /* Role tokens */
   --surface-base: var(--c-bg);
@@ -43,7 +43,7 @@
   --c-text-mute: var(--text-muted);
   --c-border: var(--c-hairline);
   --c-footer-bg: var(--c-deep);
-  --c-footer-text: rgba(244,241,234,.85);
+  --c-footer-text: rgba(255,255,255,.85);
   --c-footer-border: var(--c-hairline-dark);
   --c-slate-900: var(--c-ink);
 
@@ -54,10 +54,10 @@
   --radius-card: 0.75rem;
   --radius-btn: 0.5rem;
   --radius-pill: 9999px;
-  --shadow-sm: 0 1px 2px rgba(19,36,63,.05);
-  --shadow-md: 0 1px 2px rgba(19,36,63,.05);
-  --shadow-lg: 0 10px 24px -12px rgba(19,36,63,.14);
-  --shadow-flame: 0 10px 24px -12px rgba(19,36,63,.14);
+  --shadow-sm: 0 1px 2px rgba(17,17,17,.05);
+  --shadow-md: 0 1px 2px rgba(17,17,17,.05);
+  --shadow-lg: 0 10px 24px -12px rgba(17,17,17,.14);
+  --shadow-flame: 0 10px 24px -12px rgba(17,17,17,.14);
 }
 
 /* ---- Base ---- */
@@ -86,7 +86,7 @@ img { max-width: 100%; height: auto; }
   z-index: 9999;
   padding: 0.875rem 1.5rem;
   background: var(--c-flame);
-  color: #FBFAF5;
+  color: #FFFFFF;
   font-weight: 700;
   border-radius: 0 0 var(--radius-btn) 0;
 }
@@ -155,7 +155,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 50;
-  background: rgba(244,241,234,0.85);
+  background: rgba(255,255,255,0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -210,7 +210,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .glass-nav__cta:hover {
   background: var(--c-flame);
   border-color: var(--c-flame);
-  color: #FBFAF5;
+  color: #FFFFFF;
 }
 
 /* mobile menu toggle */
@@ -221,14 +221,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   width: 40px; height: 40px;
   border: 1px solid var(--c-border);
   border-radius: 8px;
-  background: #FBFAF5;
+  background: #FFFFFF;
   color: var(--c-text);
 }
 @media (min-width: 900px) { .glass-nav__toggle { display: none; } }
 .glass-nav__mobile {
   display: none;
   border-top: 1px solid var(--c-border);
-  background: #FBFAF5;
+  background: #FFFFFF;
 }
 .glass-nav__mobile.is-open { display: block; }
 .glass-nav__mobile a {
@@ -247,7 +247,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   gap: 0.5rem;
   padding: 0.3rem 0.85rem;
   border: 1px solid rgba(var(--c-azure-rgb),0.4);
-  background: #FBFAF5;
+  background: #FFFFFF;
   color: var(--c-flame);
   font-family: var(--font-en);
   font-size: 0.75rem;
@@ -273,7 +273,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 
 /* ---- Cards ---- */
 .content-card {
-  background: #FBFAF5;
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-md);
@@ -314,17 +314,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .btn-primary {
   padding: 0.875rem 1.5rem;
   background: var(--c-text);
-  color: #FBFAF5;
+  color: #FFFFFF;
   border-radius: var(--radius-btn);
   border: 1px solid var(--c-text);
 }
-.btn-primary:hover { background: #2A3A55; color: #FBFAF5; }
+.btn-primary:hover { background: #333333; color: #FFFFFF; }
 
 .btn-secondary {
   padding: 0.625rem 1.25rem;
   border: 1px solid var(--c-border);
   color: var(--c-text-sub);
-  background: #FBFAF5;
+  background: #FFFFFF;
   border-radius: var(--radius-pill);
   font-family: var(--font-en);
   text-transform: uppercase;
@@ -334,18 +334,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .btn-secondary:hover {
   background: var(--c-flame);
   border-color: var(--c-flame);
-  color: #FBFAF5;
+  color: #FFFFFF;
 }
 
 .btn-flame {
   padding: 0.875rem 1.625rem;
   background: var(--c-flame);
-  color: #FBFAF5;
+  color: #FFFFFF;
   border-radius: var(--radius-pill);
   border: 1px solid var(--c-flame);
   box-shadow: var(--shadow-flame);
 }
-.btn-flame:hover { background: #36618F; border-color: #36618F; color: #FBFAF5; }
+.btn-flame:hover { background: #36618F; border-color: #36618F; color: #FFFFFF; }
 
 .btn-arrow { transition: transform .2s ease; }
 .btn-primary:hover .btn-arrow,
@@ -356,7 +356,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   display: inline-block;
   padding: 0.25rem 0.75rem;
   background: var(--c-gray);
-  color: #13243F;
+  color: #111111;
   border-radius: var(--radius-pill);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -382,7 +382,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .hero-section {
   position: relative;
   overflow: hidden;
-  background: #FBFAF5;
+  background: #FFFFFF;
   padding-top: 8rem;
   padding-bottom: 6rem;
 }
@@ -404,7 +404,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(244,241,234,0.85) 0%, rgba(244,241,234,0.7) 60%, rgba(244,241,234,0.95) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0.95) 100%);
 }
 .hero-content {
   position: relative;
@@ -459,13 +459,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 @media (max-width: 900px) { .site-footer__inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
 @media (max-width: 560px) { .site-footer__inner { grid-template-columns: 1fr; } }
 .site-footer__brand img { height: 36px; }
-.site-footer__brand p { color: #7FA3CC; font-size: 0.875rem; line-height: 1.7; margin-top: 0.75rem; }
+.site-footer__brand p { color: #A1A1AA; font-size: 0.875rem; line-height: 1.7; margin-top: 0.75rem; }
 .site-footer__col h4 {
   font-family: var(--font-en);
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: #7FA3CC;
+  color: #A1A1AA;
   margin-bottom: 1rem;
   font-weight: 700;
 }
@@ -483,7 +483,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
   justify-content: space-between;
   align-items: center;
   font-size: 0.8125rem;
-  color: #7FA3CC;
+  color: #A1A1AA;
 }
 
 /* ---- Section helpers ---- */
@@ -582,14 +582,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .bg-green-50, .bg-green-100, .bg-emerald-50, .bg-emerald-100,
 .bg-purple-50, .bg-purple-100, .bg-violet-50, .bg-violet-100,
 .bg-pink-50, .bg-pink-100, .bg-red-50, .bg-red-100 {
-  background-color: #FBFAF5 !important; /* slate-50 */
+  background-color: #FFFFFF !important; /* slate-50 */
 }
 /* Solid accent backgrounds (yellow-400 badges etc.) → flame */
 .bg-yellow-400, .bg-yellow-500, .bg-amber-400, .bg-amber-500 {
   background-color: var(--c-flame) !important;
-  color: #FBFAF5 !important;
+  color: #FFFFFF !important;
 }
-.text-yellow-900, .text-yellow-800, .text-amber-900, .text-amber-800 { color: #FBFAF5 !important; }
+.text-yellow-900, .text-yellow-800, .text-amber-900, .text-amber-800 { color: #FFFFFF !important; }
 
 /* Gradient backgrounds with blue/cyan/yellow → gray gradient */
 .bg-gradient-to-r.from-blue-50, .bg-gradient-to-br.from-blue-50,
@@ -600,7 +600,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 .bg-gradient-to-r.from-indigo-50, .bg-gradient-to-br.from-indigo-50,
 .bg-gradient-to-r.from-purple-50, .bg-gradient-to-br.from-purple-50,
 .bg-gradient-to-r.from-green-50, .bg-gradient-to-br.from-green-50 {
-  background: linear-gradient(135deg, #FBFAF5 0%, #ECE7DB 60%, #D8D4C8 100%) !important;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F4F4F5 60%, #E4E4E7 100%) !important;
 }
 
 /* Border colors in blue/yellow families → border-flame or slate */
@@ -630,7 +630,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 [class*="bg-purple"], [class*="bg-violet"], [class*="bg-fuchsia"], [class*="bg-pink"],
 [class*="bg-green"], [class*="bg-emerald"], [class*="bg-teal"], [class*="bg-lime"],
 [class*="bg-sky"], [class*="bg-cyan"], [class*="bg-indigo"] {
-  background-color: #ECE7DB !important; /* slate-100: neutral icon backdrop */
+  background-color: #F4F4F5 !important; /* slate-100: neutral icon backdrop */
   color: var(--c-slate-900) !important;
 }
 /* But keep flame explicitly if someone applied it */
@@ -658,10 +658,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 /* Legacy inline glass-nav override (sub-pages have navy border) */
 header.glass-nav,
 .glass-nav {
-  background: rgba(244,241,234,0.88) !important;
+  background: rgba(255,255,255,0.88) !important;
   backdrop-filter: blur(14px) saturate(140%) !important;
   -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
-  border-bottom: 1px solid rgba(19,36,63,.06) !important;
+  border-bottom: 1px solid rgba(17,17,17,.06) !important;
 }
 
 /* Body font force — inherits from body, works even if a page sets its own */
@@ -684,7 +684,7 @@ h1 .font-en, h2 .font-en, h3 .font-en {
 /* Buttons: legacy <a class="bg-brand-blue text-white px-*"> auto-styles as btn-primary-like */
 a.bg-brand-blue, button.bg-brand-blue {
   background-color: var(--c-slate-900) !important;
-  color: #FBFAF5 !important;
+  color: #FFFFFF !important;
   border-radius: 9999px !important;
   transition: background-color .2s ease, transform .2s ease !important;
 }
@@ -708,7 +708,7 @@ a.bg-brand-blue:hover, button.bg-brand-blue:hover {
 .site-footer__build {
   letter-spacing: .08em;
   font-size: .65rem;
-  color: #7FA3CC;
+  color: #A1A1AA;
   opacity: .7;
 }
 
@@ -882,7 +882,7 @@ main article h2, main .prose h2 {
 .bg-teal-100, .bg-teal-50, .bg-cyan-100, .bg-cyan-50,
 .bg-indigo-100, .bg-indigo-50, .bg-violet-100, .bg-violet-50,
 .bg-red-100, .bg-red-50, .bg-rose-100 {
-  background-color: rgba(19,36,63,0.06) !important;
+  background-color: rgba(17,17,17,0.06) !important;
 }
 .text-purple-600, .text-purple-700, .text-purple-500,
 .text-green-600, .text-green-700, .text-green-500,
@@ -891,11 +891,11 @@ main article h2, main .prose h2 {
 .text-teal-600, .text-teal-700,
 .text-indigo-600, .text-indigo-700,
 .text-violet-600, .text-violet-700 {
-  color: var(--c-slate-900, #13243F) !important;
+  color: var(--c-slate-900, #111111) !important;
 }
 /* News tag pills: purple→slate, red→flame */
-.bg-purple-600\/10 { background-color: rgba(19,36,63,0.08) !important; }
-.bg-purple-600 { background-color: var(--c-slate-900, #13243F) !important; }
+.bg-purple-600\/10 { background-color: rgba(17,17,17,0.08) !important; }
+.bg-purple-600 { background-color: var(--c-slate-900, #111111) !important; }
 .bg-red-600\/10 { background-color: rgba(155,45,48,0.10) !important; }
 .bg-red-600 { background-color: var(--c-flame) !important; }
 .text-red-600, .text-red-700 { color: var(--c-flame) !important; }
@@ -905,13 +905,13 @@ main article h2, main .prose h2 {
 .bg-gradient-to-br.from-blue-50.to-cyan-50,
 .bg-gradient-to-br.from-cyan-50,
 .bg-gradient-to-r.from-blue-50 {
-  background: #FBFAF5 !important;
+  background: #FFFFFF !important;
   border: 1px solid var(--c-border) !important;
 }
 
 /* ---- 6. subsidy 3ステップのカード化（.text-center wrap with gap-8 grid） ---- */
 section#flow .grid > .text-center {
-  background: #FBFAF5;
+  background: #FFFFFF;
   border: 1px solid var(--c-border);
   border-radius: var(--radius-card);
   padding: 2rem 1.5rem;
@@ -923,7 +923,7 @@ section#flow .grid > .text-center .rounded-full.bg-brand-blue {
 }
 
 /* ---- Subsidy: 3ロール（当社/外部専門家/申請者）内部テキストもflame/navyに ---- */
-.subsidy-role-card h3 { color: var(--c-slate-900, #13243F) !important; }
+.subsidy-role-card h3 { color: var(--c-slate-900, #111111) !important; }
 
 /* ---- Hero Follow-up heading：問い（H2）+ 答え（リード段落）へ分割 ---- */
 .hero-followup-heading {
@@ -1003,8 +1003,8 @@ h1.text-display {
   scroll-snap-align: start;
   flex: 0 0 auto;
   width: clamp(260px, 78vw, 320px);
-  background: #FBFAF5;
-  border: 1px solid #D8D4C8;
+  background: #FFFFFF;
+  border: 1px solid #E4E4E7;
   border-radius: 14px;
   overflow: hidden;
   transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
@@ -1021,7 +1021,7 @@ h1.text-display {
   aspect-ratio: 16 / 10;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  border-bottom: 1px solid #ECE7DB;
+  border-bottom: 1px solid #F4F4F5;
 }
 .news-card-v2-visual > .news-visual-lockup,
 .news-card-v2-visual > .news-visual-caption {
@@ -1033,24 +1033,24 @@ h1.text-display {
 .news-card-v2-tag {
   display: inline-block;
   font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
-  padding: 4px 10px; border-radius: 3px; color: #FBFAF5; line-height: 1.4;
+  padding: 4px 10px; border-radius: 3px; color: #FFFFFF; line-height: 1.4;
 }
 .news-tag-flame   { background: #3E6FA8; }
-.news-tag-navy    { background: #13243F; }
+.news-tag-navy    { background: #111111; }
 .news-tag-emerald { background: #36618F; }
-.news-tag-amber   { background: #C8922E; }
+.news-tag-amber   { background: #111111; }
 .news-card-v2-date {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 12px; color: #6B7280; letter-spacing: 0.02em;
+  font-size: 12px; color: #6B6F76; letter-spacing: 0.02em;
 }
 .news-card-v2-title {
-  font-size: 15px; font-weight: 700; color: #13243F;
+  font-size: 15px; font-weight: 700; color: #111111;
   line-height: 1.55; margin: 0 0 8px;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 @media (min-width: 768px) { .news-card-v2-title { font-size: 16px; } }
 .news-card-v2-lede {
-  font-size: 12.5px; color: #6B7280; line-height: 1.7; margin: 0 0 12px;
+  font-size: 12.5px; color: #6B6F76; line-height: 1.7; margin: 0 0 12px;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .news-card-v2-cta {
@@ -1062,37 +1062,37 @@ h1.text-display {
 
 /* Visual variants */
 .news-visual-caption {
-  font-size: 11.5px; color: rgba(244,241,234,0.72); letter-spacing: 0.02em;
+  font-size: 11.5px; color: rgba(255,255,255,0.72); letter-spacing: 0.02em;
 }
 
 .news-visual-lockup-card {
-  background: #FBFAF5;
+  background: #FFFFFF;
   display: flex; flex-direction: column; gap: 10px; padding: 18px 22px;
   align-items: center; justify-content: center;
 }
 .news-visual-lockup-card--emerald {
-  background: #FBFAF5;
+  background: #FFFFFF;
 }
 .news-visual-lockup { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
 .news-visual-lockup--solo { justify-content: center; }
 .news-visual-brand {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: #13243F;
-  padding: 8px 12px; border-radius: 6px; background: #FBFAF5; border: 1px solid #D8D4C8;
+  font-size: 12px; font-weight: 800; letter-spacing: 0.08em; color: #111111;
+  padding: 8px 12px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E4E4E7;
   text-transform: uppercase; white-space: nowrap;
 }
 .news-visual-wordmark {
   font-family: var(--font-en);
   font-size: 15px; font-weight: 800; letter-spacing: 0.02em;
   padding: 8px 12px; border-radius: 6px;
-  background: #FBFAF5; border: 1px solid #D8D4C8;
+  background: #FFFFFF; border: 1px solid #E4E4E7;
   white-space: nowrap;
 }
 .news-visual-wordmark--flame { color: #3E6FA8; }
-.news-visual-wordmark--amber { color: #C8922E; }
+.news-visual-wordmark--amber { color: #111111; }
 .news-visual-x { color: #3E6FA8; font-weight: 800; font-size: 18px; }
 .news-visual-logo { max-height: 32px; max-width: 130px; object-fit: contain; }
-.news-visual-lockup-card .news-visual-caption { color: #6B7280; font-size: 11px; letter-spacing: 0.06em; }
+.news-visual-lockup-card .news-visual-caption { color: #6B6F76; font-size: 11px; letter-spacing: 0.06em; }
 
 /* End */
 
@@ -1167,7 +1167,7 @@ h1, h2, h3,
 
 .glass-nav,
 header.glass-nav {
-  background: rgba(244,241,234,0.88);
+  background: rgba(255,255,255,0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--c-hairline);
@@ -1199,7 +1199,7 @@ section#flow .grid > .text-center {
 .service-card:hover,
 .news-card-v2:hover,
 section#flow .grid > .text-center:hover {
-  border-color: #C5BFAF;
+  border-color: #D4D4D8;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -1215,7 +1215,7 @@ button.bg-brand-blue {
 .btn-primary:hover,
 a.bg-brand-blue:hover,
 button.bg-brand-blue:hover {
-  background: #0E1B30;
+  background: #0A0A0A;
   color: var(--c-bg);
 }
 .btn-secondary {
@@ -1243,7 +1243,7 @@ button.bg-brand-blue:hover {
 }
 .hero-overlay,
 .hero-video-bg::after {
-  background: linear-gradient(180deg, rgba(244,241,234,.42), rgba(244,241,234,.88) 78%, #F4F1EA 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.88) 78%, #FFFFFF 100%);
 }
 .hero-motion-token,
 .hero-motion-subline,
@@ -1274,13 +1274,13 @@ button.bg-brand-blue:hover {
 
 .site-footer {
   background: var(--c-deep);
-  color: rgba(244,241,234,.85);
+  color: rgba(255,255,255,.85);
   border-top: 1px solid var(--c-hairline-dark);
 }
 .site-footer__brand img { height: 36px; width: auto; }
 .site-footer__brand p,
 .site-footer__col h4,
-.site-footer__bottom { color: rgba(244,241,234,.68); }
+.site-footer__bottom { color: rgba(255,255,255,.68); }
 .site-footer__col a:hover { color: var(--accent-soft); }
 
 .news-tag-flame,
@@ -1332,3 +1332,8 @@ button.bg-brand-blue:hover {
     transition: none;
   }
 }
+/* mono adapter (2026-10-08): ヒーローに合わせ白黒基調。差し色は青 1 色 */
+.bg-amber-50 { background-color: #F4F4F5 !important; }
+.text-amber-700 { color: #111111 !important; }
+.bg-emerald-50 { background-color: rgba(62,111,168,.08) !important; }
+.text-emerald-700, .text-emerald-600 { color: #36618F !important; }

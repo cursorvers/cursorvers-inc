@@ -29,8 +29,8 @@ button:focus-visible {
   top: 0;
   z-index: 9999;
   padding: 1rem 1.5rem;
-  background: #13243F;
-  color: #F4F1EA;
+  background: #111111;
+  color: #FFFFFF;
   font-weight: bold;
   text-decoration: none;
 }

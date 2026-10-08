@@ -1,12 +1,12 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.7'; // Updated: 2026-10-04 - cookie-consent.js link tap area enlarged; version bump delivers it to existing visitors (2.2.6: SW navigation handler broke on Pages 308 redirects)
+const CACHE_VERSION = '2.2.8'; // Updated: 2026-10-08 - 配色を白黒基調へ (renewal.css?v=20261008m)。版を上げて既存の訪問者に届ける
 const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
-  '/assets/css/renewal.css?v=20260822e',
+  '/assets/css/renewal.css?v=20261008m',
   '/dist/tailwind.min.css',
-  '/dist/tailwind.min.css?v=20260822e',
+  '/dist/tailwind.min.css?v=20261008m',
   '/assets/js/nav.js',
   '/assets/js/reveal.js',
   '/assets/js/cookie-consent.js',
