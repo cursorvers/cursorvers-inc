@@ -1146,11 +1146,10 @@
     linear-gradient(#111111, #111111) right center / 3px 10px no-repeat;
 }
 
+/* 再生の印は右向きの三角 (clip-path で切り抜く) */
 .hero-mono__pause[data-state="paused"]::before {
-  background:
-    linear-gradient(to bottom right, transparent 49%, #111111 50%, transparent 51%) left top / 33.333% 100% no-repeat,
-    linear-gradient(to bottom, #111111, #111111) center / 33.333% 100% no-repeat,
-    linear-gradient(to bottom left, transparent 49%, #111111 50%, transparent 51%) right top / 33.333% 100% no-repeat;
+  background: #111111;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
 /* 文字が順に現れる動き (h1 は動かさない) */
