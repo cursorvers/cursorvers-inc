@@ -1044,6 +1044,11 @@
   color: #9AA0A6;
 }
 
+/* 社名と区切りをまとめる箱。PC では箱を作らず、中身を従来どおり kicker の flex の並びに置く */
+.hero-mono__brand {
+  display: contents;
+}
+
 .hero-mono h1 {
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 800;
@@ -1244,6 +1249,12 @@
     font-size: clamp(34px, 9.6vw, 44px);
   }
 
+  /* スマホではヘッダーのロゴに CURSORVERS があるので、kicker は線と社名を隠して 1 行にする (2026-10-09 user 選択) */
+  .hero-mono__rule,
+  .hero-mono__brand {
+    display: none;
+  }
+
   .hero-mono__kicker {
     position: absolute;
     left: 20px;
@@ -1351,7 +1362,7 @@ header.glass-nav, .glass-nav {
   <div class="hero-mono__veil" aria-hidden="true"></div>
   <div class="hero-mono__inner">
     <div class="hero-mono__copy">
-      <p class="hero-mono__kicker"><span class="hero-mono__rule" aria-hidden="true"></span>CURSORVERS<span class="hero-mono__sep" aria-hidden="true">/</span>MEDICAL &amp; WELFARE AI PARTNER</p>
+      <p class="hero-mono__kicker"><span class="hero-mono__rule" aria-hidden="true"></span><span class="hero-mono__brand">CURSORVERS<span class="hero-mono__sep" aria-hidden="true">/</span></span>MEDICAL &amp; WELFARE AI PARTNER</p>
       <h1 id="hero-title"><span class="nb">AIに、</span><span class="nb">臨床の魂を</span></h1>
       <p class="hero-mono__sub jp-keep">医療機関・社会福祉法人の<wbr>AI導入を、<wbr>臨床経験のある<wbr>医師が設計し、<wbr>職員に定着するまで<wbr>伴走します。</p>
       <div class="hero-mono__ctas">
