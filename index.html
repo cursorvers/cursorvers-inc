@@ -1284,10 +1284,16 @@
     margin-top: 0;
   }
 
+  /* スマホでは帯の端で目立たないよう小さく、少し透かす (押せる高さ 36px は保つ) */
   .hero-mono__pause {
-    top: calc(var(--hero-stage) - 56px);
+    top: calc(var(--hero-stage) - 48px);
     bottom: auto;
-    right: 16px;
+    right: 12px;
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
+    border-color: rgba(17,17,17,.4);
+    background: rgba(255,255,255,.7);
   }
 }
 
@@ -1355,7 +1361,7 @@ header.glass-nav, .glass-nav {
       </div>
     </div>
   </div>
-  <button type="button" class="hero-mono__pause" id="heroPause" aria-pressed="false" data-state="playing" hidden>動きを止める</button>
+  <button type="button" lang="en" class="hero-mono__pause" id="heroPause" aria-pressed="false" data-state="playing" hidden>Pause</button>
   <script>
   /* 3D は load の後のアイドル時に読み込む (LCP は文字)。reduced-motion でも 1 枚の静止画は描く */
   (function () {
