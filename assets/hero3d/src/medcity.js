@@ -19,48 +19,113 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   const T = { hero: [], equip: [], mid: [], far: [], accent: [] };
   const F = { pos: [], nrm: [], col: [] };
 
-  const ROOM_COLORS = {
-    C0: [1, 0, 0],
-    C1: [0, 1, 0],
-    C2: [0, 0, 1],
-    C3: [1, 1, 0],
-    C4: [1, 0, 1]
+  const H = 0.2158;
+
+  const ID_COLORS = {
+    floor: { C0: [1, 0, 0], C1: [0, 1, 0], C2: [0, 0, 1], C3: [1, 1, 0], C4: [1, 0, 1] },
+    wall:  { C0: [H, 0, 0], C1: [0, H, 0], C2: [0, 0, H], C3: [H, H, 0], C4: [H, 0, H] },
+    equip: { C0: [1, H, H], C1: [H, 1, H], C2: [H, H, 1], C3: [1, 1, H], C4: [1, H, 1] }
   };
+
+  const ROOM_INTERIORS = [
+    { room: 'C0', b: [-1.4, 0, 11, 10.4, 3.7, 39.4] },
+    { room: 'C0', b: [-1.4, 4, 11, 10.4, 7.7, 37.4] },
+    { room: 'C0', b: [-1.4, 8, 11, 10.4, 11.7, 35.4] },
+    { room: 'C0', b: [-1.4, 12, 11, 10.4, 15.7, 33.4] },
+    { room: 'C0', b: [-1.4, 16, 11, 10.4, 19.7, 31.4] },
+    { room: 'C1', b: [50.6, 0.2, -10.4, 93.4, 12, 10.4] },
+    { room: 'C2', b: [50.6, 0.1, 22.6, 77.4, 9, 45.4] },
+    { room: 'C3', b: [-87.4, 0.15, -69.4, -72.6, 8, -54.6] },
+    { room: 'C4', b: [76.6, 0.15, 66.6, 105.4, 10, 95.4] }
+  ];
 
   const seg = (a, x0, y0, z0, x1, y1, z1) => a.push(x0, y0, z0, x1, y1, z1);
 
-  function quad(ax, ay, az, bx, by, bz, cx, cy, cz, dx, dy, dz, nx, ny, nz, room) {
-    F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz, ax, ay, az, cx, cy, cz, dx, dy, dz);
-    let v;
-    if (ids) {
-      const c = room ? ROOM_COLORS[room] || [1, 1, 1] : [1, 1, 1];
+  function quad(ax, ay, az, bx, by, bz, cx, cy, cz, dx, dy, dz, nx, ny, nz, room, kind) {
+    if (ids && kind === 'equip' && room) {
+      const c = ID_COLORS.equip[room] || [1, 1, 1];
+      F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz, ax, ay, az, cx, cy, cz, dx, dy, dz);
       for (let i = 0; i < 6; i++) {
         F.nrm.push(nx, ny, nz);
         F.col.push(c[0], c[1], c[2]);
       }
       return;
     }
+    if (ids) {
+      const pts = [[ax, ay, az], [bx, by, bz], [cx, cy, cz], [dx, dy, dz]];
+      const na = ny !== 0 ? 1 : (nx !== 0 ? 0 : 2);
+      const nsign = na === 0 ? nx : na === 1 ? ny : nz;
+      // tangent axes (ua, va) chosen so cross(e_ua, e_va) = n
+      let ua, va;
+      if (na === 0) { if (nsign > 0) { ua = 1; va = 2; } else { ua = 2; va = 1; } }
+      else if (na === 1) { if (nsign > 0) { ua = 2; va = 0; } else { ua = 0; va = 2; } }
+      else { if (nsign > 0) { ua = 0; va = 1; } else { ua = 1; va = 0; } }
+      const fixed = pts[0][na];
+      const test = fixed + nsign * 0.01;
+      let umin = Infinity, umax = -Infinity, vmin = Infinity, vmax = -Infinity;
+      for (const p of pts) {
+        umin = Math.min(umin, p[ua]); umax = Math.max(umax, p[ua]);
+        vmin = Math.min(vmin, p[va]); vmax = Math.max(vmax, p[va]);
+      }
+      const mk = (u0, u1, v0, v1, col) => {
+        if (!(u1 - u0 > 0) || !(v1 - v0 > 0)) return;
+        const P = (au, av) => { const q = [0, 0, 0]; q[na] = fixed; q[ua] = au; q[va] = av; return q; };
+        const q = [P(u0, v0), P(u1, v0), P(u1, v1), P(u0, v1)];
+        F.pos.push(
+          q[0][0], q[0][1], q[0][2], q[1][0], q[1][1], q[1][2],
+          q[2][0], q[2][1], q[2][2], q[0][0], q[0][1], q[0][2],
+          q[2][0], q[2][1], q[2][2], q[3][0], q[3][1], q[3][2]
+        );
+        for (let i = 0; i < 6; i++) {
+          F.nrm.push(nx, ny, nz);
+          F.col.push(col[0], col[1], col[2]);
+        }
+      };
+      // ceiling (-y): no kind, always white
+      if (na === 1 && nsign < 0) {
+        mk(umin, umax, vmin, vmax, [1, 1, 1]);
+        return;
+      }
+      let hit = null;
+      for (const r of ROOM_INTERIORS) {
+        const b = r.b;
+        if (!(test > b[na] && test < b[na + 3])) continue;
+        const iu0 = Math.max(umin, b[ua]), iu1 = Math.min(umax, b[ua + 3]);
+        const iv0 = Math.max(vmin, b[va]), iv1 = Math.min(vmax, b[va + 3]);
+        if (iu0 < iu1 && iv0 < iv1) { hit = { room: r.room, iu0, iu1, iv0, iv1 }; break; }
+      }
+      if (!hit) {
+        mk(umin, umax, vmin, vmax, [1, 1, 1]);
+        return;
+      }
+      const kindName = na === 1 ? 'floor' : 'wall';
+      const col = ID_COLORS[kindName][hit.room] || [1, 1, 1];
+      const { iu0, iu1, iv0, iv1 } = hit;
+      mk(iu0, iu1, iv0, iv1, col);
+      mk(umin, umax, iv1, vmax, [1, 1, 1]);
+      mk(umin, umax, vmin, iv0, [1, 1, 1]);
+      mk(iu1, umax, iv0, iv1, [1, 1, 1]);
+      mk(umin, iu0, iv0, iv1, [1, 1, 1]);
+      return;
+    }
+    let v;
     if (ny > 0.5) v = 1.0;
     else if (Math.abs(nx) > 0.5) v = 0.955;
     else if (Math.abs(nz) > 0.5) v = 0.925;
     else v = 0.88;
+    F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz, ax, ay, az, cx, cy, cz, dx, dy, dz);
     for (let i = 0; i < 6; i++) {
       F.nrm.push(nx, ny, nz);
       F.col.push(v, v, v);
     }
   }
 
-  // B0: 同じ箱の中で重複する辺は 1 回だけ描く (座標を丸めたキーで判定)
-  function edgeDedup() {
-    const seen = new Set();
-    const K = (x, y, z) => Math.round(x * 100) + ',' + Math.round(y * 100) + ',' + Math.round(z * 100);
-    return function eseg(a, x0, y0, z0, x1, y1, z1) {
-      const k1 = K(x0, y0, z0), k2 = K(x1, y1, z1);
-      const key = k1 <= k2 ? k1 + '|' + k2 : k2 + '|' + k1;
-      if (seen.has(key)) return;
-      seen.add(key);
-      seg(a, x0, y0, z0, x1, y1, z1);
-    };
+  const IDL = { pos: [], col: [] };
+  function idseg(room, x0, y0, z0, x1, y1, z1) {
+    if (!ids) return;
+    IDL.pos.push(x0, y0, z0, x1, y1, z1);
+    const c = ID_COLORS.equip[room] || [1, 1, 1];
+    IDL.col.push(c[0], c[1], c[2], c[0], c[1], c[2]);
   }
 
   // box with per-face edge/face skipping (skip = { px, nx, py, ny, pz, nz }), opt.room = 'C0'..'C4'
@@ -70,42 +135,54 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     const sk = opt.skip || {};
     const wf = !!opt.face && solid;
     const room = opt.room;
-    const eseg = edgeDedup();
+    const kind = tone === 'equip' ? 'equip' : null;
+    const idEdge = ids && kind === 'equip' && room && !opt.face;
+    // 同じ箱の中で重複する辺は 1 回だけ描く (座標を丸めたキーで判定)
+    const seen = new Set();
+    const K = (x, y, z) => Math.round(x * 100) + ',' + Math.round(y * 100) + ',' + Math.round(z * 100);
+    const eseg = function (a2, ex0, ey0, ez0, ex1, ey1, ez1) {
+      const k1 = K(ex0, ey0, ez0), k2 = K(ex1, ey1, ez1);
+      const key = k1 <= k2 ? k1 + '|' + k2 : k2 + '|' + k1;
+      if (seen.has(key)) return;
+      seen.add(key);
+      seg(a2, ex0, ey0, ez0, ex1, ey1, ez1);
+      if (idEdge) idseg(room, ex0, ey0, ez0, ex1, ey1, ez1);
+    };
     // ny (bottom)
     if (!sk.ny) {
       eseg(a, x0, y0, z0, x1, y0, z0); eseg(a, x1, y0, z0, x1, y0, z1);
       eseg(a, x1, y0, z1, x0, y0, z1); eseg(a, x0, y0, z1, x0, y0, z0);
-      if (wf) quad(x0, y0, z0, x1, y0, z0, x1, y0, z1, x0, y0, z1, 0, -1, 0, room);
+      if (wf) quad(x0, y0, z0, x1, y0, z0, x1, y0, z1, x0, y0, z1, 0, -1, 0, room, kind);
     }
     // py (top)
     if (!sk.py) {
       eseg(a, x0, y1, z0, x1, y1, z0); eseg(a, x1, y1, z0, x1, y1, z1);
       eseg(a, x1, y1, z1, x0, y1, z1); eseg(a, x0, y1, z1, x0, y1, z0);
-      if (wf) quad(x0, y1, z0, x0, y1, z1, x1, y1, z1, x1, y1, z0, 0, 1, 0, room);
+      if (wf) quad(x0, y1, z0, x0, y1, z1, x1, y1, z1, x1, y1, z0, 0, 1, 0, room, kind);
     }
     // nz
     if (!sk.nz) {
       eseg(a, x0, y0, z0, x1, y0, z0); eseg(a, x0, y1, z0, x1, y1, z0);
       eseg(a, x0, y0, z0, x0, y1, z0); eseg(a, x1, y0, z0, x1, y1, z0);
-      if (wf) quad(x0, y0, z0, x0, y1, z0, x1, y1, z0, x1, y0, z0, 0, 0, -1, room);
+      if (wf) quad(x0, y0, z0, x0, y1, z0, x1, y1, z0, x1, y0, z0, 0, 0, -1, room, kind);
     }
     // pz
     if (!sk.pz) {
       eseg(a, x0, y0, z1, x1, y0, z1); eseg(a, x0, y1, z1, x1, y1, z1);
       eseg(a, x0, y0, z1, x0, y1, z1); eseg(a, x1, y0, z1, x1, y1, z1);
-      if (wf) quad(x0, y0, z1, x1, y0, z1, x1, y1, z1, x0, y1, z1, 0, 0, 1, room);
+      if (wf) quad(x0, y0, z1, x1, y0, z1, x1, y1, z1, x0, y1, z1, 0, 0, 1, room, kind);
     }
     // nx
     if (!sk.nx) {
       eseg(a, x0, y0, z0, x0, y0, z1); eseg(a, x0, y1, z0, x0, y1, z1);
       eseg(a, x0, y0, z0, x0, y1, z0); eseg(a, x0, y0, z1, x0, y1, z1);
-      if (wf) quad(x0, y0, z0, x0, y0, z1, x0, y1, z1, x0, y1, z0, -1, 0, 0, room);
+      if (wf) quad(x0, y0, z0, x0, y0, z1, x0, y1, z1, x0, y1, z0, -1, 0, 0, room, kind);
     }
     // px
     if (!sk.px) {
       eseg(a, x1, y0, z0, x1, y0, z1); eseg(a, x1, y1, z0, x1, y1, z1);
       eseg(a, x1, y0, z0, x1, y1, z0); eseg(a, x1, y0, z1, x1, y1, z1);
-      if (wf) quad(x1, y0, z0, x1, y1, z0, x1, y1, z1, x1, y0, z1, 1, 0, 0, room);
+      if (wf) quad(x1, y0, z0, x1, y1, z0, x1, y1, z1, x1, y0, z1, 1, 0, 0, room, kind);
     }
   }
 
@@ -282,6 +359,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         // legs (4 short lines)
         for (const [lx, lz] of [[-0.45, -1.2], [0.45, -1.2], [-0.45, 1.2], [0.45, 1.2]]) {
           seg(T.equip, bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
+          idseg('C0', bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
         }
         // pillow at head end (+z)
         box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { room: 'C0' });
@@ -290,9 +368,13 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         // IV stand: pole height 2.1 + top cross 2 lines + 2 legs
         const ix = bx - 0.9;
         seg(T.equip, ix, fy, iz, ix, fy + 2.1, iz);
+        idseg('C0', ix, fy, iz, ix, fy + 2.1, iz);
         seg(T.equip, ix, fy + 2.1, iz, ix - 0.3, fy + 2.1, iz);
+        idseg('C0', ix, fy + 2.1, iz, ix - 0.3, fy + 2.1, iz);
         seg(T.equip, ix, fy + 2.1, iz, ix + 0.3, fy + 2.1, iz);
+        idseg('C0', ix, fy + 2.1, iz, ix + 0.3, fy + 2.1, iz);
         seg(T.equip, ix, fy, iz - 0.3, ix, fy, iz + 0.3);
+        idseg('C0', ix, fy, iz - 0.3, ix, fy, iz + 0.3);
       }
       // curtain rails at fy+2.6, two lines per floor
       seg(T.equip, -1.0, fy + 2.6, rail0, 10.0, fy + 2.6, rail0);
@@ -911,6 +993,13 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   const midLines = lineObj(T.mid, 0x8a9099, 0.7975);     // was 0.55
   const farLines = lineObj(T.far, 0xc9cdd3, 0.75);       // was 0.50
   const accentLines = lineObj(T.accent, 0x3e6fa8, 0.9);
+  if (ids && IDL.pos.length) {
+    const idlGeo = new THREE.BufferGeometry();
+    idlGeo.setAttribute('position', new THREE.BufferAttribute(Float32Array.from(IDL.pos), 3));
+    idlGeo.setAttribute('color', new THREE.BufferAttribute(Float32Array.from(IDL.col), 3));
+    const idlMat = new THREE.LineBasicMaterial({ vertexColors: true, depthWrite: false, fog: false });
+    group.add(new THREE.LineSegments(idlGeo, idlMat));
+  }
   group.add(heroLines, equipLines, midLines, farLines, accentLines);
 
   // landing lights (fixed size, 点滅なし)
