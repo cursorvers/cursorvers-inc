@@ -41,6 +41,7 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #111111; color: #FFFFFF; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
 
         /* PC向け大きめフォント（年配経営者向け） */
         @media (min-width: 768px) {
@@ -99,7 +100,7 @@
         <div class="bg-white shadow rounded-lg p-8 space-y-8 text-base text-gray-700 leading-7">
             <section>
                 <h2 class="text-base mb-3">1. 事業者情報</h2>
-                <p>Cursorvers株式会社（所在地：〒102-0074 東京都千代田区九段南1-5-6 りそな九段ビル5F KSフロア）</p>
+                <p class="jp-keep">Cursorvers<wbr>株式会社<wbr>（所在地：<wbr><span style="white-space:nowrap">〒102-0093</span> 東京都<wbr>千代田区<wbr>平河町<wbr><span style="white-space:nowrap">1-4-15</span> 平河町<wbr>小池ビル3F）</p>
             </section>
             <section class="bg-brand-gray border border-gray-200 rounded-2xl p-6 md:p-8">
                 <h2 class="text-base mb-3 font-bold text-brand-black">重要：患者情報（PHI）について</h2>
