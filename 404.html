@@ -41,7 +41,9 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #111111; color: #FFFFFF; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
-    </style>
+    .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+</style>
 </head>
 <body class="antialiased">
     <a href="#main" class="skip-link">本文へスキップ</a>
@@ -77,6 +79,7 @@
         <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-8">
             ページが見つかりません
         </h1>
+<p lang="en" class="en-line" style="margin:-1rem auto 2rem; max-width:42rem;">The page you are looking for may have been moved or deleted.</p>
         <p class="text-base md:text-lg text-gray-600 leading-loose mb-4">
             お探しのページは移動または削除された可能性があります。
         </p>
