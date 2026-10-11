@@ -67,26 +67,25 @@ jobs:
           # Cloudflare Pages 設定ファイル
           cp _headers _redirects _site/ 2>/dev/null || true
 
-      - name: Require Turnstile sitekey
-        env:
-          SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
-        run: |
-          if [ -z "$SITE_KEY" ]; then
-            echo "::error::TURNSTILE_SITE_KEY (repo variable) is not set"
-            exit 1
-          fi
+      - name: Test the Turnstile guard
+        run: npm run test:turnstile-guard
 
-      - name: Inject Turnstile sitekey
-        run: python3 -c 'import os, pathlib; p = pathlib.Path("_site/contact.html"); p.write_text(p.read_text().replace("TURNSTILE_SITE_KEY_PLACEHOLDER", os.environ["SITE_KEY"]))'
+      - name: Inject and verify Turnstile sitekey
+        # 鍵は標準入力で渡す。空・空白だけ・不正な文字・置換漏れ・読めないファイルのどれでも止まる (値は出力しない)
         env:
           SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+        run: printf '%s' "$SITE_KEY" | node scripts/inject-turnstile-sitekey.mjs --commit "$GITHUB_SHA" _site
 
       - name: Verify no placeholder remains
+        # grep の終了コード: 0 = 残っている (停止) / 1 = 無い (通過) / 2 以上 = 検査できなかった (停止)
         run: |
-          if grep -rl TURNSTILE_SITE_KEY_PLACEHOLDER _site; then
-            echo "::error::placeholder TURNSTILE_SITE_KEY_PLACEHOLDER remains in _site"
-            exit 1
-          fi
+          rc=0
+          grep -rlF TURNSTILE_SITE_KEY_PLACEHOLDER _site || rc=$?
+          case "$rc" in
+            0) echo "::error::placeholder TURNSTILE_SITE_KEY_PLACEHOLDER remains in _site"; exit 1 ;;
+            1) echo "placeholder check: none in _site" ;;
+            *) echo "::error::grep failed with exit $rc; cannot confirm the placeholder is gone"; exit 1 ;;
+          esac
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
