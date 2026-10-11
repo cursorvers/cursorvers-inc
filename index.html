@@ -1190,6 +1190,25 @@
   animation: hero-in .8s cubic-bezier(.2,.7,.2,1) .45s both;
 }
 
+/* 英文の 1 行 (海外の審査員向け)。副題の下に寄せ、日本語より小さく薄くする */
+.hero-mono__en {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5B6067;
+  max-width: 48em;
+  margin: -26px 0 36px;
+  animation: hero-in .8s cubic-bezier(.2,.7,.2,1) .38s both;
+}
+@media (min-width: 768px) {
+  .hero-mono__en { font-size: 14px; margin: -30px 0 40px; }
+}
+@media (max-width: 767px) {
+  .hero-mono__en { font-size: 12px; margin: -16px 0 24px; }
+}
+/* 各セクションの見出しの直下に添える英文の 1 行 */
+.en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+
 /* PC の文字を大きくする (2026-10-11 user 指示)。スマホは下の @media (max-width: 767px) の指定のまま */
 @media (min-width: 768px) {
   .hero-mono__copy { max-width: 880px; }
@@ -1635,6 +1654,7 @@ header.glass-nav, .glass-nav {
       <p class="hero-mono__kicker"><span class="hero-mono__rule" aria-hidden="true"></span><span class="hero-mono__brand">CURSORVERS<span class="hero-mono__sep" aria-hidden="true">/</span></span>MEDICAL &amp; WELFARE AI PARTNER</p>
       <h1 id="hero-title"><span class="nb">AIに、</span><span class="nb">臨床の魂を</span></h1>
       <p class="hero-mono__sub jp-keep">医療機関・社会福祉法人の<wbr>AI導入を、<wbr>臨床経験のある<wbr>医師が設計し、<wbr>職員に定着するまで<wbr>伴走します。</p>
+      <p lang="en" class="hero-mono__en">We help medical institutions and social-welfare corporations adopt AI: a physician with clinical experience designs it and supports staff until it takes hold.</p>
       <div class="hero-mono__ctas">
         <a class="hero-mono__primary" href="contact.html" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_consult' })">無料壁打ちを予約（30分）<span aria-hidden="true">→</span></a>
         <a class="hero-mono__link" href="#paths" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_paths' })">サービスを見る</a>
@@ -1701,6 +1721,7 @@ header.glass-nav, .glass-nav {
         <div class="text-center mb-14 md:mb-20">
             <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en jp-keep">事業内容</span>
             <h2 id="paths-heading" class="jp-keep text-headline font-bold text-brand-black mb-6 text-balance">何を<wbr>頼めますか</h2>
+            <p lang="en" class="en-line mb-4 max-w-2xl mx-auto">Choose from three options for adoption support and third-party review. Training for companies is in planning.</p>
             <p class="jp-keep text-text-secondary text-body-lg">導入の<wbr>伴走と、<wbr>第三者の<wbr>レビューは、<wbr>3つから<wbr>選べます。<wbr>企業向けの<wbr>研修も<wbr>企画中です。</p>
         </div>
 
@@ -1782,7 +1803,7 @@ header.glass-nav, .glass-nav {
         <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">R&amp;D</span>
         <h2 id="rnd-heading" class="jp-keep text-2xl md:text-3xl font-bold text-brand-black">ソフトウェアも、<wbr>自分たちで<wbr>作っています。</h2>
       </div>
-      <p lang="en" class="mt-3 md:mt-0 md:max-w-md text-sm text-text-tertiary leading-relaxed">We build our own software: medical-AI governance and audit software (patent pending), and a local LLM for small clinics, co-developed with a partner.</p>
+      <p lang="en" class="mt-3 md:mt-0 md:max-w-md text-sm text-text-tertiary leading-relaxed">We build our own software: medical-AI governance and audit software (patent pending). With a partner, we are also developing a local LLM for small clinics.</p>
     </div>
     <div class="grid md:grid-cols-2 gap-4 md:gap-6">
       <div class="rounded-2xl bg-brand-gray overflow-hidden flex flex-col">
@@ -1866,6 +1887,7 @@ header.glass-nav, .glass-nav {
                     <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
                         第三者レビューは、<wbr>臨床と<wbr>運用の<wbr>視点で。<span class="block">提案は、<wbr>臨床経験の<wbr>ある<wbr>医師が<wbr>読みます。</span>
                     </h2>
+                    <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">Our third-party review is not aimed at selling products: a physician with clinical experience reads each proposal from clinical and operational viewpoints.</p>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-flame/20 pl-6 md:pl-10">
                         <p class="jp-keep">
@@ -2001,6 +2023,7 @@ header.glass-nav, .glass-nav {
                 <h2 id="training-heading" class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
                     <span class="block">「そのAI、<wbr>使って<wbr>良いのか？」</span><span class="block">営業の<wbr>現場で<wbr>答えられるように。</span>
                 </h2>
+                <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">Planned: medical-AI governance training for corporate sales teams and for medical and welfare staff. It does not recommend specific products.</p>
                 <div
                     class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-flame/20 pl-6 md:pl-10">
                     <p class="jp-keep">
@@ -2036,6 +2059,7 @@ header.glass-nav, .glass-nav {
                     Study</span>
                 <h2 class="text-headline font-bold text-brand-black">導入実績</h2>
                 <p class="text-text-secondary text-body mt-4">AI運用を守る体制づくりをご支援した医療機関様</p>
+                <p lang="en" class="en-line mt-2">Kajita Clinic (Chiba City): we supported the clinic in building a structure that keeps its AI operations running.</p>
             </div>
 
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -2149,6 +2173,7 @@ header.glass-nav, .glass-nav {
                 <div>
                     <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
+                    <p lang="en" class="en-line mt-3 max-w-2xl">Recent news: selection for Anthropic's Claude Startup Program, an excellence award from a Japanese medical-safety society, and conference talks.</p>
                 </div>
             </div>
 
@@ -2291,6 +2316,7 @@ header.glass-nav, .glass-nav {
                 <h2 class="jp-keep text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
                             導入、<wbr>レビュー、<wbr>研修。<br class="br-pc">医師が<wbr>ご相談を<wbr>受けます。
                         </h2>
+                        <p lang="en" class="en-line en-line--dark -mt-2 mb-6">A physician answers inquiries about adoption, third-party review, and training, and sorts out the issues to address first.</p>
                         <p class="jp-keep text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
                             医療機関に<wbr>出す前の<wbr>提案書、<wbr>導入前に<wbr>受けた<wbr>ベンダー提案、<wbr>AI導入や<wbr>研修の<wbr>ご相談を<wbr>お聞かせください。<br class="br-pc">
                             第三者の<wbr>臨床目線で、<wbr>先に<wbr>潰すべき<wbr>論点を<wbr>整理します。
@@ -2325,7 +2351,7 @@ header.glass-nav, .glass-nav {
         <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">Tool</span>
         <h3 class="text-2xl md:text-3xl font-bold text-brand-black">GuideScope</h3>
         <p class="jp-keep mt-3 text-base md:text-lg text-text-secondary leading-relaxed">レビューの<wbr>補助に<wbr>使う<wbr>道具として、<wbr>GuideScope&nbsp;(医療AI関連<wbr>ガイドラインの<wbr>検索プロンプトを<wbr>作るツール)&nbsp;を<wbr>開発し、<wbr>公開しています。</p>
-        <p lang="en" class="mt-2 text-sm text-text-tertiary">We also built GuideScope, a small tool that supports our reviews.</p>
+        <p lang="en" class="mt-2 text-sm text-text-tertiary">We also built and publish GuideScope, a tool that generates search prompts for medical-AI guidelines to support our reviews.</p>
       </div>
       <a href="https://cursorvers.jp/tools/guidescope/" target="_blank" rel="noopener noreferrer" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'home_product_guidescope' })" class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg border border-brand-black text-brand-black text-base font-semibold hover:bg-brand-black hover:text-white transition jp-keep">GuideScope&nbsp;を開く<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
     </div>
@@ -2454,6 +2480,7 @@ header.glass-nav, .glass-nav {
                     <p class="text-text-secondary text-sm md:text-base leading-relaxed mt-4">
                         Cursorvers（カーソルバース）は、Cursor（判断点）とvers（turn＝向きを変える）を掛け合わせた造語です。
                     </p>
+                    <p lang="en" class="en-line mt-2">The name joins Cursor (a decision point) and vers (to turn). It stands for setting clear decision points: who decides, who verifies, and who stops when problems arise.</p>
                 </div>
 
                 <div class="mobile-tight-card bg-brand-gray border border-gray-200 rounded-xl p-5 md:p-7">
