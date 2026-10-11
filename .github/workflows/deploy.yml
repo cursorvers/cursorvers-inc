@@ -67,11 +67,26 @@ jobs:
           # Cloudflare Pages 設定ファイル
           cp _headers _redirects _site/ 2>/dev/null || true
 
+      - name: Require Turnstile sitekey
+        env:
+          SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+        run: |
+          if [ -z "$SITE_KEY" ]; then
+            echo "::error::TURNSTILE_SITE_KEY (repo variable) is not set"
+            exit 1
+          fi
+
       - name: Inject Turnstile sitekey
-        if: vars.TURNSTILE_SITE_KEY != ''
         run: python3 -c 'import os, pathlib; p = pathlib.Path("_site/contact.html"); p.write_text(p.read_text().replace("TURNSTILE_SITE_KEY_PLACEHOLDER", os.environ["SITE_KEY"]))'
         env:
           SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
+
+      - name: Verify no placeholder remains
+        run: |
+          if grep -rl TURNSTILE_SITE_KEY_PLACEHOLDER _site; then
+            echo "::error::placeholder TURNSTILE_SITE_KEY_PLACEHOLDER remains in _site"
+            exit 1
+          fi
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
