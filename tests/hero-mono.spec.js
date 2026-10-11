@@ -1,5 +1,5 @@
 /**
- * Hero (白黒 3D 医療街区ヒーロー) 構造への整流 section
+ * Hero (白地に黒文字、背景は波の動画) 構造への整流 section
  *
  * locator 回避について:
  *   PWA start_url の pending navigation 中に page.locator の auto-wait が
@@ -9,6 +9,7 @@
  *
  * 経緯:
  *   2026-10-08 に V5 から白黒の 3D 医療街区ヒーローへ刷新した。
+ *   2026-10-11 に背景を 3D から波の動画 (自サイトの assets/video/) に替えた。3D は cursorvers.jp へ移した。
  */
 const { test, expect } = require("@playwright/test");
 
@@ -40,12 +41,17 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
         pathsAnchorExists: Boolean(document.querySelector("section#paths")),
         bandExists: Boolean(document.querySelector(".au-band")),
         heroFxExists: Boolean(document.querySelector("canvas#heroFx")),
+        heroVideoInHero: Boolean(document.querySelector("#main .hero-video-container video.hero-video")),
+        heroVideoSources: [...document.querySelectorAll("#main video.hero-video source")].map((el) => ({
+          src: el.getAttribute("src"),
+          media: el.getAttribute("media"),
+        })),
       };
     });
 
     expect(contract).toMatchObject({
       heroExists: true,
-      videoCount: 0,
+      videoCount: 1,
       h1Text: "AIに、臨床の魂を",
       subText: "医療機関・社会福祉法人のAI導入を、臨床経験のある医師が設計し、職員に定着するまで伴走します。",
       primaryHref: "contact.html",
@@ -53,8 +59,15 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
       linkText: "サービスを見る",
       pathsAnchorExists: true,
       bandExists: true,
-      heroFxExists: true,
+      heroFxExists: false,
+      heroVideoInHero: true,
     });
+
+    // スマホ用を先に並べ、動画は自サイトに置く (AGENTS.md R1・R5、CSP の media-src 'self')
+    expect(contract.heroVideoSources).toEqual([
+      { src: "assets/video/hero-wave-mobile.mp4", media: "(max-width: 767px)" },
+      { src: "assets/video/hero-wave-pc.mp4", media: "(min-width: 768px)" },
+    ]);
 
     expect(contract.primaryText.startsWith("無料壁打ちを予約（30分）")).toBe(true);
   });
@@ -84,99 +97,76 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
     expect(state.menuToggleExists).toBe(true);
   });
 
-  test("3D boots (or degrades gracefully without WebGL)", async ({ page }) => {
+  test("video plays the mobile source and shows the pause button", async ({ page }) => {
     await page.goto("/", { waitUntil: "commit" });
+    await page.waitForFunction(() => {
+      const v = document.querySelector("#main video.hero-video");
+      return v && v.currentSrc && !v.paused;
+    }, null, { timeout: 15000 });
 
-    await page.waitForFunction(
-      () => document.documentElement.dataset.hero3d === "on" || document.documentElement.dataset.hero3d === "off",
-      { timeout: 15000 }
-    );
-
-    const hero3d = await page.evaluate(() => document.documentElement.dataset.hero3d);
-
-    if (hero3d === "on") {
-      const state = await page.evaluate(() => {
-        const fx = document.querySelector("#heroFx");
-        return {
-          status: fx ? fx.dataset.status : null,
-          calls: fx ? Number(fx.dataset.calls) : null,
-          pauseHidden: document.querySelector("#heroPause") ? document.querySelector("#heroPause").hidden : null,
-        };
-      });
-      expect(state.status).toBe("ready");
-      expect(state.calls).toBeLessThanOrEqual(12);
-      expect(state.pauseHidden).toBe(false);
-    } else {
-      const visible = await page.evaluate(() => {
-        const h1 = document.querySelector("#main h1");
-        const primary = document.querySelector("#main .hero-mono__primary");
-        const r1 = h1 ? h1.getBoundingClientRect() : null;
-        const r2 = primary ? primary.getBoundingClientRect() : null;
-        return {
-          h1Visible: Boolean(r1 && r1.width > 0 && r1.height > 0),
-          primaryVisible: Boolean(r2 && r2.width > 0 && r2.height > 0),
-        };
-      });
-      expect(visible.h1Visible).toBe(true);
-      expect(visible.primaryVisible).toBe(true);
-    }
+    const state = await page.evaluate(() => {
+      const v = document.querySelector("#main video.hero-video");
+      const btn = document.querySelector("#heroPause");
+      return {
+        currentSrc: v.currentSrc,
+        muted: v.muted,
+        pauseHidden: btn ? btn.hidden : null,
+        pressed: btn ? btn.getAttribute("aria-pressed") : null,
+      };
+    });
+    expect(state.currentSrc.endsWith("/assets/video/hero-wave-mobile.mp4")).toBe(true);
+    expect(state.muted).toBe(true);
+    expect(state.pauseHidden).toBe(false);
+    expect(state.pressed).toBe("false");
   });
 
   test("pause button stops motion (WCAG 2.2.2)", async ({ page }) => {
     await page.goto("/", { waitUntil: "commit" });
-
-    await page.waitForFunction(
-      () => document.documentElement.dataset.hero3d === "on" || document.documentElement.dataset.hero3d === "off",
-      { timeout: 15000 }
-    );
-
-    const hero3d = await page.evaluate(() => document.documentElement.dataset.hero3d);
-    test.skip(hero3d !== "on", "hero3d is off in this environment");
-
-    await page.waitForFunction(() => parseFloat(document.querySelector("#heroFx").dataset.t) > 0.5, null, { timeout: 15000 });
+    await page.waitForFunction(() => {
+      const v = document.querySelector("#main video.hero-video");
+      return v && !v.paused && v.currentTime > 0.3;
+    }, null, { timeout: 15000 });
 
     await page.evaluate(() => document.querySelector("#heroPause").click());
     expect(await page.evaluate(() => document.querySelector("#heroPause").getAttribute("aria-pressed"))).toBe("true");
+    expect(await page.evaluate(() => document.querySelector("#main video.hero-video").paused)).toBe(true);
 
-    const t1 = await page.evaluate(() => document.querySelector("#heroFx").dataset.t);
+    const t1 = await page.evaluate(() => document.querySelector("#main video.hero-video").currentTime);
     await page.waitForTimeout(1000);
-    const t2 = await page.evaluate(() => document.querySelector("#heroFx").dataset.t);
+    const t2 = await page.evaluate(() => document.querySelector("#main video.hero-video").currentTime);
     expect(t2).toBe(t1);
 
     await page.evaluate(() => document.querySelector("#heroPause").click());
     expect(await page.evaluate(() => document.querySelector("#heroPause").getAttribute("aria-pressed"))).toBe("false");
-
-    const t3 = await page.evaluate(() => document.querySelector("#heroFx").dataset.t);
-    await page.waitForTimeout(1000);
-    const t4 = await page.evaluate(() => document.querySelector("#heroFx").dataset.t);
-    expect(parseFloat(t4)).toBeGreaterThan(parseFloat(t3));
+    await page.waitForFunction((t) => document.querySelector("#main video.hero-video").currentTime > t, t2, { timeout: 5000 });
   });
 
-  test("reduced-motion hides the pause button and freezes time", async ({ page }) => {
+  test("reduced-motion keeps the video still and offers Play", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/", { waitUntil: "commit" });
+    await page.waitForFunction(() => document.readyState !== "loading");
+    await page.waitForTimeout(1500);
 
-    await page.waitForFunction(
-      () => document.documentElement.dataset.hero3d === "on" || document.documentElement.dataset.hero3d === "off",
-      { timeout: 15000 }
-    );
-
-    const hero3d = await page.evaluate(() => document.documentElement.dataset.hero3d);
-    test.skip(hero3d !== "on", "hero3d is off in this environment");
-
-    const state = await page.evaluate(() => ({
-      pauseHidden: document.querySelector("#heroPause").hidden,
-      t: document.querySelector("#heroFx").dataset.t,
-    }));
-    expect(state.pauseHidden).toBe(true);
-
-    await page.waitForTimeout(5500);
-    const t2 = await page.evaluate(() => document.querySelector("#heroFx").dataset.t);
-    expect(t2).toBe(state.t);
+    const state = await page.evaluate(() => {
+      const v = document.querySelector("#main video.hero-video");
+      const btn = document.querySelector("#heroPause");
+      return {
+        paused: v.paused,
+        currentTime: v.currentTime,
+        pauseHidden: btn.hidden,
+        pressed: btn.getAttribute("aria-pressed"),
+        label: btn.textContent.trim(),
+      };
+    });
+    expect(state.paused).toBe(true);
+    expect(state.currentTime).toBe(0);
+    expect(state.pauseHidden).toBe(false);
+    expect(state.pressed).toBe("true");
+    expect(state.label).toBe("Play");
   });
 
-  test("hero stays operable when the 3D module fails to load", async ({ page }) => {
-    await page.route("**/assets/hero3d/hero3d.min.js", (route) => route.abort());
+  test("hero stays operable when the video fails to load", async ({ page }) => {
+    await page.route("**/assets/video/*.mp4", (route) => route.abort());
     await page.goto("/", { waitUntil: "commit" });
     await page.waitForTimeout(2000);
 
