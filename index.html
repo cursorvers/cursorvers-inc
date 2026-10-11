@@ -1566,6 +1566,18 @@ header.glass-nav, .glass-nav {
         font-size: 15px;
     }
 }
+        /* 余白の調整 (2026-10-11 の余白監査)。同じ白の欄が続く境目は、上の欄の下余白と足し算になって間延びするため、下の欄の上余白を詰める */
+        @media (min-width: 768px) {
+            #training { padding-top: 24px; }
+            #cta { padding-top: 96px; }
+            #company { padding-bottom: 120px; }
+            #name-meaning { padding-top: 40px; }
+        }
+        @media (max-width: 767px) {
+            #training { padding-top: 40px; }
+        }
+        /* 会社概要の 2 列の中身が、長い住所の最小幅で列の外 (右に 20px) へ出ないようにする */
+        #company .grid > * { min-width: 0; }
     </style>
 </head>
 
@@ -1639,7 +1651,7 @@ header.glass-nav, .glass-nav {
 <!-- 旧 #business (事業内容) への外部リンクの互換。後継はこの #paths -->
 <span id="business" aria-hidden="true"></span>
 <section id="paths" class="section-padding-lg bg-brand-gray relative z-10" aria-labelledby="paths-heading">
-    <div class="max-w-6xl mx-auto px-6 md:px-8">
+    <div class="max-w-6xl mx-auto px-6 md:px-12">
         <div class="text-center mb-14 md:mb-20">
             <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en jp-keep">事業内容</span>
             <h2 id="paths-heading" class="jp-keep text-headline font-bold text-brand-black mb-6 text-balance">何を<wbr>頼めますか</h2>
@@ -1732,6 +1744,7 @@ header.glass-nav, .glass-nav {
         /* バーの「お知らせ一覧へ」で飛んだとき、固定ヘッダー (PC 97px・スマホ 77px) の裏に隠さない */
         #news { scroll-margin-top: 104px; }
         @media (max-width: 767px) { #news { scroll-margin-top: 84px; } }
+        .trust-bar .trust-bar-list { margin-top: 2.5rem; }
         .trust-bar .trust-bar-all a { font-size: .85em; font-weight: 600; color: #3E6FA8; text-decoration-color: rgba(62, 111, 168, .4); }
     </style>
     <div class="max-w-6xl mx-auto px-6 md:px-12 py-14 md:py-20">
@@ -1742,13 +1755,13 @@ header.glass-nav, .glass-nav {
             <span class="mt-6 block text-sm text-white/60 leading-relaxed jp-keep no-underline">参加は、<wbr>特定の<wbr>AIベンダーや<wbr>製品を<wbr>推奨する<wbr>ものでは<wbr>ありません。<wbr>医療機関向けの<wbr>レビューは、<wbr>これまでどおり<wbr>製品中立の<wbr>立場で<wbr>行います。</span>
             <span class="mt-8 inline-flex items-center gap-2 text-base font-bold text-white no-underline">詳しく読む&nbsp;→</span>
         </a>
-        <ul class="mt-8 grid sm:grid-cols-2 gap-x-10 gap-y-4">
+        <ul class="trust-bar-list grid sm:grid-cols-2 gap-x-10 gap-y-4">
             <li><a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="text-base md:text-xl font-bold text-brand-black hover:text-flame jp-keep">日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</a></li>
             <li><a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">第54回日本救急医学会総会・学術集会 ランチョンセミナー登壇（10/28）</a></li>
             <li><a href="news/2026-10-03-hij-security-session-2606.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">Health ISAC Japan Security Session #06 登壇（11/6）</a></li>
             <li><a href="news/2026-02-16-ggen-partnership.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">Google Cloud プレミアパートナー G-gen と提携</a></li>
         </ul>
-        <a href="#news" class="mt-6 inline-block text-flame text-base font-semibold hover:underline jp-keep">お知らせ一覧へ&nbsp;↓</a>
+        <p class="mt-8 text-center"><a href="#news" class="inline-block text-flame text-base font-semibold hover:underline jp-keep">お知らせ一覧へ&nbsp;↓</a></p>
     </div>
 </aside>
 
