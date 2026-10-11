@@ -39,7 +39,6 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
         linkHref: link ? link.getAttribute("href") : null,
         linkText: link ? link.textContent.trim() : null,
         pathsAnchorExists: Boolean(document.querySelector("section#paths")),
-        bandExists: Boolean(document.querySelector(".au-band")),
         heroFxExists: Boolean(document.querySelector("canvas#heroFx")),
         heroVideoInHero: Boolean(document.querySelector("#main .hero-video-container video.hero-video")),
         heroVideoSourceCount: document.querySelectorAll("#main video.hero-video source").length,
@@ -66,7 +65,6 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
       linkHref: "#paths",
       linkText: "サービスを見る",
       pathsAnchorExists: true,
-      bandExists: true,
       heroFxExists: false,
       heroVideoInHero: true,
     });
@@ -246,6 +244,10 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
       expect(state.primaryStyle.opacity).not.toBe("0");
 
       expect(state.headerOpacity).toBe("1");
+
+      // 停止手段 (JS のボタン) が無いので、動画は出さず静止画にする (WCAG 2.2.2)
+      const videoDisplay = await page.evaluate(() => getComputedStyle(document.querySelector("#main video.hero-video")).display);
+      expect(videoDisplay).toBe("none");
     });
   });
 });

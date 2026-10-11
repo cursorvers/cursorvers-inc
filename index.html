@@ -1465,7 +1465,7 @@ header.glass-nav, .glass-nav {
 /* 図案: 既存 news-card-v2 の幅・影・hover を打ち消し、固定サイズに固定 */
 #news .news-card-v2-visual {
     width: 100%;
-    height: 160px;
+    height: 200px;
     max-width: none;
     min-width: 0;
     aspect-ratio: auto;
@@ -1573,6 +1573,10 @@ header.glass-nav, .glass-nav {
         }
         /* 会社概要の 2 列の中身が、長い住所の最小幅で列の外 (右に 20px) へ出ないようにする */
         #company .grid > * { min-width: 0; }
+        /* 768〜1023px は 2 列だと 1 列が約 300px で、社名が語の途中で切れ、提携先のロゴがカードを越えるため 1 列に積む */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            #company .grid { grid-template-columns: minmax(0, 1fr); row-gap: 5rem; }
+        }
     </style>
 </head>
 
@@ -1623,6 +1627,7 @@ header.glass-nav, .glass-nav {
     <video class="hero-video" data-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto"
       src="hero_v11_mobile.mp4" data-src-mobile="hero_v11_mobile.mp4" data-src-desktop="hero_v11_pc.mp4"
       poster="assets/video/hero-wave-poster.jpg"></video>
+    <noscript><style>#main .hero-video { display: none; } #main .hero-video-container { background: url("assets/video/hero-wave-poster.jpg") center / cover no-repeat; }</style></noscript>
     <div class="hero-overlay"></div>
   </div>
   <div class="hero-mono__inner">
@@ -1650,23 +1655,31 @@ header.glass-nav, .glass-nav {
     var mobile = window.matchMedia('(max-width: 767px)').matches;
     var want = video.getAttribute(mobile ? 'data-src-mobile' : 'data-src-desktop');
     if (want && video.getAttribute('src') !== want) { video.setAttribute('src', want); video.load(); }
+    // userPaused はボタンで止めた (または reduced-motion) ことだけを表す。表示は video の実際の状態から決める
     var userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function play() {
       if (userPaused) return;
       var p = video.play();
-      if (p && p.catch) p.catch(function () {});
+      if (p && p.catch) p.catch(render);
     }
     function render() {
       if (!btn) return;
-      btn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
-      btn.textContent = userPaused ? 'Play' : 'Pause';
-      btn.dataset.state = userPaused ? 'paused' : 'playing';
+      var stopped = video.paused || video.ended || !!video.error;
+      btn.setAttribute('aria-pressed', stopped ? 'true' : 'false');
+      btn.textContent = stopped ? 'Play' : 'Pause';
+      btn.dataset.state = stopped ? 'paused' : 'playing';
     }
+    ['play', 'playing', 'pause', 'ended', 'error'].forEach(function (type) { video.addEventListener(type, render); });
     if (btn) {
       btn.hidden = false;
       btn.addEventListener('click', function () {
-        userPaused = !userPaused;
-        if (userPaused) { video.pause(); } else { play(); }
+        if (video.paused || video.ended) {
+          userPaused = false;
+          play();
+        } else {
+          userPaused = true;
+          video.pause();
+        }
         render();
       });
     }
