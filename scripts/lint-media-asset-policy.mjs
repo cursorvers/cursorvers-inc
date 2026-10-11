@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import * as parse5 from 'parse5';
 
@@ -319,8 +319,26 @@ function lintHeroVideoAssets() {
       continue;
     }
 
+    lintHeroVideoSize(src, filePath);
     lintHeroVideoFastStart(src, filePath);
     lintHeroVideoCodec(required, src, filePath);
+  }
+}
+
+// Cloudflare Pages は 1 ファイル 25MiB まで (https://developers.cloudflare.com/pages/platform/limits/)。
+// 大きさは ffprobe の出力ではなくファイルのバイト数で測る (2026-10-11 に ffprobe の bit_rate を大きさと読み違えて 66.5MiB の動画を commit した)
+const CLOUDFLARE_PAGES_MAX_FILE_BYTES = 25 * 1024 * 1024;
+
+function lintHeroVideoSize(src, filePath) {
+  const bytes = statSync(filePath).size;
+  if (bytes >= CLOUDFLARE_PAGES_MAX_FILE_BYTES) {
+    addFinding(
+      'R8',
+      'error',
+      src,
+      1,
+      `Hero video "${src}" is ${bytes} bytes (${(bytes / 1048576).toFixed(1)} MiB); Cloudflare Pages rejects files of 25 MiB or more. Re-encode with a target bitrate (two-pass).`
+    );
   }
 }
 
