@@ -9,7 +9,7 @@
  *
  * 経緯:
  *   2026-10-08 に V5 から白黒の 3D 医療街区ヒーローへ刷新した。
- *   2026-10-11 に背景を 3D から波の動画 (自サイトの hero_v12_*.mp4。2026-10-11 に原本から 1920×1080 / 960×540 で作り直した) に替えた。3D は cursorvers.jp へ移した。
+ *   2026-10-11 に背景を 3D から波の動画 (自サイトの hero_v13_*.mp4。2026-10-11 に原本から 1920×1080 / 960×540 で作り直した) に替えた。3D は cursorvers.jp へ移した。
  */
 const { test, expect } = require("@playwright/test");
 
@@ -72,9 +72,9 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
     // 動画は自サイトに置き、<source> を使わず src を直接持つ (AGENTS.md R1・R6、CSP の media-src 'self')
     expect(contract.heroVideoSourceCount).toBe(0);
     expect(contract.heroVideoAttrs).toEqual({
-      src: "hero_v12_mobile.mp4",
-      mobile: "hero_v12_mobile.mp4",
-      desktop: "hero_v12_pc.mp4",
+      src: "hero_v13_mobile.mp4",
+      mobile: "hero_v13_mobile.mp4",
+      desktop: "hero_v13_pc.mp4",
       preload: "auto",
     });
 
@@ -123,7 +123,7 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
         pressed: btn ? btn.getAttribute("aria-pressed") : null,
       };
     });
-    expect(state.currentSrc.endsWith("/hero_v12_mobile.mp4")).toBe(true);
+    expect(state.currentSrc.endsWith("/hero_v13_mobile.mp4")).toBe(true);
     expect(state.muted).toBe(true);
     expect(state.pauseHidden).toBe(false);
     expect(state.pressed).toBe("false");
