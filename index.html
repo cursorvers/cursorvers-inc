@@ -1016,14 +1016,18 @@
   height: auto;
   transform: translate(-50%, -50%);
   object-fit: cover;
-  filter: brightness(1.1) saturate(0.9);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(135deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.75) 40%, rgba(255,255,255,.65) 100%);
+  /* 文字のある左は白を残し、右は波の色を出す (2026-10-11 user「色を褪せさせスギでは？」) */
+  background: linear-gradient(90deg, rgba(255,255,255,.82) 0%, rgba(255,255,255,.62) 45%, rgba(255,255,255,.12) 100%);
+}
+@media (max-width: 767px) {
+  /* スマホは文字が全幅に広がるので、色を残しつつ均一に白をかける */
+  .hero-overlay { background: linear-gradient(180deg, rgba(255,255,255,.78) 0%, rgba(255,255,255,.66) 100%); }
 }
 
 .hero-mono__inner {
