@@ -1440,6 +1440,132 @@ header.glass-nav, .glass-nav {
     #news .news-card-v2-cta {
       display: none;
     }
+    
+/* ===== index: news list layout ===== */
+
+#news .news-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+#news .news-row {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+#news .news-row:last-child {
+    border-bottom: none;
+}
+
+#news .news-row-link {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 図案: 既存 news-card-v2 の幅・影・hover を打ち消し、固定サイズに固定 */
+#news .news-card-v2-visual {
+    width: 100%;
+    height: 160px;
+    max-width: none;
+    min-width: 0;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+    box-shadow: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: none;
+    transition: none;
+}
+
+#news .news-row:hover .news-card-v2-visual {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 本文 */
+#news .news-row-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#news .news-card-v2-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#news .news-card-v2-title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0 0 8px;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+#news .news-list .news-card-v2-lede {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #52525B;
+    margin: 0;
+}
+
+#news .news-row-link:hover .news-card-v2-title {
+    color: #E8501A;
+}
+
+/* すべてのお知らせ */
+#news .news-list-more {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+#news .news-list-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8501A;
+    text-decoration: none;
+}
+
+#news .news-list-more-link:hover {
+    text-decoration: underline;
+}
+
+/* PC */
+@media (min-width: 768px) {
+    #news .news-row-link {
+        flex-direction: row;
+        gap: 32px;
+        padding: 28px 0;
+    }
+
+    #news .news-card-v2-visual {
+        width: 320px;
+        height: 200px;
+    }
+
+    #news .news-card-v2-title {
+        font-size: 22px;
+    }
+
+    #news .news-list .news-card-v2-lede {
+        font-size: 15px;
+    }
+}
     </style>
 </head>
 
@@ -1762,7 +1888,6 @@ header.glass-nav, .glass-nav {
         </div>
     </section>
 
-    <!-- Case Study Section -->
 <!-- 企業向け研修 (2026-10-11): 病院・医師に向き合う企業の営業部門や医療機関の職員に向けた医療AIガバナンス研修。
      講師の実名・肩書・価格・受講規模は、出演の承諾と契約条件が決まるまで載せない。
      成果は「条件と確認点を説明できる」と書き、特定の製品を勧める研修には見せない (#paths の「特定製品を売らない立場」と食い違わないように)。 -->
@@ -1805,6 +1930,7 @@ header.glass-nav, .glass-nav {
     </div>
 </section>
 
+    <!-- Case Study Section -->
     <section id="case-study" class="py-20 md:py-28 bg-brand-gray relative z-10">
         <div class="max-w-6xl mx-auto px-6 md:px-12">
             <div class="text-center mb-12 md:mb-16">
@@ -1926,18 +2052,13 @@ header.glass-nav, .glass-nav {
                     <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
                 </div>
-                <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-flame hover:underline transition shrink-0">
-                    すべてのお知らせ
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-                </a>
             </div>
 
-            <!-- News Items (horizontal scroll rail, visual-first cards) -->
-            <div class="news-scroll-wrapper">
-            <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
+            <!-- News List -->
+            <div class="news-list">
                 <!-- Anthropic「Claude Startup Program」採択 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-07-claude-startups.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-07-claude-startups.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Claude Startup Program">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -1946,7 +2067,7 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption jp-keep">Anthropic&nbsp;スタートアップ<wbr>支援プログラム</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">採択</span>
                                 <time datetime="2026-10-07" class="news-card-v2-date">2026.10.07</time>
@@ -1957,17 +2078,13 @@ header.glass-nav, .glass-nav {
                             <p class="news-card-v2-lede jp-keep">
                                 Anthropic&nbsp;が<wbr>運営する<wbr>スタートアップ<wbr>支援プログラムに<wbr>採択されました。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- 第3回日本医療安全推進学会学術総会 医療安全文化促進賞 優秀賞 受賞 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 日本医療安全推進学会">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -1976,7 +2093,7 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">医療安全文化促進賞 優秀賞</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">受賞</span>
                                 <time datetime="2026-10-04" class="news-card-v2-date">2026.10.04</time>
@@ -1984,20 +2101,16 @@ header.glass-nav, .glass-nav {
                             <h3 class="news-card-v2-title jp-keep">
                                 日本医療安全推進学会で<wbr>「医療安全文化促進賞 優秀賞」を<wbr>受賞
                             </h3>
-                            <p class="news-card-v2-lede">
-                                一般演題「医療AIにおける「責任の空白」を防ぐ」が受賞しました。
+                            <p class="news-card-v2-lede jp-keep">
+                                一般演題<wbr>「医療AIにおける<wbr>「責任の空白」を<wbr>防ぐ」が<wbr>受賞しました。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- 第54回日本救急医学会総会・学術集会 ランチョンセミナー21 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第54回日本救急医学会総会・学術集会">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2006,7 +2119,7 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">2026.10.28 出島メッセ長崎</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">登壇</span>
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
@@ -2015,20 +2128,16 @@ header.glass-nav, .glass-nav {
                             <h3 class="news-card-v2-title jp-keep">
                                 日本救急医学会の<wbr>ランチョンセミナー21に<wbr>登壇<wbr><span class="whitespace-nowrap">（10/28 長崎）</span>
                             </h3>
-                            <p class="news-card-v2-lede">
-                                救急現場での判断支援にAIを使う場面を、ガバナンスの観点から取り上げます。会場は出島メッセ長崎で、整理券制です。
+                            <p class="news-card-v2-lede jp-keep">
+                                救急現場での<wbr>判断支援に<wbr>AIを<wbr>使う<wbr>場面を、<wbr>ガバナンスの<wbr>観点から<wbr>取り上げます。<wbr>会場は<wbr>出島メッセ長崎で、<wbr>整理券制です。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- Health ISAC Japan Security Session 2026 #06 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2037,7 +2146,7 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">2026.11.6 オンライン開催</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">登壇</span>
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
@@ -2046,20 +2155,20 @@ header.glass-nav, .glass-nav {
                             <h3 class="news-card-v2-title jp-keep">
                                 Health ISAC Japan Security Session #06&nbsp;に<wbr>登壇<wbr><span class="whitespace-nowrap">（11/6 オンライン）</span>
                             </h3>
-                            <p class="news-card-v2-lede">
-                                医療AX時代に欠かせないAIガバナンスの要点を、救命救急の臨床経験から解説します。参加資格は Health ISAC Japan 会員です。
+                            <p class="news-card-v2-lede jp-keep">
+                                医療AX時代に<wbr>欠かせない<wbr>AIガバナンスの<wbr>要点を、<wbr>救命救急の<wbr>臨床経験から<wbr>解説します。<wbr>参加資格は<wbr>Health&nbsp;ISAC&nbsp;Japan&nbsp;会員です。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
-
             </div>
-            <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
-            <div class="news-scroll-hint" id="newsScrollHint" aria-hidden="true"></div>
+
+            <!-- すべてのお知らせ -->
+            <div class="news-list-more">
+                <a href="news.html" class="news-list-more-link">
+                    すべてのお知らせ
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </section>
@@ -2384,7 +2493,7 @@ header.glass-nav, .glass-nav {
                     /* ?v= は CDN エッジキャッシュ迂回用 (sw.js は edge で 4h キャッシュされるため、
                        SW 更新を即配布するには登録 URL 側で cache key を変える。sw.js の
                        CACHE_VERSION 更新時はここも同じ値に上げること) */
-                    navigator.serviceWorker.register('/sw.js?v=2.1.1', { updateViaCache: 'none' })
+                    navigator.serviceWorker.register('/sw.js?v=2.3.0', { updateViaCache: 'none' })
                         .then((registration) => {
                             console.log('[PWA] Service Worker registered:', registration.scope);
                             registration.update().catch(() => {});
