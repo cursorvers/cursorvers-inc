@@ -1324,6 +1324,122 @@ header.glass-nav, .glass-nav {
   border-bottom: 1px solid rgba(17,17,17,.06) !important;
 }
 
+    /* お知らせ (2026-10-11): genshi.ai の型 */
+    @media (min-width: 1024px) {
+      #news .news-scroll,
+      #news .news-scroll-v2 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding-right: 0;
+      }
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        width: auto;
+        flex: none;
+        min-height: 0;
+      }
+      #news .news-scroll-fade,
+      #news .news-scroll-hint {
+        display: none;
+      }
+    }
+    @media (min-width: 640px) and (max-width: 1023px) {
+      #news .news-scroll,
+      #news .news-scroll-v2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding-right: 0;
+      }
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        width: auto;
+        flex: none;
+        min-height: 0;
+      }
+      #news .news-scroll-fade,
+      #news .news-scroll-hint {
+        display: none;
+      }
+    }
+    @media (max-width: 639px) {
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        flex: 0 0 85%;
+        flex-basis: 85%;
+        max-width: 340px;
+      }
+      #news .news-card-v2 .news-card-v2-visual {
+        aspect-ratio: auto;
+        height: 250px;
+      }
+    }
+    @media (min-width: 1024px) {
+      #news .news-card-v2 .news-card-v2-visual {
+        aspect-ratio: auto;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #news .news-card-v2 .news-visual-wordmark {
+        font-size: 16px;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+    }
+    #news .news-card-v2-meta {
+      flex-wrap: wrap;
+      row-gap: 6px;
+    }
+    #news .news-card-v2-tag,
+    #news .news-card-v2-meta span.inline-block {
+      white-space: nowrap;
+    }
+    #news .news-card-v2-title.jp-keep {
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+    #news .news-card-v2-visual {
+      aspect-ratio: 4 / 3;
+      background: #F6F6F4;
+    }
+    #news .news-visual-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    #news .news-visual-brand {
+      font-size: 13px;
+    }
+    #news .news-visual-x {
+      font-size: 20px;
+    }
+    #news .news-visual-wordmark {
+      font-size: 18px;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+    #news .news-visual-logo {
+      max-height: 52px;
+    }
+    #news .news-visual-caption {
+      font-size: 13px;
+      text-align: center;
+    }
+    #news .news-card-v2-lede,
+    #news .news-card-v2-cta {
+      display: none;
+    }
     </style>
 </head>
 
@@ -1406,8 +1522,8 @@ header.glass-nav, .glass-nav {
         <span class="jp-keep text-sm font-bold text-flame">医療機関・<wbr>社会福祉法人</span>
         <h3 class="jp-keep text-2xl md:text-[1.7rem] font-bold text-brand-black leading-snug mt-3">話した<wbr>内容が、<wbr>記録の<wbr>下書きに<wbr>なる。</h3>
         <ul class="mt-6 space-y-3 flex-grow">
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>診断から<wbr>定着まで、<wbr>医師と<wbr>エンジニアが<wbr>伴走します</span></li>
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>院内<wbr>担当者の<wbr>育成&nbsp;<a href="gov-lead.html" class="text-flame hover:underline font-semibold">GOV-Lead</a>&nbsp;も<wbr>相談できます</span></li>
+          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>医師が<wbr>伴走し、<wbr>必要に<wbr>応じて<wbr>エンジニアを<wbr>アサインします</span></li>
+          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>院内<wbr>担当者の<wbr>育成&nbsp;<a href="gov-lead.html" class="text-flame hover:underline font-semibold whitespace-nowrap">GOV-Lead</a>&nbsp;も<wbr>相談できます</span></li>
         </ul>
         <a href="medical-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})" class="jp-keep mt-8 flex w-full h-12 items-center justify-center gap-2 font-bold text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">AI導入<wbr>伴走を<wbr>見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
         <a href="welfare-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_welfare'})" class="jp-keep mt-4 block text-center text-flame text-base font-semibold hover:underline">社会福祉法人の<wbr>方は<wbr>こちら →</a>
@@ -1733,8 +1849,8 @@ header.glass-nav, .glass-nav {
                                 <span class="news-card-v2-tag news-tag-amber">受賞</span>
                                 <time datetime="2026-10-04" class="news-card-v2-date">2026.10.04</time>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                日本医療安全推進学会で「医療安全文化促進賞 優秀賞」を受賞
+                            <h3 class="news-card-v2-title jp-keep">
+                                日本医療安全推進学会で<wbr>「医療安全文化促進賞 優秀賞」を<wbr>受賞
                             </h3>
                             <p class="news-card-v2-lede">
                                 一般演題「医療AIにおける「責任の空白」を防ぐ」が受賞しました。
@@ -1764,8 +1880,8 @@ header.glass-nav, .glass-nav {
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
                                 <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">10/28 開催</span>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                日本救急医学会のランチョンセミナー21に登壇（10/28 長崎）
+                            <h3 class="news-card-v2-title jp-keep">
+                                日本救急医学会の<wbr>ランチョンセミナー21に<wbr>登壇<wbr><span class="whitespace-nowrap">（10/28 長崎）</span>
                             </h3>
                             <p class="news-card-v2-lede">
                                 救急現場での判断支援にAIを使う場面を、ガバナンスの観点から取り上げます。会場は出島メッセ長崎で、整理券制です。
@@ -1795,8 +1911,8 @@ header.glass-nav, .glass-nav {
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
                                 <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">11/6 開催</span>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                Health ISAC Japan Security Session #06 に登壇（11/6 オンライン）
+                            <h3 class="news-card-v2-title jp-keep">
+                                Health ISAC Japan Security Session #06&nbsp;に<wbr>登壇<wbr><span class="whitespace-nowrap">（11/6 オンライン）</span>
                             </h3>
                             <p class="news-card-v2-lede">
                                 医療AX時代に欠かせないAIガバナンスの要点を、救命救急の臨床経験から解説します。参加資格は Health ISAC Japan 会員です。
