@@ -1,12 +1,13 @@
 // Service Worker for Cursorvers PWA
-const CACHE_VERSION = '2.2.10'; // Updated: 2026-10-09 - ヒーローの一時停止ボタンを英語表記 (Pause / Play) に。2.2.9: ヒーローの 3D とスマホ版の配置
-const CACHE_NAME = `cursorvers-v${CACHE_VERSION}`;
+const CACHE_VERSION = '2.3.0'; // Updated: 2026-10-11 - トップの再構成に合わせて CSS を作り直した。activate で消すのを自サイトの旧版だけにした。2.2.10: ヒーローの一時停止ボタンを英語表記 (Pause / Play) に
+const CACHE_PREFIX = 'cursorvers-v';
+const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 // Static assets - Cache First
 const STATIC_CACHE = [
   '/assets/css/renewal.css?v=20261008m',
   '/dist/tailwind.min.css',
-  '/dist/tailwind.min.css?v=20261008m',
+  '/dist/tailwind.min.css?v=20261011a',
   '/assets/js/nav.js',
   '/assets/js/reveal.js',
   '/assets/js/cookie-consent.js',
@@ -47,7 +48,7 @@ self.addEventListener('activate', (event) => {
     const cacheNames = await caches.keys();
     await Promise.all(
       cacheNames
-        .filter((cacheName) => cacheName !== CACHE_NAME)
+        .filter((cacheName) => cacheName.startsWith(CACHE_PREFIX) && cacheName !== CACHE_NAME)
         .map((cacheName) => {
           console.log('[SW] Deleting old cache:', cacheName);
           return caches.delete(cacheName);
