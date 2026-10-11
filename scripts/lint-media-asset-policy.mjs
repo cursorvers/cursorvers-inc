@@ -325,7 +325,7 @@ function lintHeroVideoAssets() {
   }
 }
 
-// Cloudflare Pages は 1 ファイル 25MiB まで (https://developers.cloudflare.com/pages/platform/limits/)。
+// Cloudflare Pages は 1 ファイル最大 25MiB (https://developers.cloudflare.com/pages/platform/limits/)。自社の基準として 25MiB 未満を求める。
 // 大きさは ffprobe の出力ではなくファイルのバイト数で測る (2026-10-11 に ffprobe の bit_rate を大きさと読み違えて 66.5MiB の動画を commit した)
 const CLOUDFLARE_PAGES_MAX_FILE_BYTES = 25 * 1024 * 1024;
 
@@ -337,7 +337,7 @@ function lintHeroVideoSize(src, filePath) {
       'error',
       src,
       1,
-      `Hero video "${src}" is ${bytes} bytes (${(bytes / 1048576).toFixed(1)} MiB); Cloudflare Pages rejects files of 25 MiB or more. Re-encode with a target bitrate (two-pass).`
+      `Hero video "${src}" is ${bytes} bytes (${(bytes / 1048576).toFixed(1)} MiB); project policy requires hero videos below 25 MiB (Cloudflare Pages maximum: 25 MiB per file). Re-encode with a target bitrate (two-pass).`
     );
   }
 }
