@@ -48,7 +48,7 @@ test('正しい鍵: 置換し、data-sitekey が鍵と一致し、commit と sha
   const html = fs.readFileSync(path.join(dir, 'contact.html'), 'utf8');
   assert.ok(html.includes(`data-sitekey="${KEY}"`));
   assert.ok(!html.includes(PLACEHOLDER));
-  assert.match(res.stdout, /\(1 replaced, 1 data-sitekey verified\)/);
+  assert.match(res.stdout, /\(1 replaced, 1 live widget\(s\) verified\)/);
   assert.match(res.stdout, /^commit: abc1234$/m);
   assert.match(res.stdout, /^contact\.html sha256: [0-9a-f]{64}$/m);
   assert.match(res.stdout, /0 files \(1 files scanned\)/);
@@ -127,7 +127,8 @@ test('鍵と違う data-sitekey が別にあれば止める', (t) => {
 
 test('空の data-sitekey が別にあれば止める', (t) => {
   const dir = makeSiteDir(t, `<div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div>\n<div data-sitekey=""></div>\n`);
-  assertFails(runScript([dir], KEY), KEY, /empty data-sitekey/);
+  // widget でない要素の空の data-sitekey も、鍵と一致しないとして止まる
+  assertFails(runScript([dir], KEY), KEY, /does not match/);
 });
 
 test('読めないファイルがあれば止める (検査の失敗を成功扱いしない)', { skip: process.getuid?.() === 0 }, (t) => {
@@ -152,6 +153,39 @@ test('実際の contact.html: placeholder がちょうど 1 つあり、置換�
   fs.copyFileSync(path.join(import.meta.dirname, '..', 'contact.html'), path.join(dir, 'contact.html'));
   const res = runScript(['--commit', 'abc1234', dir], KEY);
   assert.equal(res.status, 0, res.stderr);
-  assert.match(res.stdout, /\(1 replaced, 1 data-sitekey verified\)/);
+  assert.match(res.stdout, /\(1 replaced, 1 live widget\(s\) verified\)/);
   assertNoKeyLeak(res, KEY);
+});
+
+test('コメントの中にしか widget が無ければ止める', (t) => {
+  const site = makeSiteDir(t, `<!doctype html><html><body><!-- <div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div> --></body></html>`);
+  const res = runScript([site], KEY);
+  assertFails(res, KEY, /no live \.cf-turnstile widget/);
+});
+
+test('script の文字列の中にしか widget が無ければ止める', (t) => {
+  const site = makeSiteDir(t, `<!doctype html><html><body><script>const s = '<div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div>';</script></body></html>`);
+  const res = runScript([site], KEY);
+  assertFails(res, KEY, /no live/);
+});
+
+test('placeholder が文字として在るだけで widget が無ければ止める', (t) => {
+  const site = makeSiteDir(t, `<!doctype html><html><body><p>${PLACEHOLDER}</p></body></html>`);
+  const res = runScript([site], KEY);
+  assertFails(res, KEY, /no live/);
+});
+
+test('本物の widget とコメントの widget があれば、本物の 1 つだけを数えて通す', (t) => {
+  const site = makeSiteDir(t, `<!doctype html><html><body><div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div><!-- <div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div> --></body></html>`);
+  const res = runScript([site], KEY);
+  assert.equal(res.status, 0, res.stderr);
+  assert.match(res.stdout, /1 live widget/);
+});
+
+test('フォルダの symlink があれば止める (走査できない対象を成功扱いしない)', (t) => {
+  const site = makeSiteDir(t, `<!doctype html><html><body><div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div></body></html>`);
+  fs.mkdirSync(path.join(site, 'realdir'));
+  fs.symlinkSync(path.join(site, 'realdir'), path.join(site, 'linkeddir'), 'dir');
+  const res = runScript([site], KEY);
+  assertFails(res, KEY, /symlinked directory not allowed/);
 });
