@@ -58,7 +58,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261008m">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261011a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -188,7 +188,10 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #111111; color: #FFFFFF; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
-    </style>
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+    .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+</style>
 </head>
 
 <body class="antialiased">
@@ -242,6 +245,7 @@
             <div class="relative z-10 max-w-4xl mx-auto text-center">
                 <p class="text-base md:text-lg font-semibold text-flame mb-6 tracking-wider">医療機関向け / 人材育成</p>
                 <h1 class="text-6xl md:text-7xl font-bold tracking-tight mb-6 font-en">GOV-Lead</h1>
+<p lang="en" class="en-line" style="margin:-0.5rem auto 1.5rem; max-width:42rem;">A program that trains and certifies AI-governance leads inside hospitals, so that AI operations keep running when staff change.</p>
                 <h2 class="text-3xl md:text-4xl font-bold mb-8">
                     院内AIガバナンス担当者<br class="br-pc">
                     育成・認定プログラム
@@ -528,7 +532,7 @@
                     <div class="bg-white rounded-2xl p-8">
                         <div class="flex items-center gap-5 mb-4">
                             <span class="w-14 h-14 bg-flame text-white rounded-full flex items-center justify-center font-bold text-xl">1名</span>
-                            <h3 class="text-2xl font-bold">運用責任を持てる人</h3>
+                            <h3 class="jp-keep text-2xl font-bold">運用責任を<wbr>持てる人</h3>
                         </div>
                         <p class="text-lg md:text-xl text-text-secondary ml-[74px]">事務長/医療安全/情シスなど</p>
                     </div>
@@ -980,7 +984,7 @@
                 <h2 class="text-4xl md:text-5xl font-bold mb-8">
                     まずは、院内の<br class="md:hidden br-pc">
                     「AI担当の仕事」を<br class="br-pc">
-                    定義するところから。
+                    定義するところから
                 </h2>
                 <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
                     無料で相談する際に貴院の状況をお聞かせください。<br class="hidden md:block br-pc">

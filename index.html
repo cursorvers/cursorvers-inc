@@ -46,6 +46,9 @@
         })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- ヒーローの背景動画を早めに取りにいく (AGENTS.md R7)。幅ごとに片方だけ -->
+    <link rel="preload" as="video" href="hero_v13_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v13_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Cursorvers">
@@ -64,8 +67,8 @@
     <meta name="msapplication-TileColor" content="#111111">
     <meta name="msapplication-TileImage" content="/icons/icon-144.png">
 
-    <title>Cursorvers｜病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関</title>
-    <meta name="description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。医療AI関連ソフトウェアの開発・提供も行います。">
+    <title>Cursorvers｜医療AIの導入伴走・第三者レビュー・ガバナンス研修</title>
+    <meta name="description" content="臨床経験のある医師が、医療機関のAI導入と、AIベンダーの提案を製品中立で確かめます。企業の営業部門や医療機関の職員に向けた、医療AIガバナンスの研修も提供します。医療AI関連ソフトウェアの開発・提供も行います。">
     <link rel="canonical" href="https://cursorvers.com/">
 
     <!-- 構造化データ (YMYL E-E-A-T: 組織 + 創業医師。記載事実はサイト内表記に限定) -->
@@ -79,7 +82,7 @@
                 "name": "Cursorvers株式会社",
                 "url": "https://cursorvers.com/",
                 "logo": "https://cursorvers.com/images/og-cursorvers-logo.jpg",
-                "description": "医療AIの第三者レビュー。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。",
+                "description": "医療AIの導入伴走と第三者レビュー (臨床経験のある医師が、製品中立の立場で行います)。あわせて、企業の営業部門や医療機関の職員に向けて、各分野のスペシャリストを招くオムニバス形式の医療AIガバナンス研修を提供します。",
                 "address": {
                     "@type": "PostalAddress",
                     "addressCountry": "JP",
@@ -120,19 +123,19 @@
         ]
     }
     </script>
-    <meta property="og:title" content="Cursorvers｜病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関">
-    <meta property="og:description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。医療AI関連ソフトウェアの開発・提供も行います。">
+    <meta property="og:title" content="Cursorvers｜医療AIの導入伴走・第三者レビュー・ガバナンス研修">
+    <meta property="og:description" content="臨床経験のある医師が、医療機関のAI導入と、AIベンダーの提案を製品中立で確かめます。企業の営業部門や医療機関の職員に向けた、医療AIガバナンスの研修も提供します。医療AI関連ソフトウェアの開発・提供も行います。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://cursorvers.com/">
     <meta property="og:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
     <meta property="og:site_name" content="Cursorvers">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Cursorvers｜病院の導入判断とベンダーの提案品質を精査する、医療AI専門の第三者機関">
-    <meta name="twitter:description" content="医療AIを病院に提案する前に。AIベンダーの提案書、責任分界、PoC安全性を、臨床経験のある医師が製品中立でレビューします。医療AI関連ソフトウェアの開発・提供も行います。">
+    <meta name="twitter:title" content="Cursorvers｜医療AIの導入伴走・第三者レビュー・ガバナンス研修">
+    <meta name="twitter:description" content="臨床経験のある医師が、医療機関のAI導入と、AIベンダーの提案を製品中立で確かめます。企業の営業部門や医療機関の職員に向けた、医療AIガバナンスの研修も提供します。医療AI関連ソフトウェアの開発・提供も行います。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261008m">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261011a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -874,11 +877,11 @@
                 padding-left: 1.25rem;
             }
 
-            #business .card-hover {
+            #paths .card-hover {
                 border-radius: 0.75rem;
             }
 
-            #business .card-hover .h-52 {
+            #paths .card-hover .h-52 {
                 height: 11rem;
             }
 
@@ -978,7 +981,6 @@
             .news-visual-caption, .news-visual-lockup-card .news-visual-caption { font-size: 12px; }
             #news a[href="news.html"] { display: inline-flex; align-items: center; min-height: 44px; }
         }
-        #heroFx{position:absolute;inset:0;width:100%;height:100%;}
         /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
         .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
     </style>
@@ -996,26 +998,37 @@
   --hero-accent: #3E6FA8;
 }
 
-#heroFx {
+/* 背景の波の動画と、文字を読ませる白い膜 (cursorvers.jp から移した。2026-10-11) */
+.hero-video-container {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
-  opacity: 0;
-  transition: opacity 1.2s ease;
+  overflow: hidden;
 }
 
-#heroFx.is-ready {
-  opacity: 1;
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 }
 
-.hero-mono__veil {
+.hero-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(90deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.9) 50%, rgba(255,255,255,.55) 58%, rgba(255,255,255,0) 68%);
+  /* 文字のある左は白を残し、右は波の色を出す (2026-10-11 user「色を褪せさせスギでは？」) */
+  /* 濃い白は文字の段 (右端は 1280 幅まで約 720px、1440 で 813px、1920 で 1055px) を必ず覆う */
+  background: linear-gradient(90deg, rgba(255,255,255,.90) 0%, rgba(255,255,255,.86) max(57%, 760px), rgba(255,255,255,.45) calc(max(57%, 760px) + 13%), rgba(255,255,255,.15) 100%);
+}
+@media (max-width: 767px) {
+  /* スマホは文字が全幅に広がるので、色を残しつつ均一に白をかける */
+  .hero-overlay { background: linear-gradient(180deg, rgba(255,255,255,.86) 0%, rgba(255,255,255,.76) 100%); }
 }
 
 .hero-mono__inner {
@@ -1182,6 +1195,36 @@
   animation: hero-in .8s cubic-bezier(.2,.7,.2,1) .45s both;
 }
 
+/* 英文の 1 行 (海外の審査員向け)。副題の下に寄せ、日本語より小さく薄くする */
+.hero-mono__en {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5B6067;
+  max-width: 48em;
+  margin: -26px 0 36px;
+  animation: hero-in .8s cubic-bezier(.2,.7,.2,1) .38s both;
+}
+@media (min-width: 768px) {
+  .hero-mono__en { font-size: 14px; margin: -30px 0 40px; }
+}
+@media (max-width: 767px) {
+  .hero-mono__en { font-size: 12px; margin: -16px 0 24px; }
+}
+/* 各セクションの見出しの直下に添える英文の 1 行 */
+.en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+
+/* PC の文字を大きくする (2026-10-11 user 指示)。スマホは下の @media (max-width: 767px) の指定のまま */
+@media (min-width: 768px) {
+  .hero-mono__copy { max-width: 880px; }
+  .hero-mono__kicker { font-size: 14px; margin-bottom: 32px; }
+  .hero-mono__rule { width: 40px; }
+  .hero-mono h1 { font-size: clamp(46px, 5.6vw, 88px); margin-bottom: 32px; }
+  .hero-mono__sub { font-size: clamp(17px, 1.55vw, 22px); margin-bottom: 44px; }
+  .hero-mono__primary { min-height: 64px; padding: 0 34px; font-size: 18px; }
+  .hero-mono__link { font-size: 17px; }
+}
+
 @keyframes hero-in {
   from {
     opacity: 0;
@@ -1201,28 +1244,15 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1279px) {
-  .hero-mono__veil {
-    background: linear-gradient(90deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.93) 66%, rgba(255,255,255,.5) 80%, rgba(255,255,255,0) 92%);
-  }
-}
-
 @media (max-width: 767px) {
   .hero-mono {
-    /* 模型の帯の高さ。見て調整する */
-    --hero-stage: clamp(260px, 38svh, 360px);
+    /* 見出しを置く帯の高さ。3D の模型を置いていたころは clamp(260px, 38svh, 360px)。
+       背景が全面の動画になり模型の帯が要らなくなったため、見出しと説明文の間が空きすぎないよう詰める (2026-10-11) */
+    --hero-stage: clamp(230px, 30svh, 260px);
     --hero-mid: calc(80px + (var(--hero-stage) - 80px) / 2);
     --hero-shift: 14px;
     min-height: 0;
     display: block;
-  }
-
-  #heroFx {
-    inset: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--hero-stage);
   }
 
   .hero-mono__inner {
@@ -1232,17 +1262,6 @@
   /* cookie bar が表示されている間は CTA が帯に覆われるため、下の余白を広げる */
   body:has(> #cookie-bar) .hero-mono__inner {
     padding-bottom: calc(96px + env(safe-area-inset-bottom));
-  }
-
-  .hero-mono__veil {
-    inset: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--hero-stage);
-    background:
-      radial-gradient(ellipse 70% 38% at 50% calc(40px + 50%), rgba(255,255,255,.92) 0%, rgba(255,255,255,.78) 45%, rgba(255,255,255,0) 100%),
-      linear-gradient(180deg, rgba(255,255,255,0) 78%, #ffffff 100%);
   }
 
   .hero-mono__copy {
@@ -1306,10 +1325,10 @@
     margin-top: 0;
   }
 
-  /* スマホでは帯の端で目立たないよう小さく、少し透かす (押せる高さ 36px は保つ) */
+  /* スマホではヒーローの右下に小さく、少し透かす (押せる高さ 36px は保つ) */
   .hero-mono__pause {
-    top: calc(var(--hero-stage) - 48px);
-    bottom: auto;
+    top: auto;
+    bottom: 12px;
     right: 12px;
     min-height: 36px;
     padding: 0 12px;
@@ -1324,6 +1343,264 @@ header.glass-nav, .glass-nav {
   border-bottom: 1px solid rgba(17,17,17,.06) !important;
 }
 
+    /* お知らせ (2026-10-11): genshi.ai の型 */
+    @media (min-width: 1024px) {
+      #news .news-scroll,
+      #news .news-scroll-v2 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding-right: 0;
+      }
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        width: auto;
+        flex: none;
+        min-height: 0;
+      }
+      #news .news-scroll-fade,
+      #news .news-scroll-hint {
+        display: none;
+      }
+    }
+    @media (min-width: 640px) and (max-width: 1023px) {
+      #news .news-scroll,
+      #news .news-scroll-v2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        padding-right: 0;
+      }
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        width: auto;
+        flex: none;
+        min-height: 0;
+      }
+      #news .news-scroll-fade,
+      #news .news-scroll-hint {
+        display: none;
+      }
+    }
+    @media (max-width: 639px) {
+      #news .news-scroll > article,
+      #news .news-scroll-v2 > article {
+        flex: 0 0 85%;
+        flex-basis: 85%;
+        max-width: 340px;
+      }
+      #news .news-card-v2 .news-card-v2-visual {
+        aspect-ratio: auto;
+        height: 250px;
+      }
+    }
+    @media (min-width: 1024px) {
+      #news .news-card-v2 .news-card-v2-visual {
+        aspect-ratio: auto;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #news .news-card-v2 .news-visual-wordmark {
+        font-size: 16px;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+    }
+    #news .news-card-v2-meta {
+      flex-wrap: wrap;
+      row-gap: 6px;
+    }
+    #news .news-card-v2-tag,
+    #news .news-card-v2-meta span.inline-block {
+      white-space: nowrap;
+    }
+    #news .news-card-v2-title.jp-keep {
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+    #news .news-card-v2-visual {
+      aspect-ratio: 4 / 3;
+      background: #F6F6F4;
+    }
+    #news .news-visual-lockup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    #news .news-visual-brand {
+      font-size: 13px;
+    }
+    #news .news-visual-x {
+      font-size: 20px;
+    }
+    #news .news-visual-wordmark {
+      font-size: 18px;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+    #news .news-visual-logo {
+      max-height: 52px;
+    }
+    #news .news-visual-caption {
+      font-size: 13px;
+      text-align: center;
+    }
+    #news .news-card-v2-lede,
+    #news .news-card-v2-cta {
+      display: none;
+    }
+    
+/* ===== index: news list layout ===== */
+
+#news .news-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+#news .news-row {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+#news .news-row:last-child {
+    border-bottom: none;
+}
+
+#news .news-row-link {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 図案: 既存 news-card-v2 の幅・影・hover を打ち消し、固定サイズに固定 */
+#news .news-card-v2-visual {
+    width: 100%;
+    height: 200px;
+    max-width: none;
+    min-width: 0;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+    box-shadow: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: none;
+    transition: none;
+}
+
+#news .news-row:hover .news-card-v2-visual {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 本文 */
+#news .news-row-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#news .news-card-v2-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#news .news-card-v2-title {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0 0 8px;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+#news .news-list .news-card-v2-lede {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #52525B;
+    margin: 0;
+}
+
+#news .news-row-link:hover .news-card-v2-title {
+    color: #E8501A;
+}
+
+/* すべてのお知らせ */
+#news .news-list-more {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+#news .news-list-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #E8501A;
+    text-decoration: none;
+}
+
+#news .news-list-more-link:hover {
+    text-decoration: underline;
+}
+
+/* PC */
+@media (min-width: 768px) {
+    #news .news-row-link {
+        flex-direction: row;
+        gap: 32px;
+        padding: 28px 0;
+    }
+
+    #news .news-card-v2-visual {
+        width: 320px;
+        height: 200px;
+    }
+
+    #news .news-card-v2-title {
+        font-size: 22px;
+    }
+
+    #news .news-list .news-card-v2-lede {
+        font-size: 15px;
+    }
+}
+        /* 余白の調整 (2026-10-11 の余白監査)。同じ白の欄が続く境目は、上の欄の下余白と足し算になって間延びするため、下の欄の上余白を詰める */
+        @media (min-width: 768px) {
+            #training { padding-top: 24px; }
+            #cta { padding-top: 96px; }
+            #company { padding-bottom: 120px; }
+            #name-meaning { padding-top: 40px; }
+        }
+        @media (max-width: 767px) {
+            #training { padding-top: 40px; }
+        }
+        /* 会社概要の 2 列の中身が、長い住所の最小幅で列の外 (右に 20px) へ出ないようにする */
+        #company .grid > * { min-width: 0; }
+        /* 768〜1023px は 2 列だと 1 列が約 300px で、社名が語の途中で切れ、提携先のロゴがカードを越えるため 1 列に積む */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            #company .grid { grid-template-columns: minmax(0, 1fr); row-gap: 5rem; }
+        }
     </style>
 </head>
 
@@ -1364,19 +1641,25 @@ header.glass-nav, .glass-nav {
     </header>
 
     <!-- Hero Section (2026-10-08 に V5 から刷新。白地に黒文字、差し色 1 つ)。
-         背景は 3D の白い建築模型 (医療の街区)。カメラが複数の視点を巡って飛ぶ。
-         ソースは assets/hero3d/src/、配信は assets/hero3d/hero3d.min.js。
-         3D は load の後のアイドル時に読み込む (LCP は文字)。一時停止のボタンあり (WCAG 2.2.2)。reduced-motion では動かさず 1 枚だけ描く。
-         フェイルセーフ: JS やモジュールが失敗しても、文字・ボタン・ナビは HTML と CSS だけで成り立つ。
-         ?still=1&pose=0..3 / ?still=1&t=<秒> / ?style=wire / ?debug=1 は確認用 (tests/hero-mono.spec.js)。 -->
+         背景は波の動画に白い膜を重ねたもの (2026-10-11 に 3D の街並みから替えた。3D は cursorvers.jp へ移した)。
+         動画は自サイトの hero_v13_mobile.mp4 (960×540、約 3.6MiB) と hero_v13_pc.mp4 (1920×1080、約 11.1MiB。Pexels 3571264 の 2560×1440 原本から 2 パスで作り直した。Cloudflare Pages は 1 ファイル 25MiB まで) (CSP の media-src 'self')。差し替えるときはファイル名の版を上げる (AGENTS.md R1・R2)。
+         型は scripts/lint-media-asset-policy.mjs の R6〜R8 (iPhone Safari の自動再生): <source> を使わず src を直接指定し、直後の script で再生を確実にする。
+         一時停止のボタンあり (WCAG 2.2.2)。reduced-motion では再生せず静止画のまま。
+         フェイルセーフ: JS や動画が失敗しても、静止画 (poster) と文字・ボタン・ナビは HTML と CSS だけで成り立つ。 -->
     <section id="main" class="hero-mono" aria-labelledby="hero-title">
-  <canvas id="heroFx" aria-hidden="true"></canvas>
-  <div class="hero-mono__veil" aria-hidden="true"></div>
+  <div class="hero-video-container" aria-hidden="true">
+    <video class="hero-video" data-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto"
+      src="hero_v13_mobile.mp4" data-src-mobile="hero_v13_mobile.mp4" data-src-desktop="hero_v13_pc.mp4"
+      poster="assets/video/hero-wave-poster.jpg"></video>
+    <noscript><style>#main .hero-video { display: none; } #main .hero-video-container { background: url("assets/video/hero-wave-poster.jpg") center / cover no-repeat; }</style></noscript>
+    <div class="hero-overlay"></div>
+  </div>
   <div class="hero-mono__inner">
     <div class="hero-mono__copy">
       <p class="hero-mono__kicker"><span class="hero-mono__rule" aria-hidden="true"></span><span class="hero-mono__brand">CURSORVERS<span class="hero-mono__sep" aria-hidden="true">/</span></span>MEDICAL &amp; WELFARE AI PARTNER</p>
       <h1 id="hero-title"><span class="nb">AIに、</span><span class="nb">臨床の魂を</span></h1>
       <p class="hero-mono__sub jp-keep">医療機関・社会福祉法人の<wbr>AI導入を、<wbr>臨床経験のある<wbr>医師が設計し、<wbr>職員に定着するまで<wbr>伴走します。</p>
+      <p lang="en" class="hero-mono__en">We help medical institutions and social-welfare corporations adopt AI. A physician with clinical experience designs the adoption process and supports staff as they put it into practice.</p>
       <div class="hero-mono__ctas">
         <a class="hero-mono__primary" href="contact.html" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_consult' })">無料壁打ちを予約（30分）<span aria-hidden="true">→</span></a>
         <a class="hero-mono__link" href="#paths" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'hero_cta_paths' })">サービスを見る</a>
@@ -1385,400 +1668,220 @@ header.glass-nav, .glass-nav {
   </div>
   <button type="button" lang="en" class="hero-mono__pause" id="heroPause" aria-pressed="false" data-state="playing" hidden>Pause</button>
   <script>
-  /* 3D は load の後のアイドル時に読み込む (LCP は文字)。reduced-motion でも 1 枚の静止画は描く */
+  /* 背景動画の再生 (iPhone Safari の自動再生を確実にする。AGENTS.md R6・R7) と一時停止 (WCAG 2.2.2)。
+     reduced-motion では再生せず Play を出す。ボタンで止めたら、再訪やタップで勝手に再生し直さない */
   (function () {
-    function go() { var s = document.createElement('script'); s.type = 'module'; s.src = 'assets/hero3d/hero3d.min.js'; document.head.appendChild(s); }
-    function idle() { if ('requestIdleCallback' in window) { requestIdleCallback(go, { timeout: 1500 }); } else { setTimeout(go, 600); } }
-    if (document.readyState === 'complete') { idle(); } else { window.addEventListener('load', idle, { once: true }); }
+    var video = document.querySelector('[data-hero-video]');
+    var btn = document.getElementById('heroPause');
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute('muted', '');
+    var mobile = window.matchMedia('(max-width: 767px)').matches;
+    var want = video.getAttribute(mobile ? 'data-src-mobile' : 'data-src-desktop');
+    if (want && video.getAttribute('src') !== want) { video.setAttribute('src', want); video.load(); }
+    // userPaused はボタンで止めた (または reduced-motion) ことだけを表す。表示は video の実際の状態から決める
+    var userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function play() {
+      if (userPaused) return;
+      var p = video.play();
+      if (p && p.catch) p.catch(render);
+    }
+    function render() {
+      if (!btn) return;
+      var stopped = video.paused || video.ended || !!video.error;
+      btn.setAttribute('aria-pressed', stopped ? 'true' : 'false');
+      btn.textContent = stopped ? 'Play' : 'Pause';
+      btn.dataset.state = stopped ? 'paused' : 'playing';
+    }
+    ['play', 'playing', 'pause', 'ended', 'error'].forEach(function (type) { video.addEventListener(type, render); });
+    if (btn) {
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        if (video.paused || video.ended) {
+          userPaused = false;
+          play();
+        } else {
+          userPaused = true;
+          video.pause();
+        }
+        render();
+      });
+    }
+    if (userPaused) { video.pause(); } else { play(); }
+    render();
+    window.addEventListener('pageshow', play);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) play(); });
+    document.addEventListener('touchstart', play, { once: true, passive: true });
+    if (window.performance && performance.mark) performance.mark('hero-video-armed');
   })();
   </script>
 </section>
 
-    <!-- 3動詞マーキーバンド (lp-draft-v4「入り」より移植) -->
-    <div class="au-band" aria-hidden="true">
-        <div class="au-track">
-            <span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span><span>評価する<i>・</i>監査する<i>・</i>整理する<i>・</i>質問の型を、あなたに戻す<i>・</i></span>
+<!-- Hero Follow-up Section -->
+<!-- 旧 #business (事業内容) への外部リンクの互換。後継はこの #paths -->
+<span id="business" aria-hidden="true"></span>
+<section id="paths" class="section-padding-lg bg-brand-gray relative z-10" aria-labelledby="paths-heading">
+    <div class="max-w-6xl mx-auto px-6 md:px-12">
+        <div class="text-center mb-14 md:mb-20">
+            <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en jp-keep">事業内容</span>
+            <h2 id="paths-heading" class="jp-keep text-headline font-bold text-brand-black mb-6 text-balance">何を<wbr>頼めますか</h2>
+            <p lang="en" class="en-line mb-4 max-w-2xl mx-auto">Choose from three options for adoption support and third-party review. We also provide training for companies.</p>
+            <p class="jp-keep text-text-secondary text-body-lg">導入の<wbr>伴走と、<wbr>第三者の<wbr>レビューは、<wbr>3つから<wbr>選べます。<wbr>企業向けの<wbr>研修も<wbr>行います。</p>
         </div>
+
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="doctor_consultation.png" alt="医師が患者と対話している様子" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関・<wbr>社会福祉法人</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">話した<wbr>内容が、<wbr>記録の<wbr>下書きに<wbr>なる</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>医師が<wbr>伴走し、<wbr>必要に<wbr>応じて<wbr>エンジニアを<wbr>アサインします</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>院内<wbr>担当者の<wbr>育成&nbsp;<a href="gov-lead.html" class="text-flame hover:underline font-semibold whitespace-nowrap">GOV-Lead</a>&nbsp;も<wbr>相談できます</span></li>
+                    </ul>
+                    <a href="medical-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">AI導入<wbr>伴走を<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                    <a href="welfare-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_welfare'})" class="jp-keep mt-4 block text-center text-flame text-base font-semibold hover:underline">社会福祉法人の<wbr>方は<wbr>こちら →</a>
+                </div>
+            </div>
+
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="images/stock-audit-team.jpg" alt="Hospital audit team reviewing AI導入データ" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">承認前に、<wbr>提案を<wbr>臨床の<wbr>目で<wbr>読みます</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>責任分界・<wbr>患者<wbr>情報・<wbr>院内<wbr>説明の<wbr>抜けを<wbr>確認します</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>特定<wbr>製品を<wbr>売らない<wbr>立場で<wbr>読みます</span></li>
+                    </ul>
+                    <a href="services.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_light_review'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">導入前<wbr>レビューを<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                    <span class="hidden md:block mt-4 text-base invisible" aria-hidden="true">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="images/stock-engineers-workstation.jpg" alt="Medical AI startup engineers working at analytics workstations" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療AIベンダー</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">病院に<wbr>出す前に、<wbr>懸念点を<wbr>言語化します</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>提案書を、<wbr>臨床と<wbr>稟議の<wbr>観点で<wbr>赤入れします</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>リリース<wbr>前後の<wbr>更新も<wbr>確認します</span></li>
+                    </ul>
+                    <div class="jp-keep text-sm text-text-secondary mt-4 pt-4 border-t border-gray-100">スポット&nbsp;18万円〜／<wbr><span class="whitespace-nowrap font-semibold text-brand-black">ライト顧問&nbsp;15〜30万円/月(税別)</span></div>
+                    <a href="consulting.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">提案前<wbr>レビューを<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                    <span class="hidden md:block mt-4 text-base invisible" aria-hidden="true">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="images/stock-corporate-training.jpg" alt="講師がスクリーンを使って研修を行っている様子" loading="lazy" style="object-position: 20% 55%;">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">企業向け研修</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">専門家の<wbr>オムニバスで、<wbr>医療AIガバナンスを<wbr>組織で<wbr>学ぶ</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>対象は、<wbr>企業の<wbr>営業部門と、<wbr>医療機関・<wbr>社会福祉法人の<wbr>職員です</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>特定の<wbr>製品を<wbr>勧める<wbr>研修では<wbr>ありません</span></li>
+                    </ul>
+                    <a href="#training" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_paths_training'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">研修の<wbr>構成を<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                    <span class="hidden md:block mt-4 text-base invisible" aria-hidden="true">&nbsp;</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- 研究開発の帯: 自社開発と特許出願、協業で開発中のローカルLLM。製品名・協業先・出願番号は載せない (2026-10-11 user 回答) -->
+<section id="rnd" class="relative z-10 bg-white" aria-labelledby="rnd-heading">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
+    <div class="md:flex md:items-end md:justify-between gap-10 mb-8 md:mb-10">
+      <div>
+        <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">R&amp;D</span>
+        <h2 id="rnd-heading" class="jp-keep text-2xl md:text-3xl font-bold text-brand-black">ソフトウェアも、<wbr>自分たちで<wbr>作っています</h2>
+      </div>
+      <p lang="en" class="mt-3 md:mt-0 md:max-w-md text-sm text-text-tertiary leading-relaxed">We build our own software: medical-AI governance and audit software (patent pending). With a partner, we are also developing a local LLM for small clinics.</p>
     </div>
-
-    <!-- Product: GuideScope（公開ページの説明に限定。ツール本体はプロンプト生成のみ） -->
-    <section id="product" class="mobile-tight-section py-16 md:py-24 bg-white relative z-10" aria-labelledby="product-heading">
-        <div class="max-w-6xl mx-auto px-6 md:px-8">
-            <div class="text-center mb-10 md:mb-14">
-                <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Product</span>
-                <h2 id="product-heading" class="text-headline font-bold text-brand-black mb-6 text-balance">プロダクト</h2>
-                <p class="text-text-secondary text-body-lg jp-keep">自社で<wbr>公開している<wbr>ソフトウェアです。</p>
-                <p class="text-text-secondary text-body-lg mt-3 font-en" lang="en">Cursorvers builds software for medical-AI governance. GuideScope is live.</p>
-            </div>
-
-            <div class="card-hover bg-brand-gray rounded-2xl p-6 md:p-10 max-w-3xl mx-auto">
-                <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">公開中</p>
-                <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">GuideScope</h3>
-                <div class="space-y-4">
-                    <p class="text-body text-text-secondary leading-relaxed jp-keep">GuideScope&nbsp;は、<wbr>国内の<wbr>医療AI関連<wbr>ガイドラインを<wbr>探索するための<wbr>検索プロンプトを生成するツールです。</p>
-                    <p class="text-body text-text-secondary leading-relaxed jp-keep">ガイドラインや<wbr>通知、<wbr>法令に<wbr>抵触しうる<wbr>論点や、<wbr>医療機関と<wbr>ベンダーの<wbr>責任分界を<wbr>洗い出すための<wbr>プロンプトを生成します。</p>
-                    <p class="text-body text-text-secondary leading-relaxed jp-keep">生成した<wbr>プロンプトは、<wbr>Google&nbsp;Gemini、<wbr>ChatGPT、<wbr>Claude&nbsp;などの<wbr>LLMに貼り付けて使います。</p>
-                </div>
-                <p class="text-sm text-text-tertiary leading-relaxed mt-4 jp-keep">情報の<wbr>整理を<wbr>支援する<wbr>ツールです。<wbr>医療行為、<wbr>法的助言、<wbr>規制判断は行いません。</p>
-                <a href="https://cursorvers.jp/tools/guidescope/" target="_blank" rel="noopener noreferrer"
-                    onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'home_product_guidescope' })"
-                    class="inline-flex mt-8 w-full md:w-auto h-12 px-8 items-center justify-center gap-2 font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">
-                    GuideScope&nbsp;を開く
-                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
-                </a>
-            </div>
+    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+      <div class="rounded-2xl bg-brand-gray overflow-hidden flex flex-col">
+        <div class="h-48 md:h-60 img-cover">
+          <img src="images/rnd-governance.jpg" alt="医師とエンジニアが、医療AIの監査用の画面を一緒に確認している様子" loading="lazy" width="1280" height="720" style="object-position: 50% 40%;">
         </div>
-    </section>
-
-    <!-- Hero Follow-up Section -->
-    <section class="mobile-tight-section py-16 md:py-24 bg-white border-t border-gray-100 relative z-10" aria-label="ヒーロー補足情報">
-        <div class="max-w-6xl mx-auto px-6 md:px-12">
-            <div class="grid lg:grid-cols-[1.05fr_1fr] gap-10 md:gap-16 items-start">
-                <div>
-                    <span class="inline-flex items-center gap-3 py-2 px-5 border border-flame/20 bg-flame/5 text-flame text-sm md:text-base font-bold tracking-[0.05em] rounded-lg">
-                        <span class="w-2.5 h-2.5 rounded-full bg-flame"></span>
-                        医療AIの第三者レビュー
-                    </span>
-                    <h2 class="hero-followup-heading mt-6 font-bold text-brand-black leading-tight text-balance">
-                        そのAI、誰が診ていますか？
-                    </h2>
-                    <p class="hero-followup-lede mt-5 text-brand-black/80 font-medium leading-relaxed">
-                        医療機関にも、ベンダーにも利害のない、<br class="br-pc">独立した臨床レビューを。
-                    </p>
-                </div>
-                <div class="hero-followup-copy space-y-6">
-                    <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
-                        AIを導入したい。でも、誰が責任を持ち、どう説明し、運用後に何をアセスメントすればよいかが曖昧になりやすい。
-                    </p>
-                    <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
-                        Cursorversは、医療AIの提案書・責任分界・院内説明・運用ルールを、臨床経験のある医師の視点で読み解きます。
-                    </p>
-                    <p class="text-lg md:text-xl text-text-secondary leading-relaxed">
-                        医師の臨床レビューとして、医療機関には導入前の判断軸と運用後のアセスメント観点を。<br class="br-pc">
-                        医療AIベンダーには、病院に届く提案の言葉と説明責任の整理、リリース後アップデートの臨床目線での確認を返します。
-                    </p>
-                    <div class="mobile-support-tags flex flex-wrap gap-2" aria-label="Cursorversの提供範囲">
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">医師の臨床レビュー</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">責任分界</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">院内説明</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">運用ルール</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">導入後アセスメント</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-12 md:mt-16 grid md:grid-cols-2 gap-6 md:gap-8">
-                <div class="mobile-tight-card border border-gray-200 rounded-lg p-7 md:p-8 bg-white flex flex-col">
-                    <p class="text-sm font-bold text-flame tracking-[0.16em] mb-4">医療機関向け</p>
-                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-4">導入前と運用後を、アセスメントできる形に。</h3>
-                    <p class="text-text-secondary text-base md:text-lg leading-relaxed flex-grow">
-                        患者情報、責任分界、院内ルール、職員教育、利用実態。承認前から運用後レビューまで、確認すべき論点を整理します。
-                    </p>
-                    <div class="mt-6 flex flex-wrap gap-2" aria-label="医療機関向けの確認論点">
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">責任分界</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">患者情報</span>
-                        <span class="px-3 py-1 rounded-lg bg-brand-gray text-brand-black text-sm font-semibold">運用アセスメント</span>
-                    </div>
-                    <a href="services.html"
-                        class="mt-7 inline-flex items-center justify-center px-6 py-3 rounded-lg bg-brand-black text-white font-bold text-sm md:text-base hover:bg-flame transition">
-                        導入・アセスメントレビューを見る
-                    </a>
-                </div>
-
-                <div class="mobile-tight-card border border-gray-200 rounded-lg p-7 md:p-8 bg-brand-gray flex flex-col">
-                    <p class="text-sm font-bold text-flame tracking-[0.16em] mb-4">医療AIベンダー向け</p>
-                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-4">提案前の盲点を、先に潰す。</h3>
-                    <p class="text-text-secondary text-base md:text-lg leading-relaxed flex-grow">
-                        病院側が気にする臨床上の違和感、安全性、説明責任、現場負荷を赤入れし、リリース前後の更新が医療機関に伝わる形へ整えます。
-                    </p>
-                    <div class="mt-6 flex flex-wrap gap-2" aria-label="医療AIベンダー向けの確認論点">
-                        <span class="px-3 py-1 rounded-lg bg-white text-brand-black text-sm font-semibold">提案書</span>
-                        <span class="px-3 py-1 rounded-lg bg-white text-brand-black text-sm font-semibold">責任分界</span>
-                        <span class="px-3 py-1 rounded-lg bg-white text-brand-black text-sm font-semibold">院内説明</span>
-                    </div>
-                    <a href="consulting.html"
-                        class="mt-7 inline-flex items-center justify-center px-6 py-3 rounded-lg border border-brand-black text-brand-black font-bold text-sm md:text-base hover:border-flame hover:text-flame transition">
-                        提案前レビューを見る
-                    </a>
-                </div>
-            </div>
-
-            <div class="mobile-proof-grid mt-12 md:mt-16 pt-8 border-t border-gray-200 grid sm:grid-cols-3 gap-6 md:gap-10">
-                <div>
-                    <p class="text-flame font-bold text-4xl md:text-5xl leading-none">約20年</p>
-                    <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">医療現場の運用経験を、AI導入判断に接続します。</p>
-                </div>
-                <div>
-                    <p class="text-flame font-bold text-4xl md:text-5xl leading-none">製品中立</p>
-                    <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">特定製品を売らない立場で、責任分界と提案内容を確認します。</p>
-                </div>
-                <div>
-                    <p class="text-flame font-bold text-4xl md:text-5xl leading-none">3つの論点</p>
-                    <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">提案書・責任分界・運用アセスメントを、現場で説明できる形へ整理します。</p>
-                </div>
-            </div>
+        <div class="p-6 md:p-8">
+          <span class="inline-block text-xs font-bold text-white bg-brand-black rounded px-2 py-1 mb-3">特許出願中</span>
+          <h3 class="jp-keep text-lg md:text-xl font-bold text-brand-black">医療AIの<wbr>ガバナンス・<wbr>監査の<wbr>ソフトウェア</h3>
+          <p class="jp-keep mt-2 text-base text-text-secondary leading-relaxed">医療AIの<wbr>ガバナンスと<wbr>監査を<wbr>支える<wbr>ソフトウェアを、<wbr>自社で<wbr>開発しています。</p>
         </div>
-    </section>
-
-
-    <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し。2026-10-04 に #news をバー直下へ移動したが、
-         2026-10-07 に「お知らせと近い。残すならお知らせはもっと下」との user 指摘で、#news を
-         導入事例の後 (CTA の直前) へ戻し、バーは要約・#news は詳細と役割を分けた。同日、Expo と協賛会員を外し
-         救急医学会・Health ISAC Japan の登壇と Claude Startup Program 採択を追加。記載は全て #news 既載の事実、<style> は
-         SW HTML=network-first 即時反映の site 前例に従い inline) -->
-    <aside class="trust-bar relative z-10" aria-label="実績・認定">
-        <style>
-            .trust-bar { background: #FFFFFF; border-top: 1px solid rgba(0, 0, 0, .05); border-bottom: 1px solid rgba(0, 0, 0, .05); }
-            .trust-bar ul { max-width: 72rem; margin: 0 auto; padding: 1.35rem 1.5rem;
-                display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-                gap: .8rem 2.4rem; list-style: none;
-                font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
-                font-size: clamp(15px, 1.4vw, 18px);
-                letter-spacing: .06em; color: #111111; }
-            .trust-bar li { text-align: center; word-break: keep-all; text-wrap: balance; }
-            .trust-bar a { color: inherit; text-decoration: underline; text-decoration-color: rgba(17,17,17, .28);
-                text-decoration-thickness: 1px; text-underline-offset: .32em; transition: color .2s, text-decoration-color .2s; }
-            .trust-bar a:hover, .trust-bar a:focus-visible { color: #3E6FA8; text-decoration-color: currentColor; }
-            /* バーの「お知らせ一覧へ」で飛んだとき、固定ヘッダー (PC 97px・スマホ 77px) の裏に隠さない */
-            #news { scroll-margin-top: 104px; }
-            @media (max-width: 767px) { #news { scroll-margin-top: 84px; } }
-            .trust-bar .trust-bar-all a { font-size: .85em; font-weight: 600; color: #3E6FA8; text-decoration-color: rgba(62, 111, 168, .4); }
-        </style>
-        <ul>
-            <li><a href="news/2026-10-04-jsmsp-3rd-excellence-award.html">日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</a></li>
-            <li><a href="news/2026-10-03-jaam54-luncheon-seminar.html">第54回日本救急医学会総会・学術集会 ランチョンセミナー登壇（10/28）</a></li>
-            <li><a href="news/2026-10-03-hij-security-session-2606.html">Health ISAC Japan Security Session #06 登壇（11/6）</a></li>
-            <li><a href="news/2026-02-16-ggen-partnership.html">Google Cloud プレミアパートナー G-gen と提携</a></li>
-            <li><a href="news/2026-10-07-claude-startups.html">Anthropic<wbr>「Claude&nbsp;Startup&nbsp;Program」に採択</a></li>
-            <li class="trust-bar-all"><a href="#news">お知らせ一覧へ&nbsp;↓</a></li>
-        </ul>
-    </aside>
-
-    <!-- Name Meaning Section -->
-    <!-- iOS Safari mobile fix: 単一カラム grid の implicit 列が、分割不能な H2 (word-break:keep-all で
-         和文がスペース無し=改行不能) の max-content まで広がり、左カラム (H2/本文) が画面右端から
-         はみ出していた (grid blowout)。desktop Chrome/WebKit では再現せず iOS Safari/Chrome のみ発生。
-         モバイルで列を minmax(0,1fr) に拘束し、H2/本文/summary を改行可能にする。
-         <style> を index.html に置くのは SW が HTML=network-first のため (CSS キャッシュ非依存で即時反映)。 -->
+      </div>
+      <div class="rounded-2xl bg-brand-gray overflow-hidden flex flex-col">
+        <div class="h-48 md:h-60 img-cover">
+          <img src="images/rnd-local-llm.jpg" alt="小さな診療所の机に置かれた小型のサーバー。奥で医師が書類を読んでいる" loading="lazy" width="1280" height="720" style="object-position: 40% 55%;">
+        </div>
+        <div class="p-6 md:p-8">
+          <span class="inline-block text-xs font-bold text-brand-black bg-white border border-brand-black rounded px-2 py-1 mb-3">開発中</span>
+          <h3 class="jp-keep text-lg md:text-xl font-bold text-brand-black">小規模医療機関<wbr>向けの<wbr>ローカルLLM</h3>
+          <p class="jp-keep mt-2 text-base text-text-secondary leading-relaxed">小規模の<wbr>医療機関が<wbr>院内で<wbr>使える<wbr>ローカルLLMを、<wbr>協業で<wbr>開発しています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し。2026-10-04 に #news をバー直下へ移動したが、
+     2026-10-07 に「お知らせと近い。残すならお知らせはもっと下」との user 指摘で、#news を
+     導入事例の後 (CTA の直前) へ戻し、バーは要約・#news は詳細と役割を分けた。同日、Expo と協賛会員を外し
+     救急医学会・Health ISAC Japan の登壇と Claude Startup Program 採択を追加。記載は全て #news 既載の事実、<style> は
+     SW HTML=network-first 即時反映の site 前例に従い inline) -->
+<aside class="trust-bar relative z-10" aria-label="実績・認定">
     <style>
-    @media (max-width: 767px) {
-      #name-meaning .grid { grid-template-columns: minmax(0, 1fr) !important; }
-      #name-meaning h2,
-      #name-meaning p,
-      #name-meaning summary { word-break: normal !important; overflow-wrap: anywhere !important; }
-    }
+        .trust-bar { background: #FFFFFF; border-top: 1px solid rgba(0, 0, 0, .05); border-bottom: 1px solid rgba(0, 0, 0, .05); }
+        .trust-bar ul { max-width: 72rem; margin: 0 auto; padding: 1.35rem 1.5rem;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: .8rem 2.4rem; list-style: none;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+            font-size: clamp(15px, 1.4vw, 18px);
+            letter-spacing: .06em; color: #111111; }
+        .trust-bar li { text-align: center; word-break: keep-all; text-wrap: balance; }
+        .trust-bar a { color: inherit; text-decoration: underline; text-decoration-color: rgba(17,17,17, .28);
+            text-decoration-thickness: 1px; text-underline-offset: .32em; transition: color .2s, text-decoration-color .2s; }
+        .trust-bar a:hover, .trust-bar a:focus-visible { color: #3E6FA8; text-decoration-color: currentColor; }
+        /* バーの「お知らせ一覧へ」で飛んだとき、固定ヘッダー (PC 97px・スマホ 77px) の裏に隠さない */
+        #news { scroll-margin-top: 104px; }
+        @media (max-width: 767px) { #news { scroll-margin-top: 84px; } }
+        .trust-bar .trust-bar-list { margin-top: 2.5rem; }
+        .trust-bar .trust-bar-all a { font-size: .85em; font-weight: 600; color: #3E6FA8; text-decoration-color: rgba(62, 111, 168, .4); }
     </style>
-    <section id="name-meaning" class="mobile-tight-section py-10 md:py-14 bg-white relative z-10">
-        <div class="max-w-6xl mx-auto px-6 md:px-12">
-            <div class="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-14 lg:gap-16 items-center">
-                <div>
-                    <span class="text-flame text-xs font-bold tracking-[0.18em] block mb-3">名称の由来</span>
-                    <h2 class="font-bold text-brand-black text-2xl md:text-4xl leading-tight text-balance" style="word-break: keep-all; overflow-wrap: break-word;"><span class="md:whitespace-nowrap">「Cursorvers」という</span><span class="md:whitespace-nowrap">社名に込めたもの</span></h2>
-                    <p class="text-text-secondary text-sm md:text-base leading-relaxed mt-4">
-                        Cursorvers（カーソルバース）は、Cursor（判断点）とvers（turn＝向きを変える）を掛け合わせた造語です。
-                    </p>
-                </div>
+    <div class="max-w-6xl mx-auto px-6 md:px-12 py-14 md:py-20">
+        <a href="news/2026-10-07-claude-startups.html" class="block rounded-2xl bg-brand-black text-white p-8 md:p-14 hover:bg-[#1f2937] transition no-underline" style="text-decoration:none;color:#fff">
+            <span class="text-sm font-bold text-white/70 jp-keep no-underline">採択&nbsp;・&nbsp;<time datetime="2026-10-07">2026.10.07</time></span>
+            <span class="mt-5 block text-3xl md:text-5xl font-bold leading-tight jp-keep no-underline">Anthropic<wbr>「Claude Startup <span class="whitespace-nowrap">Program」に</span><wbr>採択</span>
+            <span class="mt-5 block text-base md:text-xl text-white/85 leading-relaxed jp-keep no-underline">Claude&nbsp;を<wbr>使って<wbr>事業を<wbr>構築する<wbr>スタートアップを<wbr>対象とした、<wbr>Anthropic&nbsp;の<wbr>支援プログラムです。</span>
+            <span lang="en" class="en-line en-line--dark mt-3 block no-underline">Cursorvers has been selected for Anthropic's Claude Startup Program, which supports startups building their businesses with Claude.</span>
+            <span class="mt-6 block text-sm text-white/60 leading-relaxed jp-keep no-underline">参加は、<wbr>特定の<wbr>AIベンダーや<wbr>製品を<wbr>推奨する<wbr>ものでは<wbr>ありません。<wbr>医療機関向けの<wbr>レビューは、<wbr>これまでどおり<wbr>製品中立の<wbr>立場で<wbr>行います。</span>
+            <span class="mt-8 inline-flex items-center gap-2 text-base font-bold text-white no-underline">詳しく読む&nbsp;→</span>
+        </a>
+        <ul class="trust-bar-list grid sm:grid-cols-2 gap-x-10 gap-y-4">
+            <li><a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="text-base md:text-xl font-bold text-brand-black hover:text-flame jp-keep">日本医療安全推進学会 医療安全文化促進賞 優秀賞 受賞</a></li>
+            <li><a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">第54回日本救急医学会総会・学術集会 ランチョンセミナー登壇（10/28）</a></li>
+            <li><a href="news/2026-10-03-hij-security-session-2606.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">Health ISAC Japan Security Session #06 登壇（11/6）</a></li>
+            <li><a href="news/2026-02-16-ggen-partnership.html" class="text-base md:text-lg font-bold text-brand-black hover:text-flame jp-keep">Google Cloud プレミアパートナー G-gen と提携</a></li>
+        </ul>
+        <p class="mt-8 text-center"><a href="#news" class="inline-block text-flame text-base font-semibold hover:underline jp-keep">お知らせ一覧へ&nbsp;↓</a></p>
+    </div>
+</aside>
 
-                <div class="mobile-tight-card bg-brand-gray border border-gray-200 rounded-xl p-5 md:p-7">
-                    <span class="text-flame text-sm md:text-base font-bold tracking-[0.18em]">意味するもの</span>
-                    <details class="mt-5 pt-5 border-t border-gray-200 group">
-                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame">
-                            社名に込めた意思を読む
-                        </summary>
-                        <div class="mt-4 space-y-4 text-sm md:text-base text-text-secondary leading-relaxed">
-                            <p>
-                                AI導入の成否は、製品比較より先に「<span class="font-semibold text-brand-black">判断点</span>」の設計で決まります。<span class="font-semibold text-brand-black">誰が判断し、誰が検証し、問題時に誰が止めるか</span>。<span class="font-semibold text-brand-black">責任分界</span>が曖昧なままでは、現場は回っても組織は守れません。
-                            </p>
-                            <p>
-                                Cursorversの「<span class="font-semibold text-brand-black">vers</span>」には、複数の意味を重ねています。<span class="font-semibold text-brand-black">Reverse</span>（向け直す）、<span class="font-semibold text-brand-black">Version</span>（更新し続ける）、<span class="font-semibold text-brand-black">Versus</span>（責任の対峙点を明確にする）、<span class="font-semibold text-brand-black">Versatile</span>（現場に合わせて整える）。意思決定のカーソルを正しい位置に置き、導入を「<span class="font-semibold text-brand-black">安心と継続</span>」へ変える。それが、Cursorversという名前に込めた意思です。
-                            </p>
-                        </div>
-                    </details>
-
-                    <details class="mt-5 pt-5 border-t border-gray-200 group">
-                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame">
-                            なぜ Cursorverse ではなく Cursorvers なのですか？
-                        </summary>
-                        <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
-                            「<span class="font-semibold text-brand-black">verse</span>」には“詩”や流行語の連想が強く、意図がぶれやすいためです。私たちは reverse / version に共通する <span class="font-semibold text-brand-black">vers（turn＝向きを変える）</span>を採り、AI導入の判断を正しい方向へ向け直し、運用を更新し続ける意思を名前に込めています。
-                        </p>
-                    </details>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Audience Split Section: 2レーン分岐 -->
-    <section id="paths" class="mobile-tight-section py-14 md:py-20 bg-brand-gray relative z-10">
-        <div class="max-w-6xl mx-auto px-6 md:px-12">
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-9 md:mb-12">
-                <div>
-                    <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">Service</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-brand-black">3つの入口</h2>
-                </div>
-                <p class="text-sm md:text-base text-text-secondary leading-relaxed max-w-xl">
-                    AI導入は実装まで伴走を。医療機関には導入判断とアセスメント観点を。<br class="br-pc">医療AIベンダーには病院に届く説明責任の整理を返します。
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-                <!-- カード0: AI導入伴走 (featured) -->
-                <div class="mobile-tight-card md:col-span-2 bg-brand-black text-white rounded-lg p-7 md:p-8 border border-brand-black flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-                    <div class="flex-grow">
-                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関のAI導入 <span class="ml-2 inline-block bg-flame text-white text-xs font-bold px-2 py-0.5 rounded-full align-middle">NEW</span></p>
-                        <h3 class="text-2xl md:text-3xl font-bold mb-4">話した内容が、記録の下書きになる。書類時間を、診療時間へ。</h3>
-                        <p class="text-white/80 text-base md:text-lg leading-relaxed">
-                            診断から実装・定着まで、医師とエンジニアチームが伴走。PHIは院内で閉域。補助金の活用設計も含めます。
-                        </p>
-                    </div>
-                    <div class="flex-none w-full md:w-auto">
-                        <a href="medical-ai.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})"
-                            class="flex w-full md:w-auto h-12 items-center justify-center gap-2 font-bold text-sm md:text-base bg-white text-brand-black px-8 rounded-lg hover:bg-flame hover:text-white transition">
-                            AI導入伴走を見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                    </div>
-                </div>
-                <!-- カードA: 医療機関向け -->
-                <div class="mobile-tight-card bg-white rounded-lg p-7 md:p-8 border border-gray-200 hover:border-flame/30 transition-colors flex flex-col">
-                    <p class="text-sm font-bold text-flame uppercase mb-4 font-en tracking-wider">医療機関向け</p>
-                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-5">AIベンダー提案を、鵜呑みにしない。</h3>
-                    <p class="text-text-secondary text-base md:text-lg leading-relaxed flex-grow">
-                        責任分界・患者情報・院内説明の抜けを、承認前に第三者の臨床目線で確認します。
-                    </p>
-
-                    <div class="space-y-3 mt-7">
-                        <a href="services.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_light_review'})"
-                            class="flex w-full h-12 items-center justify-center gap-2 font-bold text-sm md:text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">
-                            導入前レビューを見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                        <a href="services.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_services'})"
-                            class="block text-center text-flame text-sm md:text-base font-semibold hover:underline py-2">
-                            医療機関向けサービスを見る →
-                        </a>
-                    </div>
-
-                    <div class="mt-6 pt-5 border-t border-gray-100">
-                        <a href="gov-lead.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_govlead'})"
-                            class="inline-flex items-center gap-3 text-sm md:text-base text-text-secondary hover:text-flame transition">
-                            <span class="bg-flame text-white text-xs font-bold px-2.5 py-1 rounded">NEW</span>
-                            院内担当者育成も相談する
-                        </a>
-                    </div>
-                </div>
-
-                <!-- カードB: AIベンダー向け -->
-                <div class="mobile-tight-card bg-white rounded-lg p-7 md:p-8 border border-gray-200 hover:border-flame/30 transition-colors flex flex-col">
-                    <p class="text-sm font-bold text-flame uppercase mb-4 font-en tracking-wider">ベンダー向け</p>
-                    <h3 class="text-2xl md:text-3xl font-bold text-brand-black mb-5">病院提案の前に、懸念点を言語化する。</h3>
-                    <p class="text-text-secondary text-base md:text-lg leading-relaxed flex-grow">
-                        提案書・責任分界・院内説明を、医療機関の稟議と現場運用の観点で赤入れします。
-                    </p>
-                    <p class="text-xs md:text-sm text-text-tertiary mt-3 mb-0 leading-snug">
-                        スポット 18万円〜／ライト顧問 15〜30万円/月(税別)
-                    </p>
-
-                    <div class="space-y-3 mt-7">
-                        <a href="consulting.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})"
-                            class="flex w-full h-12 items-center justify-center gap-2 font-bold text-sm md:text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">
-                            提案前レビューを見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                        <a href="contact.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_contact'})"
-                            class="block text-center text-flame text-sm md:text-base font-semibold hover:underline py-2">
-                            レビュー範囲を相談する →
-                        </a>
-                    </div>
-
-                    <div class="mt-6 pt-5 border-t border-gray-100">
-                        <a href="contact.html"
-                            onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_spot_review_contact'})"
-                            class="inline-flex items-center gap-3 text-sm md:text-base text-text-secondary hover:text-flame transition">
-                            <span class="bg-flame text-white text-xs font-bold px-2.5 py-1 rounded">初回</span>
-                            提案書レビューから始める
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Section -->
-    <section class="py-20 md:py-28 bg-white relative z-10">
-        <div class="max-w-6xl mx-auto px-6 md:px-12">
-            <div class="text-center mb-12 md:mb-16">
-                <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">法的要件</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-black mb-6">「問われる時代」に備える</h2>
-                <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
-                    医療×AIに関するガイドラインは、近年急速に具体化が進んでいます<sup class="text-flame">※</sup>。
-                    <span class="block">
-                        <span class="keep-together">「誰がAIの出力を検証したか」</span><span class="keep-together">「ルールは文書化されているか」</span><span class="keep-together">「職員は教育を受けているか」</span>——
-                    </span>
-                    これらを問われたとき、説明できる体制はありますか？
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-                <!-- 責任分界の明確化 -->
-                <div class="bg-brand-gray border border-gray-200 rounded-2xl p-8 md:p-10">
-                    <div class="flex items-center gap-4 mb-6">
-                        <span class="text-flame text-4xl md:text-5xl font-bold font-en leading-none">01</span>
-                        <h3 class="text-2xl md:text-3xl font-bold text-brand-black">責任分界の明確化</h3>
-                    </div>
-                    <div class="mb-6">
-                        <span class="text-flame/20 text-5xl font-sans leading-none block mb-2" aria-hidden="true">&ldquo;</span>
-                        <p class="text-body-lg text-text-secondary leading-relaxed jp-keep">
-                            対象事業者は、<wbr>合意形成に<wbr>あたり、<wbr>医療機関等に<wbr>おける<wbr>運用管理も<wbr>踏まえた<wbr>形で、<wbr><span class="text-brand-black font-semibold">役割分担を<wbr>定めること</span>。
-                        </p>
-                    </div>
-                    <div class="text-body text-text-secondary border-t border-gray-200 pt-6 mt-6">
-                        <p class="font-semibold text-brand-black mb-2">出典</p>
-                        <p class="mb-1 jp-keep">経産省・<wbr>総務省「医療情報を<wbr>取り扱う<wbr>情報システム・<wbr>サービスの<wbr>提供事業者に<wbr>おける<wbr>安全管理<wbr>ガイドライン」<wbr>第2.0版<wbr>（2025年3月改定）</p>
-                        <p class="mb-3 text-flame font-medium jp-keep">第4章「対象事業者と<wbr>医療機関等の<wbr>合意形成」<wbr>4.2「医療機関等との<wbr>役割分担の<wbr>明確化」</p>
-                        <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/teikyoujigyousyagl.html" target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-2 text-flame hover:underline">
-                            公式ページで確認 <svg class="text-sm" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- BCP の定期的な訓練・演習 -->
-                <div class="bg-brand-gray border border-gray-200 rounded-2xl p-8 md:p-10">
-                    <div class="flex items-center gap-4 mb-6">
-                        <span class="text-flame text-4xl md:text-5xl font-bold font-en leading-none">02</span>
-                        <h3 class="text-2xl md:text-3xl font-bold text-brand-black jp-keep">BCPの<wbr>定期的な<wbr><span class="inline-block">訓練・演習</span></h3>
-                    </div>
-                    <div class="mb-6">
-                        <span class="text-flame/20 text-5xl font-sans leading-none block mb-2" aria-hidden="true">&ldquo;</span>
-                        <p class="text-body-lg text-text-secondary leading-relaxed text-balance jp-keep">
-                            通常時に<wbr>整備していた<wbr>BCPが、<wbr>非常時に<wbr>おいて<wbr>迅速かつ<wbr>的確に<wbr>実施できるよう、<wbr>通常時から<wbr><span class="text-brand-black font-semibold">定期的に<wbr>訓練・演習を<wbr>実施</span>し、<wbr>その結果を<wbr>踏まえ、<wbr>必要に<wbr>応じて<wbr>改善に<wbr>向けた<wbr>対応を<wbr>企画管理者や<wbr>システム運用<wbr>担当者に<wbr>指示すること。
-                        </p>
-                    </div>
-                    <div class="text-body text-text-secondary border-t border-gray-200 pt-6 mt-6">
-                        <p class="font-semibold text-brand-black mb-2">出典</p>
-                        <p class="mb-1 jp-keep">厚労省「医療情報<wbr>システムの<wbr>安全管理に<wbr>関する<wbr>ガイドライン」<wbr>第7.0版<wbr>（2026年6月）</p>
-                        <p class="mb-3 text-flame font-medium jp-keep">経営管理編 3.「安全管理全般<wbr>（統制、<wbr>設計、<wbr>管理等）」<wbr>遵守事項⑮</p>
-                        <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank"
-                            rel="noopener noreferrer"
-                            class="inline-flex items-center gap-2 text-flame hover:underline">
-                            公式ページで確認 <svg class="text-sm" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Philosophy Section -->
+<!-- Philosophy Section -->
     <section id="philosophy" class="section-padding-lg bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6 md:px-12">
 
+            <!-- 1. 立ち位置：画像左、テキスト右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
                     <img src="images/stock-clinician-dashboard.jpg"
@@ -1786,23 +1889,22 @@ header.glass-nav, .glass-nav {
                 </div>
 
                 <div class="reveal">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">なぜ今</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        AIを買う前に、<br class="br-pc">利害のないレビューが必要です。
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">立ち位置</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        第三者レビューは、<wbr>臨床と<wbr>運用の<wbr>視点で<span class="block">提案は、<wbr>臨床経験の<wbr>ある<wbr>医師が<wbr>読みます</span>
                     </h2>
+                    <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">Our third-party review is not aimed at selling products: a physician with clinical experience reads each proposal from clinical and operational viewpoints.</p>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-flame/20 pl-6 md:pl-10">
-                        <p>
-                            AI製品を売る人と、その提案を検証する人が同じでは、医療機関の判断は偏ります。<br class="br-pc">
-                            <span class="font-bold text-flame">導入前に、製品中立の第三者が提案を読むことが必要です。</span>
+                        <p class="jp-keep">
+                            製品の<wbr>販売を<wbr>目的とせず、<wbr>提案の<wbr>条件と<wbr>確認点を<wbr>整理します。<wbr>AI製品を<wbr>売る人と、<wbr>その提案を<wbr>検証する人が<wbr>同じでは、<wbr>医療機関の<wbr>判断は<wbr>偏ります。
                         </p>
-                        <p>
-                            ガイドラインは<span class="font-bold text-flame">年々厳格化</span>し、
-                            <span class="block">
-                                <span class="keep-together">「誰がAIの出力を検証したか」</span><span class="keep-together">「ルールは文書化されているか」</span><span class="keep-together">「職員は教育を受けているか」</span>——
-                            </span>
-                            <span class="font-semibold text-brand-black">が問われる時代。Cursorversは、提案前・導入前に説明できる論点へ整理します。</span>
-                        </p>
+                        <div class="mt-8">
+                            <div class="text-flame font-bold text-5xl md:text-6xl leading-none">約20年</div>
+                            <p class="jp-keep mt-4 text-base md:text-lg text-text-secondary leading-relaxed">
+                                医療現場の運用経験を、AI導入判断に接続します。
+                            </p>
+                        </div>
                     </div>
 
                     <div class="mt-12">
@@ -1814,76 +1916,96 @@ header.glass-nav, .glass-nav {
                 </div>
             </div>
 
-            <!-- 2. Target：テキスト左、画像右 -->
+            <!-- 2. 対象：テキスト左、画像右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="reveal order-2 md:order-1">
                     <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">対象</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
                         <span class="block">中小病院・有床診療所</span>
                         <span class="block">クリニック・在宅医療</span>
                     </h2>
+                    <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">For small and mid-sized hospitals, clinics with inpatient beds, clinics, and home-care providers.</p>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
-                            専任スタッフを置けない現場でも<br class="br-pc">安心して運用が続くように設計されたサービスです。
-                        </p>
-                        <p>
-                            だからこそ、<span class="font-semibold text-brand-black">最小構成でAI運用の安全と継続</span>を実現する設計が必要です。<br class="br-pc">
-                            Cursorversは、貴院の規模と体制に合わせた「続けられる運用設計」を提案します。
+                        <p class="jp-keep">
+                            <span class="jp-keep">専任スタッフを<wbr>置けない<wbr>現場でも<br class="br-pc"><wbr>安心して<wbr>運用が<wbr>続くように<wbr>設計された<wbr>サービスです。</span>
                         </p>
                     </div>
                 </div>
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
-                    <picture>
-                        <source srcset="doctor_consultation.webp" type="image/webp">
-                        <img src="doctor_consultation.png" alt="男性医師が患者と温かく対話している様子" loading="lazy">
-                    </picture>
+                    <img src="images/stock-business-meeting.jpg" alt="医療機関の担当者が打ち合わせをしている様子" loading="lazy">
                 </div>
             </div>
 
-            <!-- 3. Pain Point：画像左、テキスト右 -->
+            <!-- 3. 運用：画像左、テキスト右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
                     <img src="images/stock-advisor-meeting.jpg"
                         alt="AIガバナンス顧問が医療リーダーと戦略を共有している様子" loading="lazy">
                 </div>
                 <div class="reveal">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">課題</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        「担当者が辞めたら終わり」を、<br class="md:hidden br-pc">終わらせる。
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">運用</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        人が替わっても、<wbr>運用は残りますか
                     </h2>
+                    <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">Will your AI operations last when staff change? We design them to continue even without dedicated staff.</p>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
-                            多くの医療機関で、AI運用は<span class="font-semibold text-brand-black">特定の個人</span>に依存しています。<br class="br-pc">
-                            その人が異動すれば、ノウハウも消え、安心が揺らぐ。
+                        <p class="jp-keep">
+                            専任<wbr>スタッフを<wbr>置けない<wbr>現場でも、<wbr>運用が<wbr>続くように<wbr>設計します。
                         </p>
-                        <p>
-                            Cursorversは、<span class="font-semibold text-brand-black">誰が担当しても回る仕組み</span>を作ります。<br class="br-pc">
-                            院内ルール・チェックリスト・研修資料——すべて「引き継げる成果物」として納品します。
-                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">01</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">院内ルール</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">誰が<wbr>担当しても<wbr>回る<wbr>仕組みを、<wbr>文書で<wbr>残します。</p>
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">02</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">チェックリスト</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">導入<wbr>判断の<wbr>前に、<wbr>確認すべき<wbr>質問を<wbr>返します。</p>
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">03</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">研修資料</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">引き継げる<wbr>成果物として<wbr>納品します。</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Our Answer：テキスト左、画像右 -->
+            <!-- 4. ガイドライン：テキスト左、画像右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center">
                 <div class="reveal order-2 md:order-1">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">解決策</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        <span class="block md:inline">提案書に、</span>
-                        <span class="block md:inline">第三者の臨床レビューを。</span>
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">ガイドライン</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        問われたとき、<wbr>何を<wbr>説明しますか
                     </h2>
+                    <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">When asked, what will you explain? Who verified the AI output, whether rules are documented, and whether staff are trained.</p>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
-                            大学病院には専門委員会がある。でも、中小病院やクリニックには<span
-                                class="font-semibold text-brand-black">AI提案を精査する余力がない</span>。
+                        <p class="jp-keep">
+                            誰がAIの<wbr>出力を<wbr>検証したか。<wbr>ルールは<wbr>文書化されて<wbr>いるか。<wbr>職員は<wbr>教育を<wbr>受けているか。
                         </p>
-                        <p>
-                            導入判断の前に、提案書・責任分界・院内説明を読み込み、<br class="br-pc">
-                            <span class="font-semibold text-brand-black">追加で確認すべき質問と判断メモを返します。</span>
-                        </p>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">責任分界の<wbr>明確化</h3>
+                                <p class="jp-keep mt-2 text-sm text-text-tertiary">出典: 経産省・<wbr>総務省「医療情報を<wbr>取り扱う<wbr>情報システム・<wbr>サービスの<wbr>提供事業者に<wbr>おける<wbr>安全管理<wbr>ガイドライン」<wbr>第2.0版</p>
+                                <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/teikyoujigyousyagl.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-2 text-flame text-base hover:underline">
+                                    <span class="jp-keep">公式ページで確認</span>
+                                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                                </a>
+                            </div>
+                            <div>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">BCPの<wbr>定期的な<wbr>訓練・演習</h3>
+                                <p class="jp-keep mt-2 text-sm text-text-tertiary">出典: 厚労省「医療情報<wbr>システムの<wbr>安全管理に<wbr>関する<wbr>ガイドライン」<wbr>第7.0版</p>
+                                <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-2 text-flame text-base hover:underline">
+                                    <span class="jp-keep">公式ページで確認</span>
+                                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
@@ -1892,68 +2014,44 @@ header.glass-nav, .glass-nav {
                 </div>
             </div>
 
-            <!-- 脚注 -->
-            <div class="mt-20 pt-10 border-t border-gray-200 text-sm text-text-tertiary max-w-3xl">
-                <p class="mb-2 jp-keep"><sup class="text-flame">※</sup> 厚労省「医療情報<wbr>システムの<wbr>安全管理に<wbr>関する<wbr>ガイドライン」<wbr>第7.0版<wbr>（2026年6月）、<wbr>経産省・<wbr>総務省「医療情報を<wbr>取り扱う<wbr>情報システム・<wbr>サービスの<wbr>提供事業者に<wbr>おける<wbr>安全管理<wbr>ガイドライン」<wbr>第2.0版<wbr>（2025年3月改定）<wbr>など。</p>
-            </div>
-
         </div>
     </section>
 
-    <!-- Business Section -->
-    <section id="business" class="section-padding-lg bg-brand-gray relative z-10">
-        <div class="max-w-6xl mx-auto px-6 md:px-8">
-            <div class="text-center mb-14 md:mb-20">
-                <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">事業内容</span>
-                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">提案前・導入前を守る、2つの支援</h2>
-                <p class="text-text-secondary text-body-lg">AIベンダーと医療機関の間に、製品中立のレビューを挟みます。</p>
+<!-- 企業向け研修。詳細は cursorvers.jp/solutions#training -->
+<section id="training" class="section-padding-lg bg-white relative z-10" aria-labelledby="training-heading">
+    <div class="max-w-6xl mx-auto px-6 md:px-12">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center">
+            <div class="img-clean aspect-[4/5] reveal shadow-2xl">
+                <img src="images/stock-corporate-training.jpg" alt="講師がスクリーンを使って研修を行っている様子" loading="lazy">
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-                <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
-                    <div class="h-52 md:h-64 img-cover">
-                        <img src="images/stock-audit-team.jpg"
-                            alt="Hospital audit team reviewing AI導入データ" loading="lazy">
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col flex-grow">
-                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関向け
-                        </p>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">導入前セカンドオピニオン</h3>
-                        <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            AIベンダー提案の責任分界、患者情報、院内運用、PoC安全性を承認前にレビューします。
-                        </p>
-                        <p class="text-sm text-text-secondary mt-4 pt-4 border-t border-gray-100">
-                            <span class="font-semibold text-brand-black">新メニュー：</span>院内AIガバナンス担当者を育成する「<a href="gov-lead.html" class="text-flame hover:underline font-semibold">GOV-Lead</a>」もご用意しています。
-                        </p>
-                        <a href="services.html"
-                            class="flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">
-                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                    </div>
+            <div class="reveal">
+                <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">企業向け研修</span>
+                <h2 id="training-heading" class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                    <span class="block">「そのAI、<wbr>使って<wbr>良いのか？」</span><span class="block">営業の<wbr>現場で<wbr>答えられるように</span>
+                </h2>
+                <p lang="en" class="en-line -mt-6 mb-10 max-w-xl">Medical-AI governance training for corporate sales teams, taught by practicing specialists. It does not recommend specific products.</p>
+                <div
+                    class="text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-flame/20 pl-6 md:pl-10">
+                    <p class="jp-keep">
+                        病院や<wbr>医師に<wbr>向き合う<wbr>企業の<wbr>営業部門に<wbr>向けて、<wbr>各分野の<wbr>スペシャリストを<wbr>お招きする<wbr>オムニバス形式の<wbr>研修です。<wbr>使える<wbr>条件と<wbr>確かめる<wbr>点を、<wbr>受講者が<wbr>説明できることを<wbr>目指します。<wbr>特定の<wbr>製品を<wbr>勧める<wbr>研修では<wbr>ありません。
+                    </p>
                 </div>
 
-                <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
-                    <div class="h-52 md:h-64 img-cover">
-                        <img src="images/stock-engineers-workstation.jpg"
-                            alt="Medical AI startup engineers working at analytics workstations" loading="lazy">
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col flex-grow">
-                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">ベンダー向け
-                        </p>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">提案前レビュー</h3>
-                        <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            病院に出す前の提案書、責任分界、院内説明を、稟議と現場運用の観点で赤入れします。
-                        </p>
-                        <a href="consulting.html"
-                            class="flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">
-                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                    </div>
+                <div class="mt-12 flex flex-col gap-5">
+                    <a href="https://cursorvers.jp/solutions#training" target="_blank" rel="noopener" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_training_detail_edu'})"
+                        class="jp-keep inline-flex items-center gap-3 text-flame font-bold text-lg hover:gap-4 transition-all">
+                        研修の<wbr>詳細を<wbr>見る<wbr>（cursorvers.jp） <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                    </a>
+                    <a href="contact.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_training_contact'})"
+                        class="jp-keep inline-flex items-center gap-3 text-brand-black font-bold text-lg hover:gap-4 transition-all">
+                        研修について<wbr>問い合わせる <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                    </a>
                 </div>
             </div>
-
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Case Study Section -->
     <section id="case-study" class="py-20 md:py-28 bg-brand-gray relative z-10">
@@ -1963,6 +2061,7 @@ header.glass-nav, .glass-nav {
                     Study</span>
                 <h2 class="text-headline font-bold text-brand-black">導入実績</h2>
                 <p class="text-text-secondary text-body mt-4">AI運用を守る体制づくりをご支援した医療機関様</p>
+                <p lang="en" class="en-line mt-2">Kajita Clinic (Chiba City): we supported the clinic in building a structure that keeps its AI operations running.</p>
             </div>
 
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -2037,7 +2136,6 @@ header.glass-nav, .glass-nav {
             </div>
         </div>
     </section>
-
     <script>
         // Case Study Slideshow
         (function () {
@@ -2077,19 +2175,15 @@ header.glass-nav, .glass-nav {
                 <div>
                     <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
+                    <p lang="en" class="en-line mt-3 max-w-2xl">Recent news: selection for Anthropic's Claude Startup Program, an excellence award for a conference presentation, and upcoming conference&nbsp;talks.</p>
                 </div>
-                <a href="news.html" class="inline-flex items-center gap-1 text-sm font-semibold text-flame hover:underline transition shrink-0">
-                    すべてのお知らせ
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-                </a>
             </div>
 
-            <!-- News Items (horizontal scroll rail, visual-first cards) -->
-            <div class="news-scroll-wrapper">
-            <div class="news-scroll news-scroll-v2" id="newsScroll" tabindex="0" aria-label="お知らせ一覧。横にスクロールしてすべての記事を閲覧できます。">
+            <!-- News List -->
+            <div class="news-list">
                 <!-- Anthropic「Claude Startup Program」採択 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-07-claude-startups.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-07-claude-startups.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Claude Startup Program">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2098,7 +2192,7 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption jp-keep">Anthropic&nbsp;スタートアップ<wbr>支援プログラム</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">採択</span>
                                 <time datetime="2026-10-07" class="news-card-v2-date">2026.10.07</time>
@@ -2109,17 +2203,13 @@ header.glass-nav, .glass-nav {
                             <p class="news-card-v2-lede jp-keep">
                                 Anthropic&nbsp;が<wbr>運営する<wbr>スタートアップ<wbr>支援プログラムに<wbr>採択されました。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- 第3回日本医療安全推進学会学術総会 医療安全文化促進賞 優秀賞 受賞 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-04-jsmsp-3rd-excellence-award.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 日本医療安全推進学会">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2128,28 +2218,24 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">医療安全文化促進賞 優秀賞</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">受賞</span>
                                 <time datetime="2026-10-04" class="news-card-v2-date">2026.10.04</time>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                日本医療安全推進学会で「医療安全文化促進賞 優秀賞」を受賞
+                            <h3 class="news-card-v2-title jp-keep">
+                                日本医療安全推進学会で<wbr>「医療安全文化促進賞 優秀賞」を<wbr>受賞
                             </h3>
-                            <p class="news-card-v2-lede">
-                                一般演題「医療AIにおける「責任の空白」を防ぐ」が受賞しました。
+                            <p class="news-card-v2-lede jp-keep">
+                                一般演題<wbr>「医療AIにおける<wbr>「責任の空白」を<wbr>防ぐ」が<wbr>受賞しました。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- 第54回日本救急医学会総会・学術集会 ランチョンセミナー21 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-03-jaam54-luncheon-seminar.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第54回日本救急医学会総会・学術集会">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2158,29 +2244,25 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">2026.10.28 出島メッセ長崎</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">登壇</span>
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
                                 <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">10/28 開催</span>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                日本救急医学会のランチョンセミナー21に登壇（10/28 長崎）
+                            <h3 class="news-card-v2-title jp-keep">
+                                日本救急医学会の<wbr>ランチョンセミナー21に<wbr>登壇<wbr><span class="whitespace-nowrap">（10/28 長崎）</span>
                             </h3>
-                            <p class="news-card-v2-lede">
-                                救急現場での判断支援にAIを使う場面を、ガバナンスの観点から取り上げます。会場は出島メッセ長崎で、整理券制です。
+                            <p class="news-card-v2-lede jp-keep">
+                                救急現場での<wbr>判断支援に<wbr>AIを<wbr>使う<wbr>場面を、<wbr>ガバナンスの<wbr>観点から<wbr>取り上げます。<wbr>会場は<wbr>出島メッセ長崎で、<wbr>整理券制です。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
 
                 <!-- Health ISAC Japan Security Session 2026 #06 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-card-v2-link">
+                <article class="news-row">
+                    <a href="news/2026-10-03-hij-security-session-2606.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
                             <div class="news-visual-lockup">
                                 <span class="news-visual-brand">Cursorvers</span>
@@ -2189,209 +2271,29 @@ header.glass-nav, .glass-nav {
                             </div>
                             <span class="news-visual-caption">2026.11.6 オンライン開催</span>
                         </div>
-                        <div class="news-card-v2-body">
+                        <div class="news-row-body">
                             <div class="news-card-v2-meta">
                                 <span class="news-card-v2-tag news-tag-amber">登壇</span>
                                 <time datetime="2026-10-03" class="news-card-v2-date">2026.10.03</time>
                                 <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">11/6 開催</span>
                             </div>
-                            <h3 class="news-card-v2-title">
-                                Health ISAC Japan Security Session #06 に登壇（11/6 オンライン）
+                            <h3 class="news-card-v2-title jp-keep">
+                                Health ISAC Japan Security Session #06&nbsp;に<wbr>登壇<wbr><span class="whitespace-nowrap">（11/6 オンライン）</span>
                             </h3>
-                            <p class="news-card-v2-lede">
-                                医療AX時代に欠かせないAIガバナンスの要点を、救命救急の臨床経験から解説します。参加資格は Health ISAC Japan 会員です。
+                            <p class="news-card-v2-lede jp-keep">
+                                医療AX時代に<wbr>欠かせない<wbr>AIガバナンスの<wbr>要点を、<wbr>救命救急の<wbr>臨床経験から<wbr>解説します。<wbr>参加資格は<wbr>Health&nbsp;ISAC&nbsp;Japan&nbsp;会員です。
                             </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- 第3回日本医療安全推進学会学術総会 シンポジウム登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-08-07-jsmsp-3rd-symposium.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × 第3回日本医療安全推進学会学術総会">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">日本医療安全推進学会</span>
-                            </div>
-                            <span class="news-visual-caption">2026.9.12–13 東京大学 本郷キャンパス</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-08-07" class="news-card-v2-date">2026.08.07</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">9/12–13 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                第3回日本医療安全推進学会学術総会 シンポジウム「医療安全におけるサイバーセキュリティとAIの安全保障」に登壇
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                医療機関のサイバーセキュリティと医療AIの安全運用を、医療安全の枠組みで接続して議論します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- DX/AI Runner Expo 2026 登壇 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-05-25-dxai-runner-expo-2026.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × DX/AI Runner Expo 2026">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">DX/AI Runner Expo 2026</span>
-                            </div>
-                            <span class="news-visual-caption">2026.6.4 オンライン登壇</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-amber">登壇</span>
-                                <time datetime="2026-05-25" class="news-card-v2-date">2026.05.25</time>
-                                <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">6/4 開催</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                6/4（木）「DX/AI Runner Expo 2026」に登壇 — 医療業界に参入したいAI・DXベンダー企業向け
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                無料オンラインカンファレンスに登壇。医療業界への参入ノウハウと成果を出すポイントを解説します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- 医療AI導入の順番 -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-03-02-hospital-ai-implementation.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers Column">
-                            <div class="news-visual-lockup news-visual-lockup--solo">
-                                <span class="news-visual-brand">Cursorvers</span>
-                            </div>
-                            <span class="news-visual-caption">内科医 × エンジニア 共同執筆</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-navy">コラム</span>
-                                <time datetime="2026-03-02" class="news-card-v2-date">2026.03.02</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                「病院AI導入には順番がある」— 内科医×エンジニアが示す実装の地図
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                松尾研AI経営講座を受講した内科医が整理した、病院AI導入の3つのフレームワーク。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- Health ISAC Japan -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-18-health-isac-japan.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Health ISAC Japan">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <img src="images/logo-health-isac-japan.png" alt="Health ISAC Japan logo" class="news-visual-logo" loading="lazy">
-                            </div>
-                            <span class="news-visual-caption">医療サイバーセキュリティ協賛会員</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-flame">セキュリティ</span>
-                                <time datetime="2026-02-18" class="news-card-v2-date">2026.02.18</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                Health ISAC Japan の協賛会員として登録されました
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                医療サイバーセキュリティの情報共有組織に参加し、ガバナンス支援を強化します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- G-gen Partnership -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-16-ggen-partnership.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card news-visual-lockup-card--emerald" aria-label="Cursorvers × G-gen">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <img src="images/logo-ggen.png" alt="G-gen logo" class="news-visual-logo" loading="lazy">
-                            </div>
-                            <span class="news-visual-caption">Google Cloud Premier Partner 協業</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-emerald">パートナーシップ</span>
-                                <time datetime="2026-02-16" class="news-card-v2-date">2026.02.16</time>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                Google Cloud プレミアパートナー 株式会社G-gen とパートナーシップを締結
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                Googleプロダクトを活用した「安心・安全」な医療AI環境の構築を共同で推進します。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </article>
-
-                <!-- GuideScope -->
-                <article class="news-card-v2 group">
-                    <a href="news/2026-02-10-guidescope.html" class="news-card-v2-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × GuideScope">
-                            <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--flame">GuideScope</span>
-                            </div>
-                            <span class="news-visual-caption">自社プロダクト 提供開始</span>
-                        </div>
-                        <div class="news-card-v2-body">
-                            <div class="news-card-v2-meta">
-                                <span class="news-card-v2-tag news-tag-flame">プロダクト</span>
-                                <time datetime="2026-02-10" class="news-card-v2-date">2026.02.10</time>
-                                <span class="inline-block bg-flame/10 text-flame text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">LIVE</span>
-                            </div>
-                            <h3 class="news-card-v2-title">
-                                GuideScope — 医療一次資料の突合・検証ツール 提供開始（MVP）
-                            </h3>
-                            <p class="news-card-v2-lede">
-                                一次資料と実務文書を突合するビジョンのもと、まずはLLM向け検索プロンプト生成ツールとしてMVPを提供開始。Google Gemini・ChatGPT・Claude等で活用できます。
-                            </p>
-                            <span class="news-card-v2-cta">
-                                詳しく読む
-                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
                         </div>
                     </a>
                 </article>
             </div>
-            <div class="news-scroll-fade" id="newsScrollFade" aria-hidden="true"></div>
-            <div class="news-scroll-hint" id="newsScrollHint" aria-hidden="true"></div>
+
+            <!-- すべてのお知らせ -->
+            <div class="news-list-more">
+                <a href="news.html" class="news-list-more-link">
+                    すべてのお知らせ
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </section>
@@ -2413,12 +2315,13 @@ header.glass-nav, .glass-nav {
                         <span
                             class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">Get
                             Started</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                            売る側にも、買う側にも、<br class="br-pc">独立した臨床レビューを。
+                <h2 class="jp-keep text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                            導入、<wbr>レビュー、<wbr>研修<br>医師が<wbr>ご相談を<wbr>受けます
                         </h2>
-                        <p class="text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
-                            医療機関に出す前の提案書、導入前に受けたベンダー提案をお聞かせください。<br class="br-pc">
-                            第三者の臨床目線で、先に潰すべき論点を整理します。
+                        <p lang="en" class="en-line en-line--dark -mt-2 mb-6">A physician answers inquiries about adoption, third-party review, and training, and sorts out the issues to address first.</p>
+                        <p class="jp-keep text-gray-300 text-lg md:text-xl leading-relaxed mb-10">
+                            医療機関に<wbr>出す前の<wbr>提案書、<wbr>導入前に<wbr>受けた<wbr>ベンダー提案、<wbr>AI導入や<wbr>研修の<wbr>ご相談を<wbr>お聞かせください。<br class="br-pc">
+                            第三者の<wbr>臨床目線で、<wbr>先に<wbr>潰すべき<wbr>論点を<wbr>整理します。
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 mb-8">
                             <a href="services.html#step1"
@@ -2433,13 +2336,29 @@ header.glass-nav, .glass-nav {
                             </a>
                         </div>
                         <div class="flex flex-wrap gap-6 text-sm text-gray-400">
-                            <a href="contact.html" class="hover:text-white transition">レビュー範囲を相談する →</a>
+                            <a href="contact.html" class="hover:text-white transition">相談の範囲を問い合わせる →</a>
+                            <a href="medical-ai.html" class="hover:text-white transition">AI導入伴走 →</a>
+                            <a href="#training" class="hover:text-white transition">企業向け研修 →</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+<section id="product" class="relative z-10 bg-brand-gray border-t border-gray-100" aria-label="補助ツール">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-16">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
+      <div>
+        <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-3 font-en">Tool</span>
+        <h3 class="text-2xl md:text-3xl font-bold text-brand-black">GuideScope</h3>
+        <p class="jp-keep mt-3 text-base md:text-lg text-text-secondary leading-relaxed">レビューの<wbr>補助に<wbr>使う<wbr>道具として、<wbr>GuideScope&nbsp;(医療AI関連<wbr>ガイドラインの<wbr>検索プロンプトを<wbr>作るツール)&nbsp;を<wbr>開発し、<wbr>公開しています。</p>
+        <p lang="en" class="mt-2 text-sm text-text-tertiary">We also built and publish GuideScope, a tool that generates search prompts for medical-AI guidelines to support our reviews.</p>
+      </div>
+      <a href="https://cursorvers.jp/tools/guidescope/" target="_blank" rel="noopener noreferrer" onclick="if (window.gtag) gtag('event', 'cta_click', { label: 'home_product_guidescope' })" class="shrink-0 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg border border-brand-black text-brand-black text-base font-semibold hover:bg-brand-black hover:text-white transition jp-keep">GuideScope&nbsp;を開く<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg></a>
+    </div>
+  </div>
+</section>
 
     <!-- Company Section -->
     <section id="company" class="section-padding-lg bg-white relative z-10">
@@ -2535,6 +2454,61 @@ header.glass-nav, .glass-nav {
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Name Meaning Section -->
+    <!-- iOS Safari mobile fix: 単一カラム grid の implicit 列が、分割不能な H2 (word-break:keep-all で
+         和文がスペース無し=改行不能) の max-content まで広がり、左カラム (H2/本文) が画面右端から
+         はみ出していた (grid blowout)。desktop Chrome/WebKit では再現せず iOS Safari/Chrome のみ発生。
+         モバイルで列を minmax(0,1fr) に拘束し、H2/本文/summary を改行可能にする。
+         <style> を index.html に置くのは SW が HTML=network-first のため (CSS キャッシュ非依存で即時反映)。 -->
+    <style>
+    @media (max-width: 767px) {
+      #name-meaning .grid { grid-template-columns: minmax(0, 1fr) !important; }
+      #name-meaning p,
+      #name-meaning summary { word-break: normal !important; overflow-wrap: anywhere !important; }
+      #name-meaning h2 { word-break: keep-all !important; overflow-wrap: anywhere !important; }
+    }
+    </style>
+    <section id="name-meaning" class="mobile-tight-section py-10 md:py-14 bg-white relative z-10">
+        <div class="max-w-6xl mx-auto px-6 md:px-12">
+            <div class="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-14 lg:gap-16 items-center">
+                <div>
+                    <span class="text-flame text-xs font-bold tracking-[0.18em] block mb-3">名称の由来</span>
+                    <h2 class="font-bold text-brand-black text-2xl md:text-4xl leading-tight text-balance" style="word-break: keep-all; overflow-wrap: break-word;"><span class="md:whitespace-nowrap">「Cursorvers」という</span><wbr><span class="md:whitespace-nowrap">社名に<wbr>込めたもの</span></h2>
+                    <p class="text-text-secondary text-sm md:text-base leading-relaxed mt-4">
+                        Cursorvers（カーソルバース）は、Cursor（判断点）とvers（turn＝向きを変える）を掛け合わせた造語です。
+                    </p>
+                    <p lang="en" class="en-line mt-2">The name joins Cursor (a decision point) and vers (to turn). It stands for setting clear decision points: who decides, who verifies, and who stops when problems arise.</p>
+                </div>
+
+                <div class="mobile-tight-card bg-brand-gray border border-gray-200 rounded-xl p-5 md:p-7">
+                    <span class="text-flame text-sm md:text-base font-bold tracking-[0.18em]">意味するもの</span>
+                    <details class="mt-5 pt-5 border-t border-gray-200 group">
+                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame">
+                            社名に込めた意思を読む
+                        </summary>
+                        <div class="mt-4 space-y-4 text-sm md:text-base text-text-secondary leading-relaxed">
+                            <p>
+                                AI導入の成否は、製品比較より先に「<span class="font-semibold text-brand-black">判断点</span>」の設計で決まります。<span class="font-semibold text-brand-black">誰が判断し、誰が検証し、問題時に誰が止めるか</span>。<span class="font-semibold text-brand-black">責任分界</span>が曖昧なままでは、現場は回っても組織は守れません。
+                            </p>
+                            <p>
+                                Cursorversの「<span class="font-semibold text-brand-black">vers</span>」には、複数の意味を重ねています。<span class="font-semibold text-brand-black">Reverse</span>（向け直す）、<span class="font-semibold text-brand-black">Version</span>（更新し続ける）、<span class="font-semibold text-brand-black">Versus</span>（責任の対峙点を明確にする）、<span class="font-semibold text-brand-black">Versatile</span>（現場に合わせて整える）。意思決定のカーソルを正しい位置に置き、導入を「<span class="font-semibold text-brand-black">安心と継続</span>」へ変える。それが、Cursorversという名前に込めた意思です。
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="mt-5 pt-5 border-t border-gray-200 group">
+                        <summary class="cursor-pointer text-sm md:text-base font-bold text-brand-black leading-snug marker:text-flame">
+                            なぜ Cursorverse ではなく Cursorvers なのですか？
+                        </summary>
+                        <p class="mt-3 text-sm md:text-base text-text-secondary leading-relaxed">
+                            「<span class="font-semibold text-brand-black">verse</span>」には“詩”や流行語の連想が強く、意図がぶれやすいためです。私たちは reverse / version に共通する <span class="font-semibold text-brand-black">vers（turn＝向きを変える）</span>を採り、AI導入の判断を正しい方向へ向け直し、運用を更新し続ける意思を名前に込めています。
+                        </p>
+                    </details>
                 </div>
             </div>
         </div>
@@ -2646,7 +2620,7 @@ header.glass-nav, .glass-nav {
                     /* ?v= は CDN エッジキャッシュ迂回用 (sw.js は edge で 4h キャッシュされるため、
                        SW 更新を即配布するには登録 URL 側で cache key を変える。sw.js の
                        CACHE_VERSION 更新時はここも同じ値に上げること) */
-                    navigator.serviceWorker.register('/sw.js?v=2.1.1', { updateViaCache: 'none' })
+                    navigator.serviceWorker.register('/sw.js?v=2.3.0', { updateViaCache: 'none' })
                         .then((registration) => {
                             console.log('[PWA] Service Worker registered:', registration.scope);
                             registration.update().catch(() => {});

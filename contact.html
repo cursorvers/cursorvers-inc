@@ -29,7 +29,7 @@
     <meta name="twitter:title" content="お問い合わせ | Cursorvers｜医療AIの&quot;産業医&quot; — 提案前に、責任分界を整える">
     <meta name="twitter:description" content="Cursorversへのお問い合わせ。医療機関向けAIガバナンス支援、AIベンダー向けコンサルティング、その他のご相談を承ります。">
     <meta name="twitter:image" content="https://cursorvers.com/images/og-cursorvers-logo.jpg">
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261008m">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261011a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,7 +137,13 @@
         a:focus-visible, button:focus-visible { outline: 2px solid #111111; outline-offset: 2px; }
         .skip-link { position: absolute; left: -9999px; top: 0; z-index: 9999; padding: 1rem 1.5rem; background: #111111; color: #FFFFFF; font-weight: bold; text-decoration: none; }
         .skip-link:focus { left: 0; }
-    </style>
+        .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+        /* カードの箇条書き: チェック印を文字の 1 行目に揃える / 文中のリンクは 44px の下限を外す */
+        .contact-check { margin-top: 0.2em; }
+        .contact-inline-link { min-height: 0; }
+    .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+</style>
 </head>
 
 <body class="antialiased">
@@ -181,9 +187,10 @@
         <section class="py-20 md:py-28 px-6 bg-brand-gray">
             <div class="max-w-4xl mx-auto text-center">
                 <span class="pill-eyebrow" style="display:inline-flex; margin-bottom:1.5rem;"><span class="pill-eyebrow__dot"></span>Contact / お問い合わせ</span>
-                <h1 class="hero-h1 text-4xl md:text-5xl font-bold tracking-tight mb-6">
-                    医療AIの<span style="color:var(--c-flame);">提案前レビュー</span>・<br class="hidden md:block br-pc">セカンドオピニオン、まずは無料相談から。
+                <h1 class="hero-h1 jp-keep text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                    医療AIの<wbr><span style="color:var(--c-flame);">提案前レビュー</span>・<br class="hidden md:block br-pc">セカンド<wbr><span class="whitespace-nowrap">オピニオン、</span><wbr>まずは<wbr>無料相談から
                 </h1>
+<p lang="en" class="en-line" style="margin:-0.5rem auto 1.5rem; max-width:42rem;">Free initial consultation on pre-proposal reviews and second opinions for medical AI. We send our first reply within 48 hours.</p>
                 <hr class="section-divider--flame" style="margin:0 auto 1.5rem;">
                 <p class="text-xl md:text-2xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
                     ご相談内容に応じた窓口をお選びください。初回返信は48時間以内。
@@ -212,108 +219,105 @@
         <!-- Contact Cards -->
         <section class="py-12 md:py-20 px-6">
             <div class="max-w-5xl mx-auto">
-                <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+                <div class="grid lg:grid-cols-3 gap-6 lg:gap-8">
                     <!-- 医療機関 -->
-                    <a href="#inquiry-form" data-contact-type="hospital"
-                        class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
-                        onclick="if(window.gtag)gtag('event','contact_click',{label:'hospital'})">
+                    <div class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group">
                         <div class="w-20 h-20 bg-flame/5 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-flame transition">
                             <svg class="text-3xl text-flame group-hover:text-white transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-hospital"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">医療機関の方</h3>
-                        <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
-                            AIガバナンス顧問、アセスメント、GOV-Lead（人材育成）など、医療機関向けサービスに関するご相談
+                        <p class="jp-keep text-lg text-text-secondary mb-6 leading-relaxed flex-1">
+                            AIガバナンス顧問、<wbr>アセスメント、<wbr><span class="whitespace-nowrap">GOV-Lead</span>（人材育成）<wbr>など、<wbr>医療機関向け<wbr>サービスに<wbr>関する<wbr>ご相談
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-flame" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
-                                <a href="https://app.cursorvers.jp/apply/48h" class="hover:underline" target="_blank" rel="noopener noreferrer" aria-label="48h簡易診断（48時間診断キット）の申込ページ（別サイト・新しいタブで開きます）">48h簡易診断（48時間診断キット）</a>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-flame shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                                <a href="https://app.cursorvers.jp/apply/48h" class="contact-inline-link min-w-0 hover:underline" target="_blank" rel="noopener noreferrer" aria-label="48h簡易診断（48時間診断キット）の申込ページ（別サイト・新しいタブで開きます）">48h簡易診断（48時間診断キット）</a>
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-flame" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-flame shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 AIガバナンス顧問
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-flame" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-flame shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 本アセスメント
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-flame" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-flame shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 GOV-Lead（人材育成）
                             </li>
                         </ul>
-                        <span class="inline-flex items-center justify-center px-6 py-4 bg-flame text-white font-bold rounded-full group-hover:bg-brand-black transition">
-                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </span>
-                    </a>
+                        <a href="#inquiry-form" data-contact-type="hospital" onclick="if(window.gtag)gtag('event','contact_click',{label:'hospital'})"
+                            class="mt-auto flex w-full h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-flame text-white font-bold text-base hover:bg-brand-black transition">
+                            医療機関として相談する <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                        </a>
+                    </div>
 
                     <!-- AIベンダー -->
-                    <a href="#inquiry-form" data-contact-type="vendor"
-                        class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
-                        onclick="if(window.gtag)gtag('event','contact_click',{label:'vendor'})">
+                    <div class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group">
                         <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-flame/10 transition">
                             <svg class="text-3xl text-slate-600 group-hover:text-brand-black transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-microchip"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">AIベンダーの方</h3>
-                        <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
-                            医療AI製品の市場参入、3省2ガイドライン対応、品質保証体制構築に関するご相談
+                        <p class="jp-keep text-lg text-text-secondary mb-6 leading-relaxed flex-1">
+                            医療AI製品の<wbr>市場参入、<wbr>3省2ガイドライン<wbr>対応、<wbr>品質保証<wbr>体制構築に<wbr>関する<wbr>ご相談
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-slate-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-slate-600 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 市場参入支援
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-slate-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-slate-600 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 ガイドライン対応
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-slate-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-slate-600 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 品質保証体制構築
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-slate-600" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-slate-600 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 導入支援
                             </li>
                         </ul>
-                        <span class="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-200 font-bold rounded-full group-hover:border-brand-black group-hover:bg-brand-black group-hover:text-white transition">
-                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </span>
-                    </a>
+                        <a href="#inquiry-form" data-contact-type="vendor" onclick="if(window.gtag)gtag('event','contact_click',{label:'vendor'})"
+                            class="mt-auto flex w-full h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-gray-300 text-brand-black font-bold text-base hover:bg-brand-black hover:border-brand-black hover:text-white transition">
+                            ベンダーとして相談する <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                        </a>
+                    </div>
 
                     <!-- その他 -->
-                    <a href="#inquiry-form" data-contact-type="other"
-                        class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group"
-                        onclick="if(window.gtag)gtag('event','contact_click',{label:'other'})">
+                    <div class="bg-white rounded-2xl p-8 card-hover flex flex-col text-center group">
                         <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-200 transition">
                             <svg class="text-3xl text-gray-500 group-hover:text-brand-black transition" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-comments"></use></svg>
                         </div>
                         <h3 class="text-2xl font-bold mb-4">その他のご相談</h3>
-                        <p class="text-lg text-text-secondary mb-6 leading-relaxed flex-1">
-                            取材・講演依頼、パートナーシップ、採用、その他一般的なお問い合わせ
+                        <p class="jp-keep text-lg text-text-secondary mb-6 leading-relaxed flex-1">
+                            取材・<wbr>講演依頼、<wbr>パートナーシップ、<wbr>採用、<wbr>その他<wbr>一般的な<wbr>お問い合わせ
                         </p>
                         <ul class="text-left text-text-tertiary mb-6 space-y-2">
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-gray-500 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 取材・講演依頼
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-gray-500 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 パートナーシップ
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-gray-500 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 採用について
                             </li>
-                            <li class="flex items-center gap-2 text-sm">
-                                <svg class="text-gray-500" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
+                            <li class="flex items-start gap-2 text-sm">
+                                <svg class="text-gray-500 shrink-0 contact-check" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-check"></use></svg>
                                 その他のご質問
                             </li>
                         </ul>
-                        <span class="inline-flex items-center justify-center px-6 py-4 border-2 border-gray-200 font-bold rounded-full group-hover:border-brand-black group-hover:bg-brand-black group-hover:text-white transition">
-                            お問い合わせ <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </span>
-                    </a>
+                        <a href="#inquiry-form" data-contact-type="other" onclick="if(window.gtag)gtag('event','contact_click',{label:'other'})"
+                            class="mt-auto flex w-full h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-gray-300 text-brand-black font-bold text-base hover:bg-brand-black hover:border-brand-black hover:text-white transition">
+                            その他の相談をする <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

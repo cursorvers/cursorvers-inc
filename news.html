@@ -32,7 +32,7 @@
 
     <!-- OGP -->
 
-    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261008m">
+    <link rel="stylesheet" href="dist/tailwind.min.css?v=20261011a">
     <!-- renewal:start -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +48,9 @@
         .skip-link:focus { left: 0; }
         /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
         .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
-    </style>
+    .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
+.en-line--dark { color: rgba(255, 255, 255, .62); }
+</style>
 </head>
 
 <body class="antialiased">
@@ -101,6 +103,7 @@
                 </nav>
                 <h1 class="hero-h1 text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h1>
                 <p class="mt-2 text-lg text-gray-500 font-en">News &amp; Updates</p>
+<p lang="en" class="en-line" style="margin-top:0.5rem;">Announcements, talks, and awards from Cursorvers.</p>
             </div>
         </section>
 
