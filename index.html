@@ -1510,48 +1510,66 @@ header.glass-nav, .glass-nav {
   </script>
 </section>
 
-<section id="paths" class="mobile-tight-section py-20 md:py-32 bg-brand-gray relative z-10" aria-labelledby="paths-heading">
-  <div class="max-w-6xl mx-auto px-6 md:px-12">
-    <span class="text-flame text-xs font-bold tracking-[0.18em] uppercase block mb-4 font-en jp-keep">Service</span>
-    <h2 id="paths-heading" class="jp-keep text-3xl md:text-5xl font-bold text-brand-black leading-tight">何を<wbr>頼めますか</h2>
-    <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed mt-5">導入の<wbr>伴走と、<wbr>第三者の<wbr>レビュー。<wbr>3つから<wbr>選べます。</p>
+<section id="paths" class="section-padding-lg bg-brand-gray relative z-10" aria-labelledby="paths-heading">
+    <div class="max-w-6xl mx-auto px-6 md:px-8">
+        <div class="text-center mb-14 md:mb-20">
+            <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en jp-keep">事業内容</span>
+            <h2 id="paths-heading" class="jp-keep text-headline font-bold text-brand-black mb-6 text-balance">何を<wbr>頼めますか</h2>
+            <p class="jp-keep text-text-secondary text-body-lg">導入の<wbr>伴走と、<wbr>第三者の<wbr>レビュー。<wbr>3つから<wbr>選べます。</p>
+        </div>
 
-    <div class="grid lg:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
 
-      <div class="bg-white border border-gray-200 rounded-lg p-8 md:p-10 flex flex-col">
-        <span class="jp-keep text-sm font-bold text-flame">医療機関・<wbr>社会福祉法人</span>
-        <h3 class="jp-keep text-2xl md:text-[1.7rem] font-bold text-brand-black leading-snug mt-3">話した<wbr>内容が、<wbr>記録の<wbr>下書きに<wbr>なる。</h3>
-        <ul class="mt-6 space-y-3 flex-grow">
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>医師が<wbr>伴走し、<wbr>必要に<wbr>応じて<wbr>エンジニアを<wbr>アサインします</span></li>
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>院内<wbr>担当者の<wbr>育成&nbsp;<a href="gov-lead.html" class="text-flame hover:underline font-semibold whitespace-nowrap">GOV-Lead</a>&nbsp;も<wbr>相談できます</span></li>
-        </ul>
-        <a href="medical-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})" class="jp-keep mt-8 flex w-full h-12 items-center justify-center gap-2 font-bold text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">AI導入<wbr>伴走を<wbr>見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
-        <a href="welfare-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_welfare'})" class="jp-keep mt-4 block text-center text-flame text-base font-semibold hover:underline">社会福祉法人の<wbr>方は<wbr>こちら →</a>
-      </div>
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="doctor_consultation.png" alt="医師が患者と対話している様子" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関・<wbr>社会福祉法人</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">話した<wbr>内容が、<wbr>記録の<wbr>下書きに<wbr>なる。</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>医師が<wbr>伴走し、<wbr>必要に<wbr>応じて<wbr>エンジニアを<wbr>アサインします</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>院内<wbr>担当者の<wbr>育成&nbsp;<a href="gov-lead.html" class="text-flame hover:underline font-semibold whitespace-nowrap">GOV-Lead</a>&nbsp;も<wbr>相談できます</span></li>
+                    </ul>
+                    <a href="medical-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_medicalai'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">AI導入<wbr>伴走を<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                    <a href="welfare-ai.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_entrance_welfare'})" class="jp-keep mt-4 block text-center text-flame text-base font-semibold hover:underline">社会福祉法人の<wbr>方は<wbr>こちら →</a>
+                </div>
+            </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-8 md:p-10 flex flex-col">
-        <span class="jp-keep text-sm font-bold text-flame">医療機関</span>
-        <h3 class="jp-keep text-2xl md:text-[1.7rem] font-bold text-brand-black leading-snug mt-3">承認前に、<wbr>提案を<wbr>臨床の<wbr>目で<wbr>読みます。</h3>
-        <ul class="mt-6 space-y-3 flex-grow">
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>責任分界・<wbr>患者<wbr>情報・<wbr>院内<wbr>説明の<wbr>抜けを<wbr>確認します</span></li>
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>特定<wbr>製品を<wbr>売らない<wbr>立場で<wbr>読みます</span></li>
-        </ul>
-        <a href="services.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_light_review'})" class="jp-keep mt-8 flex w-full h-12 items-center justify-center gap-2 font-bold text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">導入前<wbr>レビューを<wbr>見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
-      </div>
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="images/stock-audit-team.jpg" alt="Hospital audit team reviewing AI導入データ" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">承認前に、<wbr>提案を<wbr>臨床の<wbr>目で<wbr>読みます。</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>責任分界・<wbr>患者<wbr>情報・<wbr>院内<wbr>説明の<wbr>抜けを<wbr>確認します</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>特定<wbr>製品を<wbr>売らない<wbr>立場で<wbr>読みます</span></li>
+                    </ul>
+                    <a href="services.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_hospital_light_review'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">導入前<wbr>レビューを<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                </div>
+            </div>
 
-      <div class="bg-white border border-gray-200 rounded-lg p-8 md:p-10 flex flex-col">
-        <span class="jp-keep text-sm font-bold text-flame">医療AIベンダー</span>
-        <h3 class="jp-keep text-2xl md:text-[1.7rem] font-bold text-brand-black leading-snug mt-3">病院に<wbr>出す前に、<wbr>懸念点を<wbr>言語化します。</h3>
-        <ul class="mt-6 space-y-3 flex-grow">
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>提案書を、<wbr>臨床と<wbr>稟議の<wbr>観点で<wbr>赤入れします</span></li>
-          <li class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>リリース<wbr>前後の<wbr>更新も<wbr>確認します</span></li>
-        </ul>
-        <div class="jp-keep mt-5 text-sm text-text-tertiary">スポット&nbsp;18万円〜／<wbr><span class="whitespace-nowrap">ライト顧問&nbsp;15〜30万円/月(税別)</span></div>
-        <a href="consulting.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})" class="jp-keep mt-8 flex w-full h-12 items-center justify-center gap-2 font-bold text-base bg-brand-black text-white rounded-lg hover:bg-flame transition">提案前<wbr>レビューを<wbr>見る<svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
-      </div>
+            <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
+                <div class="h-52 md:h-64 img-cover">
+                    <img src="images/stock-engineers-workstation.jpg" alt="Medical AI startup engineers working at analytics workstations" loading="lazy">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    <p class="jp-keep text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療AIベンダー</p>
+                    <h3 class="jp-keep text-xl md:text-2xl font-bold mb-4 text-brand-black">病院に<wbr>出す前に、<wbr>懸念点を<wbr>言語化します。</h3>
+                    <ul class="jp-keep text-body text-text-secondary leading-relaxed flex-grow space-y-3">
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>提案書を、<wbr>臨床と<wbr>稟議の<wbr>観点で<wbr>赤入れします</span></li>
+                        <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 rounded-full bg-flame flex-shrink-0" aria-hidden="true"></span><span>リリース<wbr>前後の<wbr>更新も<wbr>確認します</span></li>
+                    </ul>
+                    <div class="jp-keep text-sm text-text-secondary mt-4 pt-4 border-t border-gray-100">スポット&nbsp;18万円〜／<wbr><span class="whitespace-nowrap font-semibold text-brand-black">ライト顧問&nbsp;15〜30万円/月(税別)</span></div>
+                    <a href="consulting.html" onclick="if(window.gtag)gtag('event','cta_click',{label:'home_hero_vendor_consulting'})" class="jp-keep flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">提案前<wbr>レビューを<wbr>見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg></a>
+                </div>
+            </div>
+
+        </div>
 
     </div>
-  </div>
 </section>
 
 <!-- 信頼バー: 第三者信頼の要点を 5 秒圏へ前倒し。2026-10-04 に #news をバー直下へ移動したが、
@@ -1595,10 +1613,11 @@ header.glass-nav, .glass-nav {
     </div>
 </aside>
 
-    <!-- Philosophy Section -->
+<!-- Philosophy Section -->
     <section id="philosophy" class="section-padding-lg bg-white relative z-10">
         <div class="max-w-6xl mx-auto px-6 md:px-12">
 
+            <!-- 1. 立ち位置：画像左、テキスト右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
                     <img src="images/stock-clinician-dashboard.jpg"
@@ -1606,23 +1625,21 @@ header.glass-nav, .glass-nav {
                 </div>
 
                 <div class="reveal">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">なぜ今</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        AIを買う前に、<br class="br-pc">利害のないレビューが必要です。
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">立ち位置</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        製品は売りません。<span class="block">提案は、<wbr>臨床経験の<wbr>ある<wbr>医師が<wbr>読みます。</span>
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-flame/20 pl-6 md:pl-10">
-                        <p>
-                            AI製品を売る人と、その提案を検証する人が同じでは、医療機関の判断は偏ります。<br class="br-pc">
-                            <span class="font-bold text-flame">導入前に、製品中立の第三者が提案を読むことが必要です。</span>
+                        <p class="jp-keep">
+                            AI製品を売る人と、その提案を検証する人が同じでは、医療機関の判断は偏ります。
                         </p>
-                        <p>
-                            ガイドラインは<span class="font-bold text-flame">年々厳格化</span>し、
-                            <span class="block">
-                                <span class="keep-together">「誰がAIの出力を検証したか」</span><span class="keep-together">「ルールは文書化されているか」</span><span class="keep-together">「職員は教育を受けているか」</span>——
-                            </span>
-                            <span class="font-semibold text-brand-black">が問われる時代。Cursorversは、提案前・導入前に説明できる論点へ整理します。</span>
-                        </p>
+                        <div class="mt-8">
+                            <div class="text-flame font-bold text-5xl md:text-6xl leading-none">約20年</div>
+                            <p class="jp-keep mt-4 text-base md:text-lg text-text-secondary leading-relaxed">
+                                医療現場の運用経験を、AI導入判断に接続します。
+                            </p>
+                        </div>
                     </div>
 
                     <div class="mt-12">
@@ -1634,141 +1651,98 @@ header.glass-nav, .glass-nav {
                 </div>
             </div>
 
-            <!-- 2. Target：テキスト左、画像右 -->
+            <!-- 2. 対象：テキスト左、画像右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="reveal order-2 md:order-1">
                     <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">対象</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
                         <span class="block">中小病院・有床診療所</span>
                         <span class="block">クリニック・在宅医療</span>
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
+                        <p class="jp-keep">
                             専任スタッフを置けない現場でも<br class="br-pc">安心して運用が続くように設計されたサービスです。
-                        </p>
-                        <p>
-                            だからこそ、<span class="font-semibold text-brand-black">最小構成でAI運用の安全と継続</span>を実現する設計が必要です。<br class="br-pc">
-                            Cursorversは、貴院の規模と体制に合わせた「続けられる運用設計」を提案します。
                         </p>
                     </div>
                 </div>
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
-                    <picture>
-                        <source srcset="doctor_consultation.webp" type="image/webp">
-                        <img src="doctor_consultation.png" alt="男性医師が患者と温かく対話している様子" loading="lazy">
-                    </picture>
+                    <img src="images/stock-business-meeting.jpg" alt="医療機関の担当者が打ち合わせをしている様子" loading="lazy">
                 </div>
             </div>
 
-            <!-- 3. Pain Point：画像左、テキスト右 -->
+            <!-- 3. 運用：画像左、テキスト右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center mb-24 md:mb-40">
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl">
                     <img src="images/stock-advisor-meeting.jpg"
                         alt="AIガバナンス顧問が医療リーダーと戦略を共有している様子" loading="lazy">
                 </div>
                 <div class="reveal">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">課題</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        「担当者が辞めたら終わり」を、<br class="md:hidden br-pc">終わらせる。
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">運用</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        人が替わっても、<wbr>運用は残りますか
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
-                            多くの医療機関で、AI運用は<span class="font-semibold text-brand-black">特定の個人</span>に依存しています。<br class="br-pc">
-                            その人が異動すれば、ノウハウも消え、安心が揺らぐ。
+                        <p class="jp-keep">
+                            専任<wbr>スタッフを<wbr>置けない<wbr>現場でも、<wbr>運用が<wbr>続くように<wbr>設計します。
                         </p>
-                        <p>
-                            Cursorversは、<span class="font-semibold text-brand-black">誰が担当しても回る仕組み</span>を作ります。<br class="br-pc">
-                            院内ルール・チェックリスト・研修資料——すべて「引き継げる成果物」として納品します。
-                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">01</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">院内ルール</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">誰が<wbr>担当しても<wbr>回る<wbr>仕組みを、<wbr>文書で<wbr>残します。</p>
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">02</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">チェックリスト</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">導入<wbr>判断の<wbr>前に、<wbr>確認すべき<wbr>質問を<wbr>返します。</p>
+                            <div class="flex items-baseline gap-3">
+                                <span class="text-flame font-bold text-2xl font-en">03</span>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">研修資料</h3>
+                            </div>
+                            <p class="jp-keep text-base md:text-lg text-text-secondary leading-relaxed">引き継げる<wbr>成果物として<wbr>納品します。</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Our Answer：テキスト左、画像右 -->
+            <!-- 4. ガイドライン：テキスト左、画像右 -->
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center">
                 <div class="reveal order-2 md:order-1">
-                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">解決策</span>
-                    <h2 class="text-title font-bold mb-10 text-brand-black text-left">
-                        <span class="block md:inline">提案書に、</span>
-                        <span class="block md:inline">第三者の臨床レビューを。</span>
+                    <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-10 font-en">ガイドライン</span>
+                    <h2 class="jp-keep text-title font-bold mb-10 text-brand-black text-left">
+                        問われたとき、<wbr>何を<wbr>説明しますか
                     </h2>
                     <div
                         class="space-y-6 md:space-y-8 text-text-secondary text-body-lg leading-relaxed border-l-2 md:border-l-4 border-gray-200 pl-6 md:pl-10">
-                        <p>
-                            大学病院には専門委員会がある。でも、中小病院やクリニックには<span
-                                class="font-semibold text-brand-black">AI提案を精査する余力がない</span>。
+                        <p class="jp-keep">
+                            誰がAIの<wbr>出力を<wbr>検証したか。<wbr>ルールは<wbr>文書化されて<wbr>いるか。<wbr>職員は<wbr>教育を<wbr>受けているか。
                         </p>
-                        <p>
-                            導入判断の前に、提案書・責任分界・院内説明を読み込み、<br class="br-pc">
-                            <span class="font-semibold text-brand-black">追加で確認すべき質問と判断メモを返します。</span>
-                        </p>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">責任分界の<wbr>明確化</h3>
+                                <p class="jp-keep mt-2 text-sm text-text-tertiary">出典: 経産省・<wbr>総務省「医療情報を<wbr>取り扱う<wbr>情報システム・<wbr>サービスの<wbr>提供事業者に<wbr>おける<wbr>安全管理<wbr>ガイドライン」<wbr>第2.0版</p>
+                                <a href="https://www.meti.go.jp/policy/mono_info_service/healthcare/teikyoujigyousyagl.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-2 text-flame text-base hover:underline">
+                                    <span class="jp-keep">公式ページで確認</span>
+                                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                                </a>
+                            </div>
+                            <div>
+                                <h3 class="jp-keep text-xl font-bold text-brand-black">BCPの<wbr>定期的な<wbr>訓練・演習</h3>
+                                <p class="jp-keep mt-2 text-sm text-text-tertiary">出典: 厚労省「医療情報<wbr>システムの<wbr>安全管理に<wbr>関する<wbr>ガイドライン」<wbr>第7.0版</p>
+                                <a href="https://www.mhlw.go.jp/stf/shingi/0000516275_00006.html" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex items-center gap-2 text-flame text-base hover:underline">
+                                    <span class="jp-keep">公式ページで確認</span>
+                                    <svg width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-up-right-from-square"></use></svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="img-clean aspect-[4/5] reveal shadow-2xl order-1 md:order-2">
                     <img src="images/stock-city-growth.jpg"
                         alt="都市のビル群が組織の成長を象徴するイメージ" loading="lazy">
-                </div>
-            </div>
-
-            <!-- 脚注 -->
-            <div class="mt-20 pt-10 border-t border-gray-200 text-sm text-text-tertiary max-w-3xl">
-                <p class="mb-2 jp-keep">出典：<wbr>厚労省「医療情報<wbr>システムの<wbr>安全管理に<wbr>関する<wbr>ガイドライン」<wbr>第7.0版<wbr>（2026年6月）、<wbr>経産省・<wbr>総務省「医療情報を<wbr>取り扱う<wbr>情報システム・<wbr>サービスの<wbr>提供事業者に<wbr>おける<wbr>安全管理<wbr>ガイドライン」<wbr>第2.0版<wbr>（2025年3月改定）<wbr>など。</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Business Section -->
-    <section id="business" class="section-padding-lg bg-brand-gray relative z-10">
-        <div class="max-w-6xl mx-auto px-6 md:px-8">
-            <div class="text-center mb-14 md:mb-20">
-                <span class="text-flame text-sm font-bold tracking-[0.2em] uppercase block mb-6 font-en">事業内容</span>
-                <h2 class="text-headline font-bold text-brand-black mb-6 text-balance">提案前・導入前を守る、2つの支援</h2>
-                <p class="text-text-secondary text-body-lg">AIベンダーと医療機関の間に、製品中立のレビューを挟みます。</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
-                <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
-                    <div class="h-52 md:h-64 img-cover">
-                        <img src="images/stock-audit-team.jpg"
-                            alt="Hospital audit team reviewing AI導入データ" loading="lazy">
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col flex-grow">
-                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">医療機関向け
-                        </p>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">導入前セカンドオピニオン</h3>
-                        <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            AIベンダー提案の責任分界、患者情報、院内運用、PoC安全性を承認前にレビューします。
-                        </p>
-                        <p class="text-sm text-text-secondary mt-4 pt-4 border-t border-gray-100">
-                            <span class="font-semibold text-brand-black">新メニュー：</span>院内AIガバナンス担当者を育成する「<a href="gov-lead.html" class="text-flame hover:underline font-semibold">GOV-Lead</a>」もご用意しています。
-                        </p>
-                        <a href="services.html"
-                            class="flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">
-                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card-hover bg-white rounded-2xl overflow-hidden flex flex-col shadow-sm">
-                    <div class="h-52 md:h-64 img-cover">
-                        <img src="images/stock-engineers-workstation.jpg"
-                            alt="Medical AI startup engineers working at analytics workstations" loading="lazy">
-                    </div>
-                    <div class="p-6 md:p-8 flex flex-col flex-grow">
-                        <p class="text-sm font-bold text-flame uppercase mb-3 font-en tracking-wider">ベンダー向け
-                        </p>
-                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-brand-black">提案前レビュー</h3>
-                        <p class="text-body text-text-secondary leading-relaxed flex-grow">
-                            病院に出す前の提案書、責任分界、院内説明を、稟議と現場運用の観点で赤入れします。
-                        </p>
-                        <a href="consulting.html"
-                            class="flex mt-6 w-full h-12 items-center justify-center font-bold text-base bg-brand-black text-white rounded-full hover:bg-flame transition">
-                            詳しく見る <svg class="ml-2" width="1em" height="1em" fill="currentColor" aria-hidden="true"><use href="./assets/icons.svg#icon-arrow-right"></use></svg>
-                        </a>
-                    </div>
                 </div>
             </div>
 
