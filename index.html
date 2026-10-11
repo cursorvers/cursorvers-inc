@@ -1190,6 +1190,17 @@
   animation: hero-in .8s cubic-bezier(.2,.7,.2,1) .45s both;
 }
 
+/* PC の文字を大きくする (2026-10-11 user 指示)。スマホは下の @media (max-width: 767px) の指定のまま */
+@media (min-width: 768px) {
+  .hero-mono__copy { max-width: 880px; }
+  .hero-mono__kicker { font-size: 14px; margin-bottom: 32px; }
+  .hero-mono__rule { width: 40px; }
+  .hero-mono h1 { font-size: clamp(46px, 5.6vw, 88px); margin-bottom: 32px; }
+  .hero-mono__sub { font-size: clamp(17px, 1.55vw, 22px); margin-bottom: 44px; }
+  .hero-mono__primary { min-height: 64px; padding: 0 34px; font-size: 18px; }
+  .hero-mono__link { font-size: 17px; }
+}
+
 @keyframes hero-in {
   from {
     opacity: 0;
