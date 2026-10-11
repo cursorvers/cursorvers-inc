@@ -46,6 +46,9 @@
         })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- ヒーローの背景動画を早めに取りにいく (AGENTS.md R7)。幅ごとに片方だけ -->
+    <link rel="preload" as="video" href="hero_v11_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v11_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Cursorvers">
@@ -1600,15 +1603,15 @@ header.glass-nav, .glass-nav {
 
     <!-- Hero Section (2026-10-08 に V5 から刷新。白地に黒文字、差し色 1 つ)。
          背景は波の動画に白い膜を重ねたもの (2026-10-11 に 3D の街並みから替えた。3D は cursorvers.jp へ移した)。
-         動画は自サイトの assets/video/ に置く (CSP の media-src 'self')。スマホ用 (640×360) を先に並べる (AGENTS.md R5)。差し替えるときはファイル名を変える (R1・R2)。
-         再生は下の script が始める。一時停止のボタンあり (WCAG 2.2.2)。reduced-motion では再生せず静止画のまま。
+         動画は自サイトの hero_v11_mobile.mp4 (640×360) と hero_v11_pc.mp4 (1280×720) (CSP の media-src 'self')。差し替えるときはファイル名の版を上げる (AGENTS.md R1・R2)。
+         型は scripts/lint-media-asset-policy.mjs の R6〜R8 (iPhone Safari の自動再生): <source> を使わず src を直接指定し、直後の script で再生を確実にする。
+         一時停止のボタンあり (WCAG 2.2.2)。reduced-motion では再生せず静止画のまま。
          フェイルセーフ: JS や動画が失敗しても、静止画 (poster) と文字・ボタン・ナビは HTML と CSS だけで成り立つ。 -->
     <section id="main" class="hero-mono" aria-labelledby="hero-title">
   <div class="hero-video-container" aria-hidden="true">
-    <video class="hero-video" muted loop playsinline preload="metadata" poster="assets/video/hero-wave-poster.jpg">
-      <source src="assets/video/hero-wave-mobile.mp4" type="video/mp4" media="(max-width: 767px)">
-      <source src="assets/video/hero-wave-pc.mp4" type="video/mp4" media="(min-width: 768px)">
-    </video>
+    <video class="hero-video" data-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto"
+      src="hero_v11_mobile.mp4" data-src-mobile="hero_v11_mobile.mp4" data-src-desktop="hero_v11_pc.mp4"
+      poster="assets/video/hero-wave-poster.jpg"></video>
     <div class="hero-overlay"></div>
   </div>
   <div class="hero-mono__inner">
@@ -1624,25 +1627,49 @@ header.glass-nav, .glass-nav {
   </div>
   <button type="button" lang="en" class="hero-mono__pause" id="heroPause" aria-pressed="false" data-state="playing" hidden>Pause</button>
   <script>
-  /* 動画の再生と一時停止 (WCAG 2.2.2)。reduced-motion では再生しない (ボタンで再生できる) */
+  /* 背景動画の再生 (iPhone Safari の自動再生を確実にする。AGENTS.md R6・R7) と一時停止 (WCAG 2.2.2)。
+     reduced-motion では再生せず Play を出す。ボタンで止めたら、再訪やタップで勝手に再生し直さない */
   (function () {
-    var video = document.querySelector('#main .hero-video');
+    var video = document.querySelector('[data-hero-video]');
     var btn = document.getElementById('heroPause');
-    if (!video || !btn) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function set(paused) {
-      if (paused) { video.pause(); } else { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
-      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      btn.textContent = paused ? 'Play' : 'Pause';
-      btn.dataset.state = paused ? 'paused' : 'playing';
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute('muted', '');
+    var mobile = window.matchMedia('(max-width: 767px)').matches;
+    var want = video.getAttribute(mobile ? 'data-src-mobile' : 'data-src-desktop');
+    if (want && video.getAttribute('src') !== want) { video.setAttribute('src', want); video.load(); }
+    var userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function play() {
+      if (userPaused) return;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
     }
-    btn.hidden = false;
-    btn.addEventListener('click', function () { set(btn.dataset.state !== 'paused'); });
-    set(reduce);
+    function render() {
+      if (!btn) return;
+      btn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+      btn.textContent = userPaused ? 'Play' : 'Pause';
+      btn.dataset.state = userPaused ? 'paused' : 'playing';
+    }
+    if (btn) {
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        userPaused = !userPaused;
+        if (userPaused) { video.pause(); } else { play(); }
+        render();
+      });
+    }
+    if (userPaused) { video.pause(); } else { play(); }
+    render();
+    window.addEventListener('pageshow', play);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) play(); });
+    document.addEventListener('touchstart', play, { once: true, passive: true });
+    if (window.performance && performance.mark) performance.mark('hero-video-armed');
   })();
   </script>
 </section>
 
+<!-- Hero Follow-up Section -->
 <!-- 旧 #business (事業内容) への外部リンクの互換。後継はこの #paths -->
 <span id="business" aria-hidden="true"></span>
 <section id="paths" class="section-padding-lg bg-brand-gray relative z-10" aria-labelledby="paths-heading">

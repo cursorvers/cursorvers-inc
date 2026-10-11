@@ -9,7 +9,7 @@
  *
  * 経緯:
  *   2026-10-08 に V5 から白黒の 3D 医療街区ヒーローへ刷新した。
- *   2026-10-11 に背景を 3D から波の動画 (自サイトの assets/video/) に替えた。3D は cursorvers.jp へ移した。
+ *   2026-10-11 に背景を 3D から波の動画 (自サイトの hero_v11_*.mp4) に替えた。3D は cursorvers.jp へ移した。
  */
 const { test, expect } = require("@playwright/test");
 
@@ -42,10 +42,18 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
         bandExists: Boolean(document.querySelector(".au-band")),
         heroFxExists: Boolean(document.querySelector("canvas#heroFx")),
         heroVideoInHero: Boolean(document.querySelector("#main .hero-video-container video.hero-video")),
-        heroVideoSources: [...document.querySelectorAll("#main video.hero-video source")].map((el) => ({
-          src: el.getAttribute("src"),
-          media: el.getAttribute("media"),
-        })),
+        heroVideoSourceCount: document.querySelectorAll("#main video.hero-video source").length,
+        heroVideoAttrs: (() => {
+          const v = document.querySelector("#main video.hero-video");
+          return v
+            ? {
+                src: v.getAttribute("src"),
+                mobile: v.getAttribute("data-src-mobile"),
+                desktop: v.getAttribute("data-src-desktop"),
+                preload: v.getAttribute("preload"),
+              }
+            : null;
+        })(),
       };
     });
 
@@ -63,11 +71,14 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
       heroVideoInHero: true,
     });
 
-    // スマホ用を先に並べ、動画は自サイトに置く (AGENTS.md R1・R5、CSP の media-src 'self')
-    expect(contract.heroVideoSources).toEqual([
-      { src: "assets/video/hero-wave-mobile.mp4", media: "(max-width: 767px)" },
-      { src: "assets/video/hero-wave-pc.mp4", media: "(min-width: 768px)" },
-    ]);
+    // 動画は自サイトに置き、<source> を使わず src を直接持つ (AGENTS.md R1・R6、CSP の media-src 'self')
+    expect(contract.heroVideoSourceCount).toBe(0);
+    expect(contract.heroVideoAttrs).toEqual({
+      src: "hero_v11_mobile.mp4",
+      mobile: "hero_v11_mobile.mp4",
+      desktop: "hero_v11_pc.mp4",
+      preload: "auto",
+    });
 
     expect(contract.primaryText.startsWith("無料壁打ちを予約（30分）")).toBe(true);
   });
@@ -114,7 +125,7 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
         pressed: btn ? btn.getAttribute("aria-pressed") : null,
       };
     });
-    expect(state.currentSrc.endsWith("/assets/video/hero-wave-mobile.mp4")).toBe(true);
+    expect(state.currentSrc.endsWith("/hero_v11_mobile.mp4")).toBe(true);
     expect(state.muted).toBe(true);
     expect(state.pauseHidden).toBe(false);
     expect(state.pressed).toBe("false");
@@ -159,14 +170,15 @@ test.describe("Hero (hero-mono) 構造への整流 section", () => {
       };
     });
     expect(state.paused).toBe(true);
-    expect(state.currentTime).toBe(0);
+    // autoplay 属性で動き出す前に script が止めるため、進んでもごくわずか
+    expect(state.currentTime).toBeLessThan(0.5);
     expect(state.pauseHidden).toBe(false);
     expect(state.pressed).toBe("true");
     expect(state.label).toBe("Play");
   });
 
   test("hero stays operable when the video fails to load", async ({ page }) => {
-    await page.route("**/assets/video/*.mp4", (route) => route.abort());
+    await page.route("**/*.mp4", (route) => route.abort());
     await page.goto("/", { waitUntil: "commit" });
     await page.waitForTimeout(2000);
 
