@@ -5,49 +5,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { pathToFileURL } from 'node:url';
+import * as parse5 from 'parse5';
 
 const PLACEHOLDER = 'TURNSTILE_SITE_KEY_PLACEHOLDER';
 // Turnstile の site key は英数字と _ - だけ。属性への差し込みも防ぐ
 const KEY_RE = /^[0-9A-Za-z_-]+$/;
 
-// コメントと script/style/template の中身を除いた「生きている」マークアップを返す。検証専用でファイルは書き換えない
-function liveMarkup(html) {
-  return html
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '')
-    .replace(/<template\b[^>]*>[\s\S]*?<\/template\s*>/gi, '');
-}
-
-// data-sitekey="..." / data-sitekey='...' の値を集める
-function extractSitekeys(html) {
-  const values = [];
-  const re = /data-sitekey\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
-  let m;
-  while ((m = re.exec(html)) !== null) {
-    values.push(m[1] !== undefined ? m[1] : m[2]);
+// parse5 でパースし、要素ノードを集める。template の中身 (node.content) には降りない。
+// コメントや script のテキストは要素でないため自然に除外される。属性名は parse5 の小文字のまま
+function collectLiveElements(html) {
+  const out = [];
+  function walk(node) {
+    for (const child of node.childNodes || []) {
+      if (child.tagName) {
+        out.push({ attrs: new Map(child.attrs.map((a) => [a.name, a.value])) });
+        if (!child.content) walk(child);
+      }
+    }
   }
-  return values;
-}
-
-// liveMarkup 上で class に cf-turnstile を含む開始タグを探し、そのタグ内の data-sitekey を取り出す
-function extractWidgets(html) {
-  const widgets = [];
-  const re = /<([a-zA-Z][^\s/>]*)((?:"[^"]*"|'[^']*'|[^>])*?)>/g;
-  const live = liveMarkup(html);
-  let m;
-  while ((m = re.exec(live)) !== null) {
-    const attrs = m[2];
-    const classM = attrs.match(/\bclass\s*=\s*(?:"([^"]*)"|'([^']*)')/);
-    if (!classM) continue;
-    const classVal = classM[1] !== undefined ? classM[1] : classM[2];
-    if (!classVal.split(/\s+/).includes('cf-turnstile')) continue;
-    const keyM = attrs.match(/\bdata-sitekey\s*=\s*(?:"([^"]*)"|'([^']*)')/);
-    widgets.push({
-      sitekey: keyM ? (keyM[1] !== undefined ? keyM[1] : keyM[2]) : null,
-    });
-  }
-  return widgets;
+  walk(parse5.parse(html));
+  return out;
 }
 
 function countOccurrences(haystack, needle) {
@@ -108,21 +85,25 @@ export function run({ siteDir, key, commit }) {
   fs.writeFileSync(contactPath, before.replaceAll(PLACEHOLDER, key), 'utf8');
   const after = fs.readFileSync(contactPath, 'utf8');
 
-  const live = liveMarkup(after);
-  const widgets = extractWidgets(after);
+  const elements = collectLiveElements(after);
+  const widgets = elements.filter((el) => {
+    const cls = el.attrs.get('class');
+    return typeof cls === 'string' && cls.split(/[ \t\n\f\r]+/).includes('cf-turnstile');
+  });
   if (widgets.length === 0) {
     return { ok: false, error: 'no live .cf-turnstile widget in contact.html (comments and script text are ignored)' };
   }
   for (const w of widgets) {
-    if (w.sitekey === null) return { ok: false, error: 'a live .cf-turnstile widget has no data-sitekey attribute in contact.html' };
-    if (w.sitekey.length === 0) return { ok: false, error: 'empty data-sitekey value found on a live widget in contact.html' };
-    if (w.sitekey === PLACEHOLDER) return { ok: false, error: 'placeholder remains in a data-sitekey attribute on a live widget' };
-    if (w.sitekey !== key) return { ok: false, error: 'a live widget data-sitekey value in contact.html does not match the injected sitekey' };
+    if (!w.attrs.has('data-sitekey')) return { ok: false, error: 'a live .cf-turnstile widget has no data-sitekey attribute in contact.html' };
+    if (w.attrs.get('data-sitekey').length === 0) return { ok: false, error: 'empty data-sitekey value found on a live widget in contact.html' };
+    if (w.attrs.get('data-sitekey') === PLACEHOLDER) return { ok: false, error: 'placeholder remains in a data-sitekey attribute on a live widget' };
+    if (w.attrs.get('data-sitekey') !== key) return { ok: false, error: 'a live widget data-sitekey value in contact.html does not match the injected sitekey' };
   }
-  // liveMarkup 上の全ての data-sitekey も鍵と一致しなければならない
-  const liveSitekeys = extractSitekeys(live);
-  for (const v of liveSitekeys) {
-    if (v !== key) return { ok: false, error: 'a data-sitekey value in contact.html does not match the injected sitekey' };
+  // 全要素の data-sitekey も鍵と一致しなければならない
+  for (const el of elements) {
+    if (el.attrs.has('data-sitekey') && el.attrs.get('data-sitekey') !== key) {
+      return { ok: false, error: 'a data-sitekey value in contact.html does not match the injected sitekey' };
+    }
   }
   if (after.includes(PLACEHOLDER)) {
     return { ok: false, error: 'placeholder still remains in contact.html' };

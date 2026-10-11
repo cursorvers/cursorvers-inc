@@ -189,3 +189,25 @@ test('フォルダの symlink があれば止める (走査できない対象を
   const res = runScript([site], KEY);
   assertFails(res, KEY, /symlinked directory not allowed/);
 });
+
+test('data-class は widget とみなさない', (t) => {
+  const dir = makeSiteDir(t, `<div data-class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div>`);
+  assertFails(runScript([dir], KEY), KEY, /no live/);
+});
+
+test('属性値中の class= は widget とみなさない', (t) => {
+  const dir = makeSiteDir(t, `<div title='class="cf-turnstile"' data-sitekey="${PLACEHOLDER}"></div>`);
+  assertFails(runScript([dir], KEY), KEY, /no live/);
+});
+
+test('template の中身は無視する', (t) => {
+  const dir = makeSiteDir(t, `<template><div class="cf-turnstile" data-sitekey="${PLACEHOLDER}"></div></template>`);
+  assertFails(runScript([dir], KEY), KEY, /no live/);
+});
+
+test('大文字属性名は parse5 が小文字化するので通る', (t) => {
+  const dir = makeSiteDir(t, `<div CLASS="x cf-turnstile" data-sitekey="${PLACEHOLDER}"></div>`);
+  const res = runScript([dir], KEY);
+  assert.equal(res.status, 0, res.stderr);
+  assert.match(res.stdout, /1 live widget/);
+});

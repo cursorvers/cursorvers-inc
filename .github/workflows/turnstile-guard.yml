@@ -5,6 +5,8 @@ on:
       - 'contact.html'
       - 'scripts/inject-turnstile-sitekey.mjs'
       - 'scripts/inject-turnstile-sitekey.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/deploy.yml'
       - '.github/workflows/turnstile-guard.yml'
 
@@ -22,6 +24,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "24"
+
+      - name: Install dependencies
+        run: npm ci
 
       # deploy はしない。鍵の検査そのものを、架空の鍵と実際の contact.html で試す
       - name: Test the Turnstile guard
