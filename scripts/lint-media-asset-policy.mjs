@@ -378,7 +378,8 @@ function lintHeroVideoCodec(kind, src, filePath) {
     );
   }
 
-  const maxWidth = kind === 'mobile' ? 960 : 1280;
+  // PC 用は 768px 以上で読む。2026-10-11 に画質のため 1280 → 1920 に上げた (スマホ用の上限と形式の条件は変えない)
+  const maxWidth = kind === 'mobile' ? 960 : 1920;
   if (Number(video.width) > maxWidth) {
     addFinding('R8', 'error', src, 1, `Hero ${kind} video "${src}" is ${video.width}px wide; keep it at or below ${maxWidth}px for iPhone Safari startup reliability.`);
   }

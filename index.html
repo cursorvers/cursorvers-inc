@@ -47,8 +47,8 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- ヒーローの背景動画を早めに取りにいく (AGENTS.md R7)。幅ごとに片方だけ -->
-    <link rel="preload" as="video" href="hero_v11_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
-    <link rel="preload" as="video" href="hero_v11_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v12_mobile.mp4" type="video/mp4" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" as="video" href="hero_v12_pc.mp4" type="video/mp4" media="(min-width: 768px)" fetchpriority="high">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Cursorvers">
@@ -1641,14 +1641,14 @@ header.glass-nav, .glass-nav {
 
     <!-- Hero Section (2026-10-08 に V5 から刷新。白地に黒文字、差し色 1 つ)。
          背景は波の動画に白い膜を重ねたもの (2026-10-11 に 3D の街並みから替えた。3D は cursorvers.jp へ移した)。
-         動画は自サイトの hero_v11_mobile.mp4 (640×360) と hero_v11_pc.mp4 (1280×720) (CSP の media-src 'self')。差し替えるときはファイル名の版を上げる (AGENTS.md R1・R2)。
+         動画は自サイトの hero_v12_mobile.mp4 (960×540) と hero_v12_pc.mp4 (1920×1080。Pexels 3571264 の 2560×1440 原本から作り直した) (CSP の media-src 'self')。差し替えるときはファイル名の版を上げる (AGENTS.md R1・R2)。
          型は scripts/lint-media-asset-policy.mjs の R6〜R8 (iPhone Safari の自動再生): <source> を使わず src を直接指定し、直後の script で再生を確実にする。
          一時停止のボタンあり (WCAG 2.2.2)。reduced-motion では再生せず静止画のまま。
          フェイルセーフ: JS や動画が失敗しても、静止画 (poster) と文字・ボタン・ナビは HTML と CSS だけで成り立つ。 -->
     <section id="main" class="hero-mono" aria-labelledby="hero-title">
   <div class="hero-video-container" aria-hidden="true">
     <video class="hero-video" data-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto"
-      src="hero_v11_mobile.mp4" data-src-mobile="hero_v11_mobile.mp4" data-src-desktop="hero_v11_pc.mp4"
+      src="hero_v12_mobile.mp4" data-src-mobile="hero_v12_mobile.mp4" data-src-desktop="hero_v12_pc.mp4"
       poster="assets/video/hero-wave-poster.jpg"></video>
     <noscript><style>#main .hero-video { display: none; } #main .hero-video-container { background: url("assets/video/hero-wave-poster.jpg") center / cover no-repeat; }</style></noscript>
     <div class="hero-overlay"></div>
