@@ -1266,74 +1266,57 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   // ---- main entrance (v0.3 entrance) ----
   {
-    // E1: entrance glazing mullions
-    for (let x = -14; x <= 14; x += 2) line('mid', x, 0, 88, x, 14, 88);
-    line('mid', -14, 4, 88, 14, 4, 88);
-    line('mid', -14, 9, 88, 14, 9, 88);
-    box(-14, 0, 87.9, 14, 0.3, 88.1, 'mid', { face: true });
-
-    // E2: vestibule
+    // E1 vertical mullions, skip portal opening
+    line('mid', -14, 0, 88, -14, 14, 88);
+    line('mid', -12, 0, 88, -12, 14, 88);
+    line('mid', -10, 0, 88, -10, 14, 88);
+    line('mid', -8, 0, 88, -8, 14, 88);
+    line('mid', -6, 0, 88, -6, 14, 88);
+    line('mid', 6, 0, 88, 6, 14, 88);
+    line('mid', 8, 0, 88, 8, 14, 88);
+    line('mid', 10, 0, 88, 10, 14, 88);
+    line('mid', 12, 0, 88, 12, 14, 88);
+    line('mid', 14, 0, 88, 14, 14, 88);
+    // E1 horizontal transoms
+    line('mid', -14, 4, 88, -5.4, 4, 88);
+    line('mid', 5.4, 4, 88, 14, 4, 88);
+    line('mid', -14, 9, 88, -5.4, 9, 88);
+    line('mid', 5.4, 9, 88, 14, 9, 88);
+    // E1 base, split at center
+    box(-14, 0, 87.9, -5.4, 0.3, 88.1, 'mid', { face: true });
+    box(5.4, 0, 87.9, 14, 0.3, 88.1, 'mid', { face: true });
+    // E1 inner door at z=88
+    line('hero', -1.6, 0, 88, -1.6, 2.6, 88);
+    line('hero', 1.6, 0, 88, 1.6, 2.6, 88);
+    line('hero', -4.6, 2.6, 88, 4.6, 2.6, 88);
+    line('hero', 0, 0, 88, 0, 2.6, 88);
+    // E2 vestibule roof
     box(-4.2, 3.4, 88, 4.2, 3.6, 90.8, 'hero', { face: true });
-    // corner posts
+    // E2 corner posts, 0.16 square
     box(-4.08, 0, 88.02, -3.92, 3.4, 88.18, 'hero', { face: true });
     box(-4.08, 0, 90.42, -3.92, 3.4, 90.58, 'hero', { face: true });
     box(3.92, 0, 88.02, 4.08, 3.4, 88.18, 'hero', { face: true });
     box(3.92, 0, 90.42, 4.08, 3.4, 90.58, 'hero', { face: true });
-    // auto door frame
+    // E2 outer auto door at z=90.6
     line('hero', -1.6, 0, 90.6, -1.6, 2.6, 90.6);
     line('hero', 1.6, 0, 90.6, 1.6, 2.6, 90.6);
     line('hero', -4, 2.6, 90.6, 4, 2.6, 90.6);
     line('hero', 0, 0, 90.6, 0, 2.6, 90.6);
-    // side transoms
+    // E2 side transoms
     line('mid', -4, 1.2, 88.1, -4, 1.2, 90.5);
     line('mid', 4, 1.2, 88.1, 4, 1.2, 90.5);
-    // entrance mat
+    // E2 entrance mat
     box(-1.8, 0, 90.7, 1.8, 0.04, 92.2, 'equip', { face: true });
-
-    // E3: canopy upstand
+    // E3 ambulance canopy nose upstands, thickness 0.25
     box(-20, 6.7, 108.75, 20, 7.3, 109, 'hero', { face: true });
     box(-20, 6.7, 91, 20, 7.3, 91.25, 'hero', { face: true });
     box(-20, 6.7, 91.25, -19.75, 7.3, 108.75, 'hero', { face: true });
     box(19.75, 6.7, 91.25, 20, 7.3, 108.75, 'hero', { face: true });
-    // soffit downlights (square outlines)
-    const zs = mobile ? [100] : [96, 100, 104];
-    for (const x of [-12, -4, 4, 12]) {
-      for (const z of zs) {
-        line('equip', x - 0.3, 5.99, z - 0.3, x + 0.3, 5.99, z - 0.3);
-        line('equip', x + 0.3, 5.99, z - 0.3, x + 0.3, 5.99, z + 0.3);
-        line('equip', x + 0.3, 5.99, z + 0.3, x - 0.3, 5.99, z + 0.3);
-        line('equip', x - 0.3, 5.99, z + 0.3, x - 0.3, 5.99, z - 0.3);
-      }
-    }
-
-    // E4: EMS sign board
-    box(-5, 7.3, 108.7, 5, 8.6, 109, 'hero', { face: true });
-    // cross outline (center -3,7.95, arm 0.5, half-width 0.09)
-    line('hero', -3.09, 8.45, 109.01, -2.91, 8.45, 109.01);
-    line('hero', -2.91, 8.45, 109.01, -2.91, 8.04, 109.01);
-    line('hero', -2.91, 8.04, 109.01, -2.5, 8.04, 109.01);
-    line('hero', -2.5, 8.04, 109.01, -2.5, 7.86, 109.01);
-    line('hero', -2.5, 7.86, 109.01, -2.91, 7.86, 109.01);
-    line('hero', -2.91, 7.86, 109.01, -2.91, 7.45, 109.01);
-    line('hero', -2.91, 7.45, 109.01, -3.09, 7.45, 109.01);
-    line('hero', -3.09, 7.45, 109.01, -3.09, 7.86, 109.01);
-    line('hero', -3.09, 7.86, 109.01, -3.5, 7.86, 109.01);
-    line('hero', -3.5, 7.86, 109.01, -3.5, 8.04, 109.01);
-    line('hero', -3.5, 8.04, 109.01, -3.09, 8.04, 109.01);
-    line('hero', -3.09, 8.04, 109.01, -3.09, 8.45, 109.01);
-    // text lines
-    line('equip', -1.6, 7.75, 109.01, 4.2, 7.75, 109.01);
-    line('equip', -1.6, 8.15, 109.01, 4.2, 8.15, 109.01);
-
-    // E5: curb and bollards
-    box(-20, 0, 91.4, 20, 0.18, 91.7, 'mid', { face: true });
-    for (const x of [-12.75, -4.25, 4.25, 12.75]) solidCylY(x, 0, 0.9, 92.2, 0.18, 12, {});
-
-    // E6: entrance portal frame (above the canopy, readable from high cameras)
+    // E6 portal frame
     box(-5.4, 0, 87.6, -4.6, 10.4, 88.4, 'hero', { face: true });
     box(4.6, 0, 87.6, 5.4, 10.4, 88.4, 'hero', { face: true });
     box(-4.6, 9.6, 87.6, 4.6, 10.4, 88.4, 'hero', { face: true });
-    // E7: link roof from the emergency canopy to the entrance
+    // E7 connecting canopy
     box(-6, 6, 88.4, 6, 6.7, 91, 'hero', { face: true });
   }
 
