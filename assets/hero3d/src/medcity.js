@@ -216,6 +216,299 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   function line(tone, ax, ay, az, bx, by, bz) { seg(T[tone], ax, ay, az, bx, by, bz); }
 
+  // ---- 曲面・配管・架台の補助 (屋上の機器の精密化で追加) ----
+  function toneOf(nx, ny, nz) {
+    const l = Math.hypot(nx, ny, nz) || 1;
+    nx /= l; ny /= l; nz /= l;
+    return Math.max(ny, 0) ** 2 * 1.0 + nx * nx * 0.955 + nz * nz * 0.925 + Math.min(ny, 0) ** 2 * 0.88;
+  }
+  let faceRoom = null;
+  function tri(ax, ay, az, bx, by, bz, cx, cy, cz, nx, ny, nz) {
+    if (!solid) return;
+    // fix 2: geometric normal vs given normal, swap if flipped
+    const g = [(by - ay) * (cz - az) - (bz - az) * (cy - ay),
+               (bz - az) * (cx - ax) - (bx - ax) * (cz - az),
+               (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)];
+    if (Math.hypot(g[0], g[1], g[2]) < 1e-9) return;
+    if (g[0] * nx + g[1] * ny + g[2] * nz < 0) { let t0 = bx, t1 = by, t2 = bz; bx = cx; by = cy; bz = cz; cx = t0; cy = t1; cz = t2; }
+    const c = ids ? ((faceRoom && ID_COLORS.equip[faceRoom]) || [1, 1, 1]) : [toneOf(nx, ny, nz), toneOf(nx, ny, nz), toneOf(nx, ny, nz)];
+    F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+    for (let i = 0; i < 3; i++) { F.nrm.push(nx, ny, nz); F.col.push(c[0], c[1], c[2]); }
+  }
+  function quadN(a, b, c, d, n) {
+    tri(a[0], a[1], a[2], b[0], b[1], b[2], c[0], c[1], c[2], n[0], n[1], n[2]);
+    tri(a[0], a[1], a[2], c[0], c[1], c[2], d[0], d[1], d[2], n[0], n[1], n[2]);
+  }
+  function solidCylY(cx, y0, y1, cz, r, div, opt = {}) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+      const p = (a, y) => [cx + r * Math.cos(a), y, cz + r * Math.sin(a)];
+      const n = [Math.cos(am), 0, Math.sin(am)];
+      quadN(p(a0, y0), p(a1, y0), p(a1, y1), p(a0, y1), n);
+      if (opt.inner) quadN(p(a1, y0), p(a0, y0), p(a0, y1), p(a1, y1), [-n[0], 0, -n[2]]);
+    }
+    if (opt.tone !== null) { const tn = opt.tone || 'equip'; ring(T[tn], cx, y0, cz, r, div, 'y'); ring(T[tn], cx, y1, cz, r, div, 'y'); }
+    if (opt.top !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, y1, cz, cx + r * Math.cos(a0), y1, cz + r * Math.sin(a0), cx + r * Math.cos(a1), y1, cz + r * Math.sin(a1), 0, 1, 0);
+    }
+    if (opt.bottom !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, y0, cz, cx + r * Math.cos(a1), y0, cz + r * Math.sin(a1), cx + r * Math.cos(a0), y0, cz + r * Math.sin(a0), 0, -1, 0);
+    }
+    if (opt.seams) for (let i = 0; i < opt.seams; i++) {
+      const a = (i / opt.seams) * Math.PI * 2;
+      seg(T[opt.seamTone || 'mid'], cx + r * Math.cos(a), y0, cz + r * Math.sin(a), cx + r * Math.cos(a), y1, cz + r * Math.sin(a));
+    }
+  }
+  function annulusY(cx, y, cz, r0, r1, div) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      quadN([cx + r0 * Math.cos(a0), y, cz + r0 * Math.sin(a0)], [cx + r1 * Math.cos(a0), y, cz + r1 * Math.sin(a0)],
+            [cx + r1 * Math.cos(a1), y, cz + r1 * Math.sin(a1)], [cx + r0 * Math.cos(a1), y, cz + r0 * Math.sin(a1)], [0, 1, 0]);
+    }
+  }
+  function solidCylZ(cx, cy, z0, z1, r, div, opt = {}) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+      const p = (a, z) => [cx + r * Math.cos(a), cy + r * Math.sin(a), z];
+      quadN(p(a0, z0), p(a1, z0), p(a1, z1), p(a0, z1), [Math.cos(am), Math.sin(am), 0]);
+    }
+    if (opt.tone !== null) { const tn = opt.tone || 'equip'; ring(T[tn], cx, cy, z0, r, div, 'z'); ring(T[tn], cx, cy, z1, r, div, 'z'); }
+    if (opt.top !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, cy, z1, cx + r * Math.cos(a1), cy + r * Math.sin(a1), z1, cx + r * Math.cos(a0), cy + r * Math.sin(a0), z1, 0, 0, 1);
+    }
+    if (opt.bottom !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, cy, z0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), z0, cx + r * Math.cos(a1), cy + r * Math.sin(a1), z0, 0, 0, -1);
+    }
+  }
+  function domeZ(cx, cy, zBase, r, depth, dir, div) {
+    const U = [0, 0.45, 0.72, 0.9, 1.0];
+    const st = U.map(u => ({ z: zBase + dir * depth * u, rr: r * Math.sqrt(Math.max(0, 1 - u * u)) }));
+    for (let k = 0; k < 4; k++) {
+      const um = (U[k] + U[k + 1]) / 2;
+      const rm = r * Math.sqrt(Math.max(0, 1 - um * um));
+      for (let i = 0; i < div; i++) {
+        const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+        const p = (a, s) => [cx + s.rr * Math.cos(a), cy + s.rr * Math.sin(a), s.z];
+        // ellipsoid normal at band mid-station
+        let nx = rm * Math.cos(am) / (r * r), ny = rm * Math.sin(am) / (r * r), nz = dir * um / depth;
+        const l = Math.hypot(nx, ny, nz);
+        quadN(p(a0, st[k]), p(a1, st[k]), p(a1, st[k + 1]), p(a0, st[k + 1]), [nx / l, ny / l, nz / l]);
+      }
+    }
+    ring(T.equip, cx, cy, zBase, r, div, 'z');
+  }
+  function saddleZ(cx, zc, yBase, tankCy, r, halfW, thick) {
+    // cradle under tank: profile bottom -> left side -> arc -> right side -> bottom
+    const rr = r + 0.02, steps = 8;
+    const x0 = cx - halfW, x1 = cx + halfW;
+    const a0 = Math.acos(halfW / rr);
+    const prof = [[x0, yBase], [x0, tankCy - rr * Math.sin(a0)]];
+    for (let i = 1; i <= steps; i++) {
+      const a = Math.PI + a0 + (Math.PI - 2 * a0) * (i / steps);
+      prof.push([cx + rr * Math.cos(a), tankCy + rr * Math.sin(a)]);
+    }
+    prof.push([x1, yBase]);
+    const zb = zc - thick / 2, zf = zc + thick / 2;
+    const bc = [(x0 + x1) / 2, yBase];
+    // front (+z) / back (-z) fans
+    for (let i = 0; i < prof.length - 1; i++) {
+      tri(prof[i][0], prof[i][1], zf, prof[i + 1][0], prof[i + 1][1], zf, bc[0], bc[1], zf, 0, 0, 1);
+      tri(prof[i + 1][0], prof[i + 1][1], zb, prof[i][0], prof[i][1], zb, bc[0], bc[1], zb, 0, 0, -1);
+    }
+    // side strip: normals toward tank axis on arc, ±x on straight sides
+    const nl = (mx, my) => { const l = Math.hypot(cx - mx, tankCy - my) || 1; return [(cx - mx) / l, (tankCy - my) / l, 0]; };
+    for (let i = 0; i < prof.length - 1; i++) {
+      const a = prof[i], b = prof[i + 1];
+      const n = i === 0 ? [-1, 0, 0]
+        : i >= 1 && i <= steps ? nl((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+        : [1, 0, 0];
+      quadN([a[0], a[1], zb], [b[0], b[1], zb], [b[0], b[1], zf], [a[0], a[1], zf], n);
+    }
+    // bottom
+    quadN([x0, yBase, zb], [x1, yBase, zb], [x1, yBase, zf], [x0, yBase, zf], [0, -1, 0]);
+    // lines: closed profile outline on front and back
+    for (const z of [zb, zf]) {
+      for (let i = 0; i < prof.length; i++) {
+        const a = prof[i], b = prof[(i + 1) % prof.length];
+        seg(T.equip, a[0], a[1], z, b[0], b[1], z);
+      }
+    }
+    // 4 vertical edges
+    for (const p of [prof[0], prof[1], prof[prof.length - 2], prof[prof.length - 1]]) {
+      seg(T.equip, p[0], p[1], zb, p[0], p[1], zf);
+    }
+  }
+  function pipe(pts, r, opt = {}) {
+    const tn = opt.tone || 'equip', div = 8;
+    const fl = opt.flanges !== false, h = 1.1 * r, th = 0.12;
+    // perpendiculars for axis-aligned legs
+    const perp = (ax) => [ax === 0 ? [0, 1, 0] : [1, 0, 0], ax === 2 ? [0, 1, 0] : [0, 0, 1]];
+    const circ = (p, u, v, rad, uu, vv) => [
+      p[0] + u[0] * rad * uu + v[0] * rad * vv,
+      p[1] + u[1] * rad * uu + v[1] * rad * vv,
+      p[2] + u[2] * rad * uu + v[2] * rad * vv];
+    for (let li = 0; li < pts.length - 1; li++) {
+      const a = pts[li], b = pts[li + 1];
+      const ax = a[0] !== b[0] ? 0 : a[1] !== b[1] ? 1 : 2; // differing coord
+      const d = Math.sign(b[ax] - a[ax]) || 1;
+      const [u, v] = perp(ax);
+      // stops: elbow cube half-size h at interior corners
+      let s = li > 0 ? h : 0;
+      let e = li < pts.length - 2 ? h : 0;
+      // flange inner faces: tube starts/stops there
+      if (fl && li === 0) s += th;
+      if (fl && li === pts.length - 2) e += th;
+      const A = a.slice(), B = b.slice();
+      A[ax] += d * s; B[ax] -= d * e;
+      // tube: 8-sided, outward normals
+      for (let i = 0; i < div; i++) {
+        const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+        const nrm = [u[0] * Math.cos(am) + v[0] * Math.sin(am), u[1] * Math.cos(am) + v[1] * Math.sin(am), u[2] * Math.cos(am) + v[2] * Math.sin(am)];
+        quadN(circ(A, u, v, r, Math.cos(a0), Math.sin(a0)), circ(A, u, v, r, Math.cos(a1), Math.sin(a1)),
+              circ(B, u, v, r, Math.cos(a1), Math.sin(a1)), circ(B, u, v, r, Math.cos(a0), Math.sin(a0)), nrm);
+      }
+      // 4 straight lines at 0/90/180/270
+      for (let k = 0; k < 4; k++) {
+        const c = Math.cos(k * Math.PI / 2), s2 = Math.sin(k * Math.PI / 2);
+        const q = circ(A, u, v, r, c, s2), q2 = circ(B, u, v, r, c, s2);
+        seg(T[tn], q[0], q[1], q[2], q2[0], q2[1], q2[2]);
+      }
+    }
+    // flanges: exactly two, at first and last point of the whole polyline
+    if (fl) {
+      const ends = [[pts[0], pts[1]], [pts[pts.length - 1], pts[pts.length - 2]]];
+      for (const [ep, other] of ends) {
+        const ax = ep[0] !== other[0] ? 0 : ep[1] !== other[1] ? 1 : 2;
+        const din = Math.sign(other[ax] - ep[ax]) || 1; // unit vector into the leg
+        const [u, v] = perp(ax);
+        const F0 = ep.slice(); // inner face
+        const F1 = ep.slice(); F1[ax] += th * din; // outer face exactly on end point
+        const fr = 1.8 * r;
+        for (let i = 0; i < div; i++) {
+          const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+          const nrm = [u[0] * Math.cos(am) + v[0] * Math.sin(am), u[1] * Math.cos(am) + v[1] * Math.sin(am), u[2] * Math.cos(am) + v[2] * Math.sin(am)];
+          quadN(circ(F0, u, v, fr, Math.cos(a0), Math.sin(a0)), circ(F0, u, v, fr, Math.cos(a1), Math.sin(a1)),
+                circ(F1, u, v, fr, Math.cos(a1), Math.sin(a1)), circ(F1, u, v, fr, Math.cos(a0), Math.sin(a0)), nrm);
+        }
+        // two flat end discs, normals ±axis
+        for (let i = 0; i < div; i++) {
+          const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+          const na = [0, 0, 0]; na[ax] = -din; // inner disc normal
+          const p0 = circ(F0, u, v, fr, Math.cos(a0), Math.sin(a0)), p1 = circ(F0, u, v, fr, Math.cos(a1), Math.sin(a1));
+          const pa = circ(F1, u, v, fr, Math.cos(a0), Math.sin(a0)), pb = circ(F1, u, v, fr, Math.cos(a1), Math.sin(a1));
+          tri(F0[0], F0[1], F0[2], p1[0], p1[1], p1[2], p0[0], p0[1], p0[2], na[0], na[1], na[2]);
+          tri(F1[0], F1[1], F1[2], pa[0], pa[1], pa[2], pb[0], pb[1], pb[2], na[0] * -1, na[1] * -1, na[2] * -1);
+        }
+        // rings at each face centre, correct axis
+        const rax = ax === 0 ? 'x' : ax === 1 ? 'y' : 'z';
+        ring(T[tn], F0[0], F0[1], F0[2], fr, div, rax);
+        ring(T[tn], F1[0], F1[1], F1[2], fr, div, rax);
+      }
+    }
+    // elbow cubes at interior corners
+    for (let i = 1; i < pts.length - 1; i++) {
+      const c = pts[i];
+      box(c[0] - h, c[1] - h, c[2] - h, c[0] + h, c[1] + h, c[2] + h, tn, { face: true });
+    }
+  }
+
+  function annulusZ(cx, cy, z, r0, r1, div, nz) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const x0a = cx + r0 * Math.cos(a0), y0a = cy + r0 * Math.sin(a0);
+      const x1a = cx + r0 * Math.cos(a1), y1a = cy + r0 * Math.sin(a1);
+      const x1b = cx + r1 * Math.cos(a1), y1b = cy + r1 * Math.sin(a1);
+      const x0b = cx + r1 * Math.cos(a0), y0b = cy + r1 * Math.sin(a0);
+      if (nz > 0) quadN([x0a, y0a, z], [x1a, y1a, z], [x1b, y1b, z], [x0b, y0b, z], [0, 0, 1]);
+      else quadN([x1a, y1a, z], [x0a, y0a, z], [x0b, y0b, z], [x1b, y1b, z], [0, 0, -1]);
+    }
+  }
+
+  function annulusX(x, cy, cz, r0, r1, div, nx) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const y0a = cy + r0 * Math.cos(a0), z0a = cz + r0 * Math.sin(a0);
+      const y1a = cy + r0 * Math.cos(a1), z1a = cz + r0 * Math.sin(a1);
+      const y1b = cy + r1 * Math.cos(a1), z1b = cz + r1 * Math.sin(a1);
+      const y0b = cy + r1 * Math.cos(a0), z0b = cz + r1 * Math.sin(a0);
+      if (nx > 0) quadN([x, y1a, z1a], [x, y0a, z0a], [x, y0b, z0b], [x, y1b, z1b], [1, 0, 0]);
+      else quadN([x, y0a, z0a], [x, y1a, z1a], [x, y1b, z1b], [x, y0b, z0b], [-1, 0, 0]);
+    }
+  }
+
+  function tubeZ(cx, cy, z0, z1, r, div, inward) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+      const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+      let nx = Math.cos((a0 + a1) / 2), ny = Math.sin((a0 + a1) / 2), nz = 0;
+      if (inward) { nx = -nx; ny = -ny; }
+      quadN([x0, y0, z0], [x1, y1, z0], [x1, y1, z1], [x0, y0, z1], [nx, ny, nz]);
+    }
+  }
+
+  function tubeX(x0, x1, cy, cz, r, div, inward) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const y0 = cy + r * Math.cos(a0), z0 = cz + r * Math.sin(a0);
+      const y1 = cy + r * Math.cos(a1), z1 = cz + r * Math.sin(a1);
+      let nx = 0, ny = Math.cos((a0 + a1) / 2), nz = Math.sin((a0 + a1) / 2);
+      if (inward) { ny = -ny; nz = -nz; }
+      quadN([x0, y1, z1], [x0, y0, z0], [x1, y0, z0], [x1, y1, z1], [nx, ny, nz]);
+    }
+  }
+
+  const FS = { pos: [], col: [] };
+  function shadeTri(a, b, c, ta, tb, tc) {
+    if (ids || !solid) return;
+    const crx = (b[1]-a[1])*(c[2]-a[2]) - (b[2]-a[2])*(c[1]-a[1]);
+    const cry = (b[2]-a[2])*(c[0]-a[0]) - (b[0]-a[0])*(c[2]-a[2]);
+    const crz = (b[0]-a[0])*(c[1]-a[1]) - (b[1]-a[1])*(c[0]-a[0]);
+    if (crx*crx + cry*cry + crz*crz === 0) return;
+    let p = a, q = b, r = c, ua = ta, ub = tb, uc = tc;
+    if (cry < 0) { const t = q; q = r; r = t; const u = ub; ub = uc; uc = u; }
+    FS.pos.push(p[0], p[1], p[2], q[0], q[1], q[2], r[0], r[1], r[2]);
+    FS.col.push(ua, ua, ua, ub, ub, ub, uc, uc, uc);
+  }
+
+  // SHADOW_CORE: centre multiplier of the shadow, applied to the floor colour without tone mapping
+  const SHADOW_CORE = 0.72;
+  function softShadowDisc(cx, y, cz, r0, r1, div) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2;
+      const a1 = ((i + 1) / div) * Math.PI * 2;
+      const p0 = [cx + r0 * Math.cos(a0), y, cz + r0 * Math.sin(a0)];
+      const p1 = [cx + r0 * Math.cos(a1), y, cz + r0 * Math.sin(a1)];
+      shadeTri([cx, y, cz], p0, p1, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+      const q0 = [cx + r1 * Math.cos(a0), y, cz + r1 * Math.sin(a0)];
+      const q1 = [cx + r1 * Math.cos(a1), y, cz + r1 * Math.sin(a1)];
+      shadeTri(p0, q0, q1, SHADOW_CORE, 1.0, 1.0);
+      shadeTri(p0, q1, p1, SHADOW_CORE, 1.0, SHADOW_CORE);
+    }
+  }
+  function softShadowRect(x0, z0, x1, z1, y, pad) {
+    const X0 = x0 - pad, Z0 = z0 - pad, X1 = x1 + pad, Z1 = z1 + pad;
+    const IN = [[x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1]];
+    const OUT = [[X0, y, Z0], [X1, y, Z0], [X1, y, Z1], [X0, y, Z1]];
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4;
+      const ip = IN[i], jp = IN[j], op = OUT[i], oq = OUT[j];
+      shadeTri(ip, op, oq, SHADOW_CORE, 1.0, 1.0);
+      shadeTri(ip, oq, jp, SHADOW_CORE, 1.0, SHADOW_CORE);
+    }
+    const a = IN[0], b = IN[1], c = IN[2], d = IN[3];
+    shadeTri(a, b, c, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+    shadeTri(a, c, d, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+  }
+
   // ================= ground =================
   {
     const E = 640;
@@ -254,7 +547,13 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       box(-2, 19.7, a.z0, a.x1, 20, 32, 'hero', { face: true, room: 'C0' });
       // ---- thin walls (thickness 0.6), shell: no room ----
       // south wall z=40, ground band y=0..4 (above y=20 the closed upper box takes over)
-      box(-2, 0, 39.4, a.x1, 4, 40, 'hero', { face: true });
+      // doorway x=0..4, y=0..3 where the link from the hall arrives (hall-back spec rev 1)
+      box(-2, 0, 39.4, 0, 4, 40, 'hero', { face: true });
+      box(4, 0, 39.4, a.x1, 4, 40, 'hero', { face: true });
+      box(0, 3, 39.4, 4, 4, 40, 'hero', { face: true });
+      seg(T.hero, 0, 0, 40, 0, 3, 40);
+      seg(T.hero, 4, 0, 40, 4, 3, 40);
+      seg(T.hero, 0, 3, 40, 4, 3, 40);
       // stepped back walls (new south face of each notch band)
       // band y=4..8: face at z=38
       box(-2, 4, 37.4, a.x1, 8, 38, 'hero', { face: true });
@@ -308,24 +607,34 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.hero, a.x1, 20, 32, a.x1, 20, 40);
       seg(T.hero, a.x1, 4, 32, a.x1, 20, 32);
       // (z=40 edge is the existing outer corner)
+      // sash frame, set back 0.3 from the outer face
+      box(3.4, 11.72, 35.6, 4.6, 11.8, 35.7, 'equip', { face: true });
+      box(3.4, 9.4, 35.6, 4.6, 9.48, 35.7, 'equip', { face: true });
+      box(3.4, 9.48, 35.6, 3.48, 11.72, 35.7, 'equip', { face: true });
+      box(4.52, 9.48, 35.6, 4.6, 11.72, 35.7, 'equip', { face: true });
+      line('mid', 3.48, 10.6, 35.65, 4.52, 10.6, 35.65);
     } else {
       box(a.x0, 0, a.z0, a.x1, a.h, a.z1, 'hero', { face: true });
     }
     // floor lines (interior rhythm) on non-cut faces
     for (let y = 4; y < a.h - 0.1; y += 4) {
       if (a.name === 'south' && y >= 4 && y < 20) continue; // notch band: no mullion rhythm on cut faces
-      if (a.name !== 'north') seg(T.equip, a.x0, y, a.z1, a.x1, y, a.z1);
+      if (a.name !== 'north' && (a.name !== 'east' || y % 12 === 0)) seg(T.equip, a.x0, y, a.z1, a.x1, y, a.z1); // east wing: every third floor only (v0.3 facade, stage 2)
       if (a.name !== 'south') seg(T.equip, a.x0, y, a.z0, a.x1, y, a.z0);
-      if (a.name !== 'west') seg(T.equip, a.x0, y, a.z0, a.x0, y, a.z1);
+      if (a.name !== 'east') seg(T.equip, a.x0, y, a.z0, a.x0, y, a.z1); // x0 is the inner face only for the east arm (the west arm's x=-40 face is a back face)
       if (a.name !== 'east') seg(T.equip, a.x1, y, a.z0, a.x1, y, a.z1);
     }
     // mullions (sparser on mobile)
     const mstep = mobile ? 5.5 : 3.7;
     if (a.name !== 'north') {
       for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
-        seg(T.equip, x, 0, a.z1, x, a.h, a.z1);
+        seg(T.equip, x, (a.name === 'south' && x > 0 && x < 4) ? 3 : 0, a.z1, x, a.h, a.z1); // south arm: start above the doorway (x 0..4, y 0..3)
     }
-    if (a.name !== 'west') {
+    if (a.name !== 'south') { // z0 is the inner face only for the south arm (back faces get mullions too)
+      for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
+        seg(T.equip, x, 0, a.z0, x, a.h, a.z0);
+    }
+    if (a.name !== 'east') {
       for (let z = a.z0 + mstep; z < a.z1 - 0.1; z += mstep)
         seg(T.equip, a.x0, 0, z, a.x0, a.h, z);
     }
@@ -335,11 +644,186 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
+  // facade articulation by building role (v0.3 facade, stage 2)
+  {
+    // 1. ward horizontal canopies
+    const ysN = mobile ? [8, 16, 24, 32, 40, 48, 56] : [8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60];
+    for (const y of ysN) {
+      box(11, y - 0.15, -39.7, 11.9, y, -11.3, 'mid', { face: true, skip: { nx: true } });
+    }
+    const ysS = mobile ? [24, 32, 40] : [24, 28, 32, 36, 40];
+    for (const y of ysS) {
+      box(-10.7, y - 0.15, 40, 10.7, y, 40.9, 'mid', { face: true, skip: { nz: true } });
+      box(11, y - 0.15, 11.3, 11.9, y, 39.7, 'mid', { face: true, skip: { nx: true } });
+    }
+
+    // 2. east wing vertical fins
+    const step = mobile ? 5.5 : 3.7;
+    for (let x = 11 + step; x < 39.9; x += step) {
+      box(x - 0.1, 4, 11, x + 0.1, 55.8, 11.8, 'mid', { face: true, skip: { nz: true } });
+    }
+    for (let z = -11 + step; z < 10.9; z += step) {
+      if (z > -4.6 && z < 4.6) {
+        box(40, 4, z - 0.1, 40.8, 11.6, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+        box(40, 16.4, z - 0.1, 40.8, 55.8, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+      } else {
+        box(40, 4, z - 0.1, 40.8, 55.8, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+      }
+    }
+    for (const y of [12, 24, 36, 48]) {
+      if (y === 12) {
+        line('mid', 40.01, y, -11, 40.01, y, -4);
+        line('mid', 40.01, y, 4, 40.01, y, 11);
+      } else {
+        line('mid', 40.01, y, -11, 40.01, y, 11);
+      }
+    }
+
+    // 3. top louver bands (four visible faces)
+    const faces = [
+      { wall: 'x', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nx: true } },   // core east face
+      { wall: 'z', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nz: true } },   // core south face
+      { wall: 'z', at: 11, dir: +1, r0: 11, r1: 40, h: 60, skip: { nz: true } },    // east wing south face
+      { wall: 'x', at: 40, dir: +1, r0: -11, r1: 11, h: 60, skip: { nx: true } },   // east wing east face
+    ];
+    const ybs = [0.6, 1.2, 1.8, 2.4, 3.0, 3.6];
+    const ybsM = [1.2, 2.4, 3.6];
+    for (const f of faces) {
+      const yb = f.h - 4, yt = f.h;
+      if (f.wall === 'x') {
+        box(f.at, yb - 0.2, f.r0, f.at + 0.5, yb, f.r1, 'mid', { face: true, skip: f.skip });
+        const ys = mobile ? ybsM : ybs;
+        for (const dy of ys) {
+          line('mid', f.at + 0.01, yb + dy, f.r0, f.at + 0.01, yb + dy, f.r1);
+        }
+      } else {
+        box(f.r0, yb - 0.2, f.at, f.r1, yb, f.at + 0.5, 'mid', { face: true, skip: f.skip });
+        const ys = mobile ? ybsM : ybs;
+        for (const dy of ys) {
+          line('mid', f.r0, yb + dy, f.at + 0.01, f.r1, yb + dy, f.at + 0.01);
+        }
+      }
+    }
+
+    // 4. deep top canopies
+    box(11, 63.8, -39.7, 12.2, 64, -11.3, 'mid', { face: true, skip: { nx: true } });
+    box(-10.7, 43.8, 40, 10.7, 44, 41.2, 'mid', { face: true, skip: { nz: true } });
+    box(11, 43.8, 11.3, 12.2, 44, 39.7, 'mid', { face: true, skip: { nx: true } });
+
+    // 5. ground-level canopies and pillars
+    box(11, 3.8, -39.7, 12.8, 4, -11.3, 'mid', { face: true, skip: { nx: true } });
+    for (const z of [-36, -28.6, -21.2, -13.8]) {
+      box(12.35, 0, z - 0.15, 12.65, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
+    box(11.3, 3.8, 11, 39.7, 4, 12.8, 'mid', { face: true, skip: { nz: true } });
+    for (const x of [14.7, 22.1, 29.5, 36.9]) {
+      box(x - 0.15, 0, 12.35, x + 0.15, 3.8, 12.65, 'mid', { face: true, skip: { py: true } });
+    }
+    box(-40, 3.8, 11, -11.3, 4, 12.8, 'mid', { face: true, skip: { nz: true } });
+    for (const x of [-36.4, -29, -21.6, -14.2]) {
+      box(x - 0.15, 0, 12.35, x + 0.15, 3.8, 12.65, 'mid', { face: true, skip: { py: true } });
+    }
+
+    // N1-N4: faces opposite the entrance (north / west), mirroring the south and east treatment
+    // N1 west face of north wing
+    for (const y of ysN) {
+      box(-11.9, y - 0.15, -39.7, -11, y, -11.3, 'mid', { face: true, skip: { px: true } });
+    }
+    box(-12.2, 63.8, -39.7, -11, 64, -11.3, 'mid', { face: true, skip: { px: true } });
+    box(-12.8, 3.8, -39.7, -11, 4, -11.3, 'mid', { face: true, skip: { px: true } });
+    for (const z of [-36, -28.6, -21.2, -13.8]) {
+      box(-12.65, 0, z - 0.15, -12.35, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
+    // N2 north face of north wing
+    for (const y of ysN) {
+      box(-10.7, y - 0.15, -40.9, 10.7, y, -40, 'mid', { face: true, skip: { pz: true } });
+    }
+    box(-10.7, 63.8, -41.2, 10.7, 64, -40, 'mid', { face: true, skip: { pz: true } });
+    // N3 north face of west tower
+    box(-40, 4, -11.6, -36.4, 84, -11, 'hero', { face: true, skip: { pz: true } });
+    for (let y = 8; y <= 80; y += 4) {
+      line('mid', -40, y, -11.61, -36.4, y, -11.61);
+    }
+    line('mid', -38.2, 4, -11.61, -38.2, 84, -11.61);
+    box(-40, 3.8, -12.8, -36.4, 4, -11, 'mid', { face: true, skip: { pz: true } });
+    box(-33.4, 3.8, -12.8, -13.1, 4, -11, 'mid', { face: true, skip: { pz: true } });
+    for (const x of [-38.2, -29, -21.6, -14.2]) {
+      box(x - 0.15, 0, -12.65, x + 0.15, 3.8, -12.35, 'mid', { face: true, skip: { py: true } });
+    }
+    box(-33.4, 83.8, -11.5, -11, 84, -11, 'mid', { face: true, skip: { pz: true } });
+    const cstep = mobile ? 1.8 : 0.9;
+    for (let k = 1; ; k++) {
+      const x = -33.4 + cstep * k;
+      if (!(x < -11.05)) break;
+      line('mid', x, 84, -11.01, x, 88, -11.01);
+    }
+    // N4 west face of west tower
+    box(-40.5, 83.8, -11, -40, 84, 11, 'mid', { face: true, skip: { px: true } });
+    for (let k = 1; ; k++) {
+      const z = -11 + cstep * k;
+      if (!(z < 10.95)) break;
+      line('mid', -40.01, 84, z, -40.01, 88, z);
+    }
+    box(-41.8, 3.8, -5.5, -40, 4, 10.7, 'mid', { face: true, skip: { px: true } });
+    for (const z of [-4.5, 2.9, 10]) {
+      box(-41.65, 0, z - 0.15, -41.35, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
+  }
+
+  // heliport tower facade (v0.3 facade, stage 2)
+  {
+    // 角の張り出し
+    box(-40, 4, 11, -36.4, 84, 11.6, 'hero', { face: true, skip: { nz: true } });
+    // 張り出しの正面 (z=11.61) の水平線
+    for (let y = 8; y <= 80; y += 4) {
+      line('mid', -40, y, 11.61, -36.4, y, 11.61);
+    }
+    // 張り出しの正面 (z=11.61) の縦線
+    line('mid', -38.2, 4, 11.61, -38.2, 84, 11.61);
+
+    // 縦の格子の冠 (y 84..88)
+    const step = mobile ? 1.8 : 0.9;
+    // 南面: 水切り
+    box(-36.4, 83.8, 11, -11, 84, 11.5, 'mid', { face: true, skip: { nz: true } });
+    // 南面: 縦線
+    for (let k = 1; ; k++) {
+      const x = -36.4 + step * k;
+      if (!(x < -11.05)) break;
+      line('mid', x, 84, 11.01, x, 88, 11.01);
+    }
+    // 東面: 水切り
+    box(-11, 83.8, -11, -10.5, 84, 11, 'mid', { face: true, skip: { nx: true } });
+    // 東面: 縦線
+    for (let k = 1; ; k++) {
+      const z = -11 + step * k;
+      if (!(z < 10.95)) break;
+      line('mid', -10.99, 84, z, -10.99, 88, z);
+    }
+  }
+
   // ---- central core (x=-11..11, z=-11..11, y=0..68) ----
   {
     box(-HW, 0, -HW, HW, 68, HW, 'hero', { face: true });
     // vertical circulation shaft x=4..10, z=4..10 as line box
     box(4, 0, 4, 10, 68, 10, 'hero');
+  }
+
+  // rooftop coping (W3), tone 'mid', skip ny
+  {
+    box(-11, 68, -40, 11, 68.6, -39.7, 'mid', { face: true, skip: { ny: true } });
+    box(10.7, 68, -39.7, 11, 68.6, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 68, 10.7, 11, 68.6, 11, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 68, -39.7, -10.7, 68.6, -11, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, -11, -11, 88.3, -10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, 10.7, -11, 88.3, 11, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, -10.7, -39.7, 88.3, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11.3, 88, -10.7, -11, 88.3, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(11, 60, -11, 40, 60.6, -10.7, 'mid', { face: true, skip: { ny: true } });
+    box(11, 60, 10.7, 40, 60.6, 11, 'mid', { face: true, skip: { ny: true } });
+    box(39.7, 60, -10.7, 40, 60.6, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 48, 11, -10.7, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
+    box(10.7, 48, 11, 11, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
+    box(-10.7, 48, 39.7, 10.7, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
   }
 
   // ---- C0 cutaway interior: beds, rails, IV, nurse station ----
@@ -355,16 +839,16 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       const cz1 = Math.min(29, bz - 3), cz0 = cz1 - 3;
       for (const bx of bedXs) {
         // bed: 1.1 wide (x) x 0.5 high x 2.6 long (z), bottom at fy+0.4
-        box(bx - 0.55, fy + 0.4, bz - 1.3, bx + 0.55, fy + 0.9, bz + 1.3, 'equip', { room: 'C0' });
+        box(bx - 0.55, fy + 0.4, bz - 1.3, bx + 0.55, fy + 0.9, bz + 1.3, 'equip', { face: true, room: 'C0' });
         // legs (4 short lines)
         for (const [lx, lz] of [[-0.45, -1.2], [0.45, -1.2], [-0.45, 1.2], [0.45, 1.2]]) {
           seg(T.equip, bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
           idseg('C0', bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
         }
         // pillow at head end (+z)
-        box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { room: 'C0' });
-        // head board: 0.15 x 0.6 x 1.15 at head end
-        box(bx - 0.075, fy + 0.4, bz + 1.3, bx + 0.075, fy + 1.0, bz + 1.15, 'equip', { room: 'C0' });
+        box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { face: true, room: 'C0' });
+        // head board: 1.15 wide x 0.6 high x 0.08 thick, against the head end, 0.02 clear of the wall
+        box(bx - 0.575, fy + 0.4, bz + 1.3, bx + 0.575, fy + 1.0, bz + 1.38, 'equip', { face: true, room: 'C0' });
         // IV stand: pole height 2.1 + top cross 2 lines + 2 legs
         const ix = bx - 0.9;
         seg(T.equip, ix, fy, iz, ix, fy + 2.1, iz);
@@ -402,20 +886,219 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   // ---- rooftop equipment ----
   {
-    // cooling towers on north arm roof (y=68)
-    cyl(-5, 68, -25, 3, 5, 'equip');
-    cyl(4, 68, -25, 3, 5, 'equip');
-    box(-8, 68, -18, 8, 69.5, -14, 'equip');
-    // O2 tanks (horizontal cylinders) on east arm roof (y=60)
+    const P = Math.PI, C = Math.cos, S = Math.sin;
+
+    // A. cooling tower factory
+    function tower(cx, cz, ladderAngle) {
+      // 1. sleepers
+      box(cx-3.6, 68, cz-2.0, cx+3.6, 68.4, cz-1.2, 'equip', {face:true});
+      box(cx-3.6, 68, cz+1.2, cx+3.6, 68.4, cz+2.0, 'equip', {face:true});
+      // 2. base beams
+      box(cx-2.2, 68.4, cz-2.6, cx-1.6, 68.8, cz+2.6, 'equip', {face:true});
+      box(cx+1.6, 68.4, cz-2.6, cx+2.2, 68.8, cz+2.6, 'equip', {face:true});
+      // 3. cold-water basin
+      solidCylY(cx, 68.8, 69.8, cz, 3.2, 32, {seams: 0});
+      // 4. lower casing + louvers + mullions
+      solidCylY(cx, 69.8, 71.6, cz, 3.0, 32, {bottom:false, top:false});
+      for (const y of [70.1, 70.4, 70.7, 71.0, 71.3]) ring(T.mid, cx, y, cz, 3.0, 32, 'y');
+      for (let i = 0; i < 12; i++) {
+        const a = i/12*2*P, x = cx+3.0*C(a), z = cz+3.0*S(a);
+        line('mid', x, 69.8, z, x, 71.6, z);
+      }
+      // 5. joint band
+      solidCylY(cx, 71.55, 71.7, cz, 3.08, 32, {});
+      // 6. upper casing
+      solidCylY(cx, 71.7, 73.4, cz, 3.0, 32, {bottom:false, top:false, seams: 8});
+      // 7. fan deck
+      annulusY(cx, 73.4, cz, 1.9, 3.0, 32);
+      // 8. drift eliminator
+      {
+        const div = 24;
+        for (let i = 0; i < div; i++) {
+          const a0 = i/div*2*P, a1 = (i+1)/div*2*P;
+          tri(cx, 73.0, cz, cx+1.9*C(a0), 73.0, cz+1.9*S(a0), cx+1.9*C(a1), 73.0, cz+1.9*S(a1), 0, 1, 0);
+        }
+        // 7 slats along x clipped to r=1.9
+        for (let k = 0; k < 7; k++) {
+          const z = cz - 1.5 + k*0.5, h = Math.sqrt(1.9*1.9 - (z-cz)*(z-cz));
+          line('mid', cx-h, 73.0, z, cx+h, 73.0, z);
+        }
+      }
+      // 9. fan stack (open, seen from above)
+      solidCylY(cx, 73.0, 74.4, cz, 1.9, 32, {top:false, bottom:false, inner:true});
+      // 10. motor support beam
+      {
+        const x0 = cx - 1.894, x1 = cx + 1.894;
+        const y0 = 73.2, y1 = 73.45;
+        const z0 = cz - 0.15, z1 = cz + 0.15;
+        quadN([x0, y0, z0], [x0, y1, z0], [x1, y1, z0], [x1, y0, z0], [0, 0, -1]);
+        quadN([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], [0, 0, 1]);
+        quadN([x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1], [0, -1, 0]);
+        quadN([x0, y1, z0], [x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [0, 1, 0]);
+        quadN([x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], [-1, 0, 0]);
+        quadN([x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1], [1, 0, 0]);
+        line('equip', cx - 1.88, 73.2, cz - 0.15, cx + 1.88, 73.2, cz - 0.15);
+        line('equip', cx - 1.88, 73.2, cz + 0.15, cx + 1.88, 73.2, cz + 0.15);
+        line('equip', cx - 1.88, 73.45, cz - 0.15, cx + 1.88, 73.45, cz - 0.15);
+        line('equip', cx - 1.88, 73.45, cz + 0.15, cx + 1.88, 73.45, cz + 0.15);
+      }
+      // 11. motor + hub
+      solidCylY(cx, 73.45, 73.95, cz, 0.45, 16, {});
+      solidCylY(cx, 73.95, 74.15, cz, 0.3, 16, {});
+      // 12. fan blades
+      for (const base of [45, 135, 225, 315]) {
+        const a = base/180*P, ca = C(a), sa = S(a);
+        // quad: root (r 0.3, chord 0.5) to tip (r 1.75, chord 0.35), tangential width
+        const w0 = 0.25, w1 = 0.175;
+        const p = (r, w) => [cx + r*ca - w*sa, 74.05, cz + r*sa + w*ca];
+        const q = [p(0.3, w0), p(0.3, -w0), p(1.75, -w1), p(1.75, w1)];
+        quadN(q[0], q[1], q[2], q[3], [0,1,0]);
+        quadN(q[0], q[3], q[2], q[1], [0,-1,0]);
+        for (let i = 0; i < 4; i++) {
+          const a2 = q[i], b2 = q[(i+1)%4];
+          line('equip', a2[0], a2[1], a2[2], b2[0], b2[1], b2[2]);
+        }
+      }
+      // 13. fan guard
+      ring(T.mid, cx, 74.4, cz, 1.0, 32, 'y');
+      ring(T.mid, cx, 74.4, cz, 0.35, 16, 'y');
+      for (let i = 0; i < 12; i++) {
+        const a = i/12*2*P;
+        line('mid', cx+0.35*C(a), 74.4, cz+0.35*S(a), cx+1.9*C(a), 74.4, cz+1.9*S(a));
+      }
+      // 14. ladder
+      {
+        const la = ladderAngle, lx = C(la), lz = S(la);
+        const px = -lz, pz = lx; // tangent
+        for (const s of [-0.25, 0.25]) {
+          const rx = cx + lx*3.35 + px*s, rz = cz + lz*3.35 + pz*s;
+          line('equip', rx, 68, rz, rx, 74.2, rz); // rail vertical
+          // top bend inward to r=2.6 then drop to deck
+          const tx = cx + lx*2.6 + px*s, tz = cz + lz*2.6 + pz*s;
+          line('equip', rx, 74.2, rz, tx, 74.2, tz);
+          line('equip', tx, 74.2, tz, tx, 73.4, tz);
+          // standoff brackets (start on casing surface, r=3.0)
+          for (const by of [70.0, 72.0, 73.4]) {
+            const h = Math.sqrt(9 - s*s);
+            line('equip', cx + lx*h + px*s, by, cz + lz*h + pz*s, rx, by, rz);
+          }
+        }
+        for (let y = 68.3; y <= 73.9 + 1e-6; y += 0.3) {
+          const a1 = cx + lx*3.35 + px*0.25, z1 = cz + lz*3.35 + pz*0.25;
+          const a2 = cx + lx*3.35 - px*0.25, z2 = cz + lz*3.35 - pz*0.25;
+          line('mid', a1, y, z1, a2, y, z2);
+        }
+      }
+      // 15. pipes
+      pipe([[cx+1.2, 72.8, cz + Math.sqrt(9 - 1.44)], [cx+1.2, 72.8, -16], [cx+1.2, 69.5, -16]], 0.25);
+      pipe([[cx-1.2, 69.12, cz + Math.sqrt(3.2*3.2 - 1.44)], [cx-1.2, 69.12, -18]], 0.19);
+      // pipe stand under return pipe
+      box(cx+1.1, 68, -19.6, cx+1.3, 72.55, -19.4, 'equip', {face:true});
+      box(cx+0.8, 72.45, -19.6, cx+1.6, 72.55, -19.4, 'equip', {face:true});
+    }
+    tower(-5, -25, P);
+    tower(4, -25, 0);
+
+    // B. pump skid
+    box(-8.2, 68, -18.2, 8.2, 68.25, -13.8, 'equip', {face:true});
+    box(-8, 68.25, -18, 8, 69.5, -14, 'equip', {face:true});
+    // panel seams (per-face obstacle lists)
+    // +z face (z=-14): hood pipes at x=-2, 2 (flange r 0.4)
+    // -z face (z=-18): supply landings at x=-6.2, 2.8
+    for (const sx of [-6, -4, -2, 0, 2, 4, 6]) {
+      if (Math.abs(sx - (-2)) < 0.5 || Math.abs(sx - 2) < 0.5) continue;
+      line('mid', sx, 68.25, -14, sx, 69.5, -14);
+      if (Math.abs(sx - (-6.2)) < 0.5 || Math.abs(sx - 2.8) < 0.5) continue;
+      line('mid', sx, 68.25, -18, sx, 69.5, -18);
+    }
+    // louver vents on +z face only
+    for (const gx of [-5.5, 0, 4.5, 7]) {
+      for (const y of [68.6, 68.8, 69.0]) {
+        line('mid', gx-0.6, y, -13.99, gx+0.6, y, -13.99);
+        line('mid', gx-0.6, y+0.08, -13.99, gx+0.6, y+0.08, -13.99);
+        line('mid', gx-0.6, y, -13.99, gx-0.6, y+0.08, -13.99);
+        line('mid', gx+0.6, y, -13.99, gx+0.6, y+0.08, -13.99);
+      }
+    }
+    // name plate
+    {
+      const x0 = -7.6, x1 = -6.6, y0 = 69.1, y1 = 69.35, z = -13.99;
+      line('mid', x0, y0, z, x1, y0, z); line('mid', x0, y1, z, x1, y1, z);
+      line('mid', x0, y0, z, x0, y1, z); line('mid', x1, y0, z, x1, y1, z);
+      for (const y of [69.16, 69.22, 69.28]) line('mid', x0+0.1, y, z, x1-0.1, y, z);
+    }
+    // roof penetrations
+    box(-2.8, 68, -12.8, -1.2, 69.4, -11.2, 'equip', {face:true});
+    box(-3.0, 69.4, -13.0, -1.0, 69.55, -11.0, 'equip', {face:true});
+    box(1.2, 68, -12.8, 2.8, 69.4, -11.2, 'equip', {face:true});
+    box(1.0, 69.4, -13.0, 3.0, 69.55, -11.0, 'equip', {face:true});
+    // skid-to-hood pipes
+    pipe([[-2, 69.0, -14], [-2, 69.0, -12.8]], 0.22);
+    pipe([[2, 69.0, -14], [2, 69.0, -12.8]], 0.22);
+
+    // C. oxygen tanks
     const tanks = mobile ? 2 : 3;
+    let xLast = 0;
     for (let k = 0; k < tanks; k++) {
-      const x = 18 + k * 8;
-      ring(T.equip, x, 61.6, -5, 1.8, 20, 'z');
-      ring(T.equip, x, 61.6, -1, 1.8, 20, 'z');
-      seg(T.equip, x, 59.8, -5, x, 59.8, -1);
-      seg(T.equip, x, 63.4, -5, x, 63.4, -1);
-      seg(T.equip, x, 61.6, -6.8, x, 61.6, -5);
-      seg(T.equip, x, 61.6, -1, x, 61.6, 0.8);
+      const x = 18 + k*8; xLast = x;
+      solidCylZ(x, 62.3, -5, -1, 1.8, 24, {top:false, bottom:false, tone: null});
+      line('equip', x + 1.8, 62.3, -5, x + 1.8, 62.3, -1);
+      line('equip', x - 1.8, 62.3, -5, x - 1.8, 62.3, -1);
+      domeZ(x, 62.3, -5, 1.8, 0.6, -1, 24);
+      domeZ(x, 62.3, -1, 1.8, 0.6, +1, 24);
+      ring(T.mid, x, 62.3, -3, 1.8, 24, 'z');
+      // saddles
+      for (const zc of [-4.3, -1.7]) {
+        box(x-1.5, 60, zc-0.3, x+1.5, 60.15, zc+0.3, 'equip', {face:true});
+        saddleZ(x, zc, 60.15, 62.3, 1.8, 1.3, 0.3);
+        // hold-down strap: arc over the top, r=1.83, a = -0.775 .. PI+0.775
+        {
+          const aS = -0.775, aE = P + 0.775, steps = 20;
+          let px0 = null, py0 = null;
+          for (let i = 0; i <= steps; i++) {
+            const a = aS + (aE - aS)*i/steps;
+            const sx = x + 1.83*C(a), sy = 62.3 + 1.83*S(a);
+            if (i > 0) line('equip', px0, py0, zc, sx, sy, zc);
+            px0 = sx; py0 = sy;
+          }
+        }
+      }
+      // outlet nozzle + tee fitting + side valve handwheel
+      pipe([[x, 62.3, -5.6], [x, 62.3, -6.6], [x, 61.12, -6.6]], 0.15, {flanges: false});
+      box(x-0.22, 60.68, -6.82, x+0.22, 61.12, -6.38, 'equip', {face:true});
+      box(x-0.22, 61.45, -6.82, x+0.22, 61.85, -6.38, 'equip', {face:true}); // バルブ本体 (ハンドルの軸はこの +x 面から出る)
+      line('equip', x+0.22, 61.65, -6.6, x+0.5, 61.65, -6.6);
+      ring(T.equip, x+0.5, 61.65, -6.6, 0.22, 16, 'x');
+      line('mid', x+0.5, 61.43, -6.6, x+0.5, 61.87, -6.6);
+      line('mid', x+0.5, 61.65, -6.82, x+0.5, 61.65, -6.38);
+      // relief valve
+      solidCylY(x, 64.08, 64.6, -1.6, 0.12, 12, {});
+      box(x-0.18, 64.6, -1.78, x+0.18, 64.75, -1.42, 'equip', {face:true});
+    }
+    // header
+    pipe([[xLast + 1.2, 60.9, -6.6], [11, 60.9, -6.6]], 0.2);
+    // header stands
+    for (const xs of [14, 22, 30]) {
+      if (xs >= xLast + 1.2) continue;
+      box(xs-0.3, 60, -6.9, xs+0.3, 60.06, -6.3, 'equip', {face:true});
+      box(xs-0.1, 60, -6.7, xs+0.1, 60.7, -6.5, 'equip', {face:true});
+    }
+    // core rooftop penthouse, ducts, access walkways (W4) and junction bands (S3)
+    {
+      box(4, 68, 4, 10, 70.4, 10, 'hero', { face: true, skip: { ny: true } });
+      line('mid', 3.99, 68, 6.4, 3.99, 68, 7.6);
+      line('mid', 3.99, 70.0, 6.4, 3.99, 70.0, 7.6);
+      line('mid', 3.99, 68, 6.4, 3.99, 70.0, 6.4);
+      line('mid', 3.99, 68, 7.6, 3.99, 70.0, 7.6);
+      box(1.4, 68.5, -11, 2.6, 69.3, 5.6, 'equip', { face: true, skip: { nz: true } });
+      box(2.6, 68.5, 4.4, 4, 69.3, 5.6, 'equip', { face: true, skip: { px: true } });
+      for (const z of [-8, -4, 0]) {
+        box(1.8, 68, z - 0.1, 2.2, 68.5, z + 0.1, 'equip', { face: true, skip: { ny: true, py: true } });
+      }
+      box(1.25, 68.35, -11, 2.75, 69.45, -10.75, 'equip', { face: true, skip: { nz: true } });
+      box(3.75, 68.35, 4.25, 4, 69.45, 5.75, 'equip', { face: true, skip: { px: true } });
+      box(-7.2, 68, -13.6, -5.8, 68.1, 5.8, 'mid', { face: true, skip: { ny: true } });
+      box(-7.2, 68, 5.8, 4, 68.1, 7.2, 'mid', { face: true, skip: { ny: true, px: true } });
     }
   }
 
@@ -423,38 +1106,38 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   {
     // --- shell: walls / floor / roof built separately, south-east corner notched in L ---
     // floor
-    box(50, 0, -11, 94, 0.2, 11, 'hero', { face: true, room: 'C1' });
+    box(50, 0, -11, 94, 0.2, 11, 'mid', { face: true, room: 'C1' });
     // north wall
-    box(50, 0, -11, 94, 12, -10.4, 'hero', { face: true });
+    box(50, 0, -11, 94, 12, -10.4, 'mid', { face: true });
     // west wall (x=50) with entrance z=-2..2, y=0..4 (real hole: split by opening)
-    box(50, 0, -11, 50.6, 12, -2, 'hero', { face: true });
-    box(50, 0, 2, 50.6, 12, 11, 'hero', { face: true });
-    box(50, 4, -2, 50.6, 12, 2, 'hero', { face: true });
+    box(50, 0, -11, 50.6, 12, -2, 'mid', { face: true });
+    box(50, 0, 2, 50.6, 12, 11, 'mid', { face: true });
+    box(50, 4, -2, 50.6, 12, 2, 'mid', { face: true });
     // south wall (z=11): L notch x=82..93.4, y=1.2..10
-    box(50, 0, 10.4, 82, 12, 11, 'hero', { face: true });
-    box(82, 0, 10.4, 93.4, 1.2, 11, 'hero', { face: true }); // 腰壁
-    box(82, 10, 10.4, 93.4, 12, 11, 'hero', { face: true }); // 上の梁
+    box(50, 0, 10.4, 82, 12, 11, 'mid', { face: true });
+    box(82, 0, 10.4, 93.4, 1.2, 11, 'mid', { face: true }); // 腰壁
+    box(82, 10, 10.4, 93.4, 12, 11, 'mid', { face: true }); // 上の梁
     // east wall (x=94): L notch z=1..10.4, y=1.2..10
-    box(93.4, 0, 1, 94, 1.2, 10.4, 'hero', { face: true });
-    box(93.4, 10, 1, 94, 12, 10.4, 'hero', { face: true });
+    box(93.4, 0, 1, 94, 1.2, 10.4, 'mid', { face: true });
+    box(93.4, 10, 1, 94, 12, 10.4, 'mid', { face: true });
     // corner column 0.6 square (x=93.4..94, z=10.4..11)
-    box(93.4, 0, 10.4, 94, 12, 11, 'hero', { face: true });
+    box(93.4, 0, 10.4, 94, 12, 11, 'mid', { face: true });
     // east wall penetration frame (z=-5.6..-4.4, y=2.2..3.4) — 線で枠だけ
     seg(T.equip, 94, 2.2, -5.6, 94, 2.2, -4.4);
     seg(T.equip, 94, 3.4, -5.6, 94, 3.4, -4.4);
     seg(T.equip, 94, 2.2, -5.6, 94, 3.4, -5.6);
     seg(T.equip, 94, 2.2, -4.4, 94, 3.4, -4.4);
     // east wall split into a real penetration hole (z=-5.6..-4.4, y=2.2..3.4)
-    box(93.4, 0, -11, 94, 12, -5.6, 'hero', { face: true });
-    box(93.4, 0, -5.6, 94, 2.2, -4.4, 'hero', { face: true });
-    box(93.4, 3.4, -5.6, 94, 12, -4.4, 'hero', { face: true });
-    box(93.4, 0, -4.4, 94, 12, 1, 'hero', { face: true });
+    box(93.4, 0, -11, 94, 12, -5.6, 'mid', { face: true });
+    box(93.4, 0, -5.6, 94, 2.2, -4.4, 'mid', { face: true });
+    box(93.4, 3.4, -5.6, 94, 12, -4.4, 'mid', { face: true });
+    box(93.4, 0, -4.4, 94, 12, 1, 'mid', { face: true });
     // lift shaft x=50..54, z=5..9, y=0..16 (joins east skybridge y=12..16)
-    box(50, 0, 5, 54, 16, 9, 'hero', { face: true });
+    box(50, 0, 5, 54, 16, 9, 'mid', { face: true });
 
     // --- CT: short donut, axis z, center (60, 5.5, 0), z=-1.1..1.1 ---
     const ctRout = 4, ctRin = 1.5;
-    const ctDivO = mobile ? 24 : 32, ctDivI = mobile ? 16 : 24;
+    const ctDivO = mobile ? 24 : 32, ctDivI = ctDivO;
     ring(T.hero, 60, 5.5, -1.1, ctRout, ctDivO, 'z');
     ring(T.equip, 60, 5.5, -1.1, ctRin, ctDivI, 'z');
     ring(T.hero, 60, 5.5, 1.1, ctRout, ctDivO, 'z');
@@ -466,42 +1149,45 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.equip, 60 + co * ctRin, 5.5 + sn * ctRin, -1.1, 60 + co * ctRin, 5.5 + sn * ctRin, 1.1);
     }
     // CT base
-    box(56, 0, -1, 64, 1.3, 1, 'equip', { face: true, room: 'C1' });
-    // CT table (passes through the hole)
-    box(59, 3.6, -5, 61, 4.1, 3, 'equip', { face: true, room: 'C1' });
-    box(59.4, 0, -5, 60.6, 3.4, -3, 'equip', { face: true, room: 'C1' });
+    box(56, 0, -1, 64, 1.5, 1, 'equip', { face: true, room: 'C1' });
+    // CT table (runs inside the bore)
+    box(59, 4.6, -5, 61, 5.0, 3, 'equip', { face: true, room: 'C1' });
+    box(59.4, 0, -5, 60.6, 4.6, -3, 'equip', { face: true, room: 'C1' });
+    faceRoom = 'C1';
+    tubeZ(60, 5.5, -1.1, 1.1, ctRout, ctDivO, false);
+    if (solid) {
+      tubeZ(60, 5.5, -1.1, 1.1, ctRin, ctDivI, true);
+      annulusZ(60, 5.5, -1.1, ctRin, ctRout, ctDivO, -1);
+      annulusZ(60, 5.5, 1.1, ctRin, ctRout, ctDivO, 1);
+    }
+    faceRoom = null;
 
-    // --- MRI: long closed tube, axis x, x=76.8..87.2, closed at x=87.2 end ---
+    // --- MRI: long tube, axis x, x=76.8..87.2, open at both ends ---
     const mrX0 = 76.8, mrX1 = 87.2, mrY = 5.5, mrZ = 0;
     const mrRout = 4, mrRin = 1.4, mrDivO = mobile ? 24 : 32;
     ring(T.hero, mrX0, mrY, mrZ, mrRout, mrDivO, 'x');
     ring(T.equip, mrX0, mrY, mrZ, mrRin, mrDivO, 'x');
     ring(T.hero, mrX1, mrY, mrZ, mrRout, mrDivO, 'x');
+    ring(T.equip, mrX1, mrY, mrZ, mrRin, mrDivO, 'x');
     for (let s = 0; s < 8; s++) {
       const t = (s / 8) * Math.PI * 2;
       const co = Math.cos(t), sn = Math.sin(t);
       seg(T.hero, mrX0, mrY + co * mrRout, mrZ + sn * mrRout, mrX1, mrY + co * mrRout, mrZ + sn * mrRout);
     }
-    // end disc at x=87.2 (solid: filled face; wire: outer ring only, already drawn)
+    ring(T.mid, 82, mrY, mrZ, mrRout, mrDivO, 'x');
+    faceRoom = 'C1';
+    tubeX(mrX0, mrX1, mrY, mrZ, mrRout, mrDivO, false);
     if (solid) {
-      const divD = 16;
-      for (let s = 0; s < divD; s++) {
-        const t0 = (s / divD) * Math.PI * 2, t1 = ((s + 1) / divD) * Math.PI * 2;
-        quad(
-          mrX1, mrY + Math.cos(t0) * mrRout, mrZ + Math.sin(t0) * mrRout,
-          mrX1, mrY + Math.cos(t1) * mrRout, mrZ + Math.sin(t1) * mrRout,
-          mrX1, mrY, mrZ,
-          mrX1, mrY, mrZ,
-          1, 0, 0, 'C1'
-        );
-      }
+      tubeX(mrX0, mrX1, mrY, mrZ, mrRin, mrDivO, true);
+      annulusX(mrX0, mrY, mrZ, mrRin, mrRout, mrDivO, -1);
+      annulusX(mrX1, mrY, mrZ, mrRin, mrRout, mrDivO, 1);
     }
+    faceRoom = null;
     // MRI base
-    box(78, 0, -1, 86, 1.3, 1, 'equip', { face: true, room: 'C1' });
-    // MRI table (enters 4.8 from x=76.8 end, bore closed beyond)
-    box(72, 3.6, -1, 81.6, 4.1, 1, 'equip', { face: true, room: 'C1' });
-    box(72.4, 0, -0.6, 73.6, 3.4, 0.6, 'equip', { face: true, room: 'C1' });
-
+    box(78, 0, -1, 86, 1.5, 1, 'equip', { face: true, room: 'C1' });
+    // MRI table (runs inside the bore)
+    box(72, 4.6, -1, 81.6, 5.0, 1, 'equip', { face: true, room: 'C1' });
+    box(72.4, 0, -0.6, 73.6, 4.6, 0.6, 'equip', { face: true, room: 'C1' });
     // --- operator consoles + glass line rects ---
     for (const cx of [62, 84]) {
       box(cx - 1.5, 0, -8.7, cx + 1.5, 1.2, -7.3, 'equip', { face: true, room: 'C1' });
@@ -524,25 +1210,28 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   {
     // --- shell: floor / walls / roof separately, south 30% of roof kept as frame ---
     // floor
-    box(50, 0, 22, 78, 0.1, 46, 'hero', { face: true, room: 'C2' });
+    box(50, 0, 22, 78, 0.1, 46, 'mid', { face: true, room: 'C2' });
     // roof: south side only (z=38.8..46); north edge reads as foreground frame
-    box(50, 8.8, 38.8, 78, 9, 46, 'hero', { face: true });
+    box(50, 8.8, 38.8, 78, 9, 46, 'mid', { face: true });
     // north wall (z=22) full height
-    box(50, 0, 22, 78, 9, 22.6, 'hero', { face: true });
+    box(50, 0, 22, 78, 9, 22.6, 'mid', { face: true });
     // east wall (x=78) full height
-    box(77.4, 0, 22, 78, 9, 46, 'hero', { face: true });
+    box(77.4, 0, 22, 78, 9, 46, 'mid', { face: true });
     // west wall (x=50) full height with entrance z=32..36, y=0..4 (real hole: split by opening)
-    box(50, 0, 22, 50.6, 9, 32, 'hero', { face: true });
-    box(50, 0, 36, 50.6, 9, 46, 'hero', { face: true });
-    box(50, 4, 32, 50.6, 9, 36, 'hero', { face: true });
+    box(50, 0, 22, 50.6, 9, 32, 'mid', { face: true });
+    box(50, 0, 36, 50.6, 9, 46, 'mid', { face: true });
+    box(50, 4, 32, 50.6, 9, 36, 'mid', { face: true });
     // south wall (z=46): spandrel to y=1.2
-    box(50, 0, 45.4, 78, 1.2, 46, 'hero', { face: true });
+    box(50, 0, 45.4, 78, 1.2, 46, 'mid', { face: true });
 
     // --- surgical table (long in z, head at +z) ---
     box(63.1, 1.0, 31.6, 64.9, 1.5, 36.4, 'equip', { face: true, room: 'C2' });
     box(63.5, 0.2, 33.3, 64.5, 1.0, 34.7, 'equip', { face: true, room: 'C2' });
 
-    // --- shadowless lamps: main (r 2.2/1.2) + 3 child lamps (r 0.8), y=4.4 ---
+    faceRoom = 'C2';
+    // ceiling beam across the room at z = 34, resting on the two walls
+    box(50.6, 8.4, 33.8, 77.4, 8.8, 34.2, 'equip', { face: true, room: 'C2' });
+    // main lamp head: lower rim (existing rings and spokes at y = lampY)
     const lampY = 4.4, lampDivO = mobile ? 24 : 32, lampDivI = mobile ? 16 : 24;
     ring(T.hero, 64, lampY, 34, 2.2, lampDivO, 'y');
     ring(T.hero, 64, lampY, 34, 1.2, lampDivI, 'y');
@@ -551,19 +1240,22 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.hero, 64 + Math.cos(t) * 1.2, lampY, 34 + Math.sin(t) * 1.2,
               64 + Math.cos(t) * 2.2, lampY, 34 + Math.sin(t) * 2.2);
     }
-    // main lamp: 3 support lines to roof frame (y=9)
-    for (let s = 0; s < 3; s++) {
-      const t = (s / 3) * Math.PI * 2 + Math.PI / 6;
-      seg(T.equip, 64 + Math.cos(t) * 1.7, lampY, 34 + Math.sin(t) * 1.7, 64, 9, 34);
-    }
-    // child lamps at radius 1.6, angles 90/210/330 deg, 1 support line each
+    // main head body and top rim ring
+    solidCylY(64, lampY, lampY + 0.4, 34, 2.2, lampDivO, { tone: null });
+    ring(T.hero, 64, lampY + 0.4, 34, 2.2, lampDivO, 'y');
+    // central post from head top to beam underside
+    solidCylY(64, lampY + 0.4, 8.4, 34, 0.12, 12, {});
+    // child lamps at radius 1.6, angles 90/210/330 deg, hung below the main head
     const childDiv = mobile ? 12 : 16;
     for (const deg of [90, 210, 330]) {
       const t = (deg * Math.PI) / 180;
       const cx = 64 + Math.cos(t) * 1.6, cz = 34 + Math.sin(t) * 1.6;
-      ring(T.hero, cx, lampY, cz, 0.8, childDiv, 'y');
-      seg(T.equip, cx, lampY, cz, cx, 9, cz);
+      ring(T.hero, cx, 3.6, cz, 0.8, childDiv, 'y');
+      solidCylY(cx, 3.6, 3.85, cz, 0.8, childDiv, { tone: null });
+      ring(T.hero, cx, 3.85, cz, 0.8, childDiv, 'y');
+      line('equip', cx, 3.85, cz, cx, lampY, cz);
     }
+    faceRoom = null;
 
     // --- anesthesia machine: body + 2 cylinders + arm over the head + monitor ---
     box(65.7, 0, 37.3, 67.9, 2.4, 39.1, 'equip', { face: true, room: 'C2' });
@@ -588,15 +1280,137 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
-  // ================= emergency entrance (south) =================
+// ================= emergency entrance (south) =================
   {
     const cz = 100;
-    // canopy: roof + columns (ambulances, ramp, bays removed)
+    // canopy: roof + columns
     box(-20, 6, cz - 9, 20, 6.7, cz + 9, 'hero', { face: true });
     for (const cx of [-17, -8.5, 0, 8.5, 17]) {
-      seg(T.hero, cx, 0, cz - 7, cx, 6, cz - 7);
-      seg(T.hero, cx, 0, cz + 7, cx, 6, cz + 7);
+      for (const z of [cz - 7, cz + 7]) {
+        box(cx - 0.45, 0, z - 0.45, cx + 0.45, 0.15, z + 0.45, 'hero', { face: true });
+        box(cx - 0.25, 0.15, z - 0.25, cx + 0.25, 5.8, z + 0.25, 'hero', { face: true });
+        box(cx - 0.45, 5.8, z - 0.45, cx + 0.45, 6, z + 0.45, 'hero', { face: true });
+      }
     }
+    // ambulance under the emergency canopy (G1), no lane/frame/ground lines
+    {
+      box(1.2, 0.55, 98.8, 5.4, 2.9, 101.2, 'hero', { face: true });
+      box(5.4, 0.55, 98.9, 7.4, 2.2, 101.1, 'hero', { face: true });
+      box(1.4, 0.35, 98.9, 7.2, 0.55, 101.1, 'equip', { face: true });
+      line('mid', 7.41, 1.4, 99.15, 7.41, 1.4, 100.85);
+      line('mid', 7.41, 2.05, 99.15, 7.41, 2.05, 100.85);
+      line('mid', 7.41, 1.4, 99.15, 7.41, 2.05, 99.15);
+      line('mid', 7.41, 1.4, 100.85, 7.41, 2.05, 100.85);
+      line('mid', 5.6, 1.4, 98.89, 7.0, 1.4, 98.89);
+      line('mid', 5.6, 2.05, 98.89, 7.0, 2.05, 98.89);
+      line('mid', 5.6, 1.4, 98.89, 5.6, 2.05, 98.89);
+      line('mid', 7.0, 1.4, 98.89, 7.0, 2.05, 98.89);
+      line('mid', 5.6, 1.4, 101.11, 7.0, 1.4, 101.11);
+      line('mid', 5.6, 2.05, 101.11, 7.0, 2.05, 101.11);
+      line('mid', 5.6, 1.4, 101.11, 5.6, 2.05, 101.11);
+      line('mid', 7.0, 1.4, 101.11, 7.0, 2.05, 101.11);
+      line('mid', 1.19, 0.6, 100, 1.19, 2.8, 100);
+      box(5.6, 2.2, 99.6, 6.4, 2.4, 100.4, 'equip', { face: true, skip: { ny: true } });
+      for (const x of [2.4, 6.4]) {
+        for (const [z0, z1] of [[98.55, 98.85], [101.15, 101.45]]) {
+          solidCylZ(x, 0.35, z0, z1, 0.35, 16, {});
+        }
+      }
+    }
+  }
+
+  // ---- main entrance (v0.3 entrance) ----
+  {
+    // E1 vertical mullions, skip portal opening
+    line('mid', -14, 0, 88, -14, 14, 88);
+    line('mid', -12, 0, 88, -12, 14, 88);
+    line('mid', -10, 0, 88, -10, 14, 88);
+    line('mid', -8, 0, 88, -8, 14, 88);
+    line('mid', -6, 0, 88, -6, 14, 88);
+    line('mid', 6, 0, 88, 6, 14, 88);
+    line('mid', 8, 0, 88, 8, 14, 88);
+    line('mid', 10, 0, 88, 10, 14, 88);
+    line('mid', 12, 0, 88, 12, 14, 88);
+    line('mid', 14, 0, 88, 14, 14, 88);
+    // E1 horizontal transoms
+    line('mid', -14, 4, 88, -5.4, 4, 88);
+    line('mid', 5.4, 4, 88, 14, 4, 88);
+    line('mid', -14, 9, 88, -5.4, 9, 88);
+    line('mid', 5.4, 9, 88, 14, 9, 88);
+    // E1 base, split at center
+    box(-14, 0, 87.9, -5.4, 0.3, 88.1, 'mid', { face: true });
+    box(5.4, 0, 87.9, 14, 0.3, 88.1, 'mid', { face: true });
+    // E1 inner door at z=88
+    line('hero', -1.6, 0, 88, -1.6, 2.6, 88);
+    line('hero', 1.6, 0, 88, 1.6, 2.6, 88);
+    line('hero', -4.6, 2.6, 88, 4.6, 2.6, 88);
+    line('hero', 0, 0, 88, 0, 2.6, 88);
+    // E2 vestibule roof
+    box(-4.2, 3.4, 88, 4.2, 3.6, 90.8, 'hero', { face: true });
+    // E2 corner posts, 0.16 square
+    box(-4.08, 0, 88.02, -3.92, 3.4, 88.18, 'hero', { face: true });
+    box(-4.08, 0, 90.42, -3.92, 3.4, 90.58, 'hero', { face: true });
+    box(3.92, 0, 88.02, 4.08, 3.4, 88.18, 'hero', { face: true });
+    box(3.92, 0, 90.42, 4.08, 3.4, 90.58, 'hero', { face: true });
+    // E2 outer auto door at z=90.6
+    line('hero', -1.6, 0, 90.6, -1.6, 2.6, 90.6);
+    line('hero', 1.6, 0, 90.6, 1.6, 2.6, 90.6);
+    line('hero', -4, 2.6, 90.6, 4, 2.6, 90.6);
+    line('hero', 0, 0, 90.6, 0, 2.6, 90.6);
+    // E2 side transoms
+    line('mid', -4, 1.2, 88.1, -4, 1.2, 90.5);
+    line('mid', 4, 1.2, 88.1, 4, 1.2, 90.5);
+    // E2 entrance mat
+    box(-1.8, 0, 90.7, 1.8, 0.04, 92.2, 'equip', { face: true });
+    // E3 ambulance canopy nose upstands, thickness 0.25
+    box(-20, 6.7, 108.75, 20, 7.3, 109, 'hero', { face: true });
+    box(-20, 6.7, 91, 20, 7.3, 91.25, 'hero', { face: true });
+    box(-20, 6.7, 91.25, -19.75, 7.3, 108.75, 'hero', { face: true });
+    box(19.75, 6.7, 91.25, 20, 7.3, 108.75, 'hero', { face: true });
+    // E6 portal frame
+    box(-5.4, 0, 87.6, -4.6, 10.4, 88.4, 'hero', { face: true });
+    box(4.6, 0, 87.6, 5.4, 10.4, 88.4, 'hero', { face: true });
+    box(-4.6, 9.6, 87.6, 4.6, 10.4, 88.4, 'hero', { face: true });
+    // E7 connecting canopy
+    box(-6, 6, 88.4, 6, 6.7, 91, 'hero', { face: true });
+
+    // anatomy pass: parts that sit on parts (v0.3 entrance, stage 2)
+
+    // A: canopy over entrance
+    // A1 roof joints
+    for (const x of [-12, -4, 4, 12]) line('far', x, 6.705, 91.25, x, 6.705, 108.75);
+    // A2 roof drains, centred over the downpipes (pipe passes through the slab y 6..6.7, hidden)
+    for (const x of [-17, 17]) box(x - 0.25, 6.7, 92.13, x + 0.25, 6.78, 92.63, 'mid', { face: true });
+    // A3 downpipes: roof underside (y 6) to the ground (enters the storm drain below grade).
+    // z 92.30..92.46 stays clear of the column base and cap (z >= 92.55)
+    for (const x of [-17, 17]) box(x - 0.08, 0, 92.3, x + 0.08, 6, 92.46, 'mid', { face: true });
+
+    // B: gate frame
+    // B1 coping
+    box(-5.6, 10.4, 87.4, 5.6, 10.6, 88.6, 'mid', { face: true });
+    // B2 column front joints
+    for (const x of [-5, 5]) line('far', x, 0, 88.41, x, 10.4, 88.41);
+    // B3 beam front joint
+    line('far', -5.4, 10.0, 88.41, 5.4, 10.0, 88.41);
+
+    // C: airlock
+    box(-1.8, 2.6, 90.6, 1.8, 3.0, 90.85, 'mid', { face: true });
+    box(-1.8, 2.6, 88, 1.8, 3.0, 88.25, 'mid', { face: true });
+    for (const x of [-4, 4]) line('mid', x, 0, 89.3, x, 3.4, 89.3);
+
+    // D: atrium roof
+    // D1 raised edges
+    box(-14, 15, 87.75, 14, 15.5, 88, 'mid', { face: true });
+    box(-14, 15, 44, 14, 15.5, 44.25, 'mid', { face: true });
+    box(-14, 15, 44.25, -13.75, 15.5, 87.75, 'mid', { face: true });
+    box(13.75, 15, 44.25, 14, 15.5, 87.75, 'mid', { face: true });
+    // D2 skylight
+    box(-6, 15, 50, 6, 15.6, 82, 'mid', { face: true });
+    // D3 skylight mullions
+    const zs = mobile ? [58, 66, 74] : [54, 58, 62, 66, 70, 74, 78];
+    for (const z of zs) line('mid', -6, 15.605, z, 6, 15.605, z);
+    // D4 roof joints
+    for (const x of [-10, 10]) line('far', x, 15.005, 44.25, x, 15.005, 87.75);
   }
 
   // ================= atrium + skybridge =================
@@ -605,7 +1419,8 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     const z0 = 44, z1 = 88;
     for (const cx of [-13, -4.5, 4.5, 13]) {
       for (const cz of [z0 + 2, (z0 + z1) / 2, z1 - 2]) {
-        seg(T.mid, cx, 0, cz, cx, 14, cz);
+        box(cx - 0.45, 0, cz - 0.45, cx + 0.45, 0.15, cz + 0.45, 'mid', { face: true });
+        box(cx - 0.3, 0.15, cz - 0.3, cx + 0.3, 14, cz + 0.3, 'mid', { face: true });
       }
     }
     box(-14, 14, z0, 14, 15, z1, 'mid', { face: true });
@@ -640,6 +1455,75 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     box(5.3, 0, 81.4, 6.7, 0.9, 82.6, 'hero', { face: true });
     box(5.4, 2.4, 81.94, 6.6, 3.2, 82.06, 'hero', { face: true });
     seg(T.hero, 6, 0.9, 82, 6, 2.4, 82);
+  }
+
+  // hall glass faces, link to the south wing, back-side parts (hall-back spec)
+  {
+    const hMull = mobile ? [52, 60, 68, 76] : [48, 52, 56, 60, 64, 68, 72, 76];
+
+    // H2: corner mullions at z 44 (z 88 corners already in E1)
+    line('mid', -14, 0, 44, -14, 14, 44);
+    line('mid', 14, 0, 44, 14, 14, 44);
+
+    // H2: side wall mullions
+    for (const sx of [-14, 14]) {
+      for (const z of hMull) line('mid', sx, 0, z, sx, 14, z);
+      // jambs at z 80 and 84 (corridor doorway on the east face; mirrored on the west)
+      line('mid', sx, 0, 80, sx, 14, 80);
+      line('mid', sx, 0, 84, sx, 14, 84);
+      // transoms y 4 and y 9 across z 44..88
+      line('mid', sx, 4, 44, sx, 4, 88);
+      line('mid', sx, 9, 44, sx, 9, 88);
+    }
+
+    // H3: north face mullions
+    const nMull = mobile ? [-10, 10] : [-10, -4, 4, 10];
+    for (const nx of nMull) {
+      if (Math.abs(nx) >= 8) {
+        line('mid', nx, 0, 44, nx, 14, 44);
+      } else {
+        line('mid', nx, 4, 44, nx, 14, 44);
+      }
+    }
+    // H3: north face transoms
+    line('mid', -14, 9, 44, 14, 9, 44);
+    line('mid', -14, 4, 44, -8, 4, 44);
+    line('mid', 8, 4, 44, 14, 4, 44);
+
+    // L: link to south wing
+    box(-8, 3.6, 40, 8, 4, 44, 'mid', { face: true });
+    box(-8, 0, 43.7, -7.7, 3.6, 44, 'mid', { face: true });
+    box(7.7, 0, 43.7, 8, 3.6, 44, 'mid', { face: true });
+    line('mid', -8, 0, 40, -8, 3.6, 40);
+    line('mid', 8, 0, 40, 8, 3.6, 40);
+    line('mid', -8, 0, 42, -8, 3.6, 42);
+    line('mid', 8, 0, 42, 8, 3.6, 42);
+
+    // K1: stair tower on west face of west wing
+    box(-43.5, 0, -10, -40, 76, -6, 'mid', { face: true });
+    box(-43.7, 76, -10.2, -40, 76.3, -5.8, 'mid', { face: true });
+    const landY = mobile ? [8, 16, 24, 32, 40, 48, 56, 64, 72] : [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72];
+    for (const ly of landY) line('far', -43.51, ly, -10, -43.51, ly, -6);
+    line('mid', -43.51, 3, -8, -43.51, 74, -8); // slit window starts above the door head (y 2.4)
+    // door frame: 3 sides, no ground edge
+    line('mid', -43.51, 0, -9, -43.51, 2.4, -9);
+    line('mid', -43.51, 0, -7, -43.51, 2.4, -7);
+    line('mid', -43.51, 2.4, -9, -43.51, 2.4, -7);
+
+    // K2: loading dock on north face of north wing
+    box(-8, 4, -42.5, 8, 4.3, -40, 'mid', { face: true });
+    box(-8, 0, -42.5, -7.7, 4, -42.2, 'mid', { face: true });
+    box(7.7, 0, -42.5, 8, 4, -42.2, 'mid', { face: true });
+    box(-6, 0, -40.15, -1, 3.4, -40, 'mid', { face: true });
+    box(1, 0, -40.15, 6, 3.4, -40, 'mid', { face: true });
+    const slatY = mobile ? [1.7] : [0.85, 1.7, 2.55];
+    for (const sy of slatY) for (const [sx0, sx1] of [[-6, -1], [1, 6]]) line('far', sx0, sy, -40.16, sx1, sy, -40.16);
+
+    // K3: duct riser on north face of west wing
+    box(-36, 0, -12.4, -33.6, 86, -11, 'mid', { face: true });
+    box(-36.2, 86, -12.6, -33.4, 86.3, -11, 'mid', { face: true });
+    const seamY = mobile ? [24, 48, 72] : [12, 24, 36, 48, 60, 72];
+    for (const qy of seamY) line('far', -36, qy, -12.41, -33.6, qy, -12.41);
   }
 
   // ================= corridors (floor 0) =================
@@ -941,8 +1825,9 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         seg(T.mid, a[0], y, a[2] + 0.4, b[0], y, a[2] + 0.4);
         const x0 = Math.min(a[0], b[0]), x1 = Math.max(a[0], b[0]);
         for (let x = x0; x <= x1 + 0.01; x += 16) {
-          seg(T.mid, x, 0, a[2] - 0.4, x, y, a[2] - 0.4);
-          seg(T.mid, x, 0, a[2] + 0.4, x, y, a[2] + 0.4);
+          const yb = (x > -8 && x < 8 && a[2] > 40 && a[2] < 44) ? 4 : 0; // over the link (x -8..8, z 40..44) the legs stand on its roof
+          seg(T.mid, x, yb, a[2] - 0.4, x, y, a[2] - 0.4);
+          seg(T.mid, x, yb, a[2] + 0.4, x, y, a[2] + 0.4);
         }
       } else { // z 方向
         seg(T.mid, a[0] - 0.4, y, a[2], a[0] - 0.4, y, b[2]);
@@ -957,6 +1842,18 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   }
   supports(common);
   supports(retCommon);
+
+  // soft contact shadows, drawn exactly on the floor surface into their own buffer
+  softShadowDisc(-5, 68, -25, 3.0, 3.9, 32);
+  softShadowDisc(4, 68, -25, 3.0, 3.9, 32);
+  softShadowRect(-8.2, -18.2, 8.2, -13.8, 68, 0.5);
+  for (const x of (mobile ? [18, 26] : [18, 26, 34])) softShadowRect(x - 1.6, -5.4, x + 1.6, -0.6, 60, 0.6);
+  softShadowRect(56, -1, 64, 1, 0.2, 0.6);
+  softShadowRect(78, -1, 86, 1, 0.2, 0.6);
+  softShadowRect(63.1, 31.6, 64.9, 36.4, 0.1, 0.5);
+  for (const cx of [-17, -8.5, 0, 8.5, 17]) for (const z of [93, 107]) softShadowRect(cx - 0.45, z - 0.45, cx + 0.45, z + 0.45, 0, 0.35);
+  softShadowRect(4, 4, 10, 10, 68, 0.5); // v0.3 W4 rooftop penthouse
+  softShadowRect(1.2, 98.8, 7.4, 101.2, 0, 0.5); // v0.3 G1 ambulance
 
   // ================= assemble render objects =================
   function lineObj(arr, color, opacity) {
@@ -985,6 +1882,32 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     });
     facesMesh = new THREE.Mesh(geo, mat);
     group.add(facesMesh);
+  }
+  // Multiply blending: the shadow colour darkens whatever floor tone is
+  // beneath it (floor × shadow) and never lightens; depthWrite is false so
+  // the shadows never occlude the floor lines, while still testing depth
+  // against the opaque faces.
+  if (solid && FS.pos.length) {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(Float32Array.from(FS.pos), 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(Float32Array.from(FS.col), 3));
+    // The colour is a multiplier, so 1.0 must stay exactly 1.0 at the outer edge
+    const mat = new THREE.MeshBasicMaterial({
+      vertexColors: true,
+      depthWrite: false,
+      toneMapped: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -4,
+      fog: false,
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.ZeroFactor,
+      blendDst: THREE.SrcColorFactor,
+    });
+    const shadowMesh = new THREE.Mesh(geo, mat);
+    shadowMesh.renderOrder = 1;
+    group.add(shadowMesh);
   }
 
   // B0: 重ね描き除去の分、不透明度を 1-(1-a)^2 に上げて見た目の濃さを保つ (accent は重複なし・変更なし)
