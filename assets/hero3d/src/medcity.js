@@ -547,7 +547,13 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       box(-2, 19.7, a.z0, a.x1, 20, 32, 'hero', { face: true, room: 'C0' });
       // ---- thin walls (thickness 0.6), shell: no room ----
       // south wall z=40, ground band y=0..4 (above y=20 the closed upper box takes over)
-      box(-2, 0, 39.4, a.x1, 4, 40, 'hero', { face: true });
+      // doorway x=0..4, y=0..3 where the link from the hall arrives (hall-back spec rev 1)
+      box(-2, 0, 39.4, 0, 4, 40, 'hero', { face: true });
+      box(4, 0, 39.4, a.x1, 4, 40, 'hero', { face: true });
+      box(0, 3, 39.4, 4, 4, 40, 'hero', { face: true });
+      seg(T.hero, 0, 0, 40, 0, 3, 40);
+      seg(T.hero, 4, 0, 40, 4, 3, 40);
+      seg(T.hero, 0, 3, 40, 4, 3, 40);
       // stepped back walls (new south face of each notch band)
       // band y=4..8: face at z=38
       box(-2, 4, 37.4, a.x1, 8, 38, 'hero', { face: true });
@@ -622,7 +628,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     const mstep = mobile ? 5.5 : 3.7;
     if (a.name !== 'north') {
       for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
-        seg(T.equip, x, 0, a.z1, x, a.h, a.z1);
+        seg(T.equip, x, (a.name === 'south' && x > 0 && x < 4) ? 3 : 0, a.z1, x, a.h, a.z1); // south arm: start above the doorway (x 0..4, y 0..3)
     }
     if (a.name !== 'south') { // z0 is the inner face only for the south arm (back faces get mullions too)
       for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
