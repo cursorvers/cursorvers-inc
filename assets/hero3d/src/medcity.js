@@ -1318,6 +1318,50 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     box(-4.6, 9.6, 87.6, 4.6, 10.4, 88.4, 'hero', { face: true });
     // E7 connecting canopy
     box(-6, 6, 88.4, 6, 6.7, 91, 'hero', { face: true });
+
+    // anatomy pass: parts that sit on parts (v0.3 entrance, stage 2)
+
+    // A: canopy over entrance
+    // A1 roof joints
+    for (const x of [-12, -4, 4, 12]) line('far', x, 6.705, 91.25, x, 6.705, 108.75);
+    // A2 roof drains
+    for (const x of [-16, 16]) box(x - 0.25, 6.7, 91.6, x + 0.25, 6.78, 92.1, 'mid', { face: true });
+    // A3 downpipes
+    for (const x of [-17, 17]) box(x - 0.08, 0.15, 92.59, x + 0.08, 6, 92.75, 'mid', { face: true });
+    // A4 beams between columns
+    const cs = [-17, -8.5, 0, 8.5, 17];
+    for (const z of [93, 107]) {
+      for (let i = 0; i <= 3; i++) {
+        box(cs[i] + 0.45, 5.5, z - 0.2, cs[i + 1] - 0.45, 6, z + 0.2, 'mid', { face: true });
+      }
+    }
+
+    // B: gate frame
+    // B1 coping
+    box(-5.6, 10.4, 87.4, 5.6, 10.6, 88.6, 'mid', { face: true });
+    // B2 column front joints
+    for (const x of [-5, 5]) line('far', x, 0, 88.41, x, 10.4, 88.41);
+    // B3 beam front joint
+    line('far', -5.4, 10.0, 88.41, 5.4, 10.0, 88.41);
+
+    // C: airlock
+    box(-1.8, 2.6, 90.6, 1.8, 3.0, 90.85, 'mid', { face: true });
+    box(-1.8, 2.6, 88, 1.8, 3.0, 88.25, 'mid', { face: true });
+    for (const x of [-4, 4]) line('mid', x, 0, 89.3, x, 3.4, 89.3);
+
+    // D: atrium roof
+    // D1 raised edges
+    box(-14, 15, 87.75, 14, 15.5, 88, 'mid', { face: true });
+    box(-14, 15, 44, 14, 15.5, 44.25, 'mid', { face: true });
+    box(-14, 15, 44.25, -13.75, 15.5, 87.75, 'mid', { face: true });
+    box(13.75, 15, 44.25, 14, 15.5, 87.75, 'mid', { face: true });
+    // D2 skylight
+    box(-6, 15, 50, 6, 15.6, 82, 'mid', { face: true });
+    // D3 skylight mullions
+    const zs = mobile ? [58, 66, 74] : [54, 58, 62, 66, 70, 74, 78];
+    for (const z of zs) line('mid', -6, 15.605, z, 6, 15.605, z);
+    // D4 roof joints
+    for (const x of [-10, 10]) line('far', x, 15.005, 44.25, x, 15.005, 87.75);
   }
 
   // ================= atrium + skybridge =================
