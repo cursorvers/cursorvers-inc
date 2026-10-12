@@ -1328,17 +1328,11 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // A: canopy over entrance
     // A1 roof joints
     for (const x of [-12, -4, 4, 12]) line('far', x, 6.705, 91.25, x, 6.705, 108.75);
-    // A2 roof drains
-    for (const x of [-16, 16]) box(x - 0.25, 6.7, 91.6, x + 0.25, 6.78, 92.1, 'mid', { face: true });
-    // A3 downpipes
-    for (const x of [-17, 17]) box(x - 0.08, 0.15, 92.59, x + 0.08, 5.8, 92.75, 'mid', { face: true }); // ends under the column cap
-    // A4 beams between columns
-    const cs = [-17, -8.5, 0, 8.5, 17];
-    for (const z of [93, 107]) {
-      for (let i = 0; i <= 3; i++) {
-        box(cs[i] + 0.45, 5.5, z - 0.2, cs[i + 1] - 0.45, 6, z + 0.2, 'mid', { face: true });
-      }
-    }
+    // A2 roof drains, centred over the downpipes (pipe passes through the slab y 6..6.7, hidden)
+    for (const x of [-17, 17]) box(x - 0.25, 6.7, 92.13, x + 0.25, 6.78, 92.63, 'mid', { face: true });
+    // A3 downpipes: roof underside (y 6) to the ground (enters the storm drain below grade).
+    // z 92.30..92.46 stays clear of the column base and cap (z >= 92.55)
+    for (const x of [-17, 17]) box(x - 0.08, 0, 92.3, x + 0.08, 6, 92.46, 'mid', { face: true });
 
     // B: gate frame
     // B1 coping
