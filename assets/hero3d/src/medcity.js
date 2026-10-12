@@ -715,6 +715,48 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
+  // heliport tower facade (v0.3 facade, stage 2)
+  {
+    // 角の張り出し
+    box(-40, 4, 11, -36.4, 84, 11.6, 'hero', { face: true, skip: { nz: true } });
+    // 張り出しの正面 (z=11.61) の水平線
+    for (let y = 8; y <= 80; y += 4) {
+      line('mid', -40, y, 11.61, -36.4, y, 11.61);
+    }
+    // 張り出しの正面 (z=11.61) の縦線
+    line('mid', -38.2, 4, 11.61, -38.2, 84, 11.61);
+
+    // 中間階の帯 (南面 z=11、x -36.4..-11)
+    // 下の庇
+    box(-36.4, 43.8, 11, -11, 44, 12, 'mid', { face: true, skip: { nz: true } });
+    // 上の庇
+    box(-36.4, 48, 11, -11, 48.2, 12, 'mid', { face: true, skip: { nz: true } });
+    // 柱
+    const cols = [-33, -29.3, -25.6, -21.9, -18.2, -14.5];
+    for (const x of cols) {
+      box(x - 0.1, 44, 11.8, x + 0.1, 48, 12.0, 'mid', { face: true, skip: { ny: true, py: true } });
+    }
+
+    // 縦の格子の冠 (y 84..88)
+    const step = mobile ? 1.8 : 0.9;
+    // 南面: 水切り
+    box(-36.4, 83.8, 11, -11, 84, 11.5, 'mid', { face: true, skip: { nz: true } });
+    // 南面: 縦線
+    for (let k = 1; ; k++) {
+      const x = -36.4 + step * k;
+      if (!(x < -11.05)) break;
+      line('mid', x, 84, 11.01, x, 88, 11.01);
+    }
+    // 東面: 水切り
+    box(-11, 83.8, -11, -10.5, 84, 11, 'mid', { face: true, skip: { nx: true } });
+    // 東面: 縦線
+    for (let k = 1; ; k++) {
+      const z = -11 + step * k;
+      if (!(z < 10.95)) break;
+      line('mid', -10.99, 84, z, -10.99, 88, z);
+    }
+  }
+
   // ---- central core (x=-11..11, z=-11..11, y=0..68) ----
   {
     box(-HW, 0, -HW, HW, 68, HW, 'hero', { face: true });
