@@ -634,6 +634,73 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
+  // facade articulation by building role (v0.3 facade)
+  {
+    // 1. ward horizontal canopies
+    const ysN = mobile ? [8, 16, 24, 32, 40, 48, 56] : [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60];
+    for (const y of ysN) {
+      box(11, y - 0.15, -39.7, 11.9, y, -11.3, 'mid', { face: true, skip: { nx: true } });
+    }
+    const ysS = mobile ? [24, 32, 40] : [24, 28, 32, 36, 40];
+    for (const y of ysS) {
+      box(-10.7, y - 0.15, 40, 10.7, y, 40.9, 'mid', { face: true, skip: { nz: true } });
+      box(11, y - 0.15, 11.3, 11.9, y, 39.7, 'mid', { face: true, skip: { nx: true } });
+    }
+
+    // 2. east wing vertical fins
+    const step = mobile ? 5.5 : 3.7;
+    for (let x = 11 + step; x < 39.9; x += step) {
+      box(x - 0.1, 4, 11, x + 0.1, 55.8, 11.8, 'mid', { face: true, skip: { nz: true } });
+    }
+    for (let z = -11 + step; z < 10.9; z += step) {
+      if (z > -4.6 && z < 4.6) {
+        box(40, 4, z - 0.1, 40.8, 11.6, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+        box(40, 16.4, z - 0.1, 40.8, 55.8, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+      } else {
+        box(40, 4, z - 0.1, 40.8, 55.8, z + 0.1, 'mid', { face: true, skip: { nx: true } });
+      }
+    }
+    for (let y = 4; y <= 52; y += 4) {
+      if (y === 12 || y === 16) {
+        line('mid', 40.01, y, -11, 40.01, y, -4);
+        line('mid', 40.01, y, 4, 40.01, y, 11);
+      } else {
+        line('mid', 40.01, y, -11, 40.01, y, 11);
+      }
+    }
+
+    // 3. top louver bands (all wings, visible faces)
+    const faces = [
+      { wall: 'x', at: 11, dir: +1, r0: -40, r1: -11, h: 68, skip: { nx: true } },  // north wing east face
+      { wall: 'x', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nx: true } },   // core east face
+      { wall: 'z', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nz: true } },   // core south face
+      { wall: 'z', at: 40, dir: +1, r0: -11, r1: 11, h: 48, skip: { nz: true } },   // south wing south face
+      { wall: 'x', at: 11, dir: +1, r0: 11, r1: 40, h: 48, skip: { nx: true } },    // south wing east face
+      { wall: 'z', at: 11, dir: +1, r0: -40, r1: -11, h: 88, skip: { nz: true } },  // west wing south face
+      { wall: 'x', at: -11, dir: +1, r0: -11, r1: 11, h: 88, skip: { nx: true } },  // west wing east face
+      { wall: 'z', at: 11, dir: +1, r0: 11, r1: 40, h: 60, skip: { nz: true } },    // east wing south face
+      { wall: 'x', at: 40, dir: +1, r0: -11, r1: 11, h: 60, skip: { nx: true } },   // east wing east face
+    ];
+    const ybs = [0.6, 1.2, 1.8, 2.4, 3.0, 3.6];
+    const ybsM = [1.2, 2.4, 3.6];
+    for (const f of faces) {
+      const yb = f.h - 4, yt = f.h;
+      if (f.wall === 'x') {
+        box(f.at, yb - 0.2, f.r0, f.at + 0.5, yb, f.r1, 'mid', { face: true, skip: f.skip });
+        const ys = mobile ? ybsM : ybs;
+        for (const dy of ys) {
+          line('mid', f.at + 0.01, yb + dy, f.r0, f.at + 0.01, yb + dy, f.r1);
+        }
+      } else {
+        box(f.r0, yb - 0.2, f.at, f.r1, yb, f.at + 0.5, 'mid', { face: true, skip: f.skip });
+        const ys = mobile ? ybsM : ybs;
+        for (const dy of ys) {
+          line('mid', f.r0, yb + dy, f.at + 0.01, f.r1, yb + dy, f.at + 0.01);
+        }
+      }
+    }
+  }
+
   // ---- central core (x=-11..11, z=-11..11, y=0..68) ----
   {
     box(-HW, 0, -HW, HW, 68, HW, 'hero', { face: true });
