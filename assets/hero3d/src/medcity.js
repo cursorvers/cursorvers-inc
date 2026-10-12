@@ -479,8 +479,8 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     FS.col.push(ua, ua, ua, ub, ub, ub, uc, uc, uc);
   }
 
-  // SHADOW_CORE: centre darkness of the shadow, multiplied into the floor colour
-  const SHADOW_CORE = 0.78;
+  // SHADOW_CORE: centre multiplier of the shadow, applied to the floor colour without tone mapping
+  const SHADOW_CORE = 0.72;
   function softShadowDisc(cx, y, cz, r0, r1, div) {
     for (let i = 0; i < div; i++) {
       const a0 = (i / div) * Math.PI * 2;
@@ -1497,9 +1497,11 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     const geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(Float32Array.from(FS.pos), 3));
     geo.setAttribute('color', new THREE.BufferAttribute(Float32Array.from(FS.col), 3));
+    // The colour is a multiplier, so 1.0 must stay exactly 1.0 at the outer edge
     const mat = new THREE.MeshBasicMaterial({
       vertexColors: true,
       depthWrite: false,
+      toneMapped: false,
       polygonOffset: true,
       polygonOffsetFactor: -1,
       polygonOffsetUnits: -4,
