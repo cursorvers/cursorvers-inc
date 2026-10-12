@@ -892,7 +892,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
     // --- CT: short donut, axis z, center (60, 5.5, 0), z=-1.1..1.1 ---
     const ctRout = 4, ctRin = 1.5;
-    const ctDivO = mobile ? 24 : 32, ctDivI = mobile ? 16 : 24;
+    const ctDivO = mobile ? 24 : 32, ctDivI = ctDivO;
     ring(T.hero, 60, 5.5, -1.1, ctRout, ctDivO, 'z');
     ring(T.equip, 60, 5.5, -1.1, ctRin, ctDivI, 'z');
     ring(T.hero, 60, 5.5, 1.1, ctRout, ctDivO, 'z');
@@ -905,9 +905,9 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
     // CT base
     box(56, 0, -1, 64, 1.5, 1, 'equip', { face: true, room: 'C1' });
-    // CT table (passes through the hole)
-    box(59, 3.4, -5, 61, 3.9, 3, 'equip', { face: true, room: 'C1' });
-    box(59.4, 0, -5, 60.6, 3.4, -3, 'equip', { face: true, room: 'C1' });
+    // CT table (runs inside the bore)
+    box(59, 4.6, -5, 61, 5.0, 3, 'equip', { face: true, room: 'C1' });
+    box(59.4, 0, -5, 60.6, 4.6, -3, 'equip', { face: true, room: 'C1' });
     faceRoom = 'C1';
     tubeZ(60, 5.5, -1.1, 1.1, ctRout, ctDivO, false);
     if (solid) {
@@ -917,43 +917,32 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
     faceRoom = null;
 
-    // --- MRI: long closed tube, axis x, x=76.8..87.2, closed at x=87.2 end ---
+    // --- MRI: long tube, axis x, x=76.8..87.2, open at both ends ---
     const mrX0 = 76.8, mrX1 = 87.2, mrY = 5.5, mrZ = 0;
     const mrRout = 4, mrRin = 1.4, mrDivO = mobile ? 24 : 32;
     ring(T.hero, mrX0, mrY, mrZ, mrRout, mrDivO, 'x');
     ring(T.equip, mrX0, mrY, mrZ, mrRin, mrDivO, 'x');
     ring(T.hero, mrX1, mrY, mrZ, mrRout, mrDivO, 'x');
+    ring(T.equip, mrX1, mrY, mrZ, mrRin, mrDivO, 'x');
     for (let s = 0; s < 8; s++) {
       const t = (s / 8) * Math.PI * 2;
       const co = Math.cos(t), sn = Math.sin(t);
       seg(T.hero, mrX0, mrY + co * mrRout, mrZ + sn * mrRout, mrX1, mrY + co * mrRout, mrZ + sn * mrRout);
     }
-    // end disc at x=87.2 (solid: filled face; wire: outer ring only, already drawn)
-    if (solid) {
-      const divD = 16;
-      for (let s = 0; s < divD; s++) {
-        const t0 = (s / divD) * Math.PI * 2, t1 = ((s + 1) / divD) * Math.PI * 2;
-        quad(
-          mrX1, mrY + Math.cos(t0) * mrRout, mrZ + Math.sin(t0) * mrRout,
-          mrX1, mrY + Math.cos(t1) * mrRout, mrZ + Math.sin(t1) * mrRout,
-          mrX1, mrY, mrZ,
-          mrX1, mrY, mrZ,
-          1, 0, 0, 'C1'
-        );
-      }
-    }
+    ring(T.mid, 82, mrY, mrZ, mrRout, mrDivO, 'x');
     faceRoom = 'C1';
     tubeX(mrX0, mrX1, mrY, mrZ, mrRout, mrDivO, false);
     if (solid) {
       tubeX(mrX0, mrX1, mrY, mrZ, mrRin, mrDivO, true);
       annulusX(mrX0, mrY, mrZ, mrRin, mrRout, mrDivO, -1);
+      annulusX(mrX1, mrY, mrZ, mrRin, mrRout, mrDivO, 1);
     }
     faceRoom = null;
     // MRI base
     box(78, 0, -1, 86, 1.5, 1, 'equip', { face: true, room: 'C1' });
-    // MRI table (enters 4.8 from x=76.8 end, bore closed beyond)
-    box(72, 3.6, -1, 81.6, 4.1, 1, 'equip', { face: true, room: 'C1' });
-    box(72.4, 0, -0.6, 73.6, 3.6, 0.6, 'equip', { face: true, room: 'C1' });
+    // MRI table (runs inside the bore)
+    box(72, 4.6, -1, 81.6, 5.0, 1, 'equip', { face: true, room: 'C1' });
+    box(72.4, 0, -0.6, 73.6, 4.6, 0.6, 'equip', { face: true, room: 'C1' });
     // --- operator consoles + glass line rects ---
     for (const cx of [62, 84]) {
       box(cx - 1.5, 0, -8.7, cx + 1.5, 1.2, -7.3, 'equip', { face: true, room: 'C1' });
