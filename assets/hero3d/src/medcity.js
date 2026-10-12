@@ -613,7 +613,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // floor lines (interior rhythm) on non-cut faces
     for (let y = 4; y < a.h - 0.1; y += 4) {
       if (a.name === 'south' && y >= 4 && y < 20) continue; // notch band: no mullion rhythm on cut faces
-      if (a.name !== 'north') seg(T.equip, a.x0, y, a.z1, a.x1, y, a.z1);
+      if (a.name !== 'north' && (a.name !== 'east' || y % 12 === 0)) seg(T.equip, a.x0, y, a.z1, a.x1, y, a.z1); // east wing: every third floor only (v0.3 facade, stage 2)
       if (a.name !== 'south') seg(T.equip, a.x0, y, a.z0, a.x1, y, a.z0);
       if (a.name !== 'west') seg(T.equip, a.x0, y, a.z0, a.x0, y, a.z1);
       if (a.name !== 'east') seg(T.equip, a.x1, y, a.z0, a.x1, y, a.z1);
@@ -634,10 +634,10 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
-  // facade articulation by building role (v0.3 facade)
+  // facade articulation by building role (v0.3 facade, stage 2)
   {
     // 1. ward horizontal canopies
-    const ysN = mobile ? [8, 16, 24, 32, 40, 48, 56] : [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60];
+    const ysN = mobile ? [8, 16, 24, 32, 40, 48, 56] : [8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60];
     for (const y of ysN) {
       box(11, y - 0.15, -39.7, 11.9, y, -11.3, 'mid', { face: true, skip: { nx: true } });
     }
@@ -660,8 +660,8 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         box(40, 4, z - 0.1, 40.8, 55.8, z + 0.1, 'mid', { face: true, skip: { nx: true } });
       }
     }
-    for (let y = 4; y <= 52; y += 4) {
-      if (y === 12 || y === 16) {
+    for (const y of [12, 24, 36, 48]) {
+      if (y === 12) {
         line('mid', 40.01, y, -11, 40.01, y, -4);
         line('mid', 40.01, y, 4, 40.01, y, 11);
       } else {
@@ -669,15 +669,10 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       }
     }
 
-    // 3. top louver bands (all wings, visible faces)
+    // 3. top louver bands (four visible faces)
     const faces = [
-      { wall: 'x', at: 11, dir: +1, r0: -40, r1: -11, h: 68, skip: { nx: true } },  // north wing east face
       { wall: 'x', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nx: true } },   // core east face
       { wall: 'z', at: 11, dir: +1, r0: -11, r1: 11, h: 68, skip: { nz: true } },   // core south face
-      { wall: 'z', at: 40, dir: +1, r0: -11, r1: 11, h: 48, skip: { nz: true } },   // south wing south face
-      { wall: 'x', at: 11, dir: +1, r0: 11, r1: 40, h: 48, skip: { nx: true } },    // south wing east face
-      { wall: 'z', at: 11, dir: +1, r0: -40, r1: -11, h: 88, skip: { nz: true } },  // west wing south face
-      { wall: 'x', at: -11, dir: +1, r0: -11, r1: 11, h: 88, skip: { nx: true } },  // west wing east face
       { wall: 'z', at: 11, dir: +1, r0: 11, r1: 40, h: 60, skip: { nz: true } },    // east wing south face
       { wall: 'x', at: 40, dir: +1, r0: -11, r1: 11, h: 60, skip: { nx: true } },   // east wing east face
     ];
@@ -698,6 +693,25 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
           line('mid', f.r0, yb + dy, f.at + 0.01, f.r1, yb + dy, f.at + 0.01);
         }
       }
+    }
+
+    // 4. deep top canopies
+    box(11, 63.8, -39.7, 12.2, 64, -11.3, 'mid', { face: true, skip: { nx: true } });
+    box(-10.7, 43.8, 40, 10.7, 44, 41.2, 'mid', { face: true, skip: { nz: true } });
+    box(11, 43.8, 11.3, 12.2, 44, 39.7, 'mid', { face: true, skip: { nx: true } });
+
+    // 5. ground-level canopies and pillars
+    box(11, 3.8, -39.7, 12.8, 4, -11.3, 'mid', { face: true, skip: { nx: true } });
+    for (const z of [-36, -28.6, -21.2, -13.8]) {
+      box(12.35, 0, z - 0.15, 12.65, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
+    box(11.3, 3.8, 11, 39.7, 4, 12.8, 'mid', { face: true, skip: { nz: true } });
+    for (const x of [14.7, 22.1, 29.5, 36.9]) {
+      box(x - 0.15, 0, 12.35, x + 0.15, 3.8, 12.65, 'mid', { face: true, skip: { py: true } });
+    }
+    box(-40, 3.8, 11, -11.3, 4, 12.8, 'mid', { face: true, skip: { nz: true } });
+    for (const x of [-36.4, -29, -21.6, -14.2]) {
+      box(x - 0.15, 0, 12.35, x + 0.15, 3.8, 12.65, 'mid', { face: true, skip: { py: true } });
     }
   }
 
