@@ -222,6 +222,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     nx /= l; ny /= l; nz /= l;
     return Math.max(ny, 0) ** 2 * 1.0 + nx * nx * 0.955 + nz * nz * 0.925 + Math.min(ny, 0) ** 2 * 0.88;
   }
+  let faceRoom = null;
   function tri(ax, ay, az, bx, by, bz, cx, cy, cz, nx, ny, nz) {
     if (!solid) return;
     // fix 2: geometric normal vs given normal, swap if flipped
@@ -230,7 +231,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
                (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)];
     if (Math.hypot(g[0], g[1], g[2]) < 1e-9) return;
     if (g[0] * nx + g[1] * ny + g[2] * nz < 0) { let t0 = bx, t1 = by, t2 = bz; bx = cx; by = cy; bz = cz; cx = t0; cy = t1; cz = t2; }
-    const c = ids ? [1, 1, 1] : [toneOf(nx, ny, nz), toneOf(nx, ny, nz), toneOf(nx, ny, nz)];
+    const c = ids ? ((faceRoom && ID_COLORS.equip[faceRoom]) || [1, 1, 1]) : [toneOf(nx, ny, nz), toneOf(nx, ny, nz), toneOf(nx, ny, nz)];
     F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz);
     for (let i = 0; i < 3; i++) { F.nrm.push(nx, ny, nz); F.col.push(c[0], c[1], c[2]); }
   }
@@ -415,6 +416,56 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
+  function annulusZ(cx, cy, z, r0, r1, div, nz) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const x0a = cx + r0 * Math.cos(a0), y0a = cy + r0 * Math.sin(a0);
+      const x1a = cx + r0 * Math.cos(a1), y1a = cy + r0 * Math.sin(a1);
+      const x1b = cx + r1 * Math.cos(a1), y1b = cy + r1 * Math.sin(a1);
+      const x0b = cx + r1 * Math.cos(a0), y0b = cy + r1 * Math.sin(a0);
+      if (nz > 0) quadN([x0a, y0a, z], [x1a, y1a, z], [x1b, y1b, z], [x0b, y0b, z], [0, 0, 1]);
+      else quadN([x1a, y1a, z], [x0a, y0a, z], [x0b, y0b, z], [x1b, y1b, z], [0, 0, -1]);
+    }
+  }
+
+  function annulusX(x, cy, cz, r0, r1, div, nx) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const y0a = cy + r0 * Math.cos(a0), z0a = cz + r0 * Math.sin(a0);
+      const y1a = cy + r0 * Math.cos(a1), z1a = cz + r0 * Math.sin(a1);
+      const y1b = cy + r1 * Math.cos(a1), z1b = cz + r1 * Math.sin(a1);
+      const y0b = cy + r1 * Math.cos(a0), z0b = cz + r1 * Math.sin(a0);
+      if (nx > 0) quadN([x, y1a, z1a], [x, y0a, z0a], [x, y0b, z0b], [x, y1b, z1b], [1, 0, 0]);
+      else quadN([x, y0a, z0a], [x, y1a, z1a], [x, y1b, z1b], [x, y0b, z0b], [-1, 0, 0]);
+    }
+  }
+
+  function tubeZ(cx, cy, z0, z1, r, div, inward) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const x0 = cx + r * Math.cos(a0), y0 = cy + r * Math.sin(a0);
+      const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+      let nx = Math.cos((a0 + a1) / 2), ny = Math.sin((a0 + a1) / 2), nz = 0;
+      if (inward) { nx = -nx; ny = -ny; }
+      quadN([x0, y0, z0], [x1, y1, z0], [x1, y1, z1], [x0, y0, z1], [nx, ny, nz]);
+    }
+  }
+
+  function tubeX(x0, x1, cy, cz, r, div, inward) {
+    if (!solid) return;
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      const y0 = cy + r * Math.cos(a0), z0 = cz + r * Math.sin(a0);
+      const y1 = cy + r * Math.cos(a1), z1 = cz + r * Math.sin(a1);
+      let nx = 0, ny = Math.cos((a0 + a1) / 2), nz = Math.sin((a0 + a1) / 2);
+      if (inward) { ny = -ny; nz = -nz; }
+      quadN([x0, y1, z1], [x0, y0, z0], [x1, y0, z0], [x1, y1, z1], [nx, ny, nz]);
+    }
+  }
+
   // ================= ground =================
   {
     const E = 640;
@@ -507,6 +558,12 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.hero, a.x1, 20, 32, a.x1, 20, 40);
       seg(T.hero, a.x1, 4, 32, a.x1, 20, 32);
       // (z=40 edge is the existing outer corner)
+      // sash frame, set back 0.3 from the outer face
+      box(3.4, 11.72, 35.6, 4.6, 11.8, 35.7, 'equip', { face: true });
+      box(3.4, 9.4, 35.6, 4.6, 9.48, 35.7, 'equip', { face: true });
+      box(3.4, 9.48, 35.6, 3.48, 11.72, 35.7, 'equip', { face: true });
+      box(4.52, 9.48, 35.6, 4.6, 11.72, 35.7, 'equip', { face: true });
+      line('mid', 3.48, 10.6, 35.65, 4.52, 10.6, 35.65);
     } else {
       box(a.x0, 0, a.z0, a.x1, a.h, a.z1, 'hero', { face: true });
     }
@@ -847,10 +904,18 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.equip, 60 + co * ctRin, 5.5 + sn * ctRin, -1.1, 60 + co * ctRin, 5.5 + sn * ctRin, 1.1);
     }
     // CT base
-    box(56, 0, -1, 64, 1.3, 1, 'equip', { face: true, room: 'C1' });
+    box(56, 0, -1, 64, 1.5, 1, 'equip', { face: true, room: 'C1' });
     // CT table (passes through the hole)
-    box(59, 3.6, -5, 61, 4.1, 3, 'equip', { face: true, room: 'C1' });
+    box(59, 3.4, -5, 61, 3.9, 3, 'equip', { face: true, room: 'C1' });
     box(59.4, 0, -5, 60.6, 3.4, -3, 'equip', { face: true, room: 'C1' });
+    faceRoom = 'C1';
+    tubeZ(60, 5.5, -1.1, 1.1, ctRout, ctDivO, false);
+    if (solid) {
+      tubeZ(60, 5.5, -1.1, 1.1, ctRin, ctDivI, true);
+      annulusZ(60, 5.5, -1.1, ctRin, ctRout, ctDivO, -1);
+      annulusZ(60, 5.5, 1.1, ctRin, ctRout, ctDivO, 1);
+    }
+    faceRoom = null;
 
     // --- MRI: long closed tube, axis x, x=76.8..87.2, closed at x=87.2 end ---
     const mrX0 = 76.8, mrX1 = 87.2, mrY = 5.5, mrZ = 0;
@@ -877,12 +942,18 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         );
       }
     }
+    faceRoom = 'C1';
+    tubeX(mrX0, mrX1, mrY, mrZ, mrRout, mrDivO, false);
+    if (solid) {
+      tubeX(mrX0, mrX1, mrY, mrZ, mrRin, mrDivO, true);
+      annulusX(mrX0, mrY, mrZ, mrRin, mrRout, mrDivO, -1);
+    }
+    faceRoom = null;
     // MRI base
-    box(78, 0, -1, 86, 1.3, 1, 'equip', { face: true, room: 'C1' });
+    box(78, 0, -1, 86, 1.5, 1, 'equip', { face: true, room: 'C1' });
     // MRI table (enters 4.8 from x=76.8 end, bore closed beyond)
     box(72, 3.6, -1, 81.6, 4.1, 1, 'equip', { face: true, room: 'C1' });
-    box(72.4, 0, -0.6, 73.6, 3.4, 0.6, 'equip', { face: true, room: 'C1' });
-
+    box(72.4, 0, -0.6, 73.6, 3.6, 0.6, 'equip', { face: true, room: 'C1' });
     // --- operator consoles + glass line rects ---
     for (const cx of [62, 84]) {
       box(cx - 1.5, 0, -8.7, cx + 1.5, 1.2, -7.3, 'equip', { face: true, room: 'C1' });
@@ -923,7 +994,10 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     box(63.1, 1.0, 31.6, 64.9, 1.5, 36.4, 'equip', { face: true, room: 'C2' });
     box(63.5, 0.2, 33.3, 64.5, 1.0, 34.7, 'equip', { face: true, room: 'C2' });
 
-    // --- shadowless lamps: main (r 2.2/1.2) + 3 child lamps (r 0.8), y=4.4 ---
+    faceRoom = 'C2';
+    // ceiling beam across the room at z = 34, resting on the two walls
+    box(50.6, 8.4, 33.8, 77.4, 8.8, 34.2, 'equip', { face: true, room: 'C2' });
+    // main lamp head: lower rim (existing rings and spokes at y = lampY)
     const lampY = 4.4, lampDivO = mobile ? 24 : 32, lampDivI = mobile ? 16 : 24;
     ring(T.hero, 64, lampY, 34, 2.2, lampDivO, 'y');
     ring(T.hero, 64, lampY, 34, 1.2, lampDivI, 'y');
@@ -932,19 +1006,22 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       seg(T.hero, 64 + Math.cos(t) * 1.2, lampY, 34 + Math.sin(t) * 1.2,
               64 + Math.cos(t) * 2.2, lampY, 34 + Math.sin(t) * 2.2);
     }
-    // main lamp: 3 support lines to roof frame (y=9)
-    for (let s = 0; s < 3; s++) {
-      const t = (s / 3) * Math.PI * 2 + Math.PI / 6;
-      seg(T.equip, 64 + Math.cos(t) * 1.7, lampY, 34 + Math.sin(t) * 1.7, 64, 9, 34);
-    }
-    // child lamps at radius 1.6, angles 90/210/330 deg, 1 support line each
+    // main head body and top rim ring
+    solidCylY(64, lampY, lampY + 0.4, 34, 2.2, lampDivO, { tone: null });
+    ring(T.hero, 64, lampY + 0.4, 34, 2.2, lampDivO, 'y');
+    // central post from head top to beam underside
+    solidCylY(64, lampY + 0.4, 8.4, 34, 0.12, 12, {});
+    // child lamps at radius 1.6, angles 90/210/330 deg, hung below the main head
     const childDiv = mobile ? 12 : 16;
     for (const deg of [90, 210, 330]) {
       const t = (deg * Math.PI) / 180;
       const cx = 64 + Math.cos(t) * 1.6, cz = 34 + Math.sin(t) * 1.6;
-      ring(T.hero, cx, lampY, cz, 0.8, childDiv, 'y');
-      seg(T.equip, cx, lampY, cz, cx, 9, cz);
+      ring(T.hero, cx, 3.6, cz, 0.8, childDiv, 'y');
+      solidCylY(cx, 3.6, 3.85, cz, 0.8, childDiv, { tone: null });
+      ring(T.hero, cx, 3.85, cz, 0.8, childDiv, 'y');
+      line('equip', cx, 3.85, cz, cx, lampY, cz);
     }
+    faceRoom = null;
 
     // --- anesthesia machine: body + 2 cylinders + arm over the head + monitor ---
     box(65.7, 0, 37.3, 67.9, 2.4, 39.1, 'equip', { face: true, room: 'C2' });
@@ -969,14 +1046,17 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
-  // ================= emergency entrance (south) =================
+// ================= emergency entrance (south) =================
   {
     const cz = 100;
-    // canopy: roof + columns (ambulances, ramp, bays removed)
+    // canopy: roof + columns
     box(-20, 6, cz - 9, 20, 6.7, cz + 9, 'hero', { face: true });
     for (const cx of [-17, -8.5, 0, 8.5, 17]) {
-      seg(T.hero, cx, 0, cz - 7, cx, 6, cz - 7);
-      seg(T.hero, cx, 0, cz + 7, cx, 6, cz + 7);
+      for (const z of [cz - 7, cz + 7]) {
+        box(cx - 0.45, 0, z - 0.45, cx + 0.45, 0.15, z + 0.45, 'hero', { face: true });
+        box(cx - 0.25, 0.15, z - 0.25, cx + 0.25, 5.8, z + 0.25, 'hero', { face: true });
+        box(cx - 0.45, 5.8, z - 0.45, cx + 0.45, 6, z + 0.45, 'hero', { face: true });
+      }
     }
   }
 
