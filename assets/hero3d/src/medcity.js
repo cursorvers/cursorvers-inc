@@ -641,6 +641,24 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     box(4, 0, 4, 10, 68, 10, 'hero');
   }
 
+  // rooftop coping (W3), tone 'mid', skip ny
+  {
+    box(-11, 68, -40, 11, 68.6, -39.7, 'mid', { face: true, skip: { ny: true } });
+    box(10.7, 68, -39.7, 11, 68.6, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 68, 10.7, 11, 68.6, 11, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 68, -39.7, -10.7, 68.6, -11, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, -11, -11, 88.3, -10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, 10.7, -11, 88.3, 11, 'mid', { face: true, skip: { ny: true } });
+    box(-40, 88, -10.7, -39.7, 88.3, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11.3, 88, -10.7, -11, 88.3, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(11, 60, -11, 40, 60.6, -10.7, 'mid', { face: true, skip: { ny: true } });
+    box(11, 60, 10.7, 40, 60.6, 11, 'mid', { face: true, skip: { ny: true } });
+    box(39.7, 60, -10.7, 40, 60.6, 10.7, 'mid', { face: true, skip: { ny: true } });
+    box(-11, 48, 11, -10.7, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
+    box(10.7, 48, 11, 11, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
+    box(-10.7, 48, 39.7, 10.7, 48.6, 40, 'mid', { face: true, skip: { ny: true } });
+  }
+
   // ---- C0 cutaway interior: beds, rails, IV, nurse station ----
   {
     const floors = [4, 8, 12, 16];
