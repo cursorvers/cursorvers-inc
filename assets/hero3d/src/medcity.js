@@ -1125,6 +1125,31 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         box(cx - 0.45, 5.8, z - 0.45, cx + 0.45, 6, z + 0.45, 'hero', { face: true });
       }
     }
+    // ambulance under the emergency canopy (G1), no lane/frame/ground lines
+    {
+      box(1.2, 0.55, 98.8, 5.4, 2.9, 101.2, 'hero', { face: true });
+      box(5.4, 0.55, 98.9, 7.4, 2.2, 101.1, 'hero', { face: true });
+      box(1.4, 0.35, 98.9, 7.2, 0.55, 101.1, 'equip', { face: true });
+      line('mid', 7.41, 1.4, 99.15, 7.41, 1.4, 100.85);
+      line('mid', 7.41, 2.05, 99.15, 7.41, 2.05, 100.85);
+      line('mid', 7.41, 1.4, 99.15, 7.41, 2.05, 99.15);
+      line('mid', 7.41, 1.4, 100.85, 7.41, 2.05, 100.85);
+      line('mid', 5.6, 1.4, 98.89, 7.0, 1.4, 98.89);
+      line('mid', 5.6, 2.05, 98.89, 7.0, 2.05, 98.89);
+      line('mid', 5.6, 1.4, 98.89, 5.6, 2.05, 98.89);
+      line('mid', 7.0, 1.4, 98.89, 7.0, 2.05, 98.89);
+      line('mid', 5.6, 1.4, 101.11, 7.0, 1.4, 101.11);
+      line('mid', 5.6, 2.05, 101.11, 7.0, 2.05, 101.11);
+      line('mid', 5.6, 1.4, 101.11, 5.6, 2.05, 101.11);
+      line('mid', 7.0, 1.4, 101.11, 7.0, 2.05, 101.11);
+      line('mid', 1.19, 0.6, 100, 1.19, 2.8, 100);
+      box(5.6, 2.2, 99.6, 6.4, 2.4, 100.4, 'equip', { face: true, skip: { ny: true } });
+      for (const x of [2.4, 6.4]) {
+        for (const [z0, z1] of [[98.55, 98.85], [101.15, 101.45]]) {
+          solidCylZ(x, 0.35, z0, z1, 0.35, 16, {});
+        }
+      }
+    }
   }
 
   // ================= atrium + skybridge =================
@@ -1496,6 +1521,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   softShadowRect(63.1, 31.6, 64.9, 36.4, 0.1, 0.5);
   for (const cx of [-17, -8.5, 0, 8.5, 17]) for (const z of [93, 107]) softShadowRect(cx - 0.45, z - 0.45, cx + 0.45, z + 0.45, 0, 0.35);
   softShadowRect(4, 4, 10, 10, 68, 0.5); // v0.3 W4 rooftop penthouse
+  softShadowRect(1.2, 98.8, 7.4, 101.2, 0, 0.5); // v0.3 G1 ambulance
 
   // ================= assemble render objects =================
   function lineObj(arr, color, opacity) {
