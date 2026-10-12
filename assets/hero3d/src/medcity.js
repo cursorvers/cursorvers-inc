@@ -781,6 +781,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       // outlet nozzle + tee fitting + side valve handwheel
       pipe([[x, 62.3, -5.6], [x, 62.3, -6.6], [x, 61.12, -6.6]], 0.15, {flanges: false});
       box(x-0.22, 60.68, -6.82, x+0.22, 61.12, -6.38, 'equip', {face:true});
+      box(x-0.22, 61.45, -6.82, x+0.22, 61.85, -6.38, 'equip', {face:true}); // バルブ本体 (ハンドルの軸はこの +x 面から出る)
       line('equip', x+0.22, 61.65, -6.6, x+0.5, 61.65, -6.6);
       ring(T.equip, x+0.5, 61.65, -6.6, 0.22, 16, 'x');
       line('mid', x+0.5, 61.43, -6.6, x+0.5, 61.87, -6.6);
