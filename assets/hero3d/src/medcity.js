@@ -654,16 +654,16 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       const cz1 = Math.min(29, bz - 3), cz0 = cz1 - 3;
       for (const bx of bedXs) {
         // bed: 1.1 wide (x) x 0.5 high x 2.6 long (z), bottom at fy+0.4
-        box(bx - 0.55, fy + 0.4, bz - 1.3, bx + 0.55, fy + 0.9, bz + 1.3, 'equip', { room: 'C0' });
+        box(bx - 0.55, fy + 0.4, bz - 1.3, bx + 0.55, fy + 0.9, bz + 1.3, 'equip', { face: true, room: 'C0' });
         // legs (4 short lines)
         for (const [lx, lz] of [[-0.45, -1.2], [0.45, -1.2], [-0.45, 1.2], [0.45, 1.2]]) {
           seg(T.equip, bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
           idseg('C0', bx + lx, fy, bz + lz, bx + lx, fy + 0.4, bz + lz);
         }
         // pillow at head end (+z)
-        box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { room: 'C0' });
-        // head board: 0.15 x 0.6 x 1.15 at head end
-        box(bx - 0.075, fy + 0.4, bz + 1.3, bx + 0.075, fy + 1.0, bz + 1.15, 'equip', { room: 'C0' });
+        box(bx - 0.3, fy + 0.9, bz + 0.7, bx + 0.3, fy + 1.05, bz + 1.25, 'equip', { face: true, room: 'C0' });
+        // head board: 1.15 wide x 0.6 high x 0.08 thick, against the head end, 0.02 clear of the wall
+        box(bx - 0.575, fy + 0.4, bz + 1.3, bx + 0.575, fy + 1.0, bz + 1.38, 'equip', { face: true, room: 'C0' });
         // IV stand: pole height 2.1 + top cross 2 lines + 2 legs
         const ix = bx - 0.9;
         seg(T.equip, ix, fy, iz, ix, fy + 2.1, iz);
