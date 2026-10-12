@@ -1368,7 +1368,8 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     const z0 = 44, z1 = 88;
     for (const cx of [-13, -4.5, 4.5, 13]) {
       for (const cz of [z0 + 2, (z0 + z1) / 2, z1 - 2]) {
-        seg(T.mid, cx, 0, cz, cx, 14, cz);
+        box(cx - 0.45, 0, cz - 0.45, cx + 0.45, 0.15, cz + 0.45, 'mid', { face: true });
+        box(cx - 0.3, 0.15, cz - 0.3, cx + 0.3, 14, cz + 0.3, 'mid', { face: true });
       }
     }
     box(-14, 14, z0, 14, 15, z1, 'mid', { face: true });
@@ -1403,6 +1404,75 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     box(5.3, 0, 81.4, 6.7, 0.9, 82.6, 'hero', { face: true });
     box(5.4, 2.4, 81.94, 6.6, 3.2, 82.06, 'hero', { face: true });
     seg(T.hero, 6, 0.9, 82, 6, 2.4, 82);
+  }
+
+  // hall glass faces, link to the south wing, back-side parts (hall-back spec)
+  {
+    const hMull = mobile ? [52, 60, 68, 76] : [48, 52, 56, 60, 64, 68, 72, 76];
+
+    // H2: corner mullions at z 44 (z 88 corners already in E1)
+    line('mid', -14, 0, 44, -14, 14, 44);
+    line('mid', 14, 0, 44, 14, 14, 44);
+
+    // H2: side wall mullions
+    for (const sx of [-14, 14]) {
+      for (const z of hMull) line('mid', sx, 0, z, sx, 14, z);
+      // jambs at z 80 and 84 (corridor doorway on the east face; mirrored on the west)
+      line('mid', sx, 0, 80, sx, 14, 80);
+      line('mid', sx, 0, 84, sx, 14, 84);
+      // transoms y 4 and y 9 across z 44..88
+      line('mid', sx, 4, 44, sx, 4, 88);
+      line('mid', sx, 9, 44, sx, 9, 88);
+    }
+
+    // H3: north face mullions
+    const nMull = mobile ? [-10, 10] : [-10, -4, 4, 10];
+    for (const nx of nMull) {
+      if (Math.abs(nx) >= 8) {
+        line('mid', nx, 0, 44, nx, 14, 44);
+      } else {
+        line('mid', nx, 4, 44, nx, 14, 44);
+      }
+    }
+    // H3: north face transoms
+    line('mid', -14, 9, 44, 14, 9, 44);
+    line('mid', -14, 4, 44, -8, 4, 44);
+    line('mid', 8, 4, 44, 14, 4, 44);
+
+    // L: link to south wing
+    box(-8, 3.6, 40, 8, 4, 44, 'mid', { face: true });
+    box(-8, 0, 43.7, -7.7, 3.6, 44, 'mid', { face: true });
+    box(7.7, 0, 43.7, 8, 3.6, 44, 'mid', { face: true });
+    line('mid', -8, 0, 40, -8, 3.6, 40);
+    line('mid', 8, 0, 40, 8, 3.6, 40);
+    line('mid', -8, 0, 42, -8, 3.6, 42);
+    line('mid', 8, 0, 42, 8, 3.6, 42);
+
+    // K1: stair tower on west face of west wing
+    box(-43.5, 0, -10, -40, 76, -6, 'mid', { face: true });
+    box(-43.7, 76, -10.2, -40, 76.3, -5.8, 'mid', { face: true });
+    const landY = mobile ? [8, 16, 24, 32, 40, 48, 56, 64, 72] : [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72];
+    for (const ly of landY) line('far', -43.51, ly, -10, -43.51, ly, -6);
+    line('mid', -43.51, 3, -8, -43.51, 74, -8); // slit window starts above the door head (y 2.4)
+    // door frame: 3 sides, no ground edge
+    line('mid', -43.51, 0, -9, -43.51, 2.4, -9);
+    line('mid', -43.51, 0, -7, -43.51, 2.4, -7);
+    line('mid', -43.51, 2.4, -9, -43.51, 2.4, -7);
+
+    // K2: loading dock on north face of north wing
+    box(-8, 4, -42.5, 8, 4.3, -40, 'mid', { face: true });
+    box(-8, 0, -42.5, -7.7, 4, -42.2, 'mid', { face: true });
+    box(7.7, 0, -42.5, 8, 4, -42.2, 'mid', { face: true });
+    box(-6, 0, -40.15, -1, 3.4, -40, 'mid', { face: true });
+    box(1, 0, -40.15, 6, 3.4, -40, 'mid', { face: true });
+    const slatY = mobile ? [1.7] : [0.85, 1.7, 2.55];
+    for (const sy of slatY) for (const [sx0, sx1] of [[-6, -1], [1, 6]]) line('far', sx0, sy, -40.16, sx1, sy, -40.16);
+
+    // K3: duct riser on north face of west wing
+    box(-36, 0, -12.4, -33.6, 86, -11, 'mid', { face: true });
+    box(-36.2, 86, -12.6, -33.4, 86.3, -11, 'mid', { face: true });
+    const seamY = mobile ? [24, 48, 72] : [12, 24, 36, 48, 60, 72];
+    for (const qy of seamY) line('far', -36, qy, -12.41, -33.6, qy, -12.41);
   }
 
   // ================= corridors (floor 0) =================
