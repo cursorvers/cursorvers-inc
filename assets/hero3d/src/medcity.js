@@ -615,7 +615,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       if (a.name === 'south' && y >= 4 && y < 20) continue; // notch band: no mullion rhythm on cut faces
       if (a.name !== 'north' && (a.name !== 'east' || y % 12 === 0)) seg(T.equip, a.x0, y, a.z1, a.x1, y, a.z1); // east wing: every third floor only (v0.3 facade, stage 2)
       if (a.name !== 'south') seg(T.equip, a.x0, y, a.z0, a.x1, y, a.z0);
-      if (a.name !== 'west') seg(T.equip, a.x0, y, a.z0, a.x0, y, a.z1);
+      if (a.name !== 'east') seg(T.equip, a.x0, y, a.z0, a.x0, y, a.z1); // x0 is the inner face only for the east arm (the west arm's x=-40 face is a back face)
       if (a.name !== 'east') seg(T.equip, a.x1, y, a.z0, a.x1, y, a.z1);
     }
     // mullions (sparser on mobile)
@@ -624,7 +624,11 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
         seg(T.equip, x, 0, a.z1, x, a.h, a.z1);
     }
-    if (a.name !== 'west') {
+    if (a.name !== 'south') { // z0 is the inner face only for the south arm (back faces get mullions too)
+      for (let x = a.x0 + mstep; x < a.x1 - 0.1; x += mstep)
+        seg(T.equip, x, 0, a.z0, x, a.h, a.z0);
+    }
+    if (a.name !== 'east') {
       for (let z = a.z0 + mstep; z < a.z1 - 0.1; z += mstep)
         seg(T.equip, a.x0, 0, z, a.x0, a.h, z);
     }
