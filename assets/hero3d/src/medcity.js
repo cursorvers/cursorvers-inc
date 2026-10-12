@@ -1051,34 +1051,34 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   {
     // --- shell: walls / floor / roof built separately, south-east corner notched in L ---
     // floor
-    box(50, 0, -11, 94, 0.2, 11, 'hero', { face: true, room: 'C1' });
+    box(50, 0, -11, 94, 0.2, 11, 'mid', { face: true, room: 'C1' });
     // north wall
-    box(50, 0, -11, 94, 12, -10.4, 'hero', { face: true });
+    box(50, 0, -11, 94, 12, -10.4, 'mid', { face: true });
     // west wall (x=50) with entrance z=-2..2, y=0..4 (real hole: split by opening)
-    box(50, 0, -11, 50.6, 12, -2, 'hero', { face: true });
-    box(50, 0, 2, 50.6, 12, 11, 'hero', { face: true });
-    box(50, 4, -2, 50.6, 12, 2, 'hero', { face: true });
+    box(50, 0, -11, 50.6, 12, -2, 'mid', { face: true });
+    box(50, 0, 2, 50.6, 12, 11, 'mid', { face: true });
+    box(50, 4, -2, 50.6, 12, 2, 'mid', { face: true });
     // south wall (z=11): L notch x=82..93.4, y=1.2..10
-    box(50, 0, 10.4, 82, 12, 11, 'hero', { face: true });
-    box(82, 0, 10.4, 93.4, 1.2, 11, 'hero', { face: true }); // 腰壁
-    box(82, 10, 10.4, 93.4, 12, 11, 'hero', { face: true }); // 上の梁
+    box(50, 0, 10.4, 82, 12, 11, 'mid', { face: true });
+    box(82, 0, 10.4, 93.4, 1.2, 11, 'mid', { face: true }); // 腰壁
+    box(82, 10, 10.4, 93.4, 12, 11, 'mid', { face: true }); // 上の梁
     // east wall (x=94): L notch z=1..10.4, y=1.2..10
-    box(93.4, 0, 1, 94, 1.2, 10.4, 'hero', { face: true });
-    box(93.4, 10, 1, 94, 12, 10.4, 'hero', { face: true });
+    box(93.4, 0, 1, 94, 1.2, 10.4, 'mid', { face: true });
+    box(93.4, 10, 1, 94, 12, 10.4, 'mid', { face: true });
     // corner column 0.6 square (x=93.4..94, z=10.4..11)
-    box(93.4, 0, 10.4, 94, 12, 11, 'hero', { face: true });
+    box(93.4, 0, 10.4, 94, 12, 11, 'mid', { face: true });
     // east wall penetration frame (z=-5.6..-4.4, y=2.2..3.4) — 線で枠だけ
     seg(T.equip, 94, 2.2, -5.6, 94, 2.2, -4.4);
     seg(T.equip, 94, 3.4, -5.6, 94, 3.4, -4.4);
     seg(T.equip, 94, 2.2, -5.6, 94, 3.4, -5.6);
     seg(T.equip, 94, 2.2, -4.4, 94, 3.4, -4.4);
     // east wall split into a real penetration hole (z=-5.6..-4.4, y=2.2..3.4)
-    box(93.4, 0, -11, 94, 12, -5.6, 'hero', { face: true });
-    box(93.4, 0, -5.6, 94, 2.2, -4.4, 'hero', { face: true });
-    box(93.4, 3.4, -5.6, 94, 12, -4.4, 'hero', { face: true });
-    box(93.4, 0, -4.4, 94, 12, 1, 'hero', { face: true });
+    box(93.4, 0, -11, 94, 12, -5.6, 'mid', { face: true });
+    box(93.4, 0, -5.6, 94, 2.2, -4.4, 'mid', { face: true });
+    box(93.4, 3.4, -5.6, 94, 12, -4.4, 'mid', { face: true });
+    box(93.4, 0, -4.4, 94, 12, 1, 'mid', { face: true });
     // lift shaft x=50..54, z=5..9, y=0..16 (joins east skybridge y=12..16)
-    box(50, 0, 5, 54, 16, 9, 'hero', { face: true });
+    box(50, 0, 5, 54, 16, 9, 'mid', { face: true });
 
     // --- CT: short donut, axis z, center (60, 5.5, 0), z=-1.1..1.1 ---
     const ctRout = 4, ctRin = 1.5;
@@ -1155,19 +1155,19 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   {
     // --- shell: floor / walls / roof separately, south 30% of roof kept as frame ---
     // floor
-    box(50, 0, 22, 78, 0.1, 46, 'hero', { face: true, room: 'C2' });
+    box(50, 0, 22, 78, 0.1, 46, 'mid', { face: true, room: 'C2' });
     // roof: south side only (z=38.8..46); north edge reads as foreground frame
-    box(50, 8.8, 38.8, 78, 9, 46, 'hero', { face: true });
+    box(50, 8.8, 38.8, 78, 9, 46, 'mid', { face: true });
     // north wall (z=22) full height
-    box(50, 0, 22, 78, 9, 22.6, 'hero', { face: true });
+    box(50, 0, 22, 78, 9, 22.6, 'mid', { face: true });
     // east wall (x=78) full height
-    box(77.4, 0, 22, 78, 9, 46, 'hero', { face: true });
+    box(77.4, 0, 22, 78, 9, 46, 'mid', { face: true });
     // west wall (x=50) full height with entrance z=32..36, y=0..4 (real hole: split by opening)
-    box(50, 0, 22, 50.6, 9, 32, 'hero', { face: true });
-    box(50, 0, 36, 50.6, 9, 46, 'hero', { face: true });
-    box(50, 4, 32, 50.6, 9, 36, 'hero', { face: true });
+    box(50, 0, 22, 50.6, 9, 32, 'mid', { face: true });
+    box(50, 0, 36, 50.6, 9, 46, 'mid', { face: true });
+    box(50, 4, 32, 50.6, 9, 36, 'mid', { face: true });
     // south wall (z=46): spandrel to y=1.2
-    box(50, 0, 45.4, 78, 1.2, 46, 'hero', { face: true });
+    box(50, 0, 45.4, 78, 1.2, 46, 'mid', { face: true });
 
     // --- surgical table (long in z, head at +z) ---
     box(63.1, 1.0, 31.6, 64.9, 1.5, 36.4, 'equip', { face: true, room: 'C2' });
