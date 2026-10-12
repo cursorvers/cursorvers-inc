@@ -916,6 +916,23 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
       box(xs-0.3, 60, -6.9, xs+0.3, 60.06, -6.3, 'equip', {face:true});
       box(xs-0.1, 60, -6.7, xs+0.1, 60.7, -6.5, 'equip', {face:true});
     }
+    // core rooftop penthouse, ducts, access walkways (W4) and junction bands (S3)
+    {
+      box(4, 68, 4, 10, 70.4, 10, 'hero', { face: true, skip: { ny: true } });
+      line('mid', 3.99, 68, 6.4, 3.99, 68, 7.6);
+      line('mid', 3.99, 70.0, 6.4, 3.99, 70.0, 7.6);
+      line('mid', 3.99, 68, 6.4, 3.99, 70.0, 6.4);
+      line('mid', 3.99, 68, 7.6, 3.99, 70.0, 7.6);
+      box(1.4, 68.5, -11, 2.6, 69.3, 5.6, 'equip', { face: true, skip: { nz: true } });
+      box(2.6, 68.5, 4.4, 4, 69.3, 5.6, 'equip', { face: true, skip: { px: true } });
+      for (const z of [-8, -4, 0]) {
+        box(1.8, 68, z - 0.1, 2.2, 68.5, z + 0.1, 'equip', { face: true, skip: { ny: true, py: true } });
+      }
+      box(1.25, 68.35, -11, 2.75, 69.45, -10.75, 'equip', { face: true, skip: { nz: true } });
+      box(3.75, 68.35, 4.25, 4, 69.45, 5.75, 'equip', { face: true, skip: { px: true } });
+      box(-7.2, 68, -13.6, -5.8, 68.1, 5.8, 'mid', { face: true, skip: { ny: true } });
+      box(-7.2, 68, 5.8, 4, 68.1, 7.2, 'mid', { face: true, skip: { ny: true, px: true } });
+    }
   }
 
   // ================= imaging department C1 (CT / MRI) =================
@@ -1478,6 +1495,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   softShadowRect(78, -1, 86, 1, 0.2, 0.6);
   softShadowRect(63.1, 31.6, 64.9, 36.4, 0.1, 0.5);
   for (const cx of [-17, -8.5, 0, 8.5, 17]) for (const z of [93, 107]) softShadowRect(cx - 0.45, z - 0.45, cx + 0.45, z + 0.45, 0, 0.35);
+  softShadowRect(4, 4, 10, 10, 68, 0.5); // v0.3 W4 rooftop penthouse
 
   // ================= assemble render objects =================
   function lineObj(arr, color, opacity) {
