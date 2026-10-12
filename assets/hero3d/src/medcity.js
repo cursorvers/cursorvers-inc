@@ -717,6 +717,51 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     for (const x of [-36.4, -29, -21.6, -14.2]) {
       box(x - 0.15, 0, 12.35, x + 0.15, 3.8, 12.65, 'mid', { face: true, skip: { py: true } });
     }
+
+    // N1-N4: faces opposite the entrance (north / west), mirroring the south and east treatment
+    // N1 west face of north wing
+    for (const y of ysN) {
+      box(-11.9, y - 0.15, -39.7, -11, y, -11.3, 'mid', { face: true, skip: { px: true } });
+    }
+    box(-12.2, 63.8, -39.7, -11, 64, -11.3, 'mid', { face: true, skip: { px: true } });
+    box(-12.8, 3.8, -39.7, -11, 4, -11.3, 'mid', { face: true, skip: { px: true } });
+    for (const z of [-36, -28.6, -21.2, -13.8]) {
+      box(-12.65, 0, z - 0.15, -12.35, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
+    // N2 north face of north wing
+    for (const y of ysN) {
+      box(-10.7, y - 0.15, -40.9, 10.7, y, -40, 'mid', { face: true, skip: { pz: true } });
+    }
+    box(-10.7, 63.8, -41.2, 10.7, 64, -40, 'mid', { face: true, skip: { pz: true } });
+    // N3 north face of west tower
+    box(-40, 4, -11.6, -36.4, 84, -11, 'hero', { face: true, skip: { pz: true } });
+    for (let y = 8; y <= 80; y += 4) {
+      line('mid', -40, y, -11.61, -36.4, y, -11.61);
+    }
+    line('mid', -38.2, 4, -11.61, -38.2, 84, -11.61);
+    box(-40, 3.8, -12.8, -36.4, 4, -11, 'mid', { face: true, skip: { pz: true } });
+    box(-33.4, 3.8, -12.8, -13.1, 4, -11, 'mid', { face: true, skip: { pz: true } });
+    for (const x of [-38.2, -29, -21.6, -14.2]) {
+      box(x - 0.15, 0, -12.65, x + 0.15, 3.8, -12.35, 'mid', { face: true, skip: { py: true } });
+    }
+    box(-33.4, 83.8, -11.5, -11, 84, -11, 'mid', { face: true, skip: { pz: true } });
+    const cstep = mobile ? 1.8 : 0.9;
+    for (let k = 1; ; k++) {
+      const x = -33.4 + cstep * k;
+      if (!(x < -11.05)) break;
+      line('mid', x, 84, -11.01, x, 88, -11.01);
+    }
+    // N4 west face of west tower
+    box(-40.5, 83.8, -11, -40, 84, 11, 'mid', { face: true, skip: { px: true } });
+    for (let k = 1; ; k++) {
+      const z = -11 + cstep * k;
+      if (!(z < 10.95)) break;
+      line('mid', -40.01, 84, z, -40.01, 88, z);
+    }
+    box(-41.8, 3.8, -5.5, -40, 4, 10.7, 'mid', { face: true, skip: { px: true } });
+    for (const z of [-4.5, 2.9, 10]) {
+      box(-41.65, 0, z - 0.15, -41.35, 3.8, z + 0.15, 'mid', { face: true, skip: { py: true } });
+    }
   }
 
   // heliport tower facade (v0.3 facade, stage 2)
