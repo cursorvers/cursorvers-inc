@@ -216,6 +216,205 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   function line(tone, ax, ay, az, bx, by, bz) { seg(T[tone], ax, ay, az, bx, by, bz); }
 
+  // ---- 曲面・配管・架台の補助 (屋上の機器の精密化で追加) ----
+  function toneOf(nx, ny, nz) {
+    const l = Math.hypot(nx, ny, nz) || 1;
+    nx /= l; ny /= l; nz /= l;
+    return Math.max(ny, 0) ** 2 * 1.0 + nx * nx * 0.955 + nz * nz * 0.925 + Math.min(ny, 0) ** 2 * 0.88;
+  }
+  function tri(ax, ay, az, bx, by, bz, cx, cy, cz, nx, ny, nz) {
+    if (!solid) return;
+    // fix 2: geometric normal vs given normal, swap if flipped
+    const g = [(by - ay) * (cz - az) - (bz - az) * (cy - ay),
+               (bz - az) * (cx - ax) - (bx - ax) * (cz - az),
+               (bx - ax) * (cy - ay) - (by - ay) * (cx - ax)];
+    if (Math.hypot(g[0], g[1], g[2]) < 1e-9) return;
+    if (g[0] * nx + g[1] * ny + g[2] * nz < 0) { let t0 = bx, t1 = by, t2 = bz; bx = cx; by = cy; bz = cz; cx = t0; cy = t1; cz = t2; }
+    const c = ids ? [1, 1, 1] : [toneOf(nx, ny, nz), toneOf(nx, ny, nz), toneOf(nx, ny, nz)];
+    F.pos.push(ax, ay, az, bx, by, bz, cx, cy, cz);
+    for (let i = 0; i < 3; i++) { F.nrm.push(nx, ny, nz); F.col.push(c[0], c[1], c[2]); }
+  }
+  function quadN(a, b, c, d, n) {
+    tri(a[0], a[1], a[2], b[0], b[1], b[2], c[0], c[1], c[2], n[0], n[1], n[2]);
+    tri(a[0], a[1], a[2], c[0], c[1], c[2], d[0], d[1], d[2], n[0], n[1], n[2]);
+  }
+  function solidCylY(cx, y0, y1, cz, r, div, opt = {}) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+      const p = (a, y) => [cx + r * Math.cos(a), y, cz + r * Math.sin(a)];
+      const n = [Math.cos(am), 0, Math.sin(am)];
+      quadN(p(a0, y0), p(a1, y0), p(a1, y1), p(a0, y1), n);
+      if (opt.inner) quadN(p(a1, y0), p(a0, y0), p(a0, y1), p(a1, y1), [-n[0], 0, -n[2]]);
+    }
+    if (opt.tone !== null) { const tn = opt.tone || 'equip'; ring(T[tn], cx, y0, cz, r, div, 'y'); ring(T[tn], cx, y1, cz, r, div, 'y'); }
+    if (opt.top !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, y1, cz, cx + r * Math.cos(a0), y1, cz + r * Math.sin(a0), cx + r * Math.cos(a1), y1, cz + r * Math.sin(a1), 0, 1, 0);
+    }
+    if (opt.bottom !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, y0, cz, cx + r * Math.cos(a1), y0, cz + r * Math.sin(a1), cx + r * Math.cos(a0), y0, cz + r * Math.sin(a0), 0, -1, 0);
+    }
+    if (opt.seams) for (let i = 0; i < opt.seams; i++) {
+      const a = (i / opt.seams) * Math.PI * 2;
+      seg(T[opt.seamTone || 'mid'], cx + r * Math.cos(a), y0, cz + r * Math.sin(a), cx + r * Math.cos(a), y1, cz + r * Math.sin(a));
+    }
+  }
+  function annulusY(cx, y, cz, r0, r1, div) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      quadN([cx + r0 * Math.cos(a0), y, cz + r0 * Math.sin(a0)], [cx + r1 * Math.cos(a0), y, cz + r1 * Math.sin(a0)],
+            [cx + r1 * Math.cos(a1), y, cz + r1 * Math.sin(a1)], [cx + r0 * Math.cos(a1), y, cz + r0 * Math.sin(a1)], [0, 1, 0]);
+    }
+  }
+  function solidCylZ(cx, cy, z0, z1, r, div, opt = {}) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+      const p = (a, z) => [cx + r * Math.cos(a), cy + r * Math.sin(a), z];
+      quadN(p(a0, z0), p(a1, z0), p(a1, z1), p(a0, z1), [Math.cos(am), Math.sin(am), 0]);
+    }
+    if (opt.tone !== null) { const tn = opt.tone || 'equip'; ring(T[tn], cx, cy, z0, r, div, 'z'); ring(T[tn], cx, cy, z1, r, div, 'z'); }
+    if (opt.top !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, cy, z1, cx + r * Math.cos(a1), cy + r * Math.sin(a1), z1, cx + r * Math.cos(a0), cy + r * Math.sin(a0), z1, 0, 0, 1);
+    }
+    if (opt.bottom !== false) for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+      tri(cx, cy, z0, cx + r * Math.cos(a0), cy + r * Math.sin(a0), z0, cx + r * Math.cos(a1), cy + r * Math.sin(a1), z0, 0, 0, -1);
+    }
+  }
+  function domeZ(cx, cy, zBase, r, depth, dir, div) {
+    const U = [0, 0.45, 0.72, 0.9, 1.0];
+    const st = U.map(u => ({ z: zBase + dir * depth * u, rr: r * Math.sqrt(Math.max(0, 1 - u * u)) }));
+    for (let k = 0; k < 4; k++) {
+      const um = (U[k] + U[k + 1]) / 2;
+      const rm = r * Math.sqrt(Math.max(0, 1 - um * um));
+      for (let i = 0; i < div; i++) {
+        const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+        const p = (a, s) => [cx + s.rr * Math.cos(a), cy + s.rr * Math.sin(a), s.z];
+        // ellipsoid normal at band mid-station
+        let nx = rm * Math.cos(am) / (r * r), ny = rm * Math.sin(am) / (r * r), nz = dir * um / depth;
+        const l = Math.hypot(nx, ny, nz);
+        quadN(p(a0, st[k]), p(a1, st[k]), p(a1, st[k + 1]), p(a0, st[k + 1]), [nx / l, ny / l, nz / l]);
+      }
+    }
+    ring(T.equip, cx, cy, zBase, r, div, 'z');
+  }
+  function saddleZ(cx, zc, yBase, tankCy, r, halfW, thick) {
+    // cradle under tank: profile bottom -> left side -> arc -> right side -> bottom
+    const rr = r + 0.02, steps = 8;
+    const x0 = cx - halfW, x1 = cx + halfW;
+    const a0 = Math.acos(halfW / rr);
+    const prof = [[x0, yBase], [x0, tankCy - rr * Math.sin(a0)]];
+    for (let i = 1; i <= steps; i++) {
+      const a = Math.PI + a0 + (Math.PI - 2 * a0) * (i / steps);
+      prof.push([cx + rr * Math.cos(a), tankCy + rr * Math.sin(a)]);
+    }
+    prof.push([x1, yBase]);
+    const zb = zc - thick / 2, zf = zc + thick / 2;
+    const bc = [(x0 + x1) / 2, yBase];
+    // front (+z) / back (-z) fans
+    for (let i = 0; i < prof.length - 1; i++) {
+      tri(prof[i][0], prof[i][1], zf, prof[i + 1][0], prof[i + 1][1], zf, bc[0], bc[1], zf, 0, 0, 1);
+      tri(prof[i + 1][0], prof[i + 1][1], zb, prof[i][0], prof[i][1], zb, bc[0], bc[1], zb, 0, 0, -1);
+    }
+    // side strip: normals toward tank axis on arc, ±x on straight sides
+    const nl = (mx, my) => { const l = Math.hypot(cx - mx, tankCy - my) || 1; return [(cx - mx) / l, (tankCy - my) / l, 0]; };
+    for (let i = 0; i < prof.length - 1; i++) {
+      const a = prof[i], b = prof[i + 1];
+      const n = i === 0 ? [-1, 0, 0]
+        : i >= 1 && i <= steps ? nl((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+        : [1, 0, 0];
+      quadN([a[0], a[1], zb], [b[0], b[1], zb], [b[0], b[1], zf], [a[0], a[1], zf], n);
+    }
+    // bottom
+    quadN([x0, yBase, zb], [x1, yBase, zb], [x1, yBase, zf], [x0, yBase, zf], [0, -1, 0]);
+    // lines: closed profile outline on front and back
+    for (const z of [zb, zf]) {
+      for (let i = 0; i < prof.length; i++) {
+        const a = prof[i], b = prof[(i + 1) % prof.length];
+        seg(T.equip, a[0], a[1], z, b[0], b[1], z);
+      }
+    }
+    // 4 vertical edges
+    for (const p of [prof[0], prof[1], prof[prof.length - 2], prof[prof.length - 1]]) {
+      seg(T.equip, p[0], p[1], zb, p[0], p[1], zf);
+    }
+  }
+  function pipe(pts, r, opt = {}) {
+    const tn = opt.tone || 'equip', div = 8;
+    const fl = opt.flanges !== false, h = 1.1 * r, th = 0.12;
+    // perpendiculars for axis-aligned legs
+    const perp = (ax) => [ax === 0 ? [0, 1, 0] : [1, 0, 0], ax === 2 ? [0, 1, 0] : [0, 0, 1]];
+    const circ = (p, u, v, rad, uu, vv) => [
+      p[0] + u[0] * rad * uu + v[0] * rad * vv,
+      p[1] + u[1] * rad * uu + v[1] * rad * vv,
+      p[2] + u[2] * rad * uu + v[2] * rad * vv];
+    for (let li = 0; li < pts.length - 1; li++) {
+      const a = pts[li], b = pts[li + 1];
+      const ax = a[0] !== b[0] ? 0 : a[1] !== b[1] ? 1 : 2; // differing coord
+      const d = Math.sign(b[ax] - a[ax]) || 1;
+      const [u, v] = perp(ax);
+      // stops: elbow cube half-size h at interior corners
+      let s = li > 0 ? h : 0;
+      let e = li < pts.length - 2 ? h : 0;
+      // flange inner faces: tube starts/stops there
+      if (fl && li === 0) s += th;
+      if (fl && li === pts.length - 2) e += th;
+      const A = a.slice(), B = b.slice();
+      A[ax] += d * s; B[ax] -= d * e;
+      // tube: 8-sided, outward normals
+      for (let i = 0; i < div; i++) {
+        const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+        const nrm = [u[0] * Math.cos(am) + v[0] * Math.sin(am), u[1] * Math.cos(am) + v[1] * Math.sin(am), u[2] * Math.cos(am) + v[2] * Math.sin(am)];
+        quadN(circ(A, u, v, r, Math.cos(a0), Math.sin(a0)), circ(A, u, v, r, Math.cos(a1), Math.sin(a1)),
+              circ(B, u, v, r, Math.cos(a1), Math.sin(a1)), circ(B, u, v, r, Math.cos(a0), Math.sin(a0)), nrm);
+      }
+      // 4 straight lines at 0/90/180/270
+      for (let k = 0; k < 4; k++) {
+        const c = Math.cos(k * Math.PI / 2), s2 = Math.sin(k * Math.PI / 2);
+        const q = circ(A, u, v, r, c, s2), q2 = circ(B, u, v, r, c, s2);
+        seg(T[tn], q[0], q[1], q[2], q2[0], q2[1], q2[2]);
+      }
+    }
+    // flanges: exactly two, at first and last point of the whole polyline
+    if (fl) {
+      const ends = [[pts[0], pts[1]], [pts[pts.length - 1], pts[pts.length - 2]]];
+      for (const [ep, other] of ends) {
+        const ax = ep[0] !== other[0] ? 0 : ep[1] !== other[1] ? 1 : 2;
+        const din = Math.sign(other[ax] - ep[ax]) || 1; // unit vector into the leg
+        const [u, v] = perp(ax);
+        const F0 = ep.slice(); // inner face
+        const F1 = ep.slice(); F1[ax] += th * din; // outer face exactly on end point
+        const fr = 1.8 * r;
+        for (let i = 0; i < div; i++) {
+          const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2, am = (a0 + a1) / 2;
+          const nrm = [u[0] * Math.cos(am) + v[0] * Math.sin(am), u[1] * Math.cos(am) + v[1] * Math.sin(am), u[2] * Math.cos(am) + v[2] * Math.sin(am)];
+          quadN(circ(F0, u, v, fr, Math.cos(a0), Math.sin(a0)), circ(F0, u, v, fr, Math.cos(a1), Math.sin(a1)),
+                circ(F1, u, v, fr, Math.cos(a1), Math.sin(a1)), circ(F1, u, v, fr, Math.cos(a0), Math.sin(a0)), nrm);
+        }
+        // two flat end discs, normals ±axis
+        for (let i = 0; i < div; i++) {
+          const a0 = (i / div) * Math.PI * 2, a1 = ((i + 1) / div) * Math.PI * 2;
+          const na = [0, 0, 0]; na[ax] = -din; // inner disc normal
+          const p0 = circ(F0, u, v, fr, Math.cos(a0), Math.sin(a0)), p1 = circ(F0, u, v, fr, Math.cos(a1), Math.sin(a1));
+          const pa = circ(F1, u, v, fr, Math.cos(a0), Math.sin(a0)), pb = circ(F1, u, v, fr, Math.cos(a1), Math.sin(a1));
+          tri(F0[0], F0[1], F0[2], p1[0], p1[1], p1[2], p0[0], p0[1], p0[2], na[0], na[1], na[2]);
+          tri(F1[0], F1[1], F1[2], pa[0], pa[1], pa[2], pb[0], pb[1], pb[2], na[0] * -1, na[1] * -1, na[2] * -1);
+        }
+        // rings at each face centre, correct axis
+        const rax = ax === 0 ? 'x' : ax === 1 ? 'y' : 'z';
+        ring(T[tn], F0[0], F0[1], F0[2], fr, div, rax);
+        ring(T[tn], F1[0], F1[1], F1[2], fr, div, rax);
+      }
+    }
+    // elbow cubes at interior corners
+    for (let i = 1; i < pts.length - 1; i++) {
+      const c = pts[i];
+      box(c[0] - h, c[1] - h, c[2] - h, c[0] + h, c[1] + h, c[2] + h, tn, { face: true });
+    }
+  }
+
   // ================= ground =================
   {
     const E = 640;
@@ -402,20 +601,201 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
 
   // ---- rooftop equipment ----
   {
-    // cooling towers on north arm roof (y=68)
-    cyl(-5, 68, -25, 3, 5, 'equip');
-    cyl(4, 68, -25, 3, 5, 'equip');
-    box(-8, 68, -18, 8, 69.5, -14, 'equip');
-    // O2 tanks (horizontal cylinders) on east arm roof (y=60)
+    const P = Math.PI, C = Math.cos, S = Math.sin;
+
+    // A. cooling tower factory
+    function tower(cx, cz, ladderAngle) {
+      // 1. sleepers
+      box(cx-3.6, 68, cz-2.0, cx+3.6, 68.4, cz-1.2, 'equip', {face:true});
+      box(cx-3.6, 68, cz+1.2, cx+3.6, 68.4, cz+2.0, 'equip', {face:true});
+      // 2. base beams
+      box(cx-2.2, 68.4, cz-2.6, cx-1.6, 68.8, cz+2.6, 'equip', {face:true});
+      box(cx+1.6, 68.4, cz-2.6, cx+2.2, 68.8, cz+2.6, 'equip', {face:true});
+      // 3. cold-water basin
+      solidCylY(cx, 68.8, 69.8, cz, 3.2, 32, {seams: 0});
+      // 4. lower casing + louvers + mullions
+      solidCylY(cx, 69.8, 71.6, cz, 3.0, 32, {bottom:false, top:false});
+      for (const y of [70.1, 70.4, 70.7, 71.0, 71.3]) ring(T.mid, cx, y, cz, 3.0, 32, 'y');
+      for (let i = 0; i < 12; i++) {
+        const a = i/12*2*P, x = cx+3.0*C(a), z = cz+3.0*S(a);
+        line('mid', x, 69.8, z, x, 71.6, z);
+      }
+      // 5. joint band
+      solidCylY(cx, 71.55, 71.7, cz, 3.08, 32, {});
+      // 6. upper casing
+      solidCylY(cx, 71.7, 73.4, cz, 3.0, 32, {bottom:false, top:false, seams: 8});
+      // 7. fan deck
+      annulusY(cx, 73.4, cz, 1.9, 3.0, 32);
+      // 8. drift eliminator
+      {
+        const div = 24;
+        for (let i = 0; i < div; i++) {
+          const a0 = i/div*2*P, a1 = (i+1)/div*2*P;
+          tri(cx, 73.0, cz, cx+1.9*C(a0), 73.0, cz+1.9*S(a0), cx+1.9*C(a1), 73.0, cz+1.9*S(a1), 0, 1, 0);
+        }
+        // 7 slats along x clipped to r=1.9
+        for (let k = 0; k < 7; k++) {
+          const z = cz - 1.5 + k*0.5, h = Math.sqrt(1.9*1.9 - (z-cz)*(z-cz));
+          line('mid', cx-h, 73.0, z, cx+h, 73.0, z);
+        }
+      }
+      // 9. fan stack (open, seen from above)
+      solidCylY(cx, 73.0, 74.4, cz, 1.9, 32, {top:false, bottom:false, inner:true});
+      // 10. motor support beam
+      {
+        const x0 = cx - 1.894, x1 = cx + 1.894;
+        const y0 = 73.2, y1 = 73.45;
+        const z0 = cz - 0.15, z1 = cz + 0.15;
+        quadN([x0, y0, z0], [x0, y1, z0], [x1, y1, z0], [x1, y0, z0], [0, 0, -1]);
+        quadN([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], [0, 0, 1]);
+        quadN([x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1], [0, -1, 0]);
+        quadN([x0, y1, z0], [x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [0, 1, 0]);
+        quadN([x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], [-1, 0, 0]);
+        quadN([x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1], [1, 0, 0]);
+        line('equip', cx - 1.88, 73.2, cz - 0.15, cx + 1.88, 73.2, cz - 0.15);
+        line('equip', cx - 1.88, 73.2, cz + 0.15, cx + 1.88, 73.2, cz + 0.15);
+        line('equip', cx - 1.88, 73.45, cz - 0.15, cx + 1.88, 73.45, cz - 0.15);
+        line('equip', cx - 1.88, 73.45, cz + 0.15, cx + 1.88, 73.45, cz + 0.15);
+      }
+      // 11. motor + hub
+      solidCylY(cx, 73.45, 73.95, cz, 0.45, 16, {});
+      solidCylY(cx, 73.95, 74.15, cz, 0.3, 16, {});
+      // 12. fan blades
+      for (const base of [45, 135, 225, 315]) {
+        const a = base/180*P, ca = C(a), sa = S(a);
+        // quad: root (r 0.3, chord 0.5) to tip (r 1.75, chord 0.35), tangential width
+        const w0 = 0.25, w1 = 0.175;
+        const p = (r, w) => [cx + r*ca - w*sa, 74.05, cz + r*sa + w*ca];
+        const q = [p(0.3, w0), p(0.3, -w0), p(1.75, -w1), p(1.75, w1)];
+        quadN(q[0], q[1], q[2], q[3], [0,1,0]);
+        quadN(q[0], q[3], q[2], q[1], [0,-1,0]);
+        for (let i = 0; i < 4; i++) {
+          const a2 = q[i], b2 = q[(i+1)%4];
+          line('equip', a2[0], a2[1], a2[2], b2[0], b2[1], b2[2]);
+        }
+      }
+      // 13. fan guard
+      ring(T.mid, cx, 74.4, cz, 1.0, 32, 'y');
+      ring(T.mid, cx, 74.4, cz, 0.35, 16, 'y');
+      for (let i = 0; i < 12; i++) {
+        const a = i/12*2*P;
+        line('mid', cx+0.35*C(a), 74.4, cz+0.35*S(a), cx+1.9*C(a), 74.4, cz+1.9*S(a));
+      }
+      // 14. ladder
+      {
+        const la = ladderAngle, lx = C(la), lz = S(la);
+        const px = -lz, pz = lx; // tangent
+        for (const s of [-0.25, 0.25]) {
+          const rx = cx + lx*3.35 + px*s, rz = cz + lz*3.35 + pz*s;
+          line('equip', rx, 68, rz, rx, 74.2, rz); // rail vertical
+          // top bend inward to r=2.6 then drop to deck
+          const tx = cx + lx*2.6 + px*s, tz = cz + lz*2.6 + pz*s;
+          line('equip', rx, 74.2, rz, tx, 74.2, tz);
+          line('equip', tx, 74.2, tz, tx, 73.4, tz);
+          // standoff brackets (start on casing surface, r=3.0)
+          for (const by of [70.0, 72.0, 73.4]) {
+            const h = Math.sqrt(9 - s*s);
+            line('equip', cx + lx*h + px*s, by, cz + lz*h + pz*s, rx, by, rz);
+          }
+        }
+        for (let y = 68.3; y <= 73.9 + 1e-6; y += 0.3) {
+          const a1 = cx + lx*3.35 + px*0.25, z1 = cz + lz*3.35 + pz*0.25;
+          const a2 = cx + lx*3.35 - px*0.25, z2 = cz + lz*3.35 - pz*0.25;
+          line('mid', a1, y, z1, a2, y, z2);
+        }
+      }
+      // 15. pipes
+      pipe([[cx+1.2, 72.8, cz + Math.sqrt(9 - 1.44)], [cx+1.2, 72.8, -16], [cx+1.2, 69.5, -16]], 0.25);
+      pipe([[cx-1.2, 69.12, cz + Math.sqrt(3.2*3.2 - 1.44)], [cx-1.2, 69.12, -18]], 0.19);
+      // pipe stand under return pipe
+      box(cx+1.1, 68, -19.6, cx+1.3, 72.55, -19.4, 'equip', {face:true});
+      box(cx+0.8, 72.45, -19.6, cx+1.6, 72.55, -19.4, 'equip', {face:true});
+    }
+    tower(-5, -25, P);
+    tower(4, -25, 0);
+
+    // B. pump skid
+    box(-8.2, 68, -18.2, 8.2, 68.25, -13.8, 'equip', {face:true});
+    box(-8, 68.25, -18, 8, 69.5, -14, 'equip', {face:true});
+    // panel seams (per-face obstacle lists)
+    // +z face (z=-14): hood pipes at x=-2, 2 (flange r 0.4)
+    // -z face (z=-18): supply landings at x=-6.2, 2.8
+    for (const sx of [-6, -4, -2, 0, 2, 4, 6]) {
+      if (Math.abs(sx - (-2)) < 0.5 || Math.abs(sx - 2) < 0.5) continue;
+      line('mid', sx, 68.25, -14, sx, 69.5, -14);
+      if (Math.abs(sx - (-6.2)) < 0.5 || Math.abs(sx - 2.8) < 0.5) continue;
+      line('mid', sx, 68.25, -18, sx, 69.5, -18);
+    }
+    // louver vents on +z face only
+    for (const gx of [-5.5, 0, 4.5, 7]) {
+      for (const y of [68.6, 68.8, 69.0]) {
+        line('mid', gx-0.6, y, -13.99, gx+0.6, y, -13.99);
+        line('mid', gx-0.6, y+0.08, -13.99, gx+0.6, y+0.08, -13.99);
+        line('mid', gx-0.6, y, -13.99, gx-0.6, y+0.08, -13.99);
+        line('mid', gx+0.6, y, -13.99, gx+0.6, y+0.08, -13.99);
+      }
+    }
+    // name plate
+    {
+      const x0 = -7.6, x1 = -6.6, y0 = 69.1, y1 = 69.35, z = -13.99;
+      line('mid', x0, y0, z, x1, y0, z); line('mid', x0, y1, z, x1, y1, z);
+      line('mid', x0, y0, z, x0, y1, z); line('mid', x1, y0, z, x1, y1, z);
+      for (const y of [69.16, 69.22, 69.28]) line('mid', x0+0.1, y, z, x1-0.1, y, z);
+    }
+    // roof penetrations
+    box(-2.8, 68, -12.8, -1.2, 69.4, -11.2, 'equip', {face:true});
+    box(-3.0, 69.4, -13.0, -1.0, 69.55, -11.0, 'equip', {face:true});
+    box(1.2, 68, -12.8, 2.8, 69.4, -11.2, 'equip', {face:true});
+    box(1.0, 69.4, -13.0, 3.0, 69.55, -11.0, 'equip', {face:true});
+    // skid-to-hood pipes
+    pipe([[-2, 69.0, -14], [-2, 69.0, -12.8]], 0.22);
+    pipe([[2, 69.0, -14], [2, 69.0, -12.8]], 0.22);
+
+    // C. oxygen tanks
     const tanks = mobile ? 2 : 3;
+    let xLast = 0;
     for (let k = 0; k < tanks; k++) {
-      const x = 18 + k * 8;
-      ring(T.equip, x, 61.6, -5, 1.8, 20, 'z');
-      ring(T.equip, x, 61.6, -1, 1.8, 20, 'z');
-      seg(T.equip, x, 59.8, -5, x, 59.8, -1);
-      seg(T.equip, x, 63.4, -5, x, 63.4, -1);
-      seg(T.equip, x, 61.6, -6.8, x, 61.6, -5);
-      seg(T.equip, x, 61.6, -1, x, 61.6, 0.8);
+      const x = 18 + k*8; xLast = x;
+      solidCylZ(x, 62.3, -5, -1, 1.8, 24, {top:false, bottom:false, tone: null});
+      line('equip', x + 1.8, 62.3, -5, x + 1.8, 62.3, -1);
+      line('equip', x - 1.8, 62.3, -5, x - 1.8, 62.3, -1);
+      domeZ(x, 62.3, -5, 1.8, 0.6, -1, 24);
+      domeZ(x, 62.3, -1, 1.8, 0.6, +1, 24);
+      ring(T.mid, x, 62.3, -3, 1.8, 24, 'z');
+      // saddles
+      for (const zc of [-4.3, -1.7]) {
+        box(x-1.5, 60, zc-0.3, x+1.5, 60.15, zc+0.3, 'equip', {face:true});
+        saddleZ(x, zc, 60.15, 62.3, 1.8, 1.3, 0.3);
+        // hold-down strap: arc over the top, r=1.83, a = -0.775 .. PI+0.775
+        {
+          const aS = -0.775, aE = P + 0.775, steps = 20;
+          let px0 = null, py0 = null;
+          for (let i = 0; i <= steps; i++) {
+            const a = aS + (aE - aS)*i/steps;
+            const sx = x + 1.83*C(a), sy = 62.3 + 1.83*S(a);
+            if (i > 0) line('equip', px0, py0, zc, sx, sy, zc);
+            px0 = sx; py0 = sy;
+          }
+        }
+      }
+      // outlet nozzle + tee fitting + side valve handwheel
+      pipe([[x, 62.3, -5.6], [x, 62.3, -6.6], [x, 61.12, -6.6]], 0.15, {flanges: false});
+      box(x-0.22, 60.68, -6.82, x+0.22, 61.12, -6.38, 'equip', {face:true});
+      line('equip', x+0.22, 61.65, -6.6, x+0.5, 61.65, -6.6);
+      ring(T.equip, x+0.5, 61.65, -6.6, 0.22, 16, 'x');
+      line('mid', x+0.5, 61.43, -6.6, x+0.5, 61.87, -6.6);
+      line('mid', x+0.5, 61.65, -6.82, x+0.5, 61.65, -6.38);
+      // relief valve
+      solidCylY(x, 64.08, 64.6, -1.6, 0.12, 12, {});
+      box(x-0.18, 64.6, -1.78, x+0.18, 64.75, -1.42, 'equip', {face:true});
+    }
+    // header
+    pipe([[xLast + 1.2, 60.9, -6.6], [11, 60.9, -6.6]], 0.2);
+    // header stands
+    for (const xs of [14, 22, 30]) {
+      if (xs >= xLast + 1.2) continue;
+      box(xs-0.3, 60, -6.9, xs+0.3, 60.06, -6.3, 'equip', {face:true});
+      box(xs-0.1, 60, -6.7, xs+0.1, 60.7, -6.5, 'equip', {face:true});
     }
   }
 
