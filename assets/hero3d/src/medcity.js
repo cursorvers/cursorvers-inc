@@ -466,6 +466,49 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     }
   }
 
+  const FS = { pos: [], col: [] };
+  function shadeTri(a, b, c, ta, tb, tc) {
+    if (ids || !solid) return;
+    const crx = (b[1]-a[1])*(c[2]-a[2]) - (b[2]-a[2])*(c[1]-a[1]);
+    const cry = (b[2]-a[2])*(c[0]-a[0]) - (b[0]-a[0])*(c[2]-a[2]);
+    const crz = (b[0]-a[0])*(c[1]-a[1]) - (b[1]-a[1])*(c[0]-a[0]);
+    if (crx*crx + cry*cry + crz*crz === 0) return;
+    let p = a, q = b, r = c, ua = ta, ub = tb, uc = tc;
+    if (cry < 0) { const t = q; q = r; r = t; const u = ub; ub = uc; uc = u; }
+    FS.pos.push(p[0], p[1], p[2], q[0], q[1], q[2], r[0], r[1], r[2]);
+    FS.col.push(ua, ua, ua, ub, ub, ub, uc, uc, uc);
+  }
+
+  // SHADOW_CORE: centre darkness of the shadow, multiplied into the floor colour
+  const SHADOW_CORE = 0.78;
+  function softShadowDisc(cx, y, cz, r0, r1, div) {
+    for (let i = 0; i < div; i++) {
+      const a0 = (i / div) * Math.PI * 2;
+      const a1 = ((i + 1) / div) * Math.PI * 2;
+      const p0 = [cx + r0 * Math.cos(a0), y, cz + r0 * Math.sin(a0)];
+      const p1 = [cx + r0 * Math.cos(a1), y, cz + r0 * Math.sin(a1)];
+      shadeTri([cx, y, cz], p0, p1, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+      const q0 = [cx + r1 * Math.cos(a0), y, cz + r1 * Math.sin(a0)];
+      const q1 = [cx + r1 * Math.cos(a1), y, cz + r1 * Math.sin(a1)];
+      shadeTri(p0, q0, q1, SHADOW_CORE, 1.0, 1.0);
+      shadeTri(p0, q1, p1, SHADOW_CORE, 1.0, SHADOW_CORE);
+    }
+  }
+  function softShadowRect(x0, z0, x1, z1, y, pad) {
+    const X0 = x0 - pad, Z0 = z0 - pad, X1 = x1 + pad, Z1 = z1 + pad;
+    const IN = [[x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1]];
+    const OUT = [[X0, y, Z0], [X1, y, Z0], [X1, y, Z1], [X0, y, Z1]];
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4;
+      const ip = IN[i], jp = IN[j], op = OUT[i], oq = OUT[j];
+      shadeTri(ip, op, oq, SHADOW_CORE, 1.0, 1.0);
+      shadeTri(ip, oq, jp, SHADOW_CORE, 1.0, SHADOW_CORE);
+    }
+    const a = IN[0], b = IN[1], c = IN[2], d = IN[3];
+    shadeTri(a, b, c, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+    shadeTri(a, c, d, SHADOW_CORE, SHADOW_CORE, SHADOW_CORE);
+  }
+
   // ================= ground =================
   {
     const E = 640;
@@ -1408,6 +1451,16 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
   supports(common);
   supports(retCommon);
 
+  // soft contact shadows, drawn exactly on the floor surface into their own buffer
+  softShadowDisc(-5, 68, -25, 3.0, 3.9, 32);
+  softShadowDisc(4, 68, -25, 3.0, 3.9, 32);
+  softShadowRect(-8.2, -18.2, 8.2, -13.8, 68, 0.5);
+  for (const x of (mobile ? [18, 26] : [18, 26, 34])) softShadowRect(x - 1.6, -5.4, x + 1.6, -0.6, 60, 0.6);
+  softShadowRect(56, -1, 64, 1, 0.2, 0.6);
+  softShadowRect(78, -1, 86, 1, 0.2, 0.6);
+  softShadowRect(63.1, 31.6, 64.9, 36.4, 0.1, 0.5);
+  for (const cx of [-17, -8.5, 0, 8.5, 17]) for (const z of [93, 107]) softShadowRect(cx - 0.45, z - 0.45, cx + 0.45, z + 0.45, 0, 0.35);
+
   // ================= assemble render objects =================
   function lineObj(arr, color, opacity) {
     const geo = new THREE.BufferGeometry();
@@ -1435,6 +1488,30 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     });
     facesMesh = new THREE.Mesh(geo, mat);
     group.add(facesMesh);
+  }
+  // Multiply blending: the shadow colour darkens whatever floor tone is
+  // beneath it (floor × shadow) and never lightens; depthWrite is false so
+  // the shadows never occlude the floor lines, while still testing depth
+  // against the opaque faces.
+  if (solid && FS.pos.length) {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(Float32Array.from(FS.pos), 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(Float32Array.from(FS.col), 3));
+    const mat = new THREE.MeshBasicMaterial({
+      vertexColors: true,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -4,
+      fog: false,
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.ZeroFactor,
+      blendDst: THREE.SrcColorFactor,
+    });
+    const shadowMesh = new THREE.Mesh(geo, mat);
+    shadowMesh.renderOrder = 1;
+    group.add(shadowMesh);
   }
 
   // B0: 重ね描き除去の分、不透明度を 1-(1-a)^2 に上げて見た目の濃さを保つ (accent は重複なし・変更なし)
