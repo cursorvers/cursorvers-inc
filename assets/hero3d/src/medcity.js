@@ -1327,7 +1327,7 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // A2 roof drains
     for (const x of [-16, 16]) box(x - 0.25, 6.7, 91.6, x + 0.25, 6.78, 92.1, 'mid', { face: true });
     // A3 downpipes
-    for (const x of [-17, 17]) box(x - 0.08, 0.15, 92.59, x + 0.08, 6, 92.75, 'mid', { face: true });
+    for (const x of [-17, 17]) box(x - 0.08, 0.15, 92.59, x + 0.08, 5.8, 92.75, 'mid', { face: true }); // ends under the column cap
     // A4 beams between columns
     const cs = [-17, -8.5, 0, 8.5, 17];
     for (const z of [93, 107]) {
