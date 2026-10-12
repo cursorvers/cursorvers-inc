@@ -1328,6 +1328,13 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
     // E5: curb and bollards
     box(-20, 0, 91.4, 20, 0.18, 91.7, 'mid', { face: true });
     for (const x of [-12.75, -4.25, 4.25, 12.75]) solidCylY(x, 0, 0.9, 92.2, 0.18, 12, {});
+
+    // E6: entrance portal frame (above the canopy, readable from high cameras)
+    box(-5.4, 0, 87.6, -4.6, 10.4, 88.4, 'hero', { face: true });
+    box(4.6, 0, 87.6, 5.4, 10.4, 88.4, 'hero', { face: true });
+    box(-4.6, 9.6, 87.6, 4.6, 10.4, 88.4, 'hero', { face: true });
+    // E7: link roof from the emergency canopy to the entrance
+    box(-6, 6, 88.4, 6, 6.7, 91, 'hero', { face: true });
   }
 
   // ================= atrium + skybridge =================
