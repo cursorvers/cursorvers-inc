@@ -1774,8 +1774,9 @@ export function makeMedCity(scene, { mobile = false, style = 'solid', ids = fals
         seg(T.mid, a[0], y, a[2] + 0.4, b[0], y, a[2] + 0.4);
         const x0 = Math.min(a[0], b[0]), x1 = Math.max(a[0], b[0]);
         for (let x = x0; x <= x1 + 0.01; x += 16) {
-          seg(T.mid, x, 0, a[2] - 0.4, x, y, a[2] - 0.4);
-          seg(T.mid, x, 0, a[2] + 0.4, x, y, a[2] + 0.4);
+          const yb = (x > -8 && x < 8 && a[2] > 40 && a[2] < 44) ? 4 : 0; // over the link (x -8..8, z 40..44) the legs stand on its roof
+          seg(T.mid, x, yb, a[2] - 0.4, x, y, a[2] - 0.4);
+          seg(T.mid, x, yb, a[2] + 0.4, x, y, a[2] + 0.4);
         }
       } else { // z 方向
         seg(T.mid, a[0] - 0.4, y, a[2], a[0] - 0.4, y, b[2]);
