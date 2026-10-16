@@ -83,6 +83,21 @@
         /* 見出しは「「NVIDIA Inception」に」と「採択されました」の 2 行に保つ。
            1 行目は約 11.1em (2026-10-17 実測) なので、本文の幅 (画面幅 - 48px、上限 768px) に収まる大きさまで下げる */
         h1.hero-h1.h1-program { font-size: clamp(20px, calc((100vw - 48px) / 11.4), 52px); }
+        /* 冒頭: 暗い背景に緑のネットワーク (自社で描いた図。NVIDIA の画像は使わない) */
+        .nv-hero { background: linear-gradient(90deg, rgba(12, 12, 12, .94) 0%, rgba(12, 12, 12, .72) 42%, rgba(12, 12, 12, 0) 78%), url("../images/hero-network-green.svg") 72% center / cover no-repeat, #0C0C0C; color: #FFFFFF; padding: 64px 24px 56px; }
+        .nv-hero-inner { max-width: 72rem; margin: 0 auto; }
+        .nv-hero-inner > * { max-width: 44rem; }
+        .nv-hero nav ol { color: rgba(255, 255, 255, .6); }
+        .nv-hero nav a { color: inherit; }
+        .nv-hero nav a:hover { color: #FFFFFF; }
+        .nv-hero nav [aria-current="page"] { color: #FFFFFF; }
+        .nv-hero .nv-sep { color: rgba(255, 255, 255, .3); }
+        .nv-hero .nv-meta time { color: rgba(255, 255, 255, .6); }
+        .nv-hero h1.hero-h1 { color: #FFFFFF; }
+        .nv-hero .nv-sub { color: rgba(255, 255, 255, .72); }
+        .nv-hero a:focus-visible { outline-color: #FFFFFF; }
+        @media (max-width: 1023px) { .nv-hero { background: linear-gradient(180deg, rgba(12, 12, 12, .2) 0%, rgba(12, 12, 12, .78) 100%), url("../images/hero-network-green.svg") 72% 30% / cover no-repeat, #0C0C0C; } }
+        @media (min-width: 1024px) { .nv-hero { min-height: 560px; display: flex; align-items: center; padding: 96px 48px; } .nv-hero-inner { width: 100%; } }
     .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
 .en-line--dark { color: rgba(255, 255, 255, .62); }
 </style>
@@ -124,30 +139,30 @@
     </header>
 
     <main id="main" class="pt-24">
-        <!-- Article Header -->
-        <section class="py-16 md:py-20 px-6 relative overflow-hidden" style="background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 100%);">
-            <div class="max-w-3xl mx-auto">
+        <!-- Article Header: 暗い背景 + 緑のネットワーク図 (自社で描いた図。images/hero-network-green.svg) -->
+        <section class="nv-hero">
+            <div class="nv-hero-inner">
                 <!-- Breadcrumb -->
                 <nav aria-label="パンくずリスト" class="mb-6">
                     <ol class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
                         <li><a href="../index.html" class="hover:text-flame transition">ホーム</a></li>
-                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li aria-hidden="true" class="nv-sep">/</li>
                         <li><a href="../news.html" class="hover:text-flame transition">お知らせ</a></li>
-                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li aria-hidden="true" class="nv-sep">/</li>
                         <li class="text-brand-black font-medium truncate max-w-[200px] sm:max-w-none" aria-current="page">NVIDIA Inception 採択</li>
                     </ol>
                 </nav>
                 <!-- NVIDIA Inception member badge: design.nvidia.com の公式素材 (Inception Badges.zip / for-screen / rgb) を無改変で使用。高さは Cursorvers ロゴと同じ (パートナーロゴより大きくしない)・30px 以上 (2026-10-17) -->
                 <div class="flex items-center gap-6 md:gap-12 mb-8">
-                    <img src="../assets/brand/cvr_logo_dark.png" alt="Cursorvers" width="131" height="112" class="h-20 md:h-28 w-auto mix-blend-multiply">
+                    <img src="../assets/brand/cvr_logo_light.png" alt="Cursorvers" width="131" height="112" class="h-20 md:h-28 w-auto">
                     <img src="../images/nvidia-inception-program-badge-rgb-for-screen.svg" alt="NVIDIA Inception Program" width="259" height="112" class="h-20 md:h-28 w-auto">
                 </div>
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-3 mb-4 nv-meta">
                     <time datetime="2026-10-17" class="text-sm text-gray-500 font-en">2026.10.17</time>
                     <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">採択</span>
                 </div>
-                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"><span class="inline-block whitespace-nowrap">「NVIDIA&nbsp;Inception」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg text-gray-600 font-medium jp-keep">—&nbsp;NVIDIA&nbsp;の<wbr> AI&nbsp;スタートアップ<wbr>支援プログラム</span></h1>
-<p lang="en" class="en-line" style="margin-top:0.75rem;">Cursorvers has been accepted into NVIDIA Inception, NVIDIA's program for AI startups.</p>
+                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"><span class="inline-block whitespace-nowrap">「NVIDIA&nbsp;Inception」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg nv-sub font-medium jp-keep">—&nbsp;NVIDIA&nbsp;の<wbr> AI&nbsp;スタートアップ<wbr>支援プログラム</span></h1>
+<p lang="en" class="en-line en-line--dark" style="margin-top:0.75rem;">Cursorvers has been accepted into NVIDIA Inception, NVIDIA's program for AI startups.</p>
             </div>
         </section>
 
