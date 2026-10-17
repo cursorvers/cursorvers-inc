@@ -1539,9 +1539,14 @@ header.glass-nav, .glass-nav {
     margin: 0;
 }
 
-#news .news-row-link:hover .news-card-v2-title {
-    color: #E8501A;
+@media (hover: hover) and (pointer: fine) {
+    #news .news-row-link:hover .news-card-v2-title {
+        color: #E8501A;
+    }
 }
+
+/* お知らせ欄の NVIDIA Inception 公式バッジ: 自社の枠 (高さ 40px・幅 129px) より幅が狭い範囲で少し大きくする */
+#news .news-visual-badge { height: 44px; width: auto; }
 
 /* すべてのお知らせ */
 #news .news-list-more {
@@ -2196,11 +2201,13 @@ header.glass-nav, .glass-nav {
                 <!-- NVIDIA「NVIDIA Inception」採択 -->
                 <article class="news-row">
                     <a href="news/2026-10-17-nvidia-inception.html" class="news-row-link">
-                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="NVIDIA Inception">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × NVIDIA Inception">
                             <div class="news-visual-lockup">
-                                <img src="images/nvidia-inception-program-badge-rgb-for-screen.svg" alt="NVIDIA Inception Program" width="111" height="48" class="h-12 w-auto">
+                                <span class="news-visual-brand">Cursorvers</span>
+                                <span class="news-visual-x" aria-hidden="true">×</span>
+                                <img src="images/nvidia-inception-program-badge-rgb-for-screen.svg" alt="NVIDIA Inception Program" width="102" height="44" class="news-visual-badge">
                             </div>
-                            <span class="news-visual-caption jp-keep">AI&nbsp;スタートアップ<wbr>支援プログラム</span>
+                            <span class="news-visual-caption jp-keep">NVIDIA&nbsp;の<wbr> AI&nbsp;スタートアップ<wbr>支援プログラム</span>
                         </div>
                         <div class="news-row-body">
                             <div class="news-card-v2-meta">
