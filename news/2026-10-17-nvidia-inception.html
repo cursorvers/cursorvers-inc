@@ -98,6 +98,7 @@
         .nv-hero a:focus-visible { outline-color: #FFFFFF; }
         @media (max-width: 1023px) { .nv-hero { background: linear-gradient(180deg, rgba(12, 12, 12, .2) 0%, rgba(12, 12, 12, .78) 100%), url("../images/hero-network-green.svg") 72% 30% / cover no-repeat, #0C0C0C; } }
         @media (min-width: 1024px) { .nv-hero { min-height: 560px; display: flex; align-items: center; padding: 96px 48px; } .nv-hero-inner { width: 100%; } }
+        @media (max-width: 359px) { .nv-hero .nv-lockup img { height: 64px; } }
     .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
 .en-line--dark { color: rgba(255, 255, 255, .62); }
 </style>
@@ -153,7 +154,7 @@
                     </ol>
                 </nav>
                 <!-- NVIDIA Inception member badge: design.nvidia.com の公式素材 (Inception Badges.zip / for-screen / rgb) を無改変で使用。高さは Cursorvers ロゴと同じ (パートナーロゴより大きくしない)・30px 以上 (2026-10-17) -->
-                <div class="flex items-center gap-6 md:gap-12 mb-8">
+                <div class="flex items-center gap-6 md:gap-12 mb-8 nv-lockup">
                     <img src="../assets/brand/cvr_logo_light.png" alt="Cursorvers" width="131" height="112" class="h-20 md:h-28 w-auto">
                     <img src="../images/nvidia-inception-program-badge-rgb-for-screen.svg" alt="NVIDIA Inception Program" width="259" height="112" class="h-20 md:h-28 w-auto">
                 </div>
