@@ -85,6 +85,37 @@
         h1.hero-h1.h1-program { font-size: clamp(20px, calc((100vw - 48px) / 14.6), 52px); }
     .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
 .en-line--dark { color: rgba(255, 255, 255, .62); }
+    /* 冒頭: 暗い背景に写真のタイルを散らす (claude.com/programs/startups の雰囲気に合わせ、写真は自社の素材) */
+    .cs-hero { background: #141413; color: #FFFFFF; position: relative; overflow: hidden; padding: 64px 24px 56px; }
+    .cs-hero-inner { position: relative; z-index: 1; max-width: 48rem; margin: 0 auto; text-align: center; }
+    .cs-hero nav ol { justify-content: center; color: rgba(255, 255, 255, .6); }
+    .cs-hero nav a { color: inherit; }
+    .cs-hero nav a:hover { color: #FFFFFF; }
+    .cs-hero nav [aria-current="page"] { color: #FFFFFF; }
+    .cs-hero .cs-sep { color: rgba(255, 255, 255, .3); }
+    .cs-hero .cs-meta { justify-content: center; }
+    .cs-hero .cs-meta time { color: rgba(255, 255, 255, .6); }
+    .cs-hero h1.hero-h1 { color: #FFFFFF; }
+    .cs-hero .cs-logo { display: block; height: 72px; width: auto; margin: 0 auto 28px; }
+    @media (min-width: 768px) { .cs-hero .cs-logo { height: 96px; } }
+    .cs-hero .cs-sub { color: rgba(255, 255, 255, .72); }
+    .cs-hero a:focus-visible { outline-color: #FFFFFF; }
+    .cs-tiles { display: none; }
+    .cs-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 32px; }
+    .cs-strip span { display: block; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; }
+    .cs-strip img, .cs-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cs-tile { position: absolute; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, .4); }
+    @media (min-width: 1400px) {
+        .cs-hero { min-height: 620px; display: flex; align-items: center; padding: 96px 24px; }
+        .cs-hero-inner { width: 100%; }
+        .cs-tiles { display: block; position: absolute; inset: 0; pointer-events: none; }
+        .cs-strip { display: none; }
+        .cs-tile--1 { left: 4%; top: 11%; width: 250px; height: 160px; }
+        .cs-tile--2 { left: -40px; top: 47%; width: 160px; height: 116px; }
+        .cs-tile--3 { left: 6%; bottom: -36px; width: 270px; height: 160px; }
+        .cs-tile--4 { right: -30px; top: 13%; width: 310px; height: 236px; }
+        .cs-tile--5 { right: 4%; bottom: -28px; width: 230px; height: 146px; }
+    }
 </style>
 </head>
 
@@ -124,25 +155,38 @@
     </header>
 
     <main id="main" class="pt-24">
-        <!-- Article Header -->
-        <section class="py-16 md:py-20 px-6 relative overflow-hidden" style="background: linear-gradient(135deg, #FFFFFF 0%, #FFFFFF 100%);">
-            <div class="max-w-3xl mx-auto">
+        <!-- Article Header: 暗い背景 + 写真タイル (写真は自社の素材、Unsplash 由来の stock と自社の rnd 画像) -->
+        <section class="cs-hero">
+            <div class="cs-tiles" aria-hidden="true">
+                <span class="cs-tile cs-tile--1"><img src="../images/stock-advisor-meeting.jpg" alt="" width="1200" height="787" decoding="async"></span>
+                <span class="cs-tile cs-tile--2"><img src="../images/stock-clinician-dashboard.jpg" alt="" width="1200" height="800" decoding="async"></span>
+                <span class="cs-tile cs-tile--3"><img src="../images/rnd-local-llm.jpg" alt="" width="1280" height="720" decoding="async"></span>
+                <span class="cs-tile cs-tile--4"><img src="../images/rnd-governance.jpg" alt="" width="1280" height="720" decoding="async"></span>
+                <span class="cs-tile cs-tile--5"><img src="../images/stock-engineers-workstation.jpg" alt="" width="1200" height="801" decoding="async"></span>
+            </div>
+            <div class="cs-hero-inner">
+                <img src="../assets/brand/cvr_logo_light.png" alt="Cursorvers" width="112" height="96" class="cs-logo" decoding="async">
                 <!-- Breadcrumb -->
                 <nav aria-label="パンくずリスト" class="mb-6">
                     <ol class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
                         <li><a href="../index.html" class="hover:text-flame transition">ホーム</a></li>
-                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li aria-hidden="true" class="cs-sep">/</li>
                         <li><a href="../news.html" class="hover:text-flame transition">お知らせ</a></li>
-                        <li aria-hidden="true" class="text-gray-300">/</li>
+                        <li aria-hidden="true" class="cs-sep">/</li>
                         <li class="text-brand-black font-medium truncate max-w-[200px] sm:max-w-none" aria-current="page">Claude Startup Program 採択</li>
                     </ol>
                 </nav>
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-3 mb-4 cs-meta">
                     <time datetime="2026-10-07" class="text-sm text-gray-500 font-en">2026.10.07</time>
                     <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">採択</span>
                 </div>
-                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight"><span class="inline-block whitespace-nowrap">「Claude Startup Program」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg text-gray-600 font-medium jp-keep">—&nbsp;Anthropic&nbsp;の<wbr>スタートアップ<wbr>支援プログラム</span></h1>
-<p lang="en" class="en-line" style="margin-top:0.75rem;">We have been selected for Anthropic's Claude Startup Program.</p>
+                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"><span class="inline-block whitespace-nowrap">「Claude Startup Program」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg cs-sub font-medium jp-keep">—&nbsp;Anthropic&nbsp;の<wbr>スタートアップ<wbr>支援プログラム</span></h1>
+<p lang="en" class="en-line en-line--dark" style="margin-top:0.75rem;">We have been selected for Anthropic's Claude Startup Program.</p>
+                <div class="cs-strip" aria-hidden="true">
+                    <span><img src="../images/rnd-governance.jpg" alt="" width="1280" height="720" decoding="async"></span>
+                    <span><img src="../images/stock-advisor-meeting.jpg" alt="" width="1200" height="787" decoding="async"></span>
+                    <span><img src="../images/rnd-local-llm.jpg" alt="" width="1280" height="720" decoding="async"></span>
+                </div>
             </div>
         </section>
 
@@ -150,13 +194,7 @@
         <article class="py-12 md:py-16 px-6">
             <div class="max-w-3xl mx-auto">
 
-                <!-- Executive Summary -->
-                <div class="border-l-4 border-flame bg-flame/5 p-6 md:p-8 rounded-r-lg mb-10">
-                    <p class="text-sm font-bold text-flame mb-2 font-en uppercase tracking-wider">Executive Summary</p>
-                    <p class="text-base md:text-lg text-brand-black leading-relaxed jp-keep">
-                        Cursorvers株式会社は、<wbr>Anthropic&nbsp;が<wbr>運営する<wbr>スタートアップ<wbr>支援プログラム<wbr>「<strong>Claude Startup Program</strong>」に<wbr>採択されました。
-                    </p>
-                </div>
+
 
                 <!-- Official Site Link Card (text only; OGP text quoted from claude.com) -->
                 <a href="https://claude.com/programs/startups" target="_blank" rel="noopener noreferrer" class="block bg-white border border-gray-200 rounded-xl p-6 md:p-8 mb-10 hover:shadow-md transition">
