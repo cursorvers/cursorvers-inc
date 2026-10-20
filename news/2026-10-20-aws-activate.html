@@ -80,13 +80,13 @@
         }
         /* 日本語の改行: <wbr> の位置と空白でだけ折り返す (AGENTS.md「日本語の改行」) */
         .jp-keep { word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
-        /* 見出しは「「AWS Activate」」と「（Founders）に採択されました」の 2 行に保つ */
+        /* 見出しは「「AWS Activate」に」と「採択されました」の 2 行に保つ (NVIDIA の記事と同じ形) */
         h1.hero-h1.h1-program { font-size: clamp(20px, calc((100vw - 48px) / 11.4), 52px); }
-        /* 冒頭: 暗い背景だけ (AWS の画像・ロゴ・配色は使わない) */
+        /* 冒頭: 暗い背景に中央揃え (Claude の記事と同じ)。背景の絵は置かない */
         .aws-hero { background: #0C0C0C; color: #FFFFFF; padding: 64px 24px 56px; }
-        .aws-hero-inner { max-width: 72rem; margin: 0 auto; }
-        .aws-hero-inner > * { max-width: 44rem; }
-        .aws-hero nav ol { color: rgba(255, 255, 255, .6); }
+        .aws-hero-inner { max-width: 48rem; margin: 0 auto; text-align: center; }
+        .aws-hero .aws-meta { justify-content: center; }
+        .aws-hero nav ol { justify-content: center; color: rgba(255, 255, 255, .6); }
         .aws-hero nav a { color: inherit; }
         .aws-hero nav a:hover { color: #FFFFFF; }
         .aws-hero nav [aria-current="page"] { color: #FFFFFF; }
@@ -95,13 +95,14 @@
         .aws-hero h1.hero-h1 { color: #FFFFFF; }
         .aws-hero .aws-sub { color: rgba(255, 255, 255, .72); }
         .aws-hero a:focus-visible { outline-color: #FFFFFF; }
-        /* ロゴの位置に置く文字のバッジ (AWS のロゴではない。自社の書体と色だけ) */
-        .aws-text-badge { display: inline-flex; flex-direction: column; justify-content: center; height: 5rem; padding: 0 1.25rem; border: 1px solid rgba(255, 255, 255, .45); border-radius: .75rem; font-weight: 700; letter-spacing: .02em; line-height: 1.2; }
-        .aws-text-badge-main { font-size: 1.25rem; }
-        .aws-text-badge-sub { font-size: .8125rem; font-weight: 500; color: rgba(255, 255, 255, .72); }
-        @media (min-width: 768px) { .aws-text-badge { height: 7rem; padding: 0 1.75rem; } .aws-text-badge-main { font-size: 1.75rem; } .aws-text-badge-sub { font-size: .9375rem; } }
-        @media (min-width: 1024px) { .aws-hero { min-height: 560px; display: flex; align-items: center; padding: 96px 48px; } .aws-hero-inner { width: 100%; } }
-        @media (max-width: 359px) { .aws-hero .aws-lockup img { height: 64px; } .aws-text-badge { height: 4rem; } }
+        /* ロゴの札: 白地に Cursorvers と AWS Activate の公式ロゴを「×」で並べる。AWS のロゴは無改変で、自社のロゴより小さくする (AWS Activate ロゴ ガイドライン: 自社を主に見せる) */
+        .aws-lockup-card { display: inline-flex; align-items: center; gap: 20px; background: #FFFFFF; border-radius: 16px; padding: 16px 26px; margin: 0 auto 32px; }
+        .aws-lockup-card .aws-lockup-cvr { height: 72px; width: auto; }
+        .aws-lockup-card .aws-lockup-x { color: #9CA3AF; font-size: 20px; line-height: 1; }
+        .aws-lockup-card .aws-lockup-aws { height: 28px; width: auto; }
+        @media (min-width: 768px) { .aws-lockup-card { gap: 28px; padding: 20px 36px; } .aws-lockup-card .aws-lockup-cvr { height: 96px; } .aws-lockup-card .aws-lockup-aws { height: 34px; } }
+        @media (min-width: 1024px) { .aws-hero { padding: 96px 48px; } }
+        @media (max-width: 359px) { .aws-lockup-card { gap: 14px; padding: 12px 18px; } .aws-lockup-card .aws-lockup-cvr { height: 56px; } .aws-lockup-card .aws-lockup-aws { height: 22px; } }
     .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
 .en-line--dark { color: rgba(255, 255, 255, .62); }
 </style>
@@ -143,7 +144,7 @@
     </header>
 
     <main id="main" class="pt-24">
-        <!-- Article Header: 暗い背景だけ。AWS のロゴは使わず、ロゴの位置に文字のバッジを置く (AWS Activate のロゴは AWS の事前の許可が要るため) -->
+        <!-- Article Header: 暗い背景に中央揃え。AWS Activate のロゴは AWS Activate ロゴ ガイドライン (aws.amazon.com/ru/activate/logo-guidelines/、2021-06-18 更新) に沿い、公式の画像を無改変で使う -->
         <section class="aws-hero">
             <div class="aws-hero-inner">
                 <!-- Breadcrumb -->
@@ -156,19 +157,16 @@
                         <li class="text-brand-black font-medium truncate max-w-[200px] sm:max-w-none" aria-current="page">AWS Activate 採択</li>
                     </ol>
                 </nav>
-                <div class="flex items-center gap-6 md:gap-12 mb-8 aws-lockup">
-                    <img src="../assets/brand/cvr_logo_light.png" alt="Cursorvers" width="131" height="112" class="h-20 md:h-28 w-auto">
-                    <!-- ロゴ差し替え位置 (aws-activate): 公式のロゴ画像が届いたら、この span を images/aws-activate-logo.* の <img class="h-20 md:h-28 w-auto"> に替える (NVIDIA の記事と同じ置き方。Cursorvers のロゴより大きくしない) -->
-                    <span class="aws-text-badge" role="img" aria-label="AWS Activate (Founders)">
-                        <span class="aws-text-badge-main">AWS&nbsp;Activate</span>
-                        <span class="aws-text-badge-sub">Founders</span>
-                    </span>
+                <div class="aws-lockup-card" role="img" aria-label="Cursorvers × AWS Activate">
+                    <img src="../assets/brand/cvr_logo_dark.png" alt="" width="131" height="112" class="aws-lockup-cvr">
+                    <span class="aws-lockup-x" aria-hidden="true">×</span>
+                    <img src="../images/aws-activate-logo.png" alt="" width="253" height="69" class="aws-lockup-aws">
                 </div>
                 <div class="flex items-center gap-3 mb-4 aws-meta">
                     <time datetime="2026-10-20" class="text-sm text-gray-500 font-en">2026.10.20</time>
                     <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">採択</span>
                 </div>
-                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"><span class="inline-block whitespace-nowrap">「AWS&nbsp;Activate」</span><br><span class="inline-block">（Founders）に採択されました</span><span class="block mt-3 text-base md:text-lg aws-sub font-medium jp-keep">—&nbsp;Amazon&nbsp;Web&nbsp;Services<wbr>（AWS）の<wbr>スタートアップ<wbr>支援プログラム</span></h1>
+                <h1 class="hero-h1 h1-program text-2xl md:text-3xl lg:text-4xl font-bold leading-tight"><span class="inline-block whitespace-nowrap">「AWS&nbsp;Activate」に</span><br><span class="inline-block">採択されました</span><span class="block mt-3 text-base md:text-lg aws-sub font-medium jp-keep">—&nbsp;Amazon&nbsp;Web&nbsp;Services<wbr>（AWS）の<wbr>スタートアップ<wbr>支援プログラム<wbr>（Founders）</span></h1>
 <p lang="en" class="en-line en-line--dark" style="margin-top:0.75rem;">Cursorvers has been accepted into AWS Activate (Founders), the startup program of Amazon Web Services (AWS), and receives AWS credits.</p>
             </div>
         </section>
@@ -205,7 +203,10 @@
 
                 <!-- Body Text -->
                 <div class="article-body text-gray-700 jp-keep">
-                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">プログラムについて</h2>
+                    <h2 class="text-xl md:text-2xl font-bold text-brand-black mb-4 mt-10">AWS&nbsp;Activate&nbsp;とは</h2>
+                    <p>
+                        AWS&nbsp;Activate&nbsp;は、<wbr>Amazon&nbsp;Web&nbsp;Services<wbr>（AWS）が<wbr>スタートアップ向けに<wbr>提供している<wbr>支援プログラムです。
+                    </p>
                     <p>
                         Cursorvers株式会社は、<wbr>Amazon&nbsp;Web&nbsp;Services<wbr>（AWS）の<wbr>スタートアップ<wbr>支援プログラム<wbr>「AWS&nbsp;Activate」<wbr>（Founders）に<wbr>採択され、<wbr>AWS<wbr>クレジットの<wbr>提供を<wbr>受けています。
                     </p>
@@ -227,8 +228,8 @@
                         お知らせ一覧に戻る
                     </a>
                 </div>
-                <p class="mt-12 text-xs text-gray-500 leading-relaxed jp-keep">AWS、<wbr>AWS&nbsp;Activate&nbsp;は<wbr> Amazon.com,&nbsp;Inc.&nbsp;または<wbr>その関連会社の<wbr>商標です。<wbr>本記載は<wbr> AWS&nbsp;による<wbr>推薦・<wbr>提携・<wbr>出資を<wbr>意味する<wbr>ものではありません。</p>
-                <p lang="en" class="mt-1 text-xs text-gray-500 leading-relaxed">AWS and AWS Activate are trademarks of Amazon.com, Inc. or its affiliates. This statement does not imply endorsement by, affiliation with, or investment from AWS.</p>
+                <p class="mt-12 text-xs text-gray-500 leading-relaxed jp-keep">AWS、<wbr>AWS&nbsp;Activate、<wbr>AWS&nbsp;Activate&nbsp;ロゴは<wbr> Amazon.com,&nbsp;Inc.&nbsp;または<wbr>その関連会社の<wbr>商標です。<wbr>本記載は<wbr> AWS&nbsp;による<wbr>推薦・<wbr>提携・<wbr>出資を<wbr>意味する<wbr>ものではありません。</p>
+                <p lang="en" class="mt-1 text-xs text-gray-500 leading-relaxed">AWS, AWS Activate, and the AWS Activate logo are trademarks of Amazon.com, Inc. or its affiliates. This statement does not imply endorsement by, affiliation with, or investment from AWS.</p>
             </div>
         </article>
     </main>
