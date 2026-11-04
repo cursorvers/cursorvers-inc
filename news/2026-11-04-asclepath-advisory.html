@@ -80,6 +80,25 @@
         }
     .en-line { font-size: 14px; line-height: 1.6; color: #6B7280; letter-spacing: 0; }
 .en-line--dark { color: rgba(255, 255, 255, .62); }
+/* Cursorvers × Asclepath のロゴの組み (2026-11-04 試作) */
+.cvx-logo { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E5E7EB; border-radius:10px; padding:7px 14px; }
+.cvx-mark { height:26px; width:auto; }
+.cvx-mark--cv { mix-blend-mode:multiply; }
+.cvx-name-cv { font-family: var(--font-en, inherit); font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#1F2937; }
+.cvx-name-asc { font-weight:800; font-size:17px; letter-spacing:-.01em; color:#0B1B3F; }
+.cvx-name-asc--sm { font-size:14px; }
+.cvx-x { font-size:18px; line-height:1; color:#9CA3AF; }
+h1.hero-h1.h1-advisory { font-size: clamp(22px, 1.6vw + 16px, 34px); line-height:1.4; }
+.cvx-pair { display:flex; flex-wrap:wrap; align-items:center; gap:12px 16px; margin-top:28px; }
+h1.hero-h1.h1-advisory { word-break: keep-all; overflow-wrap: anywhere; }
+.cvx-pair { flex-wrap: nowrap; }
+@media (max-width: 480px) {
+  .cvx-pair { gap: 8px; }
+  .cvx-pair .cvx-logo { padding: 6px 9px; gap: 6px; }
+  .cvx-pair .cvx-mark { height: 22px; }
+  .cvx-pair .cvx-name-cv { font-size: 11px; letter-spacing: .14em; }
+  .cvx-pair .cvx-name-asc { font-size: 15px; }
+}
 </style>
 </head>
 
@@ -136,8 +155,13 @@
                     <time datetime="2026-11-04" class="text-sm text-gray-500 font-en">2026.11.04</time>
                     <span class="inline-block bg-amber-50 text-amber-700 text-xs font-bold px-3 py-1 rounded">顧問</span>
                 </div>
-                <h1 class="hero-h1 text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black leading-tight">Asclepath株式会社の AI ガバナンス顧問に就任しました</h1>
+                <h1 class="hero-h1 h1-advisory font-bold text-brand-black">Asclepath株式会社の<wbr>AI&nbsp;ガバナンス顧問に<wbr>就任しました</h1>
 <p lang="en" class="en-line" style="margin-top:0.75rem;">Cursorvers has been appointed as AI governance advisor to Asclepath. This does not endorse or guarantee its products.</p>
+                <div class="cvx-pair" aria-label="Cursorvers × Asclepath株式会社">
+                    <span class="cvx-logo"><img src="../assets/brand/cvr_logo_dark.png" alt="" class="cvx-mark cvx-mark--cv"><span class="cvx-name-cv">Cursorvers</span></span>
+                    <span class="cvx-x" aria-hidden="true">×</span>
+                    <span class="cvx-logo"><img src="../images/asclepath-mark.png" alt="" class="cvx-mark"><span class="cvx-name-asc">Asclepath</span></span>
+                </div>
             </div>
         </section>
 

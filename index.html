@@ -1549,6 +1549,22 @@ header.glass-nav, .glass-nav {
 #news .news-visual-badge { height: 44px; width: auto; }
 /* お知らせ欄の AWS Activate ロゴ: 横長なので高さ 32px (幅 117px) にして、自社の枠 (高さ 40px・幅 129px) より小さくする */
 #news .news-visual-badge.news-visual-badge--aws { height: 32px; }
+/* Cursorvers × Asclepath のロゴの組み (2026-11-04 試作) */
+.cvx-logo { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E5E7EB; border-radius:10px; padding:7px 14px; }
+.cvx-mark { height:26px; width:auto; }
+.cvx-mark--cv { mix-blend-mode:multiply; }
+.cvx-name-cv { font-family: var(--font-en, inherit); font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#1F2937; }
+.cvx-name-asc { font-weight:800; font-size:17px; letter-spacing:-.01em; color:#0B1B3F; }
+.cvx-name-asc--sm { font-size:14px; }
+.cvx-x { font-size:18px; line-height:1; color:#9CA3AF; }
+.cvx-client-logo { flex-shrink:0; margin-left:16px; width:144px; height:64px; background:#fff; border:1px solid #F3F4F6; border-radius:8px; box-shadow:0 1px 2px rgba(0,0,0,.05); display:flex; align-items:center; justify-content:center; gap:6px; padding:0 8px; }
+.cvx-client-logo img { height:28px; width:auto; }
+.cvx-nowrap { white-space: nowrap; }
+@media (max-width: 480px) {
+  .cvx-client-logo { width: 112px; margin-left: 10px; }
+  .cvx-client-logo img { height: 22px; }
+  .cvx-client-logo .cvx-name-asc--sm { font-size: 12px; }
+}
 
 /* すべてのお知らせ */
 #news .news-list-more {
@@ -2206,14 +2222,14 @@ header.glass-nav, .glass-nav {
 
             <!-- News List -->
             <div class="news-list">
-                <!-- Asclepath株式会社 AI ガバナンス顧問 就任 (顧問契約 8-9 の表示。相手のロゴは使わない) -->
+                <!-- Asclepath株式会社 AI ガバナンス顧問 就任 (先方ロゴは先方の承諾を得て使用) -->
                 <article class="news-row">
                     <a href="news/2026-11-04-asclepath-advisory.html" class="news-row-link">
                         <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Asclepath株式会社">
                             <div class="news-visual-lockup">
-                                <span class="news-visual-brand">Cursorvers</span>
-                                <span class="news-visual-x" aria-hidden="true">×</span>
-                                <span class="news-visual-wordmark news-visual-wordmark--amber">Asclepath株式会社</span>
+                                <span class="cvx-logo"><img src="assets/brand/cvr_logo_dark.png" alt="" class="cvx-mark cvx-mark--cv"><span class="cvx-name-cv">Cursorvers</span></span>
+                                <span class="cvx-x" aria-hidden="true">×</span>
+                                <span class="cvx-logo"><img src="images/asclepath-mark.png" alt="" class="cvx-mark"><span class="cvx-name-asc">Asclepath</span></span>
                             </div>
                             <span class="news-visual-caption">AI&nbsp;ガバナンス顧問</span>
                         </div>
@@ -2567,9 +2583,10 @@ header.glass-nav, .glass-nav {
                                 <div>
                                     <p class="font-bold text-brand-black text-lg md:text-xl"><a
                                             href="https://asclepath.com/company" target="_blank" rel="noopener noreferrer"
-                                            class="hover:text-flame transition">Asclepath株式会社</a></p>
-                                    <p class="text-base text-text-tertiary mt-2">AI&nbsp;ガバナンス顧問（担当：大田原&nbsp;正幸）</p>
+                                            class="hover:text-flame transition"><span class="cvx-nowrap">Asclepath</span><wbr><span class="cvx-nowrap">株式会社</span></a></p>
+                                    <p class="text-base text-text-tertiary mt-2">AI&nbsp;ガバナンス顧問<wbr><span class="cvx-nowrap">（担当：大田原&nbsp;正幸）</span></p>
                                 </div>
+                                <a href="https://asclepath.com/company" target="_blank" rel="noopener noreferrer" aria-label="Asclepath株式会社" class="cvx-client-logo"><img src="images/asclepath-mark.png" alt="" loading="lazy"><span class="cvx-name-asc cvx-name-asc--sm">Asclepath</span></a>
                             </div>
                         </div>
                         <p class="mt-5 text-sm text-text-tertiary leading-relaxed jp-keep">
