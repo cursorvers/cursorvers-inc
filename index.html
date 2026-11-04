@@ -1549,6 +1549,22 @@ header.glass-nav, .glass-nav {
 #news .news-visual-badge { height: 44px; width: auto; }
 /* お知らせ欄の AWS Activate ロゴ: 横長なので高さ 32px (幅 117px) にして、自社の枠 (高さ 40px・幅 129px) より小さくする */
 #news .news-visual-badge.news-visual-badge--aws { height: 32px; }
+/* Cursorvers × Asclepath のロゴの組み (2026-11-04 試作) */
+.cvx-logo { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E5E7EB; border-radius:10px; padding:7px 14px; }
+.cvx-mark { height:26px; width:auto; }
+.cvx-mark--cv { mix-blend-mode:multiply; }
+.cvx-name-cv { font-family: var(--font-en, inherit); font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#1F2937; }
+.cvx-name-asc { font-weight:800; font-size:17px; letter-spacing:-.01em; color:#0B1B3F; }
+.cvx-name-asc--sm { font-size:14px; }
+.cvx-x { font-size:18px; line-height:1; color:#9CA3AF; }
+.cvx-client-logo { flex-shrink:0; margin-left:16px; width:144px; height:64px; background:#fff; border:1px solid #F3F4F6; border-radius:8px; box-shadow:0 1px 2px rgba(0,0,0,.05); display:flex; align-items:center; justify-content:center; gap:6px; padding:0 8px; }
+.cvx-client-logo img { height:28px; width:auto; }
+.cvx-nowrap { white-space: nowrap; }
+@media (max-width: 480px) {
+  .cvx-client-logo { width: 112px; margin-left: 10px; }
+  .cvx-client-logo img { height: 22px; }
+  .cvx-client-logo .cvx-name-asc--sm { font-size: 12px; }
+}
 
 /* すべてのお知らせ */
 #news .news-list-more {
@@ -2200,12 +2216,38 @@ header.glass-nav, .glass-nav {
                 <div>
                     <p class="text-sm font-bold text-flame uppercase tracking-widest font-en mb-2">News &amp; Updates</p>
                     <h2 class="text-3xl md:text-4xl font-bold text-brand-black">お知らせ</h2>
-                    <p lang="en" class="en-line mt-3 max-w-2xl">Recent news: acceptance into AWS Activate (Founders) and NVIDIA Inception, selection for Anthropic's Claude Startup Program, an excellence award for a conference presentation, and upcoming conference&nbsp;talks.</p>
+                    <p lang="en" class="en-line mt-3 max-w-2xl">Recent news: appointment as AI governance advisor to Asclepath, acceptance into AWS Activate (Founders) and NVIDIA Inception, selection for Anthropic's Claude Startup Program, an excellence award for a conference presentation, and upcoming conference&nbsp;talks.</p>
                 </div>
             </div>
 
             <!-- News List -->
             <div class="news-list">
+                <!-- Asclepath株式会社 AI ガバナンス顧問 就任 (先方ロゴは先方の承諾を得て使用) -->
+                <article class="news-row">
+                    <a href="news/2026-11-04-asclepath-advisory.html" class="news-row-link">
+                        <div class="news-card-v2-visual news-visual-lockup-card" aria-label="Cursorvers × Asclepath株式会社">
+                            <div class="news-visual-lockup">
+                                <span class="cvx-logo"><img src="assets/brand/cvr_logo_dark.png" alt="" class="cvx-mark cvx-mark--cv"><span class="cvx-name-cv">Cursorvers</span></span>
+                                <span class="cvx-x" aria-hidden="true">×</span>
+                                <span class="cvx-logo"><img src="images/asclepath-mark.png" alt="" class="cvx-mark"><span class="cvx-name-asc">Asclepath</span></span>
+                            </div>
+                            <span class="news-visual-caption">AI&nbsp;ガバナンス顧問</span>
+                        </div>
+                        <div class="news-row-body">
+                            <div class="news-card-v2-meta">
+                                <span class="news-card-v2-tag news-tag-amber">顧問</span>
+                                <time datetime="2026-11-04" class="news-card-v2-date">2026.11.04</time>
+                            </div>
+                            <h3 class="news-card-v2-title jp-keep">
+                                Asclepath株式会社の<wbr>AI&nbsp;ガバナンス顧問に<wbr>就任
+                            </h3>
+                            <p class="news-card-v2-lede jp-keep">
+                                当社が<wbr>就任しました。<wbr>同社の<wbr>製品を<wbr>推奨・<wbr>保証する<wbr>ものでは<wbr>ありません。
+                            </p>
+                        </div>
+                    </a>
+                </article>
+
                 <!-- AWS「AWS Activate」(Founders) 採択。ロゴは AWS Activate ロゴ ガイドラインに沿い、公式の画像を無改変で、自社の枠より小さく置く -->
                 <article class="news-row">
                     <a href="news/2026-10-20-aws-activate.html" class="news-row-link">
@@ -2532,6 +2574,24 @@ header.glass-nav, .glass-nav {
                                 <img src="images/logo-sirius.png" alt="税理士法人シリウス logo" class="max-h-12 max-w-28 object-contain" loading="lazy">
                             </a>
                         </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-brand-black mb-8 md:mb-12 border-b-2 border-gray-100 pb-6 mt-12 md:mt-16">
+                            Advisory Clients<span class="block text-sm text-text-tertiary font-normal mt-2">顧問先</span></h3>
+                        <div class="space-y-5">
+                            <div class="card-premium flex items-center justify-between p-5 md:p-6 rounded-2xl">
+                                <div>
+                                    <p class="font-bold text-brand-black text-lg md:text-xl"><a
+                                            href="https://asclepath.com/company" target="_blank" rel="noopener noreferrer"
+                                            class="hover:text-flame transition"><span class="cvx-nowrap">Asclepath</span><wbr><span class="cvx-nowrap">株式会社</span></a></p>
+                                    <p class="text-base text-text-tertiary mt-2">AI&nbsp;ガバナンス顧問</p>
+                                </div>
+                                <a href="https://asclepath.com/company" target="_blank" rel="noopener noreferrer" aria-label="Asclepath株式会社" class="cvx-client-logo"><img src="images/asclepath-mark.png" alt="" loading="lazy"><span class="cvx-name-asc cvx-name-asc--sm">Asclepath</span></a>
+                            </div>
+                        </div>
+                        <p class="mt-5 text-sm text-text-tertiary leading-relaxed jp-keep">
+                            顧問先の<wbr>表示は、<wbr>その会社の<wbr>製品を<wbr>推奨・<wbr>保証する<wbr>ものでは<wbr>ありません。<wbr>医療機関向けの<wbr>レビューは、<wbr>これまでどおり<wbr>製品中立の<wbr>立場で<wbr>行い、<wbr>顧問先の<wbr>製品が<wbr>助言の<wbr>対象に<wbr>なる場合は、<wbr>その関係を<wbr>お伝えします。
+                        </p>
                     </div>
                 </div>
             </div>
